@@ -1,0 +1,1108 @@
+-:    0:Source:test-src/test_Log.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project common-header (PTXdist package libcommonheader).
+-:    7://
+-:    8:// Copyright (c) 2019-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file
+-:   12:///
+-:   13:///  \brief    Test for assertion helper macros.
+-:   14:///
+-:   15:///  \author   MaHe: WAGO GmbH & Co. KG
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include <gtest/gtest.h>
+-:   23:#include <string>
+-:   24:#include "wc/log.h"
+-:   25:
+-:   26:using std::string;
+-:   27:using std::to_string;
+-:   28:
+-:   29://------------------------------------------------------------------------------
+-:   30:// defines; structure, enumeration and type definitions
+-:   31://------------------------------------------------------------------------------
+-:   32:
+-:   33://------------------------------------------------------------------------------
+-:   34:// function prototypes
+-:   35://------------------------------------------------------------------------------
+-:   36:
+-:   37://------------------------------------------------------------------------------
+-:   38:// macros
+-:   39://------------------------------------------------------------------------------
+-:   40:
+-:   41://------------------------------------------------------------------------------
+-:   42:// variables' and constants' definitions
+-:   43://------------------------------------------------------------------------------
+-:   44:static log_level_t current_log_level                           = debug;
+-:   45:static log_level_t used_log_level                              = off;
+-:   46:static char        used_message[wc_get_max_log_message_size()] = { 0 };
+-:   47:
+-:   48://------------------------------------------------------------------------------
+-:   49:// function implementation
+-:   50://------------------------------------------------------------------------------
+function wc_log_output called 4 returned 100% blocks executed 100%
+4:   51:void wc_log_output(log_level_t const  log_level,
+-:   52:                   char const * const message)
+-:   53:{
+4:   54:  used_log_level = log_level;
+4:   55:  strncpy(used_message, message, sizeof (used_message));
+4:   56:  used_message[sizeof (used_message) - 1] = '\0';
+4:   57:}
+-:   58:
+function wc_get_log_level called 11 returned 100% blocks executed 100%
+11:   59:log_level_t wc_get_log_level(void)
+-:   60:{
+11:   61:  return current_log_level;
+-:   62:}
+-:   63:
+-:   64:class Log_Fixture : public ::testing::Test
+-:   65:{
+-:   66:protected:
+function _ZN11Log_FixtureC2Ev called 9 returned 100% blocks executed 100%
+9:   67:    Log_Fixture() {}
+call    0 returned 9
+9*:   68:    virtual ~Log_Fixture() {}
+------------------
+_ZN11Log_FixtureD0Ev:
+function _ZN11Log_FixtureD0Ev called 0 returned 0% blocks executed 0%
+#####:   68:    virtual ~Log_Fixture() {}
+call    0 never executed
+call    1 never executed
+------------------
+_ZN11Log_FixtureD2Ev:
+function _ZN11Log_FixtureD2Ev called 9 returned 100% blocks executed 100%
+9:   68:    virtual ~Log_Fixture() {}
+call    0 returned 9
+------------------
+function _ZN11Log_Fixture5SetUpEv called 9 returned 100% blocks executed 100%
+9:   69:    void SetUp() override
+-:   70:    {
+9:   71:      used_message[0] = '\0';
+9:   72:      used_log_level  = off;
+9:   73:    }
+-:   74:};
+-:   75:
+4:   76:TEST_F(Log_Fixture, DebugMessageWhileOff)
+-:   77:{
+1:   78:  current_log_level = off;
+-:   79:
+1:   80:  char const message[] = "test 123";
+1:   81:  log_level_t log_level = debug;
+-:   82:
+1:   83:  wc_log(log_level, message);
+-:   84:
+1*:   85:  EXPECT_STREQ("", used_message);
+1*:   86:  EXPECT_EQ(off, used_log_level);
+1:   87:}
+------------------
+_ZN37Log_Fixture_DebugMessageWhileOff_TestC2Ev:
+function _ZN37Log_Fixture_DebugMessageWhileOff_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   76:TEST_F(Log_Fixture, DebugMessageWhileOff)
+call    0 returned 1
+------------------
+_ZN37Log_Fixture_DebugMessageWhileOff_TestD0Ev:
+function _ZN37Log_Fixture_DebugMessageWhileOff_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   76:TEST_F(Log_Fixture, DebugMessageWhileOff)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN37Log_Fixture_DebugMessageWhileOff_TestD2Ev:
+function _ZN37Log_Fixture_DebugMessageWhileOff_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   76:TEST_F(Log_Fixture, DebugMessageWhileOff)
+call    0 returned 1
+------------------
+_ZN37Log_Fixture_DebugMessageWhileOff_Test8TestBodyEv:
+function _ZN37Log_Fixture_DebugMessageWhileOff_Test8TestBodyEv called 1 returned 100% blocks executed 24%
+1:   76:TEST_F(Log_Fixture, DebugMessageWhileOff)
+-:   77:{
+1:   78:  current_log_level = off;
+-:   79:
+1:   80:  char const message[] = "test 123";
+1:   81:  log_level_t log_level = debug;
+-:   82:
+1:   83:  wc_log(log_level, message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   84:
+1*:   85:  EXPECT_STREQ("", used_message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:   86:  EXPECT_EQ(off, used_log_level);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   87:}
+------------------
+-:   88:
+4:   89:TEST_F(Log_Fixture, OffMessageWhileOff)
+-:   90:{
+1:   91:  current_log_level = off;
+-:   92:
+1:   93:  char const message[] = "test 123";
+1:   94:  log_level_t log_level = off;
+-:   95:
+1:   96:  wc_log(log_level, message);
+-:   97:
+1*:   98:  EXPECT_STREQ("", used_message);
+1*:   99:  EXPECT_EQ(off, used_log_level);
+1:  100:}
+------------------
+_ZN35Log_Fixture_OffMessageWhileOff_TestC2Ev:
+function _ZN35Log_Fixture_OffMessageWhileOff_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   89:TEST_F(Log_Fixture, OffMessageWhileOff)
+call    0 returned 1
+------------------
+_ZN35Log_Fixture_OffMessageWhileOff_TestD0Ev:
+function _ZN35Log_Fixture_OffMessageWhileOff_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   89:TEST_F(Log_Fixture, OffMessageWhileOff)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN35Log_Fixture_OffMessageWhileOff_TestD2Ev:
+function _ZN35Log_Fixture_OffMessageWhileOff_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   89:TEST_F(Log_Fixture, OffMessageWhileOff)
+call    0 returned 1
+------------------
+_ZN35Log_Fixture_OffMessageWhileOff_Test8TestBodyEv:
+function _ZN35Log_Fixture_OffMessageWhileOff_Test8TestBodyEv called 1 returned 100% blocks executed 24%
+1:   89:TEST_F(Log_Fixture, OffMessageWhileOff)
+-:   90:{
+1:   91:  current_log_level = off;
+-:   92:
+1:   93:  char const message[] = "test 123";
+1:   94:  log_level_t log_level = off;
+-:   95:
+1:   96:  wc_log(log_level, message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   97:
+1*:   98:  EXPECT_STREQ("", used_message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:   99:  EXPECT_EQ(off, used_log_level);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  100:}
+------------------
+-:  101:
+4:  102:TEST_F(Log_Fixture, OffMessageWhileDebug)
+-:  103:{
+1:  104:  current_log_level = debug;
+-:  105:
+1:  106:  char const message[] = "test 123";
+1:  107:  log_level_t log_level = off;
+-:  108:
+1:  109:  wc_log(log_level, message);
+-:  110:
+1*:  111:  EXPECT_STREQ("", used_message);
+1*:  112:  EXPECT_EQ(off, used_log_level);
+1:  113:}
+------------------
+_ZN37Log_Fixture_OffMessageWhileDebug_TestC2Ev:
+function _ZN37Log_Fixture_OffMessageWhileDebug_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  102:TEST_F(Log_Fixture, OffMessageWhileDebug)
+call    0 returned 1
+------------------
+_ZN37Log_Fixture_OffMessageWhileDebug_TestD0Ev:
+function _ZN37Log_Fixture_OffMessageWhileDebug_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  102:TEST_F(Log_Fixture, OffMessageWhileDebug)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN37Log_Fixture_OffMessageWhileDebug_TestD2Ev:
+function _ZN37Log_Fixture_OffMessageWhileDebug_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  102:TEST_F(Log_Fixture, OffMessageWhileDebug)
+call    0 returned 1
+------------------
+_ZN37Log_Fixture_OffMessageWhileDebug_Test8TestBodyEv:
+function _ZN37Log_Fixture_OffMessageWhileDebug_Test8TestBodyEv called 1 returned 100% blocks executed 24%
+1:  102:TEST_F(Log_Fixture, OffMessageWhileDebug)
+-:  103:{
+1:  104:  current_log_level = debug;
+-:  105:
+1:  106:  char const message[] = "test 123";
+1:  107:  log_level_t log_level = off;
+-:  108:
+1:  109:  wc_log(log_level, message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  110:
+1*:  111:  EXPECT_STREQ("", used_message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  112:  EXPECT_EQ(off, used_log_level);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  113:}
+------------------
+-:  114:
+4:  115:TEST_F(Log_Fixture, DebugMessageWhileDebug)
+-:  116:{
+1:  117:  current_log_level = debug;
+-:  118:
+1:  119:  char const message[] = "test 123";
+1:  120:  log_level_t log_level = debug;
+-:  121:
+1:  122:  wc_log(log_level, message);
+-:  123:
+1*:  124:  EXPECT_STREQ(message, used_message);
+1*:  125:  EXPECT_EQ(log_level, used_log_level);
+1:  126:}
+------------------
+_ZN39Log_Fixture_DebugMessageWhileDebug_TestC2Ev:
+function _ZN39Log_Fixture_DebugMessageWhileDebug_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  115:TEST_F(Log_Fixture, DebugMessageWhileDebug)
+call    0 returned 1
+------------------
+_ZN39Log_Fixture_DebugMessageWhileDebug_TestD0Ev:
+function _ZN39Log_Fixture_DebugMessageWhileDebug_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  115:TEST_F(Log_Fixture, DebugMessageWhileDebug)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN39Log_Fixture_DebugMessageWhileDebug_TestD2Ev:
+function _ZN39Log_Fixture_DebugMessageWhileDebug_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  115:TEST_F(Log_Fixture, DebugMessageWhileDebug)
+call    0 returned 1
+------------------
+_ZN39Log_Fixture_DebugMessageWhileDebug_Test8TestBodyEv:
+function _ZN39Log_Fixture_DebugMessageWhileDebug_Test8TestBodyEv called 1 returned 100% blocks executed 26%
+1:  115:TEST_F(Log_Fixture, DebugMessageWhileDebug)
+-:  116:{
+1:  117:  current_log_level = debug;
+-:  118:
+1:  119:  char const message[] = "test 123";
+1:  120:  log_level_t log_level = debug;
+-:  121:
+1:  122:  wc_log(log_level, message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  123:
+1*:  124:  EXPECT_STREQ(message, used_message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  125:  EXPECT_EQ(log_level, used_log_level);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  126:}
+------------------
+-:  127:
+4:  128:TEST_F(Log_Fixture, NoDebugMessageWhileInfo)
+-:  129:{
+1:  130:  current_log_level = info;
+-:  131:
+1:  132:  char const message[]  = "test 123";
+1:  133:  log_level_t log_level = debug;
+-:  134:
+1:  135:  wc_log(log_level, message);
+-:  136:
+1*:  137:  EXPECT_STREQ("", used_message);
+1*:  138:  EXPECT_EQ(off, used_log_level);
+1:  139:}
+------------------
+_ZN40Log_Fixture_NoDebugMessageWhileInfo_TestC2Ev:
+function _ZN40Log_Fixture_NoDebugMessageWhileInfo_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  128:TEST_F(Log_Fixture, NoDebugMessageWhileInfo)
+call    0 returned 1
+------------------
+_ZN40Log_Fixture_NoDebugMessageWhileInfo_TestD0Ev:
+function _ZN40Log_Fixture_NoDebugMessageWhileInfo_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  128:TEST_F(Log_Fixture, NoDebugMessageWhileInfo)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN40Log_Fixture_NoDebugMessageWhileInfo_TestD2Ev:
+function _ZN40Log_Fixture_NoDebugMessageWhileInfo_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  128:TEST_F(Log_Fixture, NoDebugMessageWhileInfo)
+call    0 returned 1
+------------------
+_ZN40Log_Fixture_NoDebugMessageWhileInfo_Test8TestBodyEv:
+function _ZN40Log_Fixture_NoDebugMessageWhileInfo_Test8TestBodyEv called 1 returned 100% blocks executed 24%
+1:  128:TEST_F(Log_Fixture, NoDebugMessageWhileInfo)
+-:  129:{
+1:  130:  current_log_level = info;
+-:  131:
+1:  132:  char const message[]  = "test 123";
+1:  133:  log_level_t log_level = debug;
+-:  134:
+1:  135:  wc_log(log_level, message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  136:
+1*:  137:  EXPECT_STREQ("", used_message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  138:  EXPECT_EQ(off, used_log_level);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  139:}
+------------------
+-:  140:
+4:  141:TEST_F(Log_Fixture, ErrorMessageWhileError)
+-:  142:{
+1:  143:  current_log_level = error;
+-:  144:
+1:  145:  char const message[]  = "test 123";
+1:  146:  log_level_t log_level = error;
+-:  147:
+1:  148:  wc_log(log_level, message);
+-:  149:
+1*:  150:  EXPECT_STREQ(message, used_message);
+1*:  151:  EXPECT_EQ(log_level, used_log_level);
+1:  152:}
+------------------
+_ZN39Log_Fixture_ErrorMessageWhileError_TestC2Ev:
+function _ZN39Log_Fixture_ErrorMessageWhileError_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  141:TEST_F(Log_Fixture, ErrorMessageWhileError)
+call    0 returned 1
+------------------
+_ZN39Log_Fixture_ErrorMessageWhileError_TestD0Ev:
+function _ZN39Log_Fixture_ErrorMessageWhileError_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  141:TEST_F(Log_Fixture, ErrorMessageWhileError)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN39Log_Fixture_ErrorMessageWhileError_TestD2Ev:
+function _ZN39Log_Fixture_ErrorMessageWhileError_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  141:TEST_F(Log_Fixture, ErrorMessageWhileError)
+call    0 returned 1
+------------------
+_ZN39Log_Fixture_ErrorMessageWhileError_Test8TestBodyEv:
+function _ZN39Log_Fixture_ErrorMessageWhileError_Test8TestBodyEv called 1 returned 100% blocks executed 26%
+1:  141:TEST_F(Log_Fixture, ErrorMessageWhileError)
+-:  142:{
+1:  143:  current_log_level = error;
+-:  144:
+1:  145:  char const message[]  = "test 123";
+1:  146:  log_level_t log_level = error;
+-:  147:
+1:  148:  wc_log(log_level, message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  149:
+1*:  150:  EXPECT_STREQ(message, used_message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  151:  EXPECT_EQ(log_level, used_log_level);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  152:}
+------------------
+-:  153:
+4:  154:TEST_F(Log_Fixture, NoErrorMessageWhileFatal)
+-:  155:{
+1:  156:  current_log_level = fatal;
+-:  157:
+1:  158:  char const message[]  = "test 123";
+1:  159:  log_level_t log_level = error;
+-:  160:
+1:  161:  wc_log(log_level, message);
+-:  162:
+1*:  163:  EXPECT_STREQ("", used_message);
+1*:  164:  EXPECT_EQ(off, used_log_level);
+1:  165:}
+------------------
+_ZN41Log_Fixture_NoErrorMessageWhileFatal_TestC2Ev:
+function _ZN41Log_Fixture_NoErrorMessageWhileFatal_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  154:TEST_F(Log_Fixture, NoErrorMessageWhileFatal)
+call    0 returned 1
+------------------
+_ZN41Log_Fixture_NoErrorMessageWhileFatal_TestD0Ev:
+function _ZN41Log_Fixture_NoErrorMessageWhileFatal_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  154:TEST_F(Log_Fixture, NoErrorMessageWhileFatal)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN41Log_Fixture_NoErrorMessageWhileFatal_TestD2Ev:
+function _ZN41Log_Fixture_NoErrorMessageWhileFatal_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  154:TEST_F(Log_Fixture, NoErrorMessageWhileFatal)
+call    0 returned 1
+------------------
+_ZN41Log_Fixture_NoErrorMessageWhileFatal_Test8TestBodyEv:
+function _ZN41Log_Fixture_NoErrorMessageWhileFatal_Test8TestBodyEv called 1 returned 100% blocks executed 24%
+1:  154:TEST_F(Log_Fixture, NoErrorMessageWhileFatal)
+-:  155:{
+1:  156:  current_log_level = fatal;
+-:  157:
+1:  158:  char const message[]  = "test 123";
+1:  159:  log_level_t log_level = error;
+-:  160:
+1:  161:  wc_log(log_level, message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  162:
+1*:  163:  EXPECT_STREQ("", used_message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  164:  EXPECT_EQ(off, used_log_level);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  165:}
+------------------
+-:  166:
+4:  167:TEST_F(Log_Fixture, AdvancedErrorMessage)
+-:  168:{
+1:  169:  current_log_level = error;
+-:  170:
+1:  171:  char const         message_format[] = "%s|%u";
+1:  172:  char const         message_hello[]  = "Hello";
+1:  173:  unsigned           message_12       = 12;
+1:  174:  char const * const message          = (string(message_hello) + "|" + to_string(message_12)).c_str();
+-:  175:
+1:  176:  log_level_t log_level = error;
+-:  177:
+1:  178:  wc_log_format_advanced(__FILE__, __func__, __LINE__, log_level, message_format, message_hello, message_12);
+-:  179:
+1*:  180:  EXPECT_STREQ(message, used_message);
+1*:  181:  EXPECT_EQ(log_level, used_log_level);
+1:  182:}
+------------------
+_ZN37Log_Fixture_AdvancedErrorMessage_TestC2Ev:
+function _ZN37Log_Fixture_AdvancedErrorMessage_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  167:TEST_F(Log_Fixture, AdvancedErrorMessage)
+call    0 returned 1
+------------------
+_ZN37Log_Fixture_AdvancedErrorMessage_TestD0Ev:
+function _ZN37Log_Fixture_AdvancedErrorMessage_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  167:TEST_F(Log_Fixture, AdvancedErrorMessage)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN37Log_Fixture_AdvancedErrorMessage_TestD2Ev:
+function _ZN37Log_Fixture_AdvancedErrorMessage_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  167:TEST_F(Log_Fixture, AdvancedErrorMessage)
+call    0 returned 1
+------------------
+_ZN37Log_Fixture_AdvancedErrorMessage_Test8TestBodyEv:
+function _ZN37Log_Fixture_AdvancedErrorMessage_Test8TestBodyEv called 1 returned 100% blocks executed 33%
+1:  167:TEST_F(Log_Fixture, AdvancedErrorMessage)
+-:  168:{
+1:  169:  current_log_level = error;
+-:  170:
+1:  171:  char const         message_format[] = "%s|%u";
+1:  172:  char const         message_hello[]  = "Hello";
+1:  173:  unsigned           message_12       = 12;
+1:  174:  char const * const message          = (string(message_hello) + "|" + to_string(message_12)).c_str();
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+-:  175:
+1:  176:  log_level_t log_level = error;
+-:  177:
+1:  178:  wc_log_format_advanced(__FILE__, __func__, __LINE__, log_level, message_format, message_hello, message_12);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  179:
+1*:  180:  EXPECT_STREQ(message, used_message);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  181:  EXPECT_EQ(log_level, used_log_level);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  182:}
+------------------
+-:  183:
+4:  184:TEST_F(Log_Fixture, AdvancedDebugMessage)
+-:  185:{
+1:  186:  current_log_level = debug;
+-:  187:
+1:  188:  char const         message_format[] = "%s|%u";
+1:  189:  char const         message_hello[]  = "Hello";
+1:  190:  unsigned           message_12       = 12;
+1:  191:  char const * const message          = (string(message_hello) + "|" + to_string(message_12)).c_str();
+-:  192:
+1:  193:  char const * const file = __FILE__;
+1:  194:  char const * const func = __func__;
+1:  195:  size_t const       line = __LINE__;
+-:  196:
+1:  197:  log_level_t log_level = error;
+-:  198:
+1:  199:  wc_log_format_advanced(file, func, line, log_level, message_format, message_hello, message_12);
+-:  200:
+1*:  201:  EXPECT_TRUE(string(used_message).find(message) != std::string::npos);
+1*:  202:  EXPECT_TRUE(string(used_message).find(file) != std::string::npos);
+1*:  203:  EXPECT_TRUE(string(used_message).find(func) != std::string::npos);
+1*:  204:  EXPECT_TRUE(string(used_message).find(to_string(line)) != std::string::npos);
+1*:  205:  EXPECT_EQ(log_level, used_log_level);
+1:  206:}
+------------------
+_ZN37Log_Fixture_AdvancedDebugMessage_TestC2Ev:
+function _ZN37Log_Fixture_AdvancedDebugMessage_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  184:TEST_F(Log_Fixture, AdvancedDebugMessage)
+call    0 returned 1
+------------------
+_ZN37Log_Fixture_AdvancedDebugMessage_TestD0Ev:
+function _ZN37Log_Fixture_AdvancedDebugMessage_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  184:TEST_F(Log_Fixture, AdvancedDebugMessage)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN37Log_Fixture_AdvancedDebugMessage_TestD2Ev:
+function _ZN37Log_Fixture_AdvancedDebugMessage_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  184:TEST_F(Log_Fixture, AdvancedDebugMessage)
+call    0 returned 1
+------------------
+_ZN37Log_Fixture_AdvancedDebugMessage_Test8TestBodyEv:
+function _ZN37Log_Fixture_AdvancedDebugMessage_Test8TestBodyEv called 1 returned 100% blocks executed 31%
+1:  184:TEST_F(Log_Fixture, AdvancedDebugMessage)
+-:  185:{
+1:  186:  current_log_level = debug;
+-:  187:
+1:  188:  char const         message_format[] = "%s|%u";
+1:  189:  char const         message_hello[]  = "Hello";
+1:  190:  unsigned           message_12       = 12;
+1:  191:  char const * const message          = (string(message_hello) + "|" + to_string(message_12)).c_str();
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+-:  192:
+1:  193:  char const * const file = __FILE__;
+1:  194:  char const * const func = __func__;
+1:  195:  size_t const       line = __LINE__;
+-:  196:
+1:  197:  log_level_t log_level = error;
+-:  198:
+1:  199:  wc_log_format_advanced(file, func, line, log_level, message_format, message_hello, message_12);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  200:
+1*:  201:  EXPECT_TRUE(string(used_message).find(message) != std::string::npos);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 0 (fallthrough)
+branch 10 taken 1
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 returned 1
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+1*:  202:  EXPECT_TRUE(string(used_message).find(file) != std::string::npos);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 0 (fallthrough)
+branch 10 taken 1
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 returned 1
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+1*:  203:  EXPECT_TRUE(string(used_message).find(func) != std::string::npos);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 0 (fallthrough)
+branch 10 taken 1
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 returned 1
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+1*:  204:  EXPECT_TRUE(string(used_message).find(to_string(line)) != std::string::npos);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+call   12 returned 1
+branch 13 taken 0 (fallthrough)
+branch 14 taken 1
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+branch 26 never executed
+branch 27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+1*:  205:  EXPECT_EQ(log_level, used_log_level);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  206:}
+------------------
+-:  207:
+-:  208://---- End of source file ------------------------------------------------------

@@ -1,0 +1,200 @@
+-:    0:Source:src/SnmpUserConf.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:#include "SnmpUserConf.hpp"
+-:   10:
+-:   11:#include <sstream>
+-:   12:
+-:   13:#include "KeyValueParser.hpp"
+-:   14:#include "File.hpp"
+-:   15:
+-:   16:namespace wago::snmp_config_lib {
+-:   17:
+-:   18:namespace {
+-:   19:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_120SnmpUserConfToStringESt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_St4lessIS8_ESaISt4pairIKS8_S8_EEE called 10 returned 100% blocks executed 62%
+10:   20:::std::string SnmpUserConfToString(::std::map<::std::string, ::std::string> config) {
+10:   21:  ::std::stringstream ss;
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+10:   22:  ss << "USE_USER_DEFINED_DEVICE_NAME=" << config["USE_USER_DEFINED_DEVICE_NAME"] << "\n";
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 10
+call    4 returned 10
+branch  5 taken 10 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 10
+branch  8 taken 10 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 10
+branch 11 taken 10 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 10
+branch 14 taken 10 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 10
+call   17 returned 10
+call   18 never executed
+call   19 never executed
+10:   23:  ss << "USE_USER_DEFINED_DESCRIPTION=" << config["USE_USER_DEFINED_DESCRIPTION"] << "\n";
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 10
+call    4 returned 10
+branch  5 taken 10 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 10
+branch  8 taken 10 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 10
+branch 11 taken 10 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 10
+branch 14 taken 10 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 10
+call   17 returned 10
+call   18 never executed
+call   19 never executed
+20:   24:  return ss.str();
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+10:   25:}
+call    0 returned 10
+call    1 never executed
+-:   26:
+-:   27:}  //namespace
+-:   28:
+function _ZN4wago15snmp_config_lib22UpdateSnmpUserConfDataERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_10SnmpConfigESA_ called 10 returned 100% blocks executed 59%
+10:   29:void UpdateSnmpUserConfData(::std::string &data, const SnmpConfig &new_config, const SnmpConfig &actual_config) {
+-:   30:
+10:   31:  auto user_conf = wago::util::ParseKeyValuePairs(data);
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+-:   32:
+10:   33:  if(user_conf.empty()){
+call    0 returned 10
+branch  1 taken 4 (fallthrough)
+branch  2 taken 6
+4:   34:    user_conf["USE_USER_DEFINED_DEVICE_NAME"] = "no";
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+branch  8 taken 4 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 4
+call   11 returned 4
+call   12 never executed
+call   13 never executed
+4:   35:    user_conf["USE_USER_DEFINED_DESCRIPTION"] = "no";
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+branch  8 taken 4 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 4
+call   11 returned 4
+call   12 never executed
+call   13 never executed
+-:   36:  }
+-:   37:
+10:   38:  if (new_config.sys_name_ != actual_config.sys_name_) {
+call    0 returned 10
+branch  1 taken 5 (fallthrough)
+branch  2 taken 5
+5:   39:    user_conf["USE_USER_DEFINED_DEVICE_NAME"] = "yes";
+call    0 returned 5
+call    1 returned 5
+branch  2 taken 5 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 5
+branch  5 taken 5 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 5
+branch  8 taken 5 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 5
+call   11 returned 5
+call   12 never executed
+call   13 never executed
+-:   40:  }
+10:   41:  if (new_config.sys_descr_ != actual_config.sys_descr_) {
+call    0 returned 10
+branch  1 taken 5 (fallthrough)
+branch  2 taken 5
+5:   42:    user_conf["USE_USER_DEFINED_DESCRIPTION"] = "yes";
+call    0 returned 5
+call    1 returned 5
+branch  2 taken 5 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 5
+branch  5 taken 5 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 5
+branch  8 taken 5 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 5
+call   11 returned 5
+call   12 never executed
+call   13 never executed
+-:   43:  }
+-:   44:
+10:   45:  data = SnmpUserConfToString(user_conf);
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 10
+branch  4 taken 10 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 10
+call    7 returned 10
+call    8 returned 10
+call    9 never executed
+-:   46:
+10:   47:}
+call    0 returned 10
+call    1 never executed
+-:   48:
+function _ZN4wago15snmp_config_lib22UpdateSnmpUserConfFileEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_10SnmpConfigESA_ called 0 returned 0% blocks executed 0%
+#####:   49:void UpdateSnmpUserConfFile(::std::string &&path, const SnmpConfig &new_config, const SnmpConfig &actual_config) {
+-:   50:
+#####:   51:  auto data = wago::util::ReadFile(path);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   52:  UpdateSnmpUserConfData(data, new_config, actual_config);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   53:  ::wago::util::WriteFile(path, data);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   54:
+#####:   55:}
+call    0 never executed
+call    1 never executed
+-:   56:
+-:   57:}

@@ -1,0 +1,899 @@
+-:    0:Source:test-src/libconfigtoolutils/test_ResourceHandling.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_ResourceHandling.cc
+-:   12:///
+-:   13:///  \brief    Test for helper functions for config tool resource handling.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "ctutil/resource_handling.h"
+-:   22:#include "ctutil/error_codes.h"
+-:   23:#include <gtest/gtest.h>
+-:   24:#include "testutil/file_operations.hpp"
+-:   25:#include <string.h>
+-:   26:
+-:   27:
+-:   28://------------------------------------------------------------------------------
+-:   29:// macros
+-:   30://------------------------------------------------------------------------------
+-:   31:
+-:   32://------------------------------------------------------------------------------
+-:   33:// defines; structure, enumeration and type definitions
+-:   34://------------------------------------------------------------------------------
+-:   35:
+-:   36://------------------------------------------------------------------------------
+-:   37:// variables' and constants' definitions
+-:   38://------------------------------------------------------------------------------
+-:   39:
+-:   40://------------------------------------------------------------------------------
+-:   41:// test implementation
+-:   42://------------------------------------------------------------------------------
+4:   43:TEST(CommonResources, LastErrorFile)
+-:   44:{
+-:   45:  ctutil_ResourcesCommon_t stResources;
+1:   46:  memset(&stResources, 0, sizeof(stResources));
+-:   47:
+1:   48:  statusCode_t const result = ctutil_OpenCommonResources(&stResources);
+-:   49:
+1*:   50:  ASSERT_EQ(CTUTIL_SUCCESS, result);
+1*:   51:  EXPECT_STREQ("/tmp/last_error.txt", stResources.szLastErrorFile);
+-:   52:
+1:   53:  ctutil_ReleaseCommonResources(&stResources);
+-:   54:}
+------------------
+_ZN34CommonResources_LastErrorFile_TestC2Ev:
+function _ZN34CommonResources_LastErrorFile_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   43:TEST(CommonResources, LastErrorFile)
+call    0 returned 1
+------------------
+_ZN34CommonResources_LastErrorFile_TestD0Ev:
+function _ZN34CommonResources_LastErrorFile_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   43:TEST(CommonResources, LastErrorFile)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN34CommonResources_LastErrorFile_TestD2Ev:
+function _ZN34CommonResources_LastErrorFile_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   43:TEST(CommonResources, LastErrorFile)
+call    0 returned 1
+------------------
+_ZN34CommonResources_LastErrorFile_Test8TestBodyEv:
+function _ZN34CommonResources_LastErrorFile_Test8TestBodyEv called 1 returned 100% blocks executed 31%
+1:   43:TEST(CommonResources, LastErrorFile)
+-:   44:{
+-:   45:  ctutil_ResourcesCommon_t stResources;
+1:   46:  memset(&stResources, 0, sizeof(stResources));
+-:   47:
+1:   48:  statusCode_t const result = ctutil_OpenCommonResources(&stResources);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   49:
+1*:   50:  ASSERT_EQ(CTUTIL_SUCCESS, result);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1*:   51:  EXPECT_STREQ("/tmp/last_error.txt", stResources.szLastErrorFile);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   52:
+1:   53:  ctutil_ReleaseCommonResources(&stResources);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   54:}
+------------------
+-:   55:
+-:   56:
+4:   57:TEST(ChangeableFile, PrepareChangeableFile)
+-:   58:{
+1:   59:  char const szTestFilePath[] = "/tmp/test_file";
+1:   60:  ctutil_ChangeableFile_t * pFile = NULL;
+1:   61:  statusCode_t const prepareResult = ctutil_PrepareChangeableFile(szTestFilePath, &(pFile));
+1*:   62:  ASSERT_EQ(CTUTIL_SUCCESS, prepareResult);
+1*:   63:  ASSERT_NE((void *)NULL, pFile);
+1:   64:  char const * const szOriginalPath = ctutil_GetOriginalFilePath(pFile);
+1*:   65:  EXPECT_NE((void *)NULL, szOriginalPath);
+1*:   66:  EXPECT_STREQ(szTestFilePath, szOriginalPath);
+1:   67:  char const * const szChangablePath = ctutil_GetChangeableFilePath(pFile);
+1*:   68:  EXPECT_NE((void *)NULL, szChangablePath);
+1*:   69:  EXPECT_STRNE(szTestFilePath, szChangablePath);
+1:   70:  ctutil_ReleaseFileForChanges(&(pFile));
+1*:   71:  EXPECT_EQ((void *)NULL, pFile);
+-:   72:}
+------------------
+_ZN41ChangeableFile_PrepareChangeableFile_TestC2Ev:
+function _ZN41ChangeableFile_PrepareChangeableFile_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   57:TEST(ChangeableFile, PrepareChangeableFile)
+call    0 returned 1
+------------------
+_ZN41ChangeableFile_PrepareChangeableFile_TestD0Ev:
+function _ZN41ChangeableFile_PrepareChangeableFile_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   57:TEST(ChangeableFile, PrepareChangeableFile)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN41ChangeableFile_PrepareChangeableFile_TestD2Ev:
+function _ZN41ChangeableFile_PrepareChangeableFile_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   57:TEST(ChangeableFile, PrepareChangeableFile)
+call    0 returned 1
+------------------
+_ZN41ChangeableFile_PrepareChangeableFile_Test8TestBodyEv:
+function _ZN41ChangeableFile_PrepareChangeableFile_Test8TestBodyEv called 1 returned 100% blocks executed 25%
+1:   57:TEST(ChangeableFile, PrepareChangeableFile)
+-:   58:{
+1:   59:  char const szTestFilePath[] = "/tmp/test_file";
+1:   60:  ctutil_ChangeableFile_t * pFile = NULL;
+1:   61:  statusCode_t const prepareResult = ctutil_PrepareChangeableFile(szTestFilePath, &(pFile));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   62:  ASSERT_EQ(CTUTIL_SUCCESS, prepareResult);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1*:   63:  ASSERT_NE((void *)NULL, pFile);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1:   64:  char const * const szOriginalPath = ctutil_GetOriginalFilePath(pFile);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   65:  EXPECT_NE((void *)NULL, szOriginalPath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:   66:  EXPECT_STREQ(szTestFilePath, szOriginalPath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   67:  char const * const szChangablePath = ctutil_GetChangeableFilePath(pFile);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   68:  EXPECT_NE((void *)NULL, szChangablePath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:   69:  EXPECT_STRNE(szTestFilePath, szChangablePath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   70:  ctutil_ReleaseFileForChanges(&(pFile));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   71:  EXPECT_EQ((void *)NULL, pFile);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   72:}
+------------------
+-:   73:
+-:   74:
+4:   75:TEST(ChangeableFile, ReleaseEmptyHandle)
+-:   76:{
+1:   77:  ctutil_ChangeableFile_t * pFile = NULL;
+1:   78:  ctutil_ReleaseFileForChanges(&(pFile));
+1*:   79:  EXPECT_EQ((void *)NULL, pFile);
+1:   80:}
+------------------
+_ZN38ChangeableFile_ReleaseEmptyHandle_TestC2Ev:
+function _ZN38ChangeableFile_ReleaseEmptyHandle_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   75:TEST(ChangeableFile, ReleaseEmptyHandle)
+call    0 returned 1
+------------------
+_ZN38ChangeableFile_ReleaseEmptyHandle_TestD0Ev:
+function _ZN38ChangeableFile_ReleaseEmptyHandle_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   75:TEST(ChangeableFile, ReleaseEmptyHandle)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN38ChangeableFile_ReleaseEmptyHandle_TestD2Ev:
+function _ZN38ChangeableFile_ReleaseEmptyHandle_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   75:TEST(ChangeableFile, ReleaseEmptyHandle)
+call    0 returned 1
+------------------
+_ZN38ChangeableFile_ReleaseEmptyHandle_Test8TestBodyEv:
+function _ZN38ChangeableFile_ReleaseEmptyHandle_Test8TestBodyEv called 1 returned 100% blocks executed 28%
+1:   75:TEST(ChangeableFile, ReleaseEmptyHandle)
+-:   76:{
+1:   77:  ctutil_ChangeableFile_t * pFile = NULL;
+1:   78:  ctutil_ReleaseFileForChanges(&(pFile));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   79:  EXPECT_EQ((void *)NULL, pFile);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   80:}
+------------------
+-:   81:
+-:   82:
+4:   83:TEST(ChangeableFile, CommitChangedFile)
+-:   84:{
+1:   85:  ::std::string lineBuffer;
+-:   86:
+-:   87:  // Prepare test file
+1:   88:  std::string tempDir = testutil_CreateTempDir("libconfigtoolutils_");
+1:   89:  std::string testFilePath = tempDir + "/test_file";
+1:   90:  char const * szTestFilePath = testFilePath.c_str();
+1:   91:  char const szTestContentOriginal[] = "Hello World!";
+1:   92:  char const szTestContentReplacement[] = "Unit tests are cool!";
+1:   93:  testutil_CreateFile(szTestFilePath);
+1:   94:  testutil_AppendToFile(szTestFilePath, (uint8_t const *)szTestContentOriginal, strlen(szTestContentOriginal));
+1*:   95:  ASSERT_EQ(0, chmod(szTestFilePath, (S_IRUSR | S_IWUSR)));
+1:   96:  sync();
+1*:   97:  ASSERT_STREQ(szTestContentOriginal, testutil_GetFirstMatchingLineFromFile(szTestFilePath, "e", lineBuffer));
+-:   98:
+-:   99:  // Check initial file rights
+-:  100:  struct stat stOriginalFileStat;
+1:  101:  int const statOriginalResult = lstat(szTestFilePath, &stOriginalFileStat);
+1*:  102:  ASSERT_EQ(0, statOriginalResult);
+-:  103:
+-:  104:  // Prepare test object
+1:  105:  ctutil_ChangeableFile_t * pFile = NULL;
+1:  106:  statusCode_t const prepareResult = ctutil_PrepareChangeableFile(szTestFilePath, &(pFile));
+1*:  107:  ASSERT_EQ(CTUTIL_SUCCESS, prepareResult);
+1:  108:  char const * const szOriginalPath = ctutil_GetOriginalFilePath(pFile);
+1*:  109:  ASSERT_STREQ(szTestFilePath, szOriginalPath);
+1:  110:  char const * const szChangablePath = ctutil_GetChangeableFilePath(pFile);
+-:  111:
+-:  112:  // Modify file
+1:  113:  testutil_CreateFile(szChangablePath);
+1:  114:  testutil_AppendToFile(szChangablePath, (uint8_t const *)szTestContentReplacement, strlen(szTestContentReplacement));
+1*:  115:  ASSERT_STREQ(szTestContentReplacement, testutil_GetFirstMatchingLineFromFile(szChangablePath, "e", lineBuffer));
+1*:  116:  ASSERT_EQ(CTUTIL_SUCCESS, ctutil_CommitChangeableFile(pFile));
+-:  117:
+-:  118:  // Check for commited result
+1*:  119:  EXPECT_STREQ(szTestContentReplacement, testutil_GetFirstMatchingLineFromFile(szTestFilePath, "e", lineBuffer));
+-:  120:  struct stat stModifiedFileStat;
+1:  121:  int const statModifiedResult = lstat(szTestFilePath, &stModifiedFileStat);
+1*:  122:  ASSERT_EQ(0, statModifiedResult);
+1*:  123:  EXPECT_EQ(stOriginalFileStat.st_mode, stModifiedFileStat.st_mode);
+-:  124:
+-:  125:  // Cleanup
+1*:  126:  EXPECT_TRUE(testutil_RemoveFile(szTestFilePath));
+1*:  127:  EXPECT_TRUE(testutil_RemoveDir(tempDir.c_str()));
+-:  128:  // FIXME: We should clean the temporarily file may be left but if it not exist QEMU will crash when run with Valgrind
+-:  129://  (void)testutil_RemoveFile(szChangablePath);
+1:  130:  ctutil_ReleaseFileForChanges(&(pFile));
+1:  131:}
+------------------
+_ZN37ChangeableFile_CommitChangedFile_TestC2Ev:
+function _ZN37ChangeableFile_CommitChangedFile_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   83:TEST(ChangeableFile, CommitChangedFile)
+call    0 returned 1
+------------------
+_ZN37ChangeableFile_CommitChangedFile_TestD0Ev:
+function _ZN37ChangeableFile_CommitChangedFile_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   83:TEST(ChangeableFile, CommitChangedFile)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN37ChangeableFile_CommitChangedFile_TestD2Ev:
+function _ZN37ChangeableFile_CommitChangedFile_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   83:TEST(ChangeableFile, CommitChangedFile)
+call    0 returned 1
+------------------
+_ZN37ChangeableFile_CommitChangedFile_Test8TestBodyEv:
+function _ZN37ChangeableFile_CommitChangedFile_Test8TestBodyEv called 1 returned 100% blocks executed 32%
+1:   83:TEST(ChangeableFile, CommitChangedFile)
+-:   84:{
+1:   85:  ::std::string lineBuffer;
+call    0 returned 1
+-:   86:
+-:   87:  // Prepare test file
+1:   88:  std::string tempDir = testutil_CreateTempDir("libconfigtoolutils_");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   89:  std::string testFilePath = tempDir + "/test_file";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   90:  char const * szTestFilePath = testFilePath.c_str();
+call    0 returned 1
+1:   91:  char const szTestContentOriginal[] = "Hello World!";
+1:   92:  char const szTestContentReplacement[] = "Unit tests are cool!";
+1:   93:  testutil_CreateFile(szTestFilePath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   94:  testutil_AppendToFile(szTestFilePath, (uint8_t const *)szTestContentOriginal, strlen(szTestContentOriginal));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   95:  ASSERT_EQ(0, chmod(szTestFilePath, (S_IRUSR | S_IWUSR)));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   96:  sync();
+call    0 returned 1
+1*:   97:  ASSERT_STREQ(szTestContentOriginal, testutil_GetFirstMatchingLineFromFile(szTestFilePath, "e", lineBuffer));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:   98:
+-:   99:  // Check initial file rights
+-:  100:  struct stat stOriginalFileStat;
+1:  101:  int const statOriginalResult = lstat(szTestFilePath, &stOriginalFileStat);
+call    0 returned 1
+1*:  102:  ASSERT_EQ(0, statOriginalResult);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  103:
+-:  104:  // Prepare test object
+1:  105:  ctutil_ChangeableFile_t * pFile = NULL;
+1:  106:  statusCode_t const prepareResult = ctutil_PrepareChangeableFile(szTestFilePath, &(pFile));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  107:  ASSERT_EQ(CTUTIL_SUCCESS, prepareResult);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1:  108:  char const * const szOriginalPath = ctutil_GetOriginalFilePath(pFile);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  109:  ASSERT_STREQ(szTestFilePath, szOriginalPath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1:  110:  char const * const szChangablePath = ctutil_GetChangeableFilePath(pFile);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  111:
+-:  112:  // Modify file
+1:  113:  testutil_CreateFile(szChangablePath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  114:  testutil_AppendToFile(szChangablePath, (uint8_t const *)szTestContentReplacement, strlen(szTestContentReplacement));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  115:  ASSERT_STREQ(szTestContentReplacement, testutil_GetFirstMatchingLineFromFile(szChangablePath, "e", lineBuffer));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+1*:  116:  ASSERT_EQ(CTUTIL_SUCCESS, ctutil_CommitChangeableFile(pFile));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  117:
+-:  118:  // Check for commited result
+1*:  119:  EXPECT_STREQ(szTestContentReplacement, testutil_GetFirstMatchingLineFromFile(szTestFilePath, "e", lineBuffer));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  120:  struct stat stModifiedFileStat;
+1:  121:  int const statModifiedResult = lstat(szTestFilePath, &stModifiedFileStat);
+call    0 returned 1
+1*:  122:  ASSERT_EQ(0, statModifiedResult);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1*:  123:  EXPECT_EQ(stOriginalFileStat.st_mode, stModifiedFileStat.st_mode);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  124:
+-:  125:  // Cleanup
+1*:  126:  EXPECT_TRUE(testutil_RemoveFile(szTestFilePath));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 returned 1
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+1*:  127:  EXPECT_TRUE(testutil_RemoveDir(tempDir.c_str()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 0 (fallthrough)
+branch  7 taken 1
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+-:  128:  // FIXME: We should clean the temporarily file may be left but if it not exist QEMU will crash when run with Valgrind
+-:  129://  (void)testutil_RemoveFile(szChangablePath);
+1:  130:  ctutil_ReleaseFileForChanges(&(pFile));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  131:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 never executed
+call   10 never executed
+call   11 never executed
+------------------
+-:  132:
+-:  133:
+-:  134://---- End of source file ------------------------------------------------------
+-:  135:

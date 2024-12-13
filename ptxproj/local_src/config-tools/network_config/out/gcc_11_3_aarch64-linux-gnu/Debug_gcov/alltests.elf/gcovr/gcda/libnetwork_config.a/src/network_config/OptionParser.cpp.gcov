@@ -1,0 +1,1265 @@
+-:    0:Source:src/network_config/OptionParser.cpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#include "OptionParser.hpp"
+-:    4:
+-:    5:#include <functional>
+-:    6:#include <iostream>
+-:    7:#include <stdexcept>
+-:    8:#include <string>
+-:    9:
+-:   10:#include "OptionStrings.hpp"
+-:   11:#include "Utils.hpp"
+-:   12:
+-:   13:using std::string;
+-:   14:
+-:   15:namespace po = boost::program_options;
+-:   16:namespace network_config {
+-:   17:
+function _ZN14network_config12OptionParserC2Ev called 23 returned 100% blocks executed 70%
+23:   18:OptionParser::OptionParser()
+46:   19:    : options_ { GetOptions() },
+23:   20:      fields_ { GetFields() },
+call    0 returned 23
+23:   21:      descriptions_ { CreateDescriptions() },
+call    0 returned 23
+46:   22:      parsed_options_ { nullptr } {
+call    0 returned 23
+call    1 returned 23
+call    2 returned 23
+branch  3 taken 23 (fallthrough)
+branch  4 taken 0 (throw)
+23:   23:}
+call    0 never executed
+call    1 never executed
+-:   24:
+-:   25:template<typename T>
+5*:   26:static void ValidateOption(boost::any &v, ::std::vector<std::string> const &values,
+-:   27:                           const ::std::function<bool(::std::string)> &predicate) {
+5*:   28:  po::validators::check_first_occurrence(v);
+5*:   29:  const std::string &s = po::validators::get_single_string(values);
+-:   30:
+5*:   31:  if (predicate(s)) {
+4*:   32:    v = boost::any(T(s));
+-:   33:  } else {
+1*:   34:    throw po::validation_error(po::validation_error::invalid_option_value);  //NOLINT(cert-err60-cpp) see: https://www.boost.org/doc/libs/1_65_1/doc/html/program_options/howto.html
+-:   35:  }
+4*:   36:}
+------------------
+_ZN14network_configL14ValidateOptionINS_12DuplexOptionEEEvRN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt8functionIFbSB_EE:
+function _ZN14network_configL14ValidateOptionINS_12DuplexOptionEEEvRN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt8functionIFbSB_EE called 0 returned 0% blocks executed 0%
+#####:   26:static void ValidateOption(boost::any &v, ::std::vector<std::string> const &values,
+-:   27:                           const ::std::function<bool(::std::string)> &predicate) {
+#####:   28:  po::validators::check_first_occurrence(v);
+call    0 never executed
+#####:   29:  const std::string &s = po::validators::get_single_string(values);
+call    0 never executed
+-:   30:
+#####:   31:  if (predicate(s)) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+#####:   32:    v = boost::any(T(s));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+-:   33:  } else {
+#####:   34:    throw po::validation_error(po::validation_error::invalid_option_value);  //NOLINT(cert-err60-cpp) see: https://www.boost.org/doc/libs/1_65_1/doc/html/program_options/howto.html
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   35:  }
+#####:   36:}
+------------------
+_ZN14network_configL14ValidateOptionINS_11SpeedOptionEEEvRN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt8functionIFbSB_EE:
+function _ZN14network_configL14ValidateOptionINS_11SpeedOptionEEEvRN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt8functionIFbSB_EE called 0 returned 0% blocks executed 0%
+#####:   26:static void ValidateOption(boost::any &v, ::std::vector<std::string> const &values,
+-:   27:                           const ::std::function<bool(::std::string)> &predicate) {
+#####:   28:  po::validators::check_first_occurrence(v);
+call    0 never executed
+#####:   29:  const std::string &s = po::validators::get_single_string(values);
+call    0 never executed
+-:   30:
+#####:   31:  if (predicate(s)) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+#####:   32:    v = boost::any(T(s));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+-:   33:  } else {
+#####:   34:    throw po::validation_error(po::validation_error::invalid_option_value);  //NOLINT(cert-err60-cpp) see: https://www.boost.org/doc/libs/1_65_1/doc/html/program_options/howto.html
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   35:  }
+#####:   36:}
+------------------
+_ZN14network_configL14ValidateOptionINS_13AutonegOptionEEEvRN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt8functionIFbSB_EE:
+function _ZN14network_configL14ValidateOptionINS_13AutonegOptionEEEvRN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt8functionIFbSB_EE called 0 returned 0% blocks executed 0%
+#####:   26:static void ValidateOption(boost::any &v, ::std::vector<std::string> const &values,
+-:   27:                           const ::std::function<bool(::std::string)> &predicate) {
+#####:   28:  po::validators::check_first_occurrence(v);
+call    0 never executed
+#####:   29:  const std::string &s = po::validators::get_single_string(values);
+call    0 never executed
+-:   30:
+#####:   31:  if (predicate(s)) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+#####:   32:    v = boost::any(T(s));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+-:   33:  } else {
+#####:   34:    throw po::validation_error(po::validation_error::invalid_option_value);  //NOLINT(cert-err60-cpp) see: https://www.boost.org/doc/libs/1_65_1/doc/html/program_options/howto.html
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   35:  }
+#####:   36:}
+------------------
+_ZN14network_configL14ValidateOptionINS_11StateOptionEEEvRN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt8functionIFbSB_EE:
+function _ZN14network_configL14ValidateOptionINS_11StateOptionEEEvRN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt8functionIFbSB_EE called 0 returned 0% blocks executed 0%
+#####:   26:static void ValidateOption(boost::any &v, ::std::vector<std::string> const &values,
+-:   27:                           const ::std::function<bool(::std::string)> &predicate) {
+#####:   28:  po::validators::check_first_occurrence(v);
+call    0 never executed
+#####:   29:  const std::string &s = po::validators::get_single_string(values);
+call    0 never executed
+-:   30:
+#####:   31:  if (predicate(s)) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+#####:   32:    v = boost::any(T(s));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+-:   33:  } else {
+#####:   34:    throw po::validation_error(po::validation_error::invalid_option_value);  //NOLINT(cert-err60-cpp) see: https://www.boost.org/doc/libs/1_65_1/doc/html/program_options/howto.html
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   35:  }
+#####:   36:}
+------------------
+_ZN14network_configL14ValidateOptionINS_12FormatOptionEEEvRN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt8functionIFbSB_EE:
+function _ZN14network_configL14ValidateOptionINS_12FormatOptionEEEvRN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EERKSt8functionIFbSB_EE called 5 returned 80% blocks executed 55%
+5:   26:static void ValidateOption(boost::any &v, ::std::vector<std::string> const &values,
+-:   27:                           const ::std::function<bool(::std::string)> &predicate) {
+5:   28:  po::validators::check_first_occurrence(v);
+call    0 returned 5
+5:   29:  const std::string &s = po::validators::get_single_string(values);
+call    0 returned 5
+-:   30:
+5:   31:  if (predicate(s)) {
+call    0 returned 5
+call    1 returned 5
+branch  2 taken 5 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 5
+branch  5 taken 4 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+call    8 never executed
+4:   32:    v = boost::any(T(s));
+call    0 returned 4
+call    1 returned 4
+call    2 returned 4
+branch  3 taken 4 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 4
+call    6 returned 4
+call    7 returned 4
+call    8 returned 4
+call    9 never executed
+call   10 never executed
+call   11 never executed
+-:   33:  } else {
+1:   34:    throw po::validation_error(po::validation_error::invalid_option_value);  //NOLINT(cert-err60-cpp) see: https://www.boost.org/doc/libs/1_65_1/doc/html/program_options/howto.html
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 0
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   35:  }
+4:   36:}
+------------------
+-:   37:
+function _ZN14network_configL8validateERN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEPNS_12FormatOptionEi called 5 returned 80% blocks executed 100%
+5:   38:static void validate(boost::any &v, std::vector<std::string> const &values, FormatOption *format, int i) {
+-:   39:  (void) format;
+-:   40:  (void) i;
+function _ZZN14network_configL8validateERN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEPNS_12FormatOptionEiENKUlRKS9_E_clESH_ called 5 returned 100% blocks executed 100%
+6:   41:  ValidateOption<FormatOption>(v, values, [](const ::std::string &s) {
+call    0 returned 5
+call    1 returned 5
+branch  2 taken 4 (fallthrough)
+branch  3 taken 1 (throw)
+call    4 returned 4
+call    5 returned 1
+5:   42:    return s == "text" || s == "json" || s == "pretty-json";
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0
+call    3 returned 5
+branch  4 taken 1 (fallthrough)
+branch  5 taken 4
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+-:   43:  });
+4:   44:}
+-:   45:
+function _ZN14network_configL8validateERN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEPNS_11StateOptionEi called 0 returned 0% blocks executed 0%
+#####:   46:static void validate(boost::any &v, std::vector<std::string> const &values, StateOption *state, int i) {
+-:   47:  (void) state;
+-:   48:  (void) i;
+function _ZZN14network_configL8validateERN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEPNS_11StateOptionEiENKUlRKS9_E_clESH_ called 0 returned 0% blocks executed 0%
+#####:   49:  ValidateOption<StateOption>(v, values, [](const ::std::string &s) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+#####:   50:    return s == "up" || s == "down";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+-:   51:  });
+#####:   52:}
+-:   53:
+function _ZN14network_configL8validateERN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEPNS_13AutonegOptionEi called 0 returned 0% blocks executed 0%
+#####:   54:static void validate(boost::any &v, std::vector<std::string> const &values, AutonegOption *autoneg, int i) {
+-:   55:  (void) autoneg;
+-:   56:  (void) i;
+function _ZZN14network_configL8validateERN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEPNS_13AutonegOptionEiENKUlRKS9_E_clESH_ called 0 returned 0% blocks executed 0%
+#####:   57:  ValidateOption<AutonegOption>(v, values, [](const ::std::string &s) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+#####:   58:    return s == "on" || s == "off";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+-:   59:  });
+#####:   60:}
+-:   61:
+function _ZN14network_configL8validateERN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEPNS_11SpeedOptionEi called 0 returned 0% blocks executed 0%
+#####:   62:static void validate(boost::any &v, std::vector<std::string> const &values, SpeedOption *speed, int i) {
+-:   63:  (void) speed;
+-:   64:  (void) i;
+function _ZZN14network_configL8validateERN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEPNS_11SpeedOptionEiENKUlRKS9_E_clESH_ called 0 returned 0% blocks executed 0%
+#####:   65:  ValidateOption<SpeedOption>(v, values, [](const ::std::string &s) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+#####:   66:    return s == "10" || s == "100";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+-:   67:  });
+#####:   68:}
+-:   69:
+function _ZN14network_configL8validateERN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEPNS_12DuplexOptionEi called 0 returned 0% blocks executed 0%
+#####:   70:static void validate(boost::any &v, std::vector<std::string> const &values, DuplexOption *duplex, int i) {
+-:   71:  (void) duplex;
+-:   72:  (void) i;
+function _ZZN14network_configL8validateERN5boost3anyERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEPNS_12DuplexOptionEiENKUlRKS9_E_clESH_ called 0 returned 0% blocks executed 0%
+#####:   73:  ValidateOption<DuplexOption>(v, values, [](const ::std::string &s) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+#####:   74:    return s == "full" || s == "half";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+-:   75:  });
+#####:   76:}
+-:   77:
+function _ZN14network_configL18ExpectValueOrFieldERKN5boost15program_options13variables_mapERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESC_ called 29 returned 93% blocks executed 68%
+29:   78:static void ExpectValueOrField(const po::variables_map &map, const ::std::string &option, const ::std::string &field) {
+29:   79:  if (map.count(option) == 0) {
+call    0 returned 29
+branch  1 taken 29 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 21 (fallthrough)
+branch  4 taken 8
+21:   80:    return;
+-:   81:  }
+8:   82:  auto value = map[option].as<::std::string>();
+call    0 returned 8
+branch  1 taken 8 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 8
+branch  4 taken 8 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 8
+branch  7 taken 8 (fallthrough)
+branch  8 taken 0 (throw)
+8:   83:  if (value.empty() and 0 == map.count(field)) {
+call    0 returned 8
+branch  1 taken 5 (fallthrough)
+branch  2 taken 3
+call    3 returned 5
+branch  4 taken 5 (fallthrough)
+branch  5 taken 0 (throw)
+branch  6 taken 2 (fallthrough)
+branch  7 taken 3
+branch  8 taken 2 (fallthrough)
+branch  9 taken 6
+2:   84:    throw po::error("Neither the option '" + option + "' has a value nor the field '" + field + "' is set");
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 2
+branch  5 taken 2 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 2
+branch  8 taken 2 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 2
+branch 11 taken 2 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 2
+branch 14 taken 2 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 2
+call   17 returned 2
+call   18 returned 2
+call   19 returned 2
+call   20 returned 2
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+-:   85:  }
+8:   86:}
+call    0 returned 6
+call    1 returned 2
+-:   87:
+function _ZN14network_configL11ExpectValueERKN5boost15program_options13variables_mapERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 26 returned 100% blocks executed 17%
+26:   88:static void ExpectValue(const po::variables_map &map, const ::std::string &option) {
+26:   89:  if (map.count(option) == 0) {
+call    0 returned 26
+branch  1 taken 26 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 26 (fallthrough)
+branch  4 taken 0
+26:   90:    return;
+-:   91:  }
+#####:   92:  auto value = map[option].as<::std::string>();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+#####:   93:  if (value.empty()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   94:    throw po::error("Missing value for option '" + option + "'");
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+-:   95:  }
+#####:   96:}
+call    0 never executed
+call    1 never executed
+-:   97:
+function _ZNK14network_config12OptionParser18CreateDescriptionsEv called 23 returned 100% blocks executed 53%
+23:   98:po::options_description OptionParser::CreateDescriptions() const {
+-:   99:  // @formatter:off
+46:  100:  po::options_description options("Primary options");
+call    0 returned 23
+call    1 returned 23
+branch  2 taken 23 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+23:  101:  options.add_options()
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  102:    (options_.bridge_config.name, options_.bridge_config.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  103:    (options_.interface_config.name, options_.interface_config.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  104:    (options_.ip_config.name, options_.ip_config.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  105:    (options_.interface.name, options_.interface.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  106:    (options_.dip_switch_config.name, options_.dip_switch_config.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  107:    (options_.mac_address.name, options_.mac_address.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  108:    (options_.device_info.name, options_.device_info.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  109:    (options_.interface_status.name, options_.interface_status.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+46:  110:    (
+23:  111:        options_.backup.name,
+46:  112:        po::value<::std::string>()->value_name("file path"),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 never executed
+call   12 never executed
+23:  113:        options_.backup.description
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  114:    )
+46:  115:    (
+23:  116:        options_.restore.name,
+46:  117:        po::value<::std::string>()->value_name("file path"),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+call   12 returned 23
+call   13 never executed
+call   14 never executed
+23:  118:        options_.restore.description
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  119:    )
+23:  120:    (options_.get_backup_parameter_count.name, options_.get_backup_parameter_count.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  121:    (options_.dsa_mode.name, options_.dsa_mode.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  122:    (options_.fix_ip.name, options_.fix_ip.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  123:    (options_.dynamic_ip_event.name, options_.dynamic_ip_event.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  124:    (options_.reload_host_conf.name, options_.reload_host_conf.description);
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  125:
+46:  126:  po::options_description operations("Operations");
+call    0 returned 23
+call    1 returned 23
+branch  2 taken 23 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+23:  127:  operations.add_options()
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+46:  128:    (
+23:  129:        options_.get.name,
+-:  130:        po::value<::std::string>()
+-:  131:          ->value_name("<value>")
+46:  132:          ->implicit_value(""),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+branch 12 taken 23 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 23
+branch 15 taken 23 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 23
+call   18 returned 23
+call   19 returned 23
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+23:  133:        options_.get.description
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  134:    )
+46:  135:    (
+23:  136:        options_.get_current.name,
+-:  137:        po::value<::std::string>()
+-:  138:          ->value_name("<value>")
+46:  139:          ->implicit_value(""),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+branch 12 taken 23 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 23
+branch 15 taken 23 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 23
+call   18 returned 23
+call   19 returned 23
+call   20 returned 23
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+23:  140:          options_.get_current.description
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  141:    )
+46:  142:    (
+23:  143:        options_.set.name,
+-:  144:        po::value<::std::string>()
+-:  145:          ->value_name("<value>")
+46:  146:          ->implicit_value(""),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+branch 12 taken 23 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 23
+branch 15 taken 23 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 23
+call   18 returned 23
+call   19 returned 23
+call   20 returned 23
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+23:  147:        options_.set.description
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  148:    )
+46:  149:    (
+23:  150:        options_.add.name,
+-:  151:        po::value<::std::string>()
+-:  152:          ->value_name("<value>")
+46:  153:          ->implicit_value(""),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+branch 12 taken 23 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 23
+branch 15 taken 23 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 23
+call   18 returned 23
+call   19 returned 23
+call   20 returned 23
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+23:  154:        options_.add.description
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  155:    )
+46:  156:    (
+23:  157:        options_.del.name,
+-:  158:        po::value<::std::string>()
+-:  159:          ->value_name("<value>")
+46:  160:          ->implicit_value(""),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+branch 12 taken 23 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 23
+branch 15 taken 23 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 23
+call   18 returned 23
+call   19 returned 23
+call   20 returned 23
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+23:  161:          options_.del.description
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  162:    )
+23:  163:    (
+23:  164:        options_.filter.name,
+-:  165:        po::value<::std::string>()
+-:  166:          ->value_name("<value>")
+46:  167:          ->implicit_value(""),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+branch 12 taken 23 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 23
+branch 15 taken 23 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 23
+call   18 returned 23
+call   19 returned 23
+call   20 returned 23
+call   21 returned 23
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+23:  168:        options_.filter.description
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  169:    );
+-:  170:
+46:  171:  po::options_description fields("Fields");
+call    0 returned 23
+call    1 returned 23
+branch  2 taken 23 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+23:  172:  fields.add_options()
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  173:
+69:  174:    ( fields_.field.name,
+46:  175:      po::value<std::vector<::std::string>>()->value_name(fields_.device.parameter)->multitoken(),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+call   12 never executed
+call   13 never executed
+23:  176:      fields_.field.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+69:  177:    ( fields_.device.name,
+46:  178:      po::value<::std::string>()->value_name(fields_.device.parameter),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+call   12 never executed
+call   13 never executed
+23:  179:      fields_.device.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+69:  180:    ( fields_.backup_version.name,
+46:  181:      po::value<::std::string>()->value_name(fields_.backup_version.parameter),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+call   12 never executed
+call   13 never executed
+23:  182:      fields_.backup_version.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+46:  183:    ( fields_.action.name,
+46:  184:      po::value<::std::string>()->value_name(fields_.action.parameter),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+call   12 returned 23
+call   13 never executed
+call   14 never executed
+23:  185:      fields_.action.description
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  186:  );
+-:  187:
+46:  188:  po::options_description formats("Format");
+call    0 returned 23
+call    1 returned 23
+branch  2 taken 23 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+23:  189:  formats.add_options()
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  190:    (
+23:  191:        options_.format.name,
+-:  192:        po::value<FormatOption>()
+-:  193:          ->value_name("<format>")
+46:  194:          ->default_value(FormatOption("text"), "text"),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+branch 12 taken 23 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 23
+call   15 returned 23
+call   16 returned 23
+branch 17 taken 23 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 23
+branch 20 taken 23 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 23
+call   23 returned 23
+call   24 returned 23
+call   25 returned 23
+call   26 returned 23
+call   27 returned 23
+call   28 returned 23
+call   29 never executed
+call   30 never executed
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+23:  195:        options_.format.description
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  196:    );
+-:  197:
+46:  198:  po::options_description misc("Miscellaneous options");
+call    0 returned 23
+call    1 returned 23
+branch  2 taken 23 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+23:  199:  misc.add_options()
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  200:    (options_.help.name, options_.help.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  201:    (options_.quiet.name, options_.quiet.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+69:  202:    (options_.error_msg_dst.name,
+46:  203:     po::value<::std::string>()->value_name(options_.error_msg_dst.parameter),
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+call    4 returned 23
+branch  5 taken 23 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 23
+branch  8 taken 23 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 23
+call   11 returned 23
+call   12 never executed
+call   13 never executed
+23:  204:     options_.error_msg_dst.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  205:    (options_.write_last_error.name, options_.write_last_error.description)
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  206:    (options_.dryrun.name, options_.dryrun.description);
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+-:  207:  // @formatter:on
+23:  208:  options.add(operations).add(fields).add(formats).add(misc);
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 23
+branch  4 taken 23 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 23
+branch  7 taken 23 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 23
+branch 10 taken 23 (fallthrough)
+branch 11 taken 0 (throw)
+-:  209:
+46:  210:  return options;
+23:  211:}
+call    0 returned 23
+call    1 returned 23
+call    2 returned 23
+call    3 returned 23
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+-:  212:
+function _ZN14network_config12OptionParser5ParseEiPPKc called 25 returned 52% blocks executed 87%
+25:  213:void OptionParser::Parse(int argc, const char **argv) {
+28:  214:  parsed_options_ = po::parse_command_line(argc, argv, descriptions_);
+call    0 returned 25
+call    1 returned 25
+branch  2 taken 22 (fallthrough)
+branch  3 taken 3 (throw)
+call    4 returned 22
+call    5 returned 22
+call    6 returned 22
+call    7 returned 3
+call    8 returned 0
+22:  215:  map_.clear();
+call    0 returned 22
+22:  216:  po::store(parsed_options_, map_);
+call    0 returned 20
+20:  217:  po::notify(map_);
+call    0 returned 20
+-:  218:
+20:  219:  MutuallyExclusiveAndOnlyOnce(map_, options_.bridge_config, options_.interface_config, options_.ip_config,
+20:  220:                               options_.interface, options_.dip_switch_config, options_.mac_address, options_.device_info,
+20:  221:                               options_.interface_status, options_.backup, options_.restore,
+20:  222:                               options_.get_backup_parameter_count, options_.dsa_mode, options_.fix_ip,
+20:  223:                               options_.dynamic_ip_event, options_.reload_host_conf, options_.help);
+call    0 returned 19
+-:  224:
+19:  225:  OptionalAndMutuallyExclusive(map_, options_.error_msg_dst, options_.quiet);
+call    0 returned 18
+-:  226:
+18:  227:  ExpectOptionPair(map_, options_.bridge_config, options_.get, options_.set);
+call    0 returned 17
+17:  228:  ExpectOptionPair(map_, options_.ip_config, options_.get, options_.get_current, options_.set);
+call    0 returned 16
+16:  229:  ExpectOptionPair(map_, options_.interface_config, options_.get, options_.set);
+call    0 returned 16
+16:  230:  ExpectOptionPair(map_, options_.interface, options_.add, options_.del);
+call    0 returned 16
+16:  231:  ExpectOptionPair(map_, options_.dsa_mode, options_.get, options_.set);
+call    0 returned 16
+16:  232:  ExpectOptionPair(map_, options_.dip_switch_config, options_.get, options_.set);
+call    0 returned 16
+16:  233:  ExpectOptionPair(map_, options_.mac_address, options_.get);
+call    0 returned 15
+-:  234:
+19:  235:  ExpectValueOrField(map_, options_.set.name, fields_.device.name);
+call    0 returned 15
+call    1 returned 15
+branch  2 taken 15 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 15
+call    5 returned 15
+branch  6 taken 15 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 15
+branch  9 taken 14 (fallthrough)
+branch 10 taken 1 (throw)
+call   11 returned 14
+call   12 returned 14
+call   13 returned 14
+call   14 returned 14
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 0
+18:  236:  ExpectValueOrField(map_, options_.mac_address.name, fields_.device.name);
+call    0 returned 14
+call    1 returned 14
+branch  2 taken 14 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 14
+call    5 returned 14
+branch  6 taken 14 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 14
+branch  9 taken 13 (fallthrough)
+branch 10 taken 1 (throw)
+call   11 returned 13
+call   12 returned 13
+call   13 returned 13
+call   14 returned 13
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 0
+13:  237:  ExpectValue(map_, options_.add.name);
+call    0 returned 13
+call    1 returned 13
+branch  2 taken 13 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 13
+branch  5 taken 13 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 13
+call    8 returned 13
+call    9 never executed
+call   10 never executed
+call   11 never executed
+13:  238:  ExpectValue(map_, options_.del.name);
+call    0 returned 13
+call    1 returned 13
+branch  2 taken 13 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 13
+branch  5 taken 13 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 13
+call    8 returned 13
+call    9 never executed
+call   10 never executed
+13:  239:}
+-:  240:
+function _ZNK14network_config12OptionParser5IsSetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:  241:bool OptionParser::IsSet(const ::std::string &option) const {
+#####:  242:  return Contains(map_, option);
+call    0 never executed
+-:  243:}
+-:  244:
+function _ZNK14network_config12OptionParser9PrintHelpEv called 0 returned 0% blocks executed 0%
+#####:  245:void OptionParser::PrintHelp() const {
+#####:  246:  std::cout << "\nNetwork configuration command line tool\n" << std::endl << descriptions_ << std::endl;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+#####:  247:}
+-:  248:
+-:  249:} /* namespace network_config */

@@ -1,0 +1,151 @@
+-:    0:Source:src/config_linux_user/ctmain.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     ctmain.c
+-:   12:///
+-:   13:///  \brief    Config tool specific main functionality for
+-:   14:///            config_linux_user.
+-:   15:///
+-:   16:///  \author   HFS: WAGO GmbH & Co. KG
+-:   17:///  \author   PEn: WAGO GmbH & Co. KG
+-:   18://------------------------------------------------------------------------------
+-:   19:
+-:   20://------------------------------------------------------------------------------
+-:   21:// include files
+-:   22://------------------------------------------------------------------------------
+-:   23:#include "wc/structuring.h"
+-:   24:#include "wc/assertion.h"
+-:   25:#include "ctutil/common_main.h"
+-:   26:#include "ctparts/common_main_defaults.h"
+-:   27:#include "ctparts/pmain.h"
+-:   28:#include "ctparts/ctmain.h"
+-:   29:#include "params.h"
+-:   30:#include "resources.h"
+-:   31:#include "shadow_functions.h"
+-:   32:#include <string.h>
+-:   33:
+-:   34://------------------------------------------------------------------------------
+-:   35:// defines; structure, enumeration and type definitions
+-:   36://------------------------------------------------------------------------------
+-:   37:
+-:   38://------------------------------------------------------------------------------
+-:   39:// function prototypes
+-:   40://------------------------------------------------------------------------------
+-:   41:
+-:   42://------------------------------------------------------------------------------
+-:   43:// macros
+-:   44://------------------------------------------------------------------------------
+-:   45:
+-:   46://------------------------------------------------------------------------------
+-:   47:// variables' and constants' definitions
+-:   48://------------------------------------------------------------------------------
+-:   49:
+-:   50://------------------------------------------------------------------------------
+-:   51:// function implementation
+-:   52://------------------------------------------------------------------------------
+-:   53:
+-:   54:/// Early function for to prepare config tool main of config_linux_user.
+function ctparts_PrepareMain called 0 returned 0% blocks executed 0%
+#####:   55:exitCode_t ctparts_PrepareMain(int const argc,
+-:   56:                               char * const argv[])
+-:   57:{
+-:   58:  // Prepare functions
+-:   59:  ctparts_commonMainFunctions_t stFunctions;
+#####:   60:  ctparts_SetDefaultCommonMainFunctions(&stFunctions);
+call    0 never executed
+-:   61:
+-:   62:  // Call common main function to prepare config tool main
+#####:   63:  return ctutil_CommonMain(argc, argv, &stFunctions, NULL);
+call    0 never executed
+-:   64:}
+-:   65:
+-:   66:
+function IsPlainMode called 10 returned 100% blocks executed 100%
+10:   67:static bool IsPlainMode(ctutil_Options_t const * const pstOptions)
+-:   68:{
+10:   69:  return (pstOptions->pstSpecificOptions->szHash == NULL);
+-:   70:}
+-:   71:
+-:   72:
+-:   73:/// Main function for config tool core functionality of config_linux_user.
+function ctparts_ctMain called 5 returned 100% blocks executed 100%
+5:   74:exitCode_t ctparts_ctMain(int const WC_UNUSED_PARAM(argc),
+-:   75:                          char * const WC_UNUSED_PARAM(argv[]),
+-:   76:                          ctutil_Options_t const * const pstOptions,
+-:   77:                          ctutil_Resources_t const * const pstResources)
+-:   78:{
+5:   79:  statusCode_t status = CTUTIL_SUCCESS;
+-:   80:
+-:   81:  struct spwd stNewUserData;
+5:   82:  memset(&stNewUserData, 0, sizeof(stNewUserData));
+-:   83:
+5:   84:  if(IsPlainMode(pstOptions))
+call    0 returned 5
+branch  1 taken 3 (fallthrough)
+branch  2 taken 2
+-:   85:  {
+-:   86:    // Allocation for duplication will be cleaned afterwards (see cleanup section below)
+3:   87:    stNewUserData.sp_namp = strdup(pstOptions->pstSpecificOptions->szUsername);
+3:   88:    status = FillUserData(&stNewUserData, pstResources,
+3:   89:                          pstOptions->pstSpecificOptions->szUsername,
+3:   90:                          pstOptions->pstSpecificOptions->szPassword1,
+3:   91:                          pstOptions->pstSpecificOptions->szPassword2);
+call    0 returned 3
+-:   92:  }
+-:   93:  else
+-:   94:  {
+2:   95:    status = FillUserDataFromHash(&stNewUserData, pstResources,
+2:   96:                                  pstOptions->pstSpecificOptions->szUsername,
+2:   97:                                  pstOptions->pstSpecificOptions->szHash);
+call    0 returned 2
+-:   98:  }
+-:   99:
+5:  100:  if(ctutil_IsStatusOk(status))
+call    0 returned 5
+branch  1 taken 2 (fallthrough)
+branch  2 taken 3
+-:  101:  {
+2:  102:    status = SearchShadowEntry(stNewUserData.sp_namp);
+call    0 returned 2
+-:  103:  }
+-:  104:
+5:  105:  if(ctutil_IsStatusOk(status))
+call    0 returned 5
+branch  1 taken 2 (fallthrough)
+branch  2 taken 3
+-:  106:  {
+2:  107:    status = WriteShadow(pstResources, &stNewUserData);
+call    0 returned 2
+-:  108:  }
+-:  109:
+-:  110:  // Cleanup
+-:  111:  //
+-:  112:  // Note: 'man shadow' is very vague on its internal memory management
+-:  113:  // details. It is unclear whether the user has to clean up struct spwd
+-:  114:  // objects.
+-:  115:  // At least valgrind shows no memory leaks when no cleanup is done there.
+-:  116:  // That's why we only clean up self-allocated strings we use with struct spwd
+-:  117:  // objects.
+5:  118:  if(IsPlainMode(pstOptions))
+call    0 returned 5
+branch  1 taken 3 (fallthrough)
+branch  2 taken 2
+-:  119:  {
+3:  120:    free(stNewUserData.sp_namp);
+-:  121:  }
+-:  122:
+5:  123:  return ctutil_GetExitCodeFromStatus(status);
+call    0 returned 5
+-:  124:}
+-:  125:
+-:  126:
+-:  127://---- End of source file ------------------------------------------------------
+-:  128:

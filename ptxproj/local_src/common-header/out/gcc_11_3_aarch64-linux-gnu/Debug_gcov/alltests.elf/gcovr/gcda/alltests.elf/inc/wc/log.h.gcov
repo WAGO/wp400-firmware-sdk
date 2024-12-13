@@ -1,0 +1,531 @@
+-:    0:Source:inc/wc/log.h
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project common-header (PTXdist package libcommonheader).
+-:    7://
+-:    8:// Copyright (c) 2019-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file
+-:   12:///
+-:   13:///  \brief    Common log interface and framework to manage log messages.
+-:   14:///            To use log functions it is necessary to implement log level and
+-:   15:///            output functions
+-:   16:///            (\link wc_get_log_level \endlink /\link wc_log_output \endlink).
+-:   17:///
+-:   18:///  \author   MaHe: WAGO GmbH & Co. KG
+-:   19:///  \author   PEn : WAGO GmbH & Co. KG
+-:   20://------------------------------------------------------------------------------
+-:   21:#ifndef INC_WC_LOG_H_
+-:   22:#define INC_WC_LOG_H_
+-:   23:
+-:   24://------------------------------------------------------------------------------
+-:   25:// include files
+-:   26://------------------------------------------------------------------------------
+-:   27:#include "wc/assertion.h"
+-:   28:#include "wc/compiler.h"
+-:   29:#include "wc/structuring.h"
+-:   30:#include "wc/std_includes.h"
+-:   31:
+-:   32:#ifdef __cplusplus
+-:   33:#include <cstdarg>
+-:   34:#include <cstdio>
+-:   35:#include <cstring>
+-:   36:#else
+-:   37:#include <stdarg.h>
+-:   38:#include <stdio.h>
+-:   39:#include <string.h>
+-:   40:#endif
+-:   41:
+-:   42://------------------------------------------------------------------------------
+-:   43:// defines; structure, enumeration and type definitions
+-:   44://------------------------------------------------------------------------------
+-:   45:/// \def WC_LOG_FORMAT_BUFFER_SIZE
+-:   46:/// Macro defining maximum length of format buffer containing log format strings.
+-:   47:///
+-:   48:/// \note Do not use directly but function
+-:   49:///       \link wc_get_max_log_format_size \endlink instead.
+-:   50:///
+-:   51:/// \see wc_get_max_log_format_size
+-:   52:#define WC_LOG_FORMAT_BUFFER_SIZE                                          (256)
+-:   53:
+-:   54:/// \def WC_LOG_BUFFER_SIZE
+-:   55:/// Macro defining maximum length of message buffer containing log strings.
+-:   56:///
+-:   57:/// \note Do not use directly but function
+-:   58:///       \link wc_get_max_log_message_size \endlink instead.
+-:   59:///
+-:   60:/// \see wc_get_max_log_message_size
+-:   61:#define WC_LOG_BUFFER_SIZE                                                (4096)
+-:   62:
+-:   63:/// \def WC_LOG_MAX_FILE_LENGTH
+-:   64:/// Macro defining maximum length of logged file names.
+-:   65:///
+-:   66:/// \note For internal use only. Don't use externally.
+-:   67:#define WC_LOG_MAX_FILE_LENGTH                                              (50)
+-:   68:
+-:   69:/// \def WC_LOG_MAX_FUNCTION_LENGTH
+-:   70:/// Macro defining maximum length of logged function names.
+-:   71:///
+-:   72:/// \note For internal use only. Don't use externally.
+-:   73:#define WC_LOG_MAX_FUNCTION_LENGTH                                          (50)
+-:   74:
+-:   75:/// Defines various log levels.
+-:   76:/// \see <a href="http://www.thejoyofcode.com/Logging_Levels_and_how_to_use_them.aspx">Logging Levels and how to use them</a>
+-:   77:typedef enum log_level
+-:   78:{
+-:   79:  /// Off
+-:   80:  /// Logging is disabled on this log level.
+-:   81:  off = 0,    //!< off
+-:   82:
+-:   83:  /// Fatal
+-:   84:  /// Fatal is used to log all unhandled exceptions and handled errors where it is not recommend to continue program
+-:   85:  /// execution. This is typically logged inside a catch block at the boundary of your application.
+-:   86:  fatal = 1,  //!< fatal
+-:   87:
+-:   88:  /// Error
+-:   89:  /// Errors are handled 'exceptions' above warnings.
+-:   90:  /// While program operation can safely continue on warnings, errors indicate a critical program state where a master
+-:   91:  /// software part has to consider weather to continue or to stop program execution.
+-:   92:  error = 2,  //!< error
+-:   93:
+-:   94:  /// Warning
+-:   95:  /// Warning is often used for handled 'exceptions' or other important log events.
+-:   96:  /// For example, if your application requires a configuration setting but has a default in case the setting is missing,
+-:   97:  /// then the Warning level should be used to log the missing configuration setting.
+-:   98:  warning = 3,//!< warning
+-:   99:
+-:  100:  /// Information
+-:  101:  /// The Information level is typically used to output information that is useful to the running and management of your
+-:  102:  /// system. Information would also be the level used to log Entry and Exit points in key areas of your application.
+-:  103:  /// However, you may choose to add more entry and exit points at Debug level for more granularity during development and
+-:  104:  /// testing.
+-:  105:  info = 4,   //!< info
+-:  106:
+-:  107:  /// Debug
+-:  108:  /// This is the most verbose logging level (maximum volume setting).
+-:  109:  /// I usually consider Debug to be out-of-bounds for a production system and used it only for development and testing.
+-:  110:  /// I prefer to aim to get my logging levels just right so I have just enough information and endeavour to log this at
+-:  111:  /// the Information level or above.
+-:  112:  debug = 5   //!< debug
+-:  113:} log_level_t;
+-:  114:
+-:  115:/// \def WC_DEBUG_LOG
+-:  116:/// Defines an advanced debug log call, fully optimized out on release builds.
+-:  117://lint -estring(961, WC_DEBUG_LOG) to disable Rule 19.7 it is necessary to disable all 961 messages,
+-:  118://                                 function-like macro defined
+-:  119://lint -estring(960, WC_DEBUG_LOG) to disable Rule 19.4 it is necessary to disable all 960 messages,
+-:  120://                                 disallowed definition for macro
+-:  121:#ifndef NDEBUG
+-:  122:#define WC_DEBUG_LOG(message)                              wc_log_advanced(__FILE__, WC_ARRAY_TO_PTR(__func__), __LINE__, debug, message)
+-:  123:#else
+-:  124:#define WC_DEBUG_LOG(message)                                                                             (void)message
+-:  125:#endif
+-:  126:
+-:  127://------------------------------------------------------------------------------
+-:  128:// function prototypes
+-:  129://------------------------------------------------------------------------------
+-:  130:#ifdef __cplusplus
+-:  131:extern "C"
+-:  132:{
+-:  133:#endif // __cplusplus
+-:  134:
+-:  135:  /// Prototype for application specific output function to write log output.
+-:  136:  ///
+-:  137:  /// \note The function implementation has to be provided application specific.
+-:  138:  ///
+-:  139:  /// \param log_level
+-:  140:  ///   Log level of message to write, may be part of written message or used to
+-:  141:  ///   categorize log message.
+-:  142:  /// \param message
+-:  143:  ///   Log message to write to an output channel.
+-:  144:  //------------------------------------------------------------------------------
+-:  145:  void wc_log_output(log_level_t const  log_level,
+-:  146:                     char const * const message);
+-:  147:
+-:  148:  /// Prototype for application specific source of log level setting.
+-:  149:  ///
+-:  150:  /// \note The function implementation has to be provided application specific.
+-:  151:  ///
+-:  152:  /// \return
+-:  153:  ///   Currently active log level, used to forward or discard log messages.
+-:  154:  //------------------------------------------------------------------------------
+-:  155:  log_level_t wc_get_log_level(void);
+-:  156:
+-:  157:  /// Simple log function to log static messages.
+-:  158:  ///
+-:  159:  /// \param log_level
+-:  160:  ///   Log level for message, used to forward or discard message dependent on
+-:  161:  ///   currently active application log level.
+-:  162:  /// \param message
+-:  163:  ///   Log message to compute.
+-:  164:  ///
+-:  165:  /// \see wc_get_log_level
+-:  166:  /// \see wc_log_advanced
+-:  167:  /// \see wc_log_format
+-:  168:  //------------------------------------------------------------------------------
+-:  169:  static inline void wc_log(log_level_t const  log_level,
+-:  170:                            char const * const message);
+-:  171:
+-:  172:  /// Log function to log formatted messages.
+-:  173:  ///
+-:  174:  /// \param log_level
+-:  175:  ///   Log level for message, used to forward or discard message dependent on
+-:  176:  ///   currently active application log level.
+-:  177:  /// \param format
+-:  178:  ///   Log message format in printf-style to generate log message.
+-:  179:  ///   Format arguments follow in next parameters like on printf.
+-:  180:  ///
+-:  181:  /// \see wc_get_log_level
+-:  182:  /// \see wc_vlog_format
+-:  183:  /// \see wc_log
+-:  184:  /// \see wc_log_advanced
+-:  185:  //------------------------------------------------------------------------------
+-:  186:  //lint -printf(2, wc_log_format)
+-:  187:  static inline void wc_log_format(log_level_t const  log_level,
+-:  188:                                   char const * const format,
+-:  189:                                   ...) GNUC_ATTRIBUTE(format (gnu_printf, 2, 3));  //lint !e960 !e1916 Variable number of arguments needed
+-:  190:
+-:  191:  /// Log function to log formatted messages.
+-:  192:  ///
+-:  193:  /// \param log_level
+-:  194:  ///   Log level for message, used to forward or discard message dependent on
+-:  195:  ///   currently active application log level.
+-:  196:  /// \param format
+-:  197:  ///   Log message format in printf-style to generate log message.
+-:  198:  ///   Format arguments follow in next va_list parameter like on vprintf.
+-:  199:  /// \param args
+-:  200:  ///   Variable argument list with format arguments.
+-:  201:  ///
+-:  202:  /// \see wc_get_log_level
+-:  203:  /// \see wc_log_format
+-:  204:  /// \see wc_vlog_format_advanced
+-:  205:  //------------------------------------------------------------------------------
+-:  206:  static inline void wc_vlog_format(log_level_t const  log_level,
+-:  207:                                    char const * const format,
+-:  208:                                    va_list * const    args) GNUC_ATTRIBUTE(format (gnu_printf, 2, 0));
+-:  209:
+-:  210:  /// Log function to log static messages with source (file, function, line)
+-:  211:  /// information.
+-:  212:  /// Source information is only computed when currently used application log level
+-:  213:  /// is "debug", determined by function \link wc_get_log_level \endlink.
+-:  214:  ///
+-:  215:  /// \param file
+-:  216:  ///   File name as source information for log message, normally compiler auto
+-:  217:  ///   values used like "__FILE__". When NULL source information is omitted.
+-:  218:  /// \param function
+-:  219:  ///   Function name as source information for log message, normally compiler
+-:  220:  ///   auto values used like "__func__". This source information is optional.
+-:  221:  ///   Source information is completely omitted when file parameter is NULL.
+-:  222:  /// \param line
+-:  223:  ///   Line number as source information for log message, normally compiler
+-:  224:  ///   auto values used like "__LINE__".
+-:  225:  ///   Source information is completely omitted when file parameter is NULL.
+-:  226:  /// \param log_level
+-:  227:  ///   Log level for message, used to forward or discard message dependent on
+-:  228:  ///   currently active application log level.
+-:  229:  /// \param message
+-:  230:  ///   Log message to compute.
+-:  231:  ///
+-:  232:  /// \see wc_get_log_level
+-:  233:  /// \see wc_log
+-:  234:  /// \see wc_log_format_advanced
+-:  235:  //------------------------------------------------------------------------------
+-:  236:  static inline void wc_log_advanced(char const * const file,
+-:  237:                                     char const * const function,
+-:  238:                                     size_t const       line,
+-:  239:                                     log_level_t const  log_level,
+-:  240:                                     char const * const message);
+-:  241:
+-:  242:  /// Log function to log formatted messages with source (file, function, line)
+-:  243:  /// information.
+-:  244:  /// Source information is only computed when currently used application log level
+-:  245:  /// is "debug", determined by function \link wc_get_log_level \endlink.
+-:  246:  ///
+-:  247:  /// \param file
+-:  248:  ///   File name as source information for log message, normally compiler auto
+-:  249:  ///   values used like "__FILE__". When NULL source information is omitted.
+-:  250:  /// \param function
+-:  251:  ///   Function name as source information for log message, normally compiler
+-:  252:  ///   auto values used like "__func__". This source information is optional.
+-:  253:  ///   Source information is completely omitted when file parameter is NULL.
+-:  254:  /// \param line
+-:  255:  ///   Line number as source information for log message, normally compiler
+-:  256:  ///   auto values used like "__LINE__".
+-:  257:  ///   Source information is completely omitted when file parameter is NULL.
+-:  258:  /// \param log_level
+-:  259:  ///   Log level for message, used to forward or discard message dependent on
+-:  260:  ///   currently active application log level.
+-:  261:  /// \param format
+-:  262:  ///   Log message format in printf-style to generate log message.
+-:  263:  ///   Format arguments follow in next parameters like on printf.
+-:  264:  ///
+-:  265:  /// \see wc_get_log_level
+-:  266:  /// \see wc_vlog_format_advanced
+-:  267:  /// \see wc_log_format
+-:  268:  /// \see wc_log_advanced
+-:  269:  //------------------------------------------------------------------------------
+-:  270:  //lint -printf(5, wc_log_format_advanced)
+-:  271:  static inline void wc_log_format_advanced(char const * const file,
+-:  272:                                            char const * const function,
+-:  273:                                            size_t const       line,
+-:  274:                                            log_level_t const  log_level,
+-:  275:                                            char const * const format,
+-:  276:                                            ...) GNUC_ATTRIBUTE(format (gnu_printf, 5, 6));  //lint !e960 !e1916 Variable number of arguments needed
+-:  277:
+-:  278:  /// Log function to log formatted messages with source (file, function, line)
+-:  279:  /// information.
+-:  280:  /// Source information is only computed when currently used application log level
+-:  281:  /// is "debug", determined by function \link wc_get_log_level \endlink.
+-:  282:  ///
+-:  283:  /// \param file
+-:  284:  ///   File name as source information for log message, normally compiler auto
+-:  285:  ///   values used like "__FILE__". When NULL source information is omitted.
+-:  286:  /// \param function
+-:  287:  ///   Function name as source information for log message, normally compiler
+-:  288:  ///   auto values used like "__func__". This source information is optional.
+-:  289:  ///   Source information is completely omitted when file parameter is NULL.
+-:  290:  /// \param line
+-:  291:  ///   Line number as source information for log message, normally compiler
+-:  292:  ///   auto values used like "__LINE__".
+-:  293:  ///   Source information is completely omitted when file parameter is NULL.
+-:  294:  /// \param log_level
+-:  295:  ///   Log level for message, used to forward or discard message dependent on
+-:  296:  ///   currently active application log level.
+-:  297:  /// \param format
+-:  298:  ///   Log message format in printf-style to generate log message.
+-:  299:  ///   Format arguments follow in next va_list parameter like on vprintf.
+-:  300:  /// \param args
+-:  301:  ///   Variable argument list with format arguments.
+-:  302:  ///
+-:  303:  /// \see wc_get_log_level
+-:  304:  /// \see wc_log_format_advanced
+-:  305:  /// \see wc_log_format
+-:  306:  /// \see wc_log_advanced
+-:  307:  //------------------------------------------------------------------------------
+-:  308:  static inline void wc_vlog_format_advanced(char const * const file,
+-:  309:                                             char const * const function,
+-:  310:                                             size_t const       line,
+-:  311:                                             log_level_t const  log_level,
+-:  312:                                             char const * const format,
+-:  313:                                             va_list * const    args) GNUC_ATTRIBUTE(format (gnu_printf, 5, 0));
+-:  314:
+-:  315:#ifndef __cplusplus
+-:  316:
+-:  317:  /// Function (C variant) to determine maximum log message size.
+-:  318:  ///
+-:  319:  /// \return
+-:  320:  ///   Maximum log message size in bytes.
+-:  321:  //------------------------------------------------------------------------------
+-:  322:  static inline size_t wc_get_max_log_message_size()
+-:  323:  {
+-:  324:    return WC_LOG_BUFFER_SIZE;
+-:  325:  }
+-:  326:
+-:  327:  /// Function (C variant) to determine maximum log format size.
+-:  328:  ///
+-:  329:  /// \return
+-:  330:  ///   Maximum log format size in bytes.
+-:  331:  //------------------------------------------------------------------------------
+-:  332:  static inline size_t wc_get_max_log_format_size()
+-:  333:  {
+-:  334:    return WC_LOG_FORMAT_BUFFER_SIZE;
+-:  335:  }
+-:  336:
+-:  337:#else
+-:  338:
+-:  339:  /// Function (C++ variant: constexpr) to determine maximum log message size.
+-:  340:  ///
+-:  341:  /// \return
+-:  342:  ///   Maximum log message size in bytes.
+-:  343:  //------------------------------------------------------------------------------
+-:  344:  static inline constexpr size_t wc_get_max_log_message_size()
+-:  345:  {
+-:  346:    return WC_LOG_BUFFER_SIZE;
+-:  347:  }
+-:  348:
+-:  349:  /// Function (C++ variant: constexpr) to determine maximum log format size.
+-:  350:  ///
+-:  351:  /// \return
+-:  352:  ///   Maximum log format size in bytes.
+-:  353:  //------------------------------------------------------------------------------
+-:  354:  static inline constexpr size_t wc_get_max_log_format_size()
+-:  355:  {
+-:  356:    return WC_LOG_FORMAT_BUFFER_SIZE;
+-:  357:  }
+-:  358:
+-:  359:#endif // __cplusplus
+-:  360:
+function wc_log called 7 returned 100% blocks executed 100%
+7:  361:  static inline void wc_log(log_level_t const  log_level,
+-:  362:                            char const * const message)
+-:  363:  {
+7:  364:    wc_log_advanced(NULL, NULL, 0, log_level, message);
+call    0 returned 7
+7:  365:  }
+-:  366:
+-:  367:  static inline void wc_log_format(log_level_t const  log_level,
+-:  368:                                   char const * const format,
+-:  369:                                   ...)
+-:  370:  {
+-:  371:    va_list args;
+-:  372:    va_start(args, format); //lint !e530 Macro initializes list
+-:  373:    wc_vlog_format(log_level, format, &args);
+-:  374:    va_end(args);
+-:  375:  }
+-:  376:
+-:  377:  static inline void wc_vlog_format(log_level_t const  log_level,
+-:  378:                                    char const * const format,
+-:  379:                                    va_list * const    args)
+-:  380:  {
+-:  381:    wc_vlog_format_advanced(NULL, NULL, 0, log_level, format, args);
+-:  382:  }
+-:  383:
+function wc_log_advanced called 7 returned 100% blocks executed 100%
+7:  384:  static inline void wc_log_advanced(char const * const file,
+-:  385:                                     char const * const function,
+-:  386:                                     size_t const       line,
+-:  387:                                     log_level_t const  log_level,
+-:  388:                                     char const * const message)
+-:  389:  {
+7:  390:    wc_log_format_advanced(file, function, line, log_level, "%s", message);
+call    0 returned 7
+7:  391:  }
+-:  392:
+function wc_log_format_advanced called 9 returned 100% blocks executed 100%
+9:  393:  static inline void wc_log_format_advanced(char const * const file,
+-:  394:                                            char const * const function,
+-:  395:                                            size_t const       line,
+-:  396:                                            log_level_t const  log_level,
+-:  397:                                            char const * const format,
+-:  398:                                            ...)
+-:  399:  {
+-:  400:    va_list args;
+9:  401:    va_start(args, format); //lint !e530 Macro initializes list
+9:  402:    wc_vlog_format_advanced(file, function, line, log_level, format, &args);
+call    0 returned 9
+branch  1 taken 9 (fallthrough)
+branch  2 taken 0 (throw)
+9:  403:    va_end(args);
+9:  404:  }
+-:  405:
+function wc_vlog_format_advanced called 9 returned 100% blocks executed 77%
+9:  406:  static inline void wc_vlog_format_advanced(char const * const file,
+-:  407:                                             char const * const function,
+-:  408:                                             size_t const       line,
+-:  409:                                             log_level_t const  log_level,
+-:  410:                                             char const * const format,
+-:  411:                                             va_list * const    args)
+-:  412:  {
+9:  413:    if ( (log_level > off) && (wc_get_log_level() >= log_level) )
+branch  0 taken 7 (fallthrough)
+branch  1 taken 2
+call    2 returned 7
+branch  3 taken 4 (fallthrough)
+branch  4 taken 3
+branch  5 taken 4 (fallthrough)
+branch  6 taken 5
+-:  414:    {
+4:  415:      char const * format_buffer = format;
+4:  416:      char buffer[WC_LOG_FORMAT_BUFFER_SIZE] = { 0 };
+4:  417:      if ( (wc_get_log_level() == debug) && (file != NULL) ) {
+call    0 returned 4
+branch  1 taken 2 (fallthrough)
+branch  2 taken 2
+branch  3 taken 1 (fallthrough)
+branch  4 taken 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 3
+-:  418:
+1:  419:        char const * function_name = function;
+1:  420:        if (function_name == NULL) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+#####:  421:          function_name = "<unknown>";
+-:  422:        }
+-:  423:
+1:  424:        char const *file_shortend = file;
+1:  425:        size_t const file_length = strlen(file);
+1:  426:        char file_buffer[WC_LOG_MAX_FILE_LENGTH + 1] = { 0 };
+1:  427:        if (file_length > WC_LOG_MAX_FILE_LENGTH)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+-:  428:        {
+#####:  429:          strncpy(file_buffer + (file_length - WC_LOG_MAX_FILE_LENGTH), file, WC_LOG_MAX_FILE_LENGTH);
+#####:  430:          file_shortend = file_buffer;
+-:  431:        }
+-:  432:
+1:  433:        char const *function_shortend = function_name;
+1:  434:        size_t const function_length = strlen(function_name);
+1:  435:        char function_buffer[WC_LOG_MAX_FUNCTION_LENGTH + 1] = { 0 };
+1:  436:        if (function_length > WC_LOG_MAX_FUNCTION_LENGTH)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+-:  437:        {
+#####:  438:          strncpy(function_buffer + (function_length - WC_LOG_MAX_FUNCTION_LENGTH), function_name, WC_LOG_MAX_FUNCTION_LENGTH);
+#####:  439:          function_shortend = function_buffer;
+-:  440:        }
+-:  441:
+1:  442:        int const print_result = snprintf(buffer, WC_LOG_FORMAT_BUFFER_SIZE, "%s @%s, %u: ", file_shortend, function_shortend, line);
+1*:  443:        WC_ASSERT(print_result >= 0);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  444:
+1:  445:        strncat(buffer, format, (WC_LOG_FORMAT_BUFFER_SIZE - 1));
+1:  446:        buffer[WC_LOG_FORMAT_BUFFER_SIZE - 1] = '\0';
+1:  447:        format_buffer = buffer;
+-:  448:      }
+-:  449:
+4:  450:      char out_buffer[WC_LOG_BUFFER_SIZE] = { 0 };
+4:  451:      int const print_result = vsnprintf(out_buffer, WC_LOG_BUFFER_SIZE, format_buffer, *args);
+4:  452:      out_buffer[WC_LOG_BUFFER_SIZE - 1] = '\0';
+4*:  453:      WC_ASSERT(print_result >= 0);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  454:
+4:  455:      if(print_result > 0)
+branch  0 taken 4 (fallthrough)
+branch  1 taken 0
+-:  456:      {
+4:  457:        if(print_result > WC_LOG_BUFFER_SIZE)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
+-:  458:        {
+#####:  459:            wc_log_output(log_level, "Log message too long, next log line shortened.");
+call    0 never executed
+-:  460:        }
+4:  461:        wc_log_output(log_level, out_buffer);
+call    0 returned 4
+-:  462:      }
+-:  463:    }
+9:  464:  }
+-:  465:
+-:  466:#ifdef __cplusplus
+-:  467:} // extern "C"
+-:  468:#endif // __cplusplus
+-:  469:
+-:  470://------------------------------------------------------------------------------
+-:  471:// macros
+-:  472://------------------------------------------------------------------------------
+-:  473:
+-:  474://------------------------------------------------------------------------------
+-:  475:// variables' and constants' definitions
+-:  476://------------------------------------------------------------------------------
+-:  477:
+-:  478://------------------------------------------------------------------------------
+-:  479:// function implementation
+-:  480://------------------------------------------------------------------------------
+-:  481:
+-:  482:
+-:  483:#endif /* INC_WC_LOG_H_ */
+-:  484://---- End of source file ------------------------------------------------------
+-:  485:

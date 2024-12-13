@@ -1,0 +1,126 @@
+-:    0:Source:test-src/test_get.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9://------------------------------------------------------------------------------
+-:   10:///  \file     test.cpp
+-:   11:///
+-:   12:///  \brief    Simple tests to show googletest working in PTXdist packet.
+-:   13:///
+-:   14:///  \author   WAGO GmbH & Co. KG
+-:   15://------------------------------------------------------------------------------
+-:   16:
+-:   17://------------------------------------------------------------------------------
+-:   18:// include files
+-:   19://------------------------------------------------------------------------------
+-:   20:#include <gtest/gtest.h>
+-:   21:#include <gmock/gmock.h>
+-:   22:
+-:   23:#include <net-snmp/net-snmp-config.h>
+-:   24:#include <net-snmp/net-snmp-features.h>
+-:   25:#include <net-snmp/net-snmp-includes.h>
+-:   26:
+-:   27:#include <cstring>
+-:   28:#include <string>
+-:   29:#include <array>
+-:   30:
+-:   31:extern "C" {
+-:   32:#include "wagosnmp_API.h"
+-:   33:// It should not be necessary to include internal header, but in order to use libwagosnmp_Int32ToTlv,
+-:   34:// some definitions from asn are required.
+-:   35:#include "wagosnmp_internal.h"
+-:   36:}
+-:   37:
+-:   38:using namespace testing;
+-:   39:
+-:   40:constexpr char iod[] = "1.2.3.4.5.6.7.8.1.2.3.4.5.6.3.2.3.4";
+-:   41:
+function _ZL4initP19tWagoSnmpTranceiver8eMsgTypeP13stWagoSnmpTlv called 0 returned 0% blocks executed 0%
+#####:   42:static void init(tWagoSnmpTranceiver *trcvr, tWagoSnmpTrcvType trcvType, tWagoSnmpTlv *tlv) {
+#####:   43:    memset(trcvr, 0, sizeof(*trcvr));
+#####:   44:    trcvr->version = SNMP_VERSION_2c;
+#####:   45:    trcvr->retries = SNMP_DEFAULT_RETRIES;
+#####:   46:    trcvr->timeout_us = 1000;
+#####:   47:    trcvr->trcvType = trcvType;
+#####:   48:    trcvr->sHost = const_cast<char*>("127.0.0.2");
+#####:   49:    trcvr->szHost = strlen(trcvr->sHost);
+#####:   50:    trcvr->sCommunity = const_cast<char*>("public");
+#####:   51:    trcvr->szCommunity = strlen(trcvr->sCommunity);
+#####:   52:    trcvr->sOID = const_cast<char*>(iod);
+#####:   53:    trcvr->szOID = strlen(trcvr->sOID);
+#####:   54:    trcvr->sInformOID = const_cast<char*>(iod);
+#####:   55:    trcvr->szInformOID = strlen(trcvr->sInformOID);
+#####:   56:    trcvr->typData = tlv;
+#####:   57:}
+-:   58:
+#####:   59:TEST(BUWA6975, SnmpGetCallingTranceiveMultipleTimes_Target) {
+-:   60:    tWagoSnmpTlv req;
+-:   61:    tWagoSnmpTranceiver trcvr;
+#####:   62:    memset(&req, 0, sizeof(req));
+-:   63:
+#####:   64:    init(&trcvr, WAGOSNMP_TRCV_GET, &req);
+-:   65:
+#####:   66:    libwagosnmp_Tranceive(&trcvr);
+#####:   67:    libwagosnmp_Tranceive(&trcvr);
+#####:   68:    libwagosnmp_Tranceive(&trcvr);
+-:   69:
+#####:   70:    libwagosnmp_NullToTlv(&req);
+#####:   71:    libwagosnmp_NullToTlv(&req);
+#####:   72:}
+------------------
+_ZN57BUWA6975_SnmpGetCallingTranceiveMultipleTimes_Target_TestC2Ev:
+function _ZN57BUWA6975_SnmpGetCallingTranceiveMultipleTimes_Target_TestC2Ev called 0 returned 0% blocks executed 0%
+#####:   59:TEST(BUWA6975, SnmpGetCallingTranceiveMultipleTimes_Target) {
+call    0 never executed
+------------------
+_ZN57BUWA6975_SnmpGetCallingTranceiveMultipleTimes_Target_TestD0Ev:
+function _ZN57BUWA6975_SnmpGetCallingTranceiveMultipleTimes_Target_TestD0Ev called 0 returned 0% blocks executed 0%
+#####:   59:TEST(BUWA6975, SnmpGetCallingTranceiveMultipleTimes_Target) {
+call    0 never executed
+call    1 never executed
+------------------
+_ZN57BUWA6975_SnmpGetCallingTranceiveMultipleTimes_Target_TestD2Ev:
+function _ZN57BUWA6975_SnmpGetCallingTranceiveMultipleTimes_Target_TestD2Ev called 0 returned 0% blocks executed 0%
+#####:   59:TEST(BUWA6975, SnmpGetCallingTranceiveMultipleTimes_Target) {
+call    0 never executed
+------------------
+_ZN57BUWA6975_SnmpGetCallingTranceiveMultipleTimes_Target_Test8TestBodyEv:
+function _ZN57BUWA6975_SnmpGetCallingTranceiveMultipleTimes_Target_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+#####:   59:TEST(BUWA6975, SnmpGetCallingTranceiveMultipleTimes_Target) {
+-:   60:    tWagoSnmpTlv req;
+-:   61:    tWagoSnmpTranceiver trcvr;
+#####:   62:    memset(&req, 0, sizeof(req));
+-:   63:
+#####:   64:    init(&trcvr, WAGOSNMP_TRCV_GET, &req);
+call    0 never executed
+-:   65:
+#####:   66:    libwagosnmp_Tranceive(&trcvr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   67:    libwagosnmp_Tranceive(&trcvr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   68:    libwagosnmp_Tranceive(&trcvr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   69:
+#####:   70:    libwagosnmp_NullToTlv(&req);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   71:    libwagosnmp_NullToTlv(&req);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   72:}
+------------------
+-:   73:
+-:   74://---- End of source file ------------------------------------------------------

@@ -1,0 +1,179 @@
+-:    0:Source:test-src/test_send_inform.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9://------------------------------------------------------------------------------
+-:   10:///  \file     test.cpp
+-:   11:///
+-:   12:///  \brief    Simple tests to show googletest working in PTXdist packet.
+-:   13:///
+-:   14:///  \author   Jens Breitenstein : WAGO GmbH & Co. KG
+-:   15://------------------------------------------------------------------------------
+-:   16:
+-:   17://------------------------------------------------------------------------------
+-:   18:// include files
+-:   19://------------------------------------------------------------------------------
+-:   20:#include <gtest/gtest.h>
+-:   21:#include <gmock/gmock.h>
+-:   22:
+-:   23:#include <net-snmp/net-snmp-config.h>
+-:   24:#include <net-snmp/net-snmp-features.h>
+-:   25:#include <net-snmp/net-snmp-includes.h>
+-:   26:
+-:   27:#include <cstring>
+-:   28:#include <string>
+-:   29:#include <array>
+-:   30:
+-:   31:extern "C" {
+-:   32:#include "wagosnmp_API.h"
+-:   33:// It should not be necessary to include internal header, but in order to use libwagosnmp_Int32ToTlv,
+-:   34:// some definitions from asn are required.
+-:   35:#include "wagosnmp_internal.h"
+-:   36:}
+-:   37:
+-:   38:using namespace testing;
+-:   39:
+-:   40:constexpr char iod[] = "1.2.3.4.5.6.7.8.1.2.3.4.5.6.3.2.3.4";
+-:   41:
+function _ZL4initP19tWagoSnmpTranceiver8eMsgTypeP13stWagoSnmpTlv called 1 returned 100% blocks executed 100%
+1:   42:static void init(tWagoSnmpTranceiver *trcvr, tWagoSnmpTrcvType trcvType, tWagoSnmpTlv *tlv) {
+1:   43:    memset(trcvr, 0, sizeof(*trcvr));
+1:   44:    trcvr->version = SNMP_VERSION_2c;
+1:   45:    trcvr->retries = SNMP_DEFAULT_RETRIES;
+1:   46:    trcvr->timeout_us = 1000;
+1:   47:    trcvr->trcvType = trcvType;
+1:   48:    trcvr->sHost = const_cast<char*>("127.0.0.2");
+1:   49:    trcvr->szHost = strlen(trcvr->sHost);
+1:   50:    trcvr->sCommunity = const_cast<char*>("public");
+1:   51:    trcvr->szCommunity = strlen(trcvr->sCommunity);
+1:   52:    trcvr->sOID = const_cast<char*>(iod);
+1:   53:    trcvr->szOID = strlen(trcvr->sOID);
+1:   54:    trcvr->sInformOID = const_cast<char*>(iod);
+1:   55:    trcvr->szInformOID = strlen(trcvr->sInformOID);
+1:   56:    trcvr->typData = tlv;
+1:   57:}
+-:   58:
+4:   59:TEST(WAT36097, SendInformWithTLVStringMemoryAlloc) {
+-:   60:    tWagoSnmpTlv req;
+-:   61:    tWagoSnmpTranceiver trcvr;
+1:   62:    memset(&req, 0, sizeof(req));
+-:   63:
+1:   64:    init(&trcvr, WAGOSNMP_TRCV_INFORM, &req);
+-:   65:
+-:   66:
+1:   67:    std::string inform_data = "inform_data";
+-:   68:    // data longer than 40 bytes triggers memory allocation in net-snmp.
+-:   69:    // upto 40 bytes are stored netsnmp_variable_list->buf directly.
+1:   70:    inform_data.append(42, 'a');
+-:   71:
+1:   72:    auto ret = libwagosnmp_StrToTlv(inform_data.c_str(), ASN_OCTET_STR, &req);
+1*:   73:    ASSERT_THAT(ret, Eq(WAGOSNMP_RETURN_OK));
+-:   74:
+1:   75:    ret = libwagosnmp_Tranceive(&trcvr);
+-:   76:
+1:   77:    libwagosnmp_NullToTlv(&req);
+1:   78:    libwagosnmp_NullToTlv(&req);
+1:   79:}
+------------------
+_ZN48WAT36097_SendInformWithTLVStringMemoryAlloc_TestC2Ev:
+function _ZN48WAT36097_SendInformWithTLVStringMemoryAlloc_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   59:TEST(WAT36097, SendInformWithTLVStringMemoryAlloc) {
+call    0 returned 1
+------------------
+_ZN48WAT36097_SendInformWithTLVStringMemoryAlloc_TestD0Ev:
+function _ZN48WAT36097_SendInformWithTLVStringMemoryAlloc_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   59:TEST(WAT36097, SendInformWithTLVStringMemoryAlloc) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN48WAT36097_SendInformWithTLVStringMemoryAlloc_TestD2Ev:
+function _ZN48WAT36097_SendInformWithTLVStringMemoryAlloc_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   59:TEST(WAT36097, SendInformWithTLVStringMemoryAlloc) {
+call    0 returned 1
+------------------
+_ZN48WAT36097_SendInformWithTLVStringMemoryAlloc_Test8TestBodyEv:
+function _ZN48WAT36097_SendInformWithTLVStringMemoryAlloc_Test8TestBodyEv called 1 returned 100% blocks executed 51%
+1:   59:TEST(WAT36097, SendInformWithTLVStringMemoryAlloc) {
+-:   60:    tWagoSnmpTlv req;
+-:   61:    tWagoSnmpTranceiver trcvr;
+1:   62:    memset(&req, 0, sizeof(req));
+-:   63:
+1:   64:    init(&trcvr, WAGOSNMP_TRCV_INFORM, &req);
+call    0 returned 1
+-:   65:
+-:   66:
+1:   67:    std::string inform_data = "inform_data";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:   68:    // data longer than 40 bytes triggers memory allocation in net-snmp.
+-:   69:    // upto 40 bytes are stored netsnmp_variable_list->buf directly.
+1:   70:    inform_data.append(42, 'a');
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   71:
+1:   72:    auto ret = libwagosnmp_StrToTlv(inform_data.c_str(), ASN_OCTET_STR, &req);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:   73:    ASSERT_THAT(ret, Eq(WAGOSNMP_RETURN_OK));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:   74:
+1:   75:    ret = libwagosnmp_Tranceive(&trcvr);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   76:
+1:   77:    libwagosnmp_NullToTlv(&req);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   78:    libwagosnmp_NullToTlv(&req);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   79:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 never executed
+------------------
+-:   80:
+-:   81://---- End of source file ------------------------------------------------------

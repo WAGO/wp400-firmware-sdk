@@ -1,0 +1,105 @@
+-:    0:Source:src/util/Program.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:
+-:   10:#include "Program.hpp"
+-:   11:
+-:   12:#include <glib.h>
+-:   13:#include <poll.h>
+-:   14:#include <fcntl.h>
+-:   15:#include <sys/types.h>
+-:   16:#include <sys/wait.h>
+-:   17:#include <sys/stat.h>
+-:   18:
+-:   19:namespace wago::util {
+-:   20:
+function _ZN4wago4util7ProgramC2EOS1_ called 0 returned 0% blocks executed 0%
+#####:   21:Program::Program(Program &&other) noexcept {
+call    0 never executed
+call    1 never executed
+#####:   22:  this->operator =(::std::move(other));
+call    0 never executed
+call    1 never executed
+#####:   23:}
+-:   24:
+function _ZN4wago4util7ProgramaSEOS1_ called 0 returned 0% blocks executed 0%
+#####:   25:Program& Program::operator=(Program &&other) noexcept {
+#####:   26:  result_ = other.result_;
+-:   27:
+#####:   28:  other.result_ = -1;
+-:   29:
+#####:   30:  return *this;
+-:   31:}
+-:   32:
+function _ZN4wago4util7Program7ExecuteEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   33:Program Program::Execute(std::string &&cmdline) {
+#####:   34:  return Execute(cmdline);
+call    0 never executed
+-:   35:}
+-:   36:
+function _ZN4wago4util7Program7ExecuteERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   37:Program Program::Execute(std::string &cmdline) {
+-:   38:  gchar *stdout;
+-:   39:  gchar *stderr;
+-:   40:  GError *g_error;
+#####:   41:  Program p;
+call    0 never executed
+-:   42:
+#####:   43:  if (g_spawn_command_line_sync(cmdline.c_str(), &stdout, &stderr, &p.result_, &g_error) == 0) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:   44:    g_error_free(g_error);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   45:  } else {
+#####:   46:    p.stdout_ = stdout;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   47:    p.stderr_ = stderr;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   48:    g_free(stdout);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   49:    g_free(stderr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   50:  }
+-:   51:
+#####:   52:  return p;
+=====:   53:}
+call    0 never executed
+-:   54:
+function _ZNK4wago4util7Program9GetStdoutB5cxx11Ev called 0 returned 0% blocks executed 0%
+#####:   55:::std::string Program::GetStdout() const {
+#####:   56:  return stdout_;
+call    0 never executed
+-:   57:}
+-:   58:
+function _ZNK4wago4util7Program9GetStderrB5cxx11Ev called 0 returned 0% blocks executed 0%
+#####:   59:::std::string Program::GetStderr() const {
+#####:   60:  return stderr_;
+call    0 never executed
+-:   61:}
+-:   62:
+function _ZNK4wago4util7Program9GetResultEv called 0 returned 0% blocks executed 0%
+#####:   63:int Program::GetResult() const {
+#####:   64:  return result_;
+-:   65:}
+-:   66:
+-:   67:}

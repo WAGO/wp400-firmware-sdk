@@ -1,0 +1,542 @@
+-:    0:Source:src/config_dnsmasq/network_config.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:/// Copyright (c) 2020-2024 WAGO GmbH & Co. KG
+-:    3:///
+-:    4:/// PROPRIETARY RIGHTS of WAGO GmbH & Co. KG are involved in
+-:    5:/// the subject matter of this material. All manufacturing, reproduction,
+-:    6:/// use, and sales rights pertaining to this subject matter are governed
+-:    7:/// by the license agreement. The recipient of this software implicitly
+-:    8:/// accepts the terms of the license.
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///
+-:   12:///  \brief    Reading of network information (ethernet, ip and interfaces).
+-:   13:///
+-:   14:///  \author   MSc, WAGO GmbH & Co. KG.
+-:   15:///  \author   MOe, WAGO GmbH & Co. KG.
+-:   16://------------------------------------------------------------------------------
+-:   17:#include "network_config.hpp"
+-:   18:
+-:   19:#include <boost/algorithm/string.hpp>
+-:   20:#include <ct_liblog.h>
+-:   21:
+-:   22:#include <BridgeConfig.hpp>
+-:   23:#include <IPConfig.hpp>
+-:   24:#include <InterfaceConfig.hpp>
+-:   25:
+-:   26:#include "error_handling.hpp"
+-:   27:#include "utilities.hpp"
+-:   28:
+-:   29:namespace napi = ::netconf::api;
+-:   30:
+-:   31:namespace configdnsmasq {
+-:   32:namespace {
+-:   33:
+function _ZN13configdnsmasq12_GLOBAL__N_112get_hostnameEb called 1 returned 100% blocks executed 20%
+1:   34:::std::string get_hostname(bool debugmode) {
+1:   35:  if (debugmode) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+1:   36:    return "debughostname";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 never executed
+-:   37:  }
+-:   38:
+#####:   39:  ::std::array<char, 256> buffer{};
+#####:   40:  int status = gethostname(buffer.data(), sizeof(buffer));
+call    0 never executed
+call    1 never executed
+#####:   41:  if (status != SUCCESS) {
+branch  0 never executed
+branch  1 never executed
+#####:   42:    erh_set_error(SYSTEM_CALL_ERROR, "gethostname failed.", true);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+#####:   43:    return "";
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:   44:  }
+-:   45:
+#####:   46:  return ::std::string{buffer.data()};
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+call    6 never executed
+-:   47:}
+-:   48:
+function _ZN13configdnsmasq12_GLOBAL__N_142read_network_config_from_program_argumentsERK7prgconfRNS_14network_configE called 0 returned 0% blocks executed 0%
+#####:   49:void read_network_config_from_program_arguments(const prgconf_t& prgconf, network_config& config) {
+#####:   50:  ::netconf::Status status;
+call    0 never executed
+#####:   51:  status = napi::MakeBridgeConfig(prgconf.bridge_config, config.bridge_config_);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+#####:   52:  erh_assert(status.IsOk(), eStatusCode::INVALID_PARAMETER, status.ToString());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+-:   53:
+#####:   54:  status = napi::MakeIPConfigs(prgconf.ip_config, config.ip_configs_);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+#####:   55:  erh_assert(status.IsOk(), eStatusCode::INVALID_PARAMETER, status.ToString());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+-:   56:
+#####:   57:  status = napi::MakeInterfaceConfigs(prgconf.interface_config, config.interface_configs_);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+#####:   58:  erh_assert(status.IsOk(), eStatusCode::INVALID_PARAMETER, status.ToString());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+-:   59:
+#####:   60:  status = napi::MakeInterfaceStatuses(prgconf.interface_statuses, config.interface_statuses_);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+#####:   61:  erh_assert(status.IsOk(), eStatusCode::INVALID_PARAMETER, status.ToString());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+#####:   62:}
+call    0 never executed
+call    1 never executed
+-:   63:
+function _ZN13configdnsmasq12_GLOBAL__N_132read_network_config_via_netconfdERNS_14network_configE called 0 returned 0% blocks executed 0%
+#####:   64:void read_network_config_via_netconfd(network_config& config) {
+#####:   65:  ::netconf::Status status = napi::GetBridgeConfig(config.bridge_config_);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   66:  erh_assert(status.IsOk(), eStatusCode::INVALID_PARAMETER, status.ToString());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+-:   67:
+#####:   68:  status = napi::GetCurrentIPConfigs(config.ip_configs_);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+#####:   69:  erh_assert(status.IsOk(), eStatusCode::INVALID_PARAMETER, status.ToString());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+-:   70:
+#####:   71:  status = napi::GetInterfaceConfigs(config.interface_configs_);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+#####:   72:  erh_assert(status.IsOk(), eStatusCode::INVALID_PARAMETER, status.ToString());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+-:   73:
+#####:   74:  status = napi::GetInterfaceStatuses(config.interface_statuses_);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+#####:   75:  erh_assert(status.IsOk(), eStatusCode::INVALID_PARAMETER, status.ToString());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+#####:   76:}
+call    0 never executed
+call    1 never executed
+-:   77:
+-:   78:}  // Anonymous namespace
+-:   79:
+function _ZN13configdnsmasq48is_network_config_provided_via_program_argumentsERK7prgconf called 3 returned 100% blocks executed 80%
+3:   80:program_arguments_provisioning is_network_config_provided_via_program_arguments(const prgconf_t& prgconf) {
+3:   81:  ::std::vector<::std::string> empty_config_names{};
+call    0 returned 3
+-:   82:
+3:   83:  if (prgconf.bridge_config.empty()) {
+call    0 returned 3
+branch  1 taken 1 (fallthrough)
+branch  2 taken 2
+1:   84:    empty_config_names.emplace_back("bridge-config");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   85:  }
+3:   86:  if (prgconf.ip_config.empty()) {
+call    0 returned 3
+branch  1 taken 2 (fallthrough)
+branch  2 taken 1
+2:   87:    empty_config_names.emplace_back("ip-config");
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+-:   88:  }
+3:   89:  if (prgconf.interface_config.empty()) {
+call    0 returned 3
+branch  1 taken 2 (fallthrough)
+branch  2 taken 1
+2:   90:    empty_config_names.emplace_back("interface-config");
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+-:   91:  }
+3:   92:  if (prgconf.interface_statuses.empty()) {
+call    0 returned 3
+branch  1 taken 2 (fallthrough)
+branch  2 taken 1
+2:   93:    empty_config_names.emplace_back("interface-statuses");
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+-:   94:  }
+-:   95:
+3:   96:  if (empty_config_names.empty()) {
+call    0 returned 3
+branch  1 taken 1 (fallthrough)
+branch  2 taken 2
+1:   97:    return COMPLETELY_PROVIDED;
+-:   98:  }
+2:   99:  if (empty_config_names.size() == 4) {
+call    0 returned 2
+branch  1 taken 1 (fallthrough)
+branch  2 taken 1
+1:  100:    return NOT_PROVIDED;
+-:  101:  }
+-:  102:
+1:  103:  ::std::string missing_configs = boost::algorithm::join(empty_config_names, ", ");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  104:  erh_log("Network config is only provided partially via program arguments. Missing configs: " + missing_configs);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+call    7 never executed
+-:  105:
+1:  106:  return PARTIALLY_PROVIDED;
+3:  107:}
+call    0 returned 1
+call    1 returned 3
+call    2 never executed
+call    3 never executed
+-:  108:
+function _ZN13configdnsmasq19read_network_configERNS_16ip_configurationERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EERK7prgconfb called 0 returned 0% blocks executed 0%
+#####:  109:void read_network_config(ip_configuration& data, std::vector<std::string>& legal_ports, const prgconf_t& prgconf,
+-:  110:                          bool debugmode) {
+#####:  111:  network_config config;
+call    0 never executed
+-:  112:
+#####:  113:  auto program_args_provisioning = is_network_config_provided_via_program_arguments(prgconf);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  114:
+#####:  115:  if (program_args_provisioning == COMPLETELY_PROVIDED) {
+branch  0 never executed
+branch  1 never executed
+#####:  116:    read_network_config_from_program_arguments(prgconf, config);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  117:  } else if (program_args_provisioning == NOT_PROVIDED) {
+branch  0 never executed
+branch  1 never executed
+#####:  118:    read_network_config_via_netconfd(config);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  119:  } else {
+#####:  120:    erh_set_error(eStatusCode::MISSING_PARAMETER, "Exiting due to missing network configs.");
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+-:  121:  }
+-:  122:
+#####:  123:  generate_legal_ports(config.interface_configs_, legal_ports);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  124:
+#####:  125:  parse_config_parameter(data, legal_ports, debugmode, config);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  126:}
+call    0 never executed
+call    1 never executed
+-:  127:
+function _ZN13configdnsmasq20generate_legal_portsERKN7netconf3api16InterfaceConfigsERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EE called 2 returned 100% blocks executed 65%
+2:  128:void generate_legal_ports(const napi::InterfaceConfigs& interface_configs, ::std::vector<::std::string>& legal_ports) {
+2:  129:  const auto& configs = interface_configs.GetConfig();
+call    0 returned 2
+function _ZZN13configdnsmasq20generate_legal_portsERKN7netconf3api16InterfaceConfigsERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISB_EEENKUlRKT_E_clINS0_13InterfaceBaseEEEDaSH_ called 8 returned 100% blocks executed 100%
+2:  130:  auto count          = ::std::count_if(configs.cbegin(), configs.cend(), [](const auto& c) {
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+branch  3 taken 2 (fallthrough)
+branch  4 taken 0 (throw)
+8:  131:    return c.interface_.GetLabel().find('X') == 0;  // starts with X, e.g. X1, X12
+call    0 returned 8
+call    1 returned 8
+call    2 returned 8
+-:  132:  });
+-:  133:
+8:  134:  for (int i = 0; i < count; i++) {
+branch  0 taken 6
+branch  1 taken 2 (fallthrough)
+6:  135:    legal_ports.push_back("br" + ::std::to_string(i));
+call    0 returned 6
+branch  1 taken 6 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 6
+branch  4 taken 6 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 6
+branch  7 taken 6 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 6
+call   10 returned 6
+call   11 never executed
+call   12 never executed
+-:  136:  }
+2:  137:}
+call    0 returned 2
+call    1 never executed
+-:  138:
+function _ZN13configdnsmasq22parse_config_parameterERNS_16ip_configurationERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEbRKNS_14network_configE called 1 returned 100% blocks executed 63%
+1:  139:void parse_config_parameter(configdnsmasq::ip_configuration& ipConfig, std::vector<std::string>& legal_ports,
+-:  140:                            bool debugmode, const network_config& config) {
+1:  141:  ipConfig.host_name = get_hostname(debugmode);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+-:  142:
+1:  143:  auto bridges = config.bridge_config_.GetBridges();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  144:
+1:  145:  ::std::string bridge_list_str = boost::algorithm::join(bridges, ",");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  146:  erh_assert(!bridge_list_str.empty(), eStatusCode::INVALID_PARAMETER, "Error: No bridges found.", true);
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 never executed
+call   11 never executed
+-:  147:
+-:  148:  // Read port specific parameters, IP-Address, Netmask.
+3:  149:  for (const auto& bridge : bridges) {
+call    0 returned 1
+call    1 returned 1
+call    2 returned 2
+call    3 returned 2
+call    4 returned 3
+branch  5 taken 2
+branch  6 taken 1 (fallthrough)
+2:  150:    auto it = ::std::find(legal_ports.begin(), legal_ports.end(), bridge);
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+branch  3 taken 2 (fallthrough)
+branch  4 taken 0 (throw)
+2*:  151:    if (it == legal_ports.end()) {
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 0 (fallthrough)
+branch  3 taken 2
+#####:  152:      continue;
+-:  153:    }
+-:  154:
+2:  155:    port_data pd;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  156:    pd.port_name_ = bridge;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  157:    pd.setState(bridge, config.bridge_config_, config.interface_configs_);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+call    7 never executed
+2:  158:    pd.setLinkState(bridge, config.bridge_config_, config.interface_statuses_);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+-:  159:
+2:  160:    auto optional = config.ip_configs_.GetIPConfig(bridge);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+4:  161:    erh_assert(optional.has_value(), eStatusCode::INVALID_PARAMETER,
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0 (throw)
+4:  162:               ::std::string("Failed to get IP config for bridge ") + bridge, true);
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 2
+branch  5 taken 2 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 2
+call    8 returned 2
+call    9 returned 2
+call   10 never executed
+call   11 never executed
+call   12 never executed
+-:  163:
+2:  164:    auto c = *optional;
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0 (throw)
+2:  165:    pd.setType(c);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  166:    pd.setIpAddress(c.address_);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  167:    pd.setNetmask(c.netmask_);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+-:  168:
+2:  169:    ipConfig.port_name_list.push_back(bridge);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  170:    ipConfig.port_data_list.push_back(pd);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  171:  }
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+call    3 never executed
+call    4 never executed
+call    5 never executed
+1:  172:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+-:  173:
+-:  174:}  // namespace configdnsmasq

@@ -1,0 +1,1378 @@
+-:    0:Source:src/SnmpParameterValidation.cpp
+-:    1:/*
+-:    2: * SnmpParameterValidation.cpp
+-:    3: *
+-:    4: *  Created on: 14.02.2022
+-:    5: *      Author: u016903
+-:    6: */
+-:    7:
+-:    8:#include "SnmpParameterValidation.hpp"
+-:    9:
+-:   10:#include <regex>
+-:   11:#include <iostream>
+-:   12:
+-:   13:#include <locale>
+-:   14:#include <codecvt>
+-:   15:#include <string>
+-:   16:
+-:   17:namespace wago::snmp_config_lib {
+-:   18:
+-:   19:namespace {
+-:   20:
+-:   21:/*::std::string is not suitable for processing strings with umlauts because they are larger than a char.
+-:   22: * wchar reserves 4 bytes for each character.
+-:   23: */
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_131GetFirstUtf8CharacterFromStringERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 28 returned 100% blocks executed 73%
+28:   24:::std::string GetFirstUtf8CharacterFromString(::std::string &str) {
+28:   25:  std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+call    0 returned 28
+branch  1 taken 28 (fallthrough)
+branch  2 taken 0 (throw)
+28:   26:  std::wstring wide = converter.from_bytes(str);
+call    0 returned 28
+branch  1 taken 28 (fallthrough)
+branch  2 taken 0 (throw)
+28:   27:  wide = wide.front();
+call    0 returned 28
+call    1 returned 28
+branch  2 taken 28 (fallthrough)
+branch  3 taken 0 (throw)
+56:   28:  return converter.to_bytes(wide);
+call    0 returned 28
+branch  1 taken 28 (fallthrough)
+branch  2 taken 0 (throw)
+28:   29:}
+call    0 returned 28
+call    1 returned 28
+call    2 never executed
+call    3 never executed
+-:   30:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_111checkStringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOS7_mmRS7_ called 201 returned 100% blocks executed 61%
+201:   31:bool checkString(const ::std::string &value, ::std::string &&regex, size_t min_string_length, size_t max_string_length,
+-:   32:                 ::std::string &match_error) {
+201:   33:  match_error = ::std::string { };
+call    0 returned 201
+call    1 returned 201
+call    2 returned 201
+201:   34:  if (value.size() < min_string_length || value.size() > max_string_length) {
+call    0 returned 201
+branch  1 taken 196 (fallthrough)
+branch  2 taken 5
+call    3 returned 196
+branch  4 taken 10 (fallthrough)
+branch  5 taken 186
+branch  6 taken 15 (fallthrough)
+branch  7 taken 186
+15:   35:    if (min_string_length == 0) {
+branch  0 taken 5 (fallthrough)
+branch  1 taken 10
+5:   36:      match_error = "the string can be up to " + ::std::to_string(max_string_length) + " characters long.";
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 5
+branch  4 taken 5 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 5
+branch  7 taken 5 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 5
+call   10 returned 5
+call   11 returned 5
+call   12 returned 5
+call   13 never executed
+call   14 never executed
+-:   37:    } else {
+20:   38:      match_error = "the string must be between " + ::std::to_string(min_string_length) + " and "
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 10
+branch  4 taken 10 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 10
+branch  7 taken 10 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 10
+call   10 returned 10
+call   11 never executed
+call   12 never executed
+call   13 never executed
+10:   39:          + ::std::to_string(max_string_length) + " characters long.";
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 10
+branch  4 taken 10 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 10
+branch  7 taken 10 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 10
+call   10 returned 10
+call   11 returned 10
+call   12 returned 10
+call   13 returned 10
+call   14 never executed
+call   15 never executed
+-:   40:    }
+15:   41:    return false;
+-:   42:  }
+-:   43:
+186:   44:  bool success = false;
+186:   45:  ::std::regex expr { regex };
+call    0 returned 186
+branch  1 taken 186 (fallthrough)
+branch  2 taken 0 (throw)
+186:   46:  ::std::smatch sm;
+call    0 returned 186
+186:   47:  if (::std::regex_match(value, sm, expr)) {
+call    0 returned 186
+branch  1 taken 186 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 158 (fallthrough)
+branch  4 taken 28
+158:   48:    success = true;
+-:   49:  } else {
+28:   50:    ::std::regex_search(value, sm, expr);
+call    0 returned 28
+branch  1 taken 28 (fallthrough)
+branch  2 taken 0 (throw)
+28:   51:    ::std::string suffix = sm.suffix();
+call    0 returned 28
+branch  1 taken 28 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 28
+branch  4 taken 28 (fallthrough)
+branch  5 taken 0 (throw)
+28:   52:    if (not suffix.empty()) {
+call    0 returned 28
+branch  1 taken 28 (fallthrough)
+branch  2 taken 0
+28:   53:      match_error = ::std::string("character '") + GetFirstUtf8CharacterFromString(suffix) + "' is not allowed.";
+call    0 returned 28
+call    1 returned 28
+branch  2 taken 28 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 28
+branch  5 taken 28 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 28
+branch  8 taken 28 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 28
+branch 11 taken 28 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 28
+call   14 returned 28
+call   15 returned 28
+call   16 returned 28
+call   17 returned 28
+call   18 returned 28
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+-:   54:    }
+28:   55:  }
+call    0 returned 28
+call    1 never executed
+186:   56:  return success;
+-:   57:
+186:   58:}
+call    0 returned 186
+call    1 returned 186
+call    2 never executed
+call    3 never executed
+-:   59:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_111IsAnyStringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS7_ called 80 returned 100% blocks executed 64%
+80:   60:bool IsAnyString(const ::std::string &value, ::std::string &match_error) {
+80:   61:  return checkString(value, "[A-Za-z0-9 !?:;\\.,{}\\[\\]()*~'_\\-@+]{0,255}", 0, 255, match_error);  //NOLINT modernize-raw-string-literal ::std::regex does not support raw-string-literal
+call    0 returned 80
+call    1 returned 80
+branch  2 taken 80 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 80
+branch  5 taken 80 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 80
+call    8 returned 80
+call    9 never executed
+call   10 never executed
+-:   62:}
+-:   63:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_129IsSelectedCharsWithLength8_32ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS7_ called 31 returned 100% blocks executed 64%
+31:   64:bool IsSelectedCharsWithLength8_32(const ::std::string &value, ::std::string &match_error) {
+31:   65:  return checkString(value, "[A-Za-z0-9!()*~'._-]{0,32}", 8, 32, match_error);
+call    0 returned 31
+call    1 returned 31
+branch  2 taken 31 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 31
+branch  5 taken 31 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 31
+call    8 returned 31
+call    9 never executed
+call   10 never executed
+-:   66:}
+-:   67:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_122ValidateBasicParameterERKNS0_10SnmpConfigE called 15 returned 100% blocks executed 28%
+15:   68:Statuses ValidateBasicParameter(const SnmpConfig &config) {
+15:   69:  Statuses s;
+call    0 returned 15
+15:   70:  ::std::string match_error { };
+call    0 returned 15
+15:   71:  if (not IsValidName(config.sys_name_, match_error)) {
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 1 (fallthrough)
+branch  4 taken 14
+1:   72:    s.AddErrorStatus(
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2:   73:        Status { StatusCode::WRONG_PARAMETER_PATTERN, "Invalid name: '" + config.sys_name_ + "' " + match_error });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+-:   74:  }
+15:   75:  if (not IsValidContact(config.sys_contact_, match_error)) {
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 15
+#####:   76:    s.AddErrorStatus(
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   77:        Status { StatusCode::WRONG_PARAMETER_PATTERN, "Invalid contact '" + config.sys_contact_ + "' " + match_error });
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+-:   78:  }
+15:   79:  if (not IsValidDescription(config.sys_descr_, match_error)) {
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 15
+#####:   80:    s.AddErrorStatus(
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   81:        Status { StatusCode::WRONG_PARAMETER_PATTERN, "Invalid description '" + config.sys_descr_ + "' " + match_error });
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+-:   82:  }
+15:   83:  if (not IsValidLocation(config.sys_location_, match_error)) {
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 15
+#####:   84:    s.AddErrorStatus(
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   85:        Status { StatusCode::WRONG_PARAMETER_PATTERN, "Invalid location: '" + config.sys_location_ + "' " + match_error });
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+-:   86:  }
+15:   87:  if (not IsValidObjectId(config.sys_objectID_, match_error)) {
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 1 (fallthrough)
+branch  4 taken 14
+1:   88:    s.AddErrorStatus(
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2:   89:        Status { StatusCode::WRONG_PARAMETER_PATTERN, "Invalid objectID: '" + config.sys_objectID_ + "' " + match_error });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+-:   90:  }
+30:   91:  return s;
+15:   92:}
+call    0 returned 15
+call    1 never executed
+call    2 never executed
+-:   93:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_126ValidateDuplicateUserEntryERKSt6vectorINS0_4UserESaIS3_EERNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 15 returned 100% blocks executed 63%
+15:   94:void ValidateDuplicateUserEntry(const ::std::vector<User> &user, Statuses &s, ::std::string &&error_msg) {
+15:   95:  auto data = user;
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+15:   96:  ::std::sort(data.begin(), data.end());
+call    0 returned 15
+call    1 returned 15
+call    2 returned 15
+branch  3 taken 15 (fallthrough)
+branch  4 taken 0 (throw)
+function _ZZN4wago15snmp_config_lib12_GLOBAL__N_126ValidateDuplicateUserEntryERKSt6vectorINS0_4UserESaIS3_EERNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENKUlRKS3_SI_E_clESI_SI_ called 2 returned 100% blocks executed 100%
+15:   97:  auto it = ::std::adjacent_find(data.begin(), data.end(), [](const User &u1, const User &u2) {
+call    0 returned 15
+call    1 returned 15
+call    2 returned 15
+branch  3 taken 15 (fallthrough)
+branch  4 taken 0 (throw)
+2:   98:    return u1.name_ == u2.name_;
+call    0 returned 2
+-:   99:  });
+-:  100:
+15:  101:  if (it != data.end()) {
+call    0 returned 15
+call    1 returned 15
+branch  2 taken 1 (fallthrough)
+branch  3 taken 14
+1:  102:    s.AddErrorStatus(Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + it->name_ + "'" });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  103:  }
+15:  104:}
+call    0 returned 15
+call    1 never executed
+-:  105:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_136ValidateDuplicateTrapReceiverV3EntryERKSt6vectorINS0_14TrapReceiverV3ESaIS3_EERNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 15 returned 100% blocks executed 63%
+15:  106:void ValidateDuplicateTrapReceiverV3Entry(const ::std::vector<TrapReceiverV3> &trap_receiver, Statuses &s,
+-:  107:                                          ::std::string &&error_msg) {
+15:  108:  auto data = trap_receiver;
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+15:  109:  ::std::sort(data.begin(), data.end());
+call    0 returned 15
+call    1 returned 15
+call    2 returned 15
+branch  3 taken 15 (fallthrough)
+branch  4 taken 0 (throw)
+function _ZZN4wago15snmp_config_lib12_GLOBAL__N_136ValidateDuplicateTrapReceiverV3EntryERKSt6vectorINS0_14TrapReceiverV3ESaIS3_EERNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENKUlRKS3_S3_E_clESI_S3_ called 3 returned 100% blocks executed 100%
+15:  110:  auto it = ::std::adjacent_find(data.begin(), data.end(), [](const TrapReceiverV3 &t1, const TrapReceiverV3 t2) {
+call    0 returned 15
+call    1 returned 15
+call    2 returned 15
+branch  3 taken 15 (fallthrough)
+branch  4 taken 0 (throw)
+3:  111:    return (t1.name_ == t2.name_ && t1.host_ == t2.host_);
+call    0 returned 3
+branch  1 taken 1 (fallthrough)
+branch  2 taken 2
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0
+-:  112:  });
+-:  113:
+15:  114:  if (it != data.end()) {
+call    0 returned 15
+call    1 returned 15
+branch  2 taken 1 (fallthrough)
+branch  3 taken 14
+1:  115:    s.AddErrorStatus(Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + it->name_ + "'" });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  116:  }
+15:  117:}
+call    0 returned 15
+call    1 never executed
+-:  118:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_131ValidateDuplicateCommunityEntryERKSt6vectorINS0_9CommunityESaIS3_EERNS0_8StatusesE called 15 returned 100% blocks executed 67%
+15:  119:void ValidateDuplicateCommunityEntry(const ::std::vector<Community> &communities, Statuses &s) {
+-:  120:
+15:  121:  auto data = communities;
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+15:  122:  std::sort(data.begin(), data.end());
+call    0 returned 15
+call    1 returned 15
+call    2 returned 15
+branch  3 taken 15 (fallthrough)
+branch  4 taken 0 (throw)
+15:  123:  auto it = std::adjacent_find(data.begin(), data.end());
+call    0 returned 15
+call    1 returned 15
+call    2 returned 15
+branch  3 taken 15 (fallthrough)
+branch  4 taken 0 (throw)
+15:  124:  if (it != data.end()) {
+call    0 returned 15
+call    1 returned 15
+branch  2 taken 1 (fallthrough)
+branch  3 taken 14
+1:  125:    s.AddErrorStatus(
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2:  126:        Status { StatusCode::WRONG_PARAMETER_PATTERN, "duplicated entry for community: '" + it->name_ + "'" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+call   11 returned 1
+call   12 returned 1
+call   13 never executed
+call   14 never executed
+call   15 never executed
+-:  127:  }
+15:  128:}
+call    0 returned 15
+call    1 never executed
+-:  129:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_139ValidateDuplicateTrapReceiverV1V2cEntryERKSt6vectorINS0_17TrapReceiverV1V2cESaIS3_EERNS0_8StatusesE called 15 returned 100% blocks executed 67%
+15:  130:void ValidateDuplicateTrapReceiverV1V2cEntry(const ::std::vector<TrapReceiverV1V2c> &traps, Statuses &s) {
+-:  131:
+15:  132:  auto data = traps;
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+15:  133:  std::sort(data.begin(), data.end());
+call    0 returned 15
+call    1 returned 15
+call    2 returned 15
+branch  3 taken 15 (fallthrough)
+branch  4 taken 0 (throw)
+15:  134:  auto it = std::adjacent_find(data.begin(), data.end());
+call    0 returned 15
+call    1 returned 15
+call    2 returned 15
+branch  3 taken 15 (fallthrough)
+branch  4 taken 0 (throw)
+15:  135:  if (it != data.end()) {
+call    0 returned 15
+call    1 returned 15
+branch  2 taken 1 (fallthrough)
+branch  3 taken 14
+1:  136:    s.AddErrorStatus(
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2:  137:        Status { StatusCode::WRONG_PARAMETER_PATTERN, "duplicated entry for trap receiver: '" + it->host_ + "'" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+call   11 returned 1
+call   12 returned 1
+call   13 never executed
+call   14 never executed
+call   15 never executed
+-:  138:  }
+15:  139:}
+call    0 returned 15
+call    1 never executed
+-:  140:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_121ValidateCommunityNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_8StatusesEOS7_ called 22 returned 100% blocks executed 51%
+22:  141:void ValidateCommunityName(const ::std::string &community, Statuses &s, ::std::string &&error_msg) {
+22:  142:  ::std::string match_error;
+call    0 returned 22
+22:  143:  if (not IsValidCommunityName(community, match_error)) {
+call    0 returned 22
+branch  1 taken 22 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 3 (fallthrough)
+branch  4 taken 19
+3:  144:    s.AddErrorStatus(
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+6:  145:        Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + community + "' " + match_error });
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 3 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 3
+branch  7 taken 3 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 3
+branch 10 taken 3 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 3
+branch 13 taken 3 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 3
+call   16 returned 3
+call   17 returned 3
+call   18 returned 3
+call   19 returned 3
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  146:  }
+22:  147:}
+call    0 returned 22
+call    1 never executed
+-:  148:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_114ValidateV3NameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_8StatusesEOS7_ called 16 returned 100% blocks executed 17%
+16:  149:void ValidateV3Name(const ::std::string &name, Statuses &s, ::std::string &&error_msg) {
+16:  150:  ::std::string match_error;
+call    0 returned 16
+16:  151:  if (not IsValidV3Name(name, match_error)) {
+call    0 returned 16
+branch  1 taken 16 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 16
+#####:  152:    s.AddErrorStatus(Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + name + "' " + match_error });
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:  153:  }
+16:  154:}
+call    0 returned 16
+call    1 never executed
+-:  155:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_112ValidateHostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_8StatusesEOS7_ called 20 returned 100% blocks executed 51%
+20:  156:void ValidateHost(const ::std::string &name, Statuses &s, ::std::string &&error_msg) {
+20:  157:  ::std::string match_error;
+call    0 returned 20
+20:  158:  if (not IsValidHost(name, match_error)) {
+call    0 returned 20
+branch  1 taken 20 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 1 (fallthrough)
+branch  4 taken 19
+1:  159:    s.AddErrorStatus(Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + name + "' " + match_error });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:  160:  }
+20:  161:}
+call    0 returned 20
+call    1 never executed
+-:  162:
+-:  163:template<class T>
+16:  164:void ValidateAuthenticationKey(const T &data, Statuses &s, ::std::string &&error_msg) {
+16:  165:  ::std::string match_error;
+16:  166:  if (data.security_level_ == SecurityLevel::AuthNoPriv || data.security_level_ == SecurityLevel::AuthPriv) {
+6:  167:    if (not IsValidAuthenticationKey(data.authentication_key_, match_error)) {
+#####:  168:      s.AddErrorStatus(
+#####:  169:          Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + data.authentication_key_ + "' "
+-:  170:              + match_error });
+-:  171:    }
+-:  172:  }
+16:  173:}
+------------------
+_ZN4wago15snmp_config_lib12_GLOBAL__N_125ValidateAuthenticationKeyINS0_4UserEEEvRKT_RNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_125ValidateAuthenticationKeyINS0_4UserEEEvRKT_RNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 8 returned 100% blocks executed 22%
+8:  164:void ValidateAuthenticationKey(const T &data, Statuses &s, ::std::string &&error_msg) {
+8:  165:  ::std::string match_error;
+call    0 returned 8
+8:  166:  if (data.security_level_ == SecurityLevel::AuthNoPriv || data.security_level_ == SecurityLevel::AuthPriv) {
+branch  0 taken 7 (fallthrough)
+branch  1 taken 1
+branch  2 taken 2 (fallthrough)
+branch  3 taken 5
+3:  167:    if (not IsValidAuthenticationKey(data.authentication_key_, match_error)) {
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 3
+#####:  168:      s.AddErrorStatus(
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+#####:  169:          Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + data.authentication_key_ + "' "
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  170:              + match_error });
+-:  171:    }
+-:  172:  }
+8:  173:}
+call    0 returned 8
+call    1 never executed
+------------------
+_ZN4wago15snmp_config_lib12_GLOBAL__N_125ValidateAuthenticationKeyINS0_14TrapReceiverV3EEEvRKT_RNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_125ValidateAuthenticationKeyINS0_14TrapReceiverV3EEEvRKT_RNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 8 returned 100% blocks executed 22%
+8:  164:void ValidateAuthenticationKey(const T &data, Statuses &s, ::std::string &&error_msg) {
+8:  165:  ::std::string match_error;
+call    0 returned 8
+8:  166:  if (data.security_level_ == SecurityLevel::AuthNoPriv || data.security_level_ == SecurityLevel::AuthPriv) {
+branch  0 taken 7 (fallthrough)
+branch  1 taken 1
+branch  2 taken 2 (fallthrough)
+branch  3 taken 5
+3:  167:    if (not IsValidAuthenticationKey(data.authentication_key_, match_error)) {
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 3
+#####:  168:      s.AddErrorStatus(
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+#####:  169:          Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + data.authentication_key_ + "' "
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  170:              + match_error });
+-:  171:    }
+-:  172:  }
+8:  173:}
+call    0 returned 8
+call    1 never executed
+------------------
+-:  174:
+-:  175:template<class T>
+16:  176:void ValidatePrivacyKey(const T &data, Statuses &s, ::std::string &&error_msg) {
+16:  177:  ::std::string match_error;
+16:  178:  if (data.security_level_ == SecurityLevel::AuthPriv) {
+4:  179:    if (not IsValidPrivacyKey(data.privacy_key_, match_error)) {
+#####:  180:      s.AddErrorStatus(
+#####:  181:          Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + data.privacy_key_ + "' " + match_error });
+-:  182:    }
+-:  183:  }
+16:  184:}
+------------------
+_ZN4wago15snmp_config_lib12_GLOBAL__N_118ValidatePrivacyKeyINS0_4UserEEEvRKT_RNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_118ValidatePrivacyKeyINS0_4UserEEEvRKT_RNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 8 returned 100% blocks executed 19%
+8:  176:void ValidatePrivacyKey(const T &data, Statuses &s, ::std::string &&error_msg) {
+8:  177:  ::std::string match_error;
+call    0 returned 8
+8:  178:  if (data.security_level_ == SecurityLevel::AuthPriv) {
+branch  0 taken 2 (fallthrough)
+branch  1 taken 6
+2:  179:    if (not IsValidPrivacyKey(data.privacy_key_, match_error)) {
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 2
+#####:  180:      s.AddErrorStatus(
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+#####:  181:          Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + data.privacy_key_ + "' " + match_error });
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  182:    }
+-:  183:  }
+8:  184:}
+call    0 returned 8
+call    1 never executed
+------------------
+_ZN4wago15snmp_config_lib12_GLOBAL__N_118ValidatePrivacyKeyINS0_14TrapReceiverV3EEEvRKT_RNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_118ValidatePrivacyKeyINS0_14TrapReceiverV3EEEvRKT_RNS0_8StatusesEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 8 returned 100% blocks executed 19%
+8:  176:void ValidatePrivacyKey(const T &data, Statuses &s, ::std::string &&error_msg) {
+8:  177:  ::std::string match_error;
+call    0 returned 8
+8:  178:  if (data.security_level_ == SecurityLevel::AuthPriv) {
+branch  0 taken 2 (fallthrough)
+branch  1 taken 6
+2:  179:    if (not IsValidPrivacyKey(data.privacy_key_, match_error)) {
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 2
+#####:  180:      s.AddErrorStatus(
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+#####:  181:          Status { StatusCode::WRONG_PARAMETER_PATTERN, error_msg + ": '" + data.privacy_key_ + "' " + match_error });
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  182:    }
+-:  183:  }
+8:  184:}
+call    0 returned 8
+call    1 never executed
+------------------
+-:  185:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_126ValidateTrapV1V2cParameterERKNS0_10SnmpConfigE called 15 returned 100% blocks executed 59%
+15:  186:Statuses ValidateTrapV1V2cParameter(const SnmpConfig &config) {
+15:  187:  Statuses s;
+call    0 returned 15
+15:  188:  ::std::string match_error { };
+call    0 returned 15
+27:  189:  for (auto &trap : config.trap_receivers_V1V2c_) {
+call    0 returned 15
+call    1 returned 15
+call    2 returned 12
+call    3 returned 27
+branch  4 taken 12
+branch  5 taken 15 (fallthrough)
+12:  190:    ValidateHost(trap.host_, s, "invalid host for trap receiver");
+call    0 returned 12
+call    1 returned 12
+branch  2 taken 12 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 12
+branch  5 taken 12 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 12
+call    8 returned 12
+call    9 never executed
+call   10 never executed
+12:  191:    ValidateCommunityName(trap.community_, s, "invalid community name for trap receiver");
+call    0 returned 12
+call    1 returned 12
+branch  2 taken 12 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 12
+branch  5 taken 12 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 12
+call    8 returned 12
+call    9 returned 12
+call   10 never executed
+call   11 never executed
+-:  192:  }
+-:  193:
+15:  194:  ValidateDuplicateTrapReceiverV1V2cEntry(config.trap_receivers_V1V2c_, s);
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+30:  195:  return s;
+15:  196:}
+call    0 returned 15
+call    1 never executed
+call    2 never executed
+-:  197:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_126ValidateCommunityParameterERKNS0_10SnmpConfigE called 15 returned 100% blocks executed 63%
+15:  198:Statuses ValidateCommunityParameter(const SnmpConfig &config) {
+15:  199:  Statuses s;
+call    0 returned 15
+15:  200:  ::std::string match_error { };
+call    0 returned 15
+25:  201:  for (auto &community : config.communities_) {
+call    0 returned 15
+call    1 returned 15
+call    2 returned 10
+call    3 returned 25
+branch  4 taken 10
+branch  5 taken 15 (fallthrough)
+10:  202:    ValidateCommunityName(community.name_, s, "invalid community name");
+call    0 returned 10
+call    1 returned 10
+branch  2 taken 10 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 10
+branch  5 taken 10 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 10
+call    8 returned 10
+call    9 returned 10
+call   10 never executed
+call   11 never executed
+-:  203:  }
+-:  204:
+15:  205:  ValidateDuplicateCommunityEntry(config.communities_, s);
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+30:  206:  return s;
+15:  207:}
+call    0 returned 15
+call    1 never executed
+call    2 never executed
+-:  208:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_123ValidateTrapV3ParameterERKNS0_10SnmpConfigE called 15 returned 100% blocks executed 52%
+15:  209:Statuses ValidateTrapV3Parameter(const SnmpConfig &config) {
+15:  210:  Statuses s;
+call    0 returned 15
+23:  211:  for (auto &trap : config.trap_receivers_V3_) {
+call    0 returned 15
+call    1 returned 15
+call    2 returned 8
+call    3 returned 23
+branch  4 taken 8
+branch  5 taken 15 (fallthrough)
+8:  212:    ValidateV3Name(trap.name_, s, "invalid name for trap receiver");
+call    0 returned 8
+call    1 returned 8
+branch  2 taken 8 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 8
+branch  5 taken 8 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 8
+call    8 returned 8
+call    9 never executed
+call   10 never executed
+8:  213:    ValidateHost(trap.host_, s, "invalid host for trap receiver");
+call    0 returned 8
+call    1 returned 8
+branch  2 taken 8 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 8
+branch  5 taken 8 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 8
+call    8 returned 8
+call    9 never executed
+call   10 never executed
+8:  214:    ValidateAuthenticationKey(trap, s, "invalid authentication key for trap receiver");
+call    0 returned 8
+call    1 returned 8
+branch  2 taken 8 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 8
+branch  5 taken 8 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 8
+call    8 returned 8
+call    9 never executed
+call   10 never executed
+8:  215:    ValidatePrivacyKey(trap, s, "invalid privacy key for trap receiver");
+call    0 returned 8
+call    1 returned 8
+branch  2 taken 8 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 8
+branch  5 taken 8 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 8
+call    8 returned 8
+call    9 returned 8
+call   10 never executed
+call   11 never executed
+-:  216:  }
+-:  217:
+15:  218:  ValidateDuplicateTrapReceiverV3Entry(config.trap_receivers_V3_, s, "duplicated trap receiver name");
+call    0 returned 15
+call    1 returned 15
+branch  2 taken 15 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 15
+branch  5 taken 15 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 15
+call    8 returned 15
+call    9 never executed
+call   10 never executed
+15:  219:  return s;
+=====:  220:}
+call    0 never executed
+-:  221:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_121ValidateUserParameterERKNS0_10SnmpConfigE called 15 returned 100% blocks executed 54%
+15:  222:Statuses ValidateUserParameter(const SnmpConfig &config) {
+15:  223:  Statuses s;
+call    0 returned 15
+23:  224:  for (auto &user : config.user_) {
+call    0 returned 15
+call    1 returned 15
+call    2 returned 8
+call    3 returned 23
+branch  4 taken 8
+branch  5 taken 15 (fallthrough)
+8:  225:    ValidateV3Name(user.name_, s, "invalid name for user");
+call    0 returned 8
+call    1 returned 8
+branch  2 taken 8 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 8
+branch  5 taken 8 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 8
+call    8 returned 8
+call    9 never executed
+call   10 never executed
+8:  226:    ValidateAuthenticationKey(user, s, "invalid authentication key for user");
+call    0 returned 8
+call    1 returned 8
+branch  2 taken 8 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 8
+branch  5 taken 8 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 8
+call    8 returned 8
+call    9 never executed
+call   10 never executed
+8:  227:    ValidatePrivacyKey(user, s, "invalid privacy key for user");
+call    0 returned 8
+call    1 returned 8
+branch  2 taken 8 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 8
+branch  5 taken 8 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 8
+call    8 returned 8
+call    9 returned 8
+call   10 never executed
+call   11 never executed
+-:  228:  }
+-:  229:
+15:  230:  ValidateDuplicateUserEntry(config.user_, s, "duplicated user name");
+call    0 returned 15
+call    1 returned 15
+branch  2 taken 15 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 15
+branch  5 taken 15 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 15
+call    8 returned 15
+call    9 never executed
+call   10 never executed
+15:  231:  return s;
+=====:  232:}
+call    0 never executed
+-:  233:
+-:  234:}  //namespace
+-:  235:
+function _ZN4wago15snmp_config_lib11IsValidNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 20 returned 100% blocks executed 100%
+20:  236:bool IsValidName(const ::std::string &value, ::std::string &match_error) {
+20:  237:  return IsAnyString(value, match_error);
+call    0 returned 20
+-:  238:}
+-:  239:
+function _ZN4wago15snmp_config_lib18IsValidDescriptionERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 20 returned 100% blocks executed 100%
+20:  240:bool IsValidDescription(const ::std::string &value, ::std::string &match_error) {
+20:  241:  return IsAnyString(value, match_error);
+call    0 returned 20
+-:  242:}
+-:  243:
+function _ZN4wago15snmp_config_lib14IsValidContactERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 20 returned 100% blocks executed 100%
+20:  244:bool IsValidContact(const ::std::string &value, ::std::string &match_error) {
+20:  245:  return IsAnyString(value, match_error);
+call    0 returned 20
+-:  246:}
+-:  247:
+function _ZN4wago15snmp_config_lib15IsValidLocationERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 20 returned 100% blocks executed 100%
+20:  248:bool IsValidLocation(const ::std::string &value, ::std::string &match_error) {
+20:  249:  return IsAnyString(value, match_error);
+call    0 returned 20
+-:  250:}
+-:  251:
+function _ZN4wago15snmp_config_lib15IsValidObjectIdERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 22 returned 100% blocks executed 64%
+22:  252:bool IsValidObjectId(const ::std::string &value, ::std::string &match_error) {
+22:  253:  return checkString(value, "(\\.\\d+)*", 0, 128, match_error);
+call    0 returned 22
+call    1 returned 22
+branch  2 taken 22 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 22
+branch  5 taken 22 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 22
+call    8 returned 22
+call    9 never executed
+call   10 never executed
+-:  254:}
+-:  255:
+function _ZN4wago15snmp_config_lib20IsValidCommunityNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 27 returned 100% blocks executed 64%
+27:  256:bool IsValidCommunityName(const ::std::string &value, ::std::string &match_error) {
+27:  257:  return checkString(value, "[A-Za-z0-9!?:;\\.,{}\\[\\]()*~'_\\-@+]{0,32}", 1, 32, match_error);  //NOLINT modernize-raw-string-literal ::std::regex does not support raw-string-literal
+call    0 returned 27
+call    1 returned 27
+branch  2 taken 27 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 27
+branch  5 taken 27 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 27
+call    8 returned 27
+call    9 never executed
+call   10 never executed
+-:  258:}
+-:  259:
+function _ZN4wago15snmp_config_lib11IsValidHostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 25 returned 100% blocks executed 64%
+25:  260:bool IsValidHost(const ::std::string &value, ::std::string &match_error) {
+25:  261:  return checkString(value, "[a-zA-Z0-9\\-\\.]{0,255}", 1, 255, match_error);
+call    0 returned 25
+call    1 returned 25
+branch  2 taken 25 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 25
+branch  5 taken 25 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 25
+call    8 returned 25
+call    9 never executed
+call   10 never executed
+-:  262:}
+-:  263:
+function _ZN4wago15snmp_config_lib15IsValidUserNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 7 returned 100% blocks executed 100%
+7:  264:bool IsValidUserName(const ::std::string &value, ::std::string &match_error) {
+7:  265:  return IsSelectedCharsWithLength8_32(value, match_error);
+call    0 returned 7
+-:  266:}
+-:  267:
+function _ZN4wago15snmp_config_lib24IsValidAuthenticationKeyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 13 returned 100% blocks executed 100%
+13:  268:bool IsValidAuthenticationKey(const ::std::string &value, ::std::string &match_error) {
+13:  269:  return IsSelectedCharsWithLength8_32(value, match_error);
+call    0 returned 13
+-:  270:}
+-:  271:
+function _ZN4wago15snmp_config_lib13IsValidV3NameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 16 returned 100% blocks executed 64%
+16:  272:bool IsValidV3Name(const ::std::string &value, ::std::string &match_error) {
+16:  273:  return checkString(value, "[A-Za-z0-9!()*~'._-]{0,32}", 1, 32, match_error);  //NOLINT modernize-raw-string-literal ::std::regex does not support raw-string-literal
+call    0 returned 16
+call    1 returned 16
+branch  2 taken 16 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 16
+branch  5 taken 16 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 16
+call    8 returned 16
+call    9 never executed
+call   10 never executed
+-:  274:}
+-:  275:
+function _ZN4wago15snmp_config_lib17IsValidPrivacyKeyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 12 returned 100% blocks executed 100%
+12:  276:bool IsValidPrivacyKey(const ::std::string &value, ::std::string &match_error) {
+12:  277:  if (value.empty()) {
+call    0 returned 12
+branch  1 taken 1 (fallthrough)
+branch  2 taken 11
+1:  278:    return true;
+-:  279:  }
+11:  280:  return IsSelectedCharsWithLength8_32(value, match_error);
+call    0 returned 11
+-:  281:}
+-:  282:
+function _ZN4wago15snmp_config_lib8ValidateERKNS0_10SnmpConfigE called 15 returned 100% blocks executed 54%
+15:  283:Statuses Validate(const SnmpConfig &config) {
+15:  284:  Statuses s;
+call    0 returned 15
+15:  285:  s.AddErrorStatuses(ValidateBasicParameter(config));
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 15
+branch  4 taken 15 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 15
+call    7 never executed
+15:  286:  s.AddErrorStatuses(ValidateCommunityParameter(config));
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 15
+branch  4 taken 15 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 15
+call    7 never executed
+15:  287:  s.AddErrorStatuses(ValidateTrapV1V2cParameter(config));
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 15
+branch  4 taken 15 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 15
+call    7 never executed
+15:  288:  s.AddErrorStatuses(ValidateUserParameter(config));
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 15
+branch  4 taken 15 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 15
+call    7 never executed
+15:  289:  s.AddErrorStatuses(ValidateTrapV3Parameter(config));
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 15
+branch  4 taken 15 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 15
+call    7 never executed
+-:  290:
+15:  291:  return s;
+=====:  292:}
+call    0 never executed
+-:  293:
+-:  294:}  //wago::snmp_config_lib

@@ -1,0 +1,73 @@
+-:    0:Source:test-src/IPConfigMock.hpp
+-:    1:
+-:    2:#include <gmock/gmock.h>
+-:    3:#include <IPConfig.hpp>
+-:    4:
+-:    5:namespace netconf {
+-:    6:namespace api {
+-:    7:
+-:    8:struct MockIPConfig {
+-:    9: public:
+-:   10:
+-:   11:  MockIPConfig();
+-:   12:  ~MockIPConfig();
+-:   13:
+2:   14:  MOCK_METHOD1(GetIPConfigs,Status(IPConfigs &config) );
+------------------
+_ZN7netconf3api12MockIPConfig12GetIPConfigsERNS0_9IPConfigsE:
+function _ZN7netconf3api12MockIPConfig12GetIPConfigsERNS0_9IPConfigsE called 1 returned 100% blocks executed 100%
+1:   14:  MOCK_METHOD1(GetIPConfigs,Status(IPConfigs &config) );
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+------------------
+_ZN7netconf3api12MockIPConfig18gmock_GetIPConfigsERKN7testing7MatcherIRNS0_9IPConfigsEEE:
+function _ZN7netconf3api12MockIPConfig18gmock_GetIPConfigsERKN7testing7MatcherIRNS0_9IPConfigsEEE called 1 returned 100% blocks executed 78%
+1:   14:  MOCK_METHOD1(GetIPConfigs,Status(IPConfigs &config) );
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 1
+call    6 never executed
+------------------
+function _ZN7netconf3api12MockIPConfig19GetCurrentIPConfigsERNS0_9IPConfigsE called 0 returned 0% blocks executed 0%
+#####:   15:  MOCK_METHOD1(GetCurrentIPConfigs,Status(IPConfigs &config) );
+call    0 never executed
+call    1 never executed
+call    2 never executed
+3:   16:  MOCK_METHOD1(SetIPConfigs, Status(const IPConfigs &config) );
+------------------
+_ZN7netconf3api12MockIPConfig12SetIPConfigsERKNS0_9IPConfigsE:
+function _ZN7netconf3api12MockIPConfig12SetIPConfigsERKNS0_9IPConfigsE called 1 returned 100% blocks executed 100%
+1:   16:  MOCK_METHOD1(SetIPConfigs, Status(const IPConfigs &config) );
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+------------------
+_ZN7netconf3api12MockIPConfig18gmock_SetIPConfigsERKN7testing7MatcherIRKNS0_9IPConfigsEEE:
+function _ZN7netconf3api12MockIPConfig18gmock_SetIPConfigsERKN7testing7MatcherIRKNS0_9IPConfigsEEE called 2 returned 100% blocks executed 78%
+2:   16:  MOCK_METHOD1(SetIPConfigs, Status(const IPConfigs &config) );
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+branch  3 taken 2 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 2
+call    6 never executed
+------------------
+function _ZN7netconf3api12MockIPConfig12SetTempFixIpEv called 0 returned 0% blocks executed 0%
+#####:   17:  MOCK_METHOD0(SetTempFixIp, Status() );
+call    0 never executed
+call    1 never executed
+-:   18:
+-:   19:
+-:   20:};
+-:   21:
+-:   22:
+-:   23:
+-:   24:} // namespace api
+-:   25:}  // namespace netconf
+-:   26:
+-:   27:

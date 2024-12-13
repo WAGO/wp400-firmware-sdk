@@ -1,0 +1,17 @@
+diff -Naur node-v12.16.1_org/src/node_crypto.cc node-v12.16.1/src/node_crypto.cc
+--- node-v12.16.1_org/src/node_crypto.cc	2020-02-18 06:08:36.000000000 +0100
++++ node-v12.16.1/src/node_crypto.cc	2024-09-06 07:43:01.990352068 +0200
+@@ -5029,11 +5029,11 @@
+   int bits, base_id = EVP_PKEY_base_id(pkey.get());
+ 
+   if (base_id == EVP_PKEY_DSA) {
+-    DSA* dsa_key = EVP_PKEY_get0_DSA(pkey.get());
++    DSA* dsa_key = (DSA*)EVP_PKEY_get0_DSA(pkey.get());
+     // Both r and s are computed mod q, so their width is limited by that of q.
+     bits = BN_num_bits(DSA_get0_q(dsa_key));
+   } else if (base_id == EVP_PKEY_EC) {
+-    EC_KEY* ec_key = EVP_PKEY_get0_EC_KEY(pkey.get());
++    EC_KEY* ec_key = (EC_KEY*)EVP_PKEY_get0_EC_KEY(pkey.get());
+     const EC_GROUP* ec_group = EC_KEY_get0_group(ec_key);
+     bits = EC_GROUP_order_bits(ec_group);
+   } else {

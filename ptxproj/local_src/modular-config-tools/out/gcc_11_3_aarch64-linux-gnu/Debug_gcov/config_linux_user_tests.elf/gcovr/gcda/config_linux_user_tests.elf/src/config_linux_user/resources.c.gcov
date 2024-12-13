@@ -1,0 +1,129 @@
+-:    0:Source:src/config_linux_user/resources.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     resources.c
+-:   12:///
+-:   13:///  \brief    Config tool specific resource definition and handling for
+-:   14:///            config_linux_user.
+-:   15:///
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "wc/structuring.h"
+-:   23:#include "wc/assertion.h"
+-:   24:#include "ctparts/common_main_defaults.h"
+-:   25:#include "resources.h"
+-:   26:#include <stdlib.h>
+-:   27:#include <paths.h>
+-:   28:
+-:   29://------------------------------------------------------------------------------
+-:   30:// defines; structure, enumeration and type definitions
+-:   31://------------------------------------------------------------------------------
+-:   32:
+-:   33://------------------------------------------------------------------------------
+-:   34:// function prototypes
+-:   35://------------------------------------------------------------------------------
+-:   36:
+-:   37://------------------------------------------------------------------------------
+-:   38:// macros
+-:   39://------------------------------------------------------------------------------
+-:   40:
+-:   41://------------------------------------------------------------------------------
+-:   42:// variables' and constants' definitions
+-:   43://------------------------------------------------------------------------------
+-:   44:
+-:   45://------------------------------------------------------------------------------
+-:   46:// function implementation
+-:   47://------------------------------------------------------------------------------
+-:   48:
+-:   49:/// Function to initialize config tool specific resources of config_linux_user.
+function ctparts_InitSpecificResources called 0 returned 0% blocks executed 0%
+#####:   50:statusCode_t ctparts_InitSpecificResources(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:   51:                                           ctutil_ResourcesSpecific_t * * const ppstResources)
+-:   52:{
+#####:   53:  statusCode_t status = CTUTIL_SUCCESS;
+-:   54:
+#####:   55:  WC_ASSERT(*ppstResources == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:   56:  *ppstResources = calloc(1, sizeof(ctutil_ResourcesSpecific_t));
+#####:   57:  ctutil_ResourcesSpecific_t * const pstResources = *ppstResources;
+#####:   58:  if(pstResources == NULL)
+branch  0 never executed
+branch  1 never executed
+-:   59:  {
+#####:   60:    status = CTUTIL_FAILED;
+-:   61:  }
+-:   62:  else
+-:   63:  {
+-:   64:    // If random does not get enough bytes use urandom
+#####:   65:    pstResources->szRandomSource1 = "/dev/random";
+#####:   66:    pstResources->szRandomSource2 = "/dev/urandom";
+#####:   67:    status = ctutil_PrepareChangeableFile(_PATH_SHADOW, &(pstResources->pShadowFile));
+call    0 never executed
+#####:   68:    if(ctutil_IsStatusFailure(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   69:    {
+#####:   70:      free(pstResources);
+#####:   71:      *ppstResources = NULL;
+-:   72:    }
+-:   73:  }
+-:   74:
+#####:   75:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   76:  {
+#####:   77:    WC_ASSERT(*ppstResources != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:   78:  }
+-:   79:  else
+-:   80:  {
+#####:   81:    WC_ASSERT(*ppstResources == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:   82:  }
+-:   83:
+#####:   84:  return status;
+-:   85:}
+-:   86:
+-:   87:
+-:   88:/// Function to release config tool specific resources of config_linux_user.
+function ctparts_ReleaseSpecificResources called 0 returned 0% blocks executed 0%
+#####:   89:void ctparts_ReleaseSpecificResources(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:   90:                                      ctutil_ResourcesSpecific_t * * const ppstResources)
+-:   91:{
+#####:   92:  ctutil_ResourcesSpecific_t * const pstResources = *ppstResources;
+#####:   93:  if(pstResources != NULL)
+branch  0 never executed
+branch  1 never executed
+-:   94:  {
+#####:   95:    ctutil_ReleaseFileForChanges(&(pstResources->pShadowFile));
+call    0 never executed
+#####:   96:    free(pstResources);
+#####:   97:    *ppstResources = NULL;
+-:   98:  }
+-:   99:
+#####:  100:  return;
+-:  101:}
+-:  102:
+-:  103:
+-:  104://---- End of source file ------------------------------------------------------
+-:  105:

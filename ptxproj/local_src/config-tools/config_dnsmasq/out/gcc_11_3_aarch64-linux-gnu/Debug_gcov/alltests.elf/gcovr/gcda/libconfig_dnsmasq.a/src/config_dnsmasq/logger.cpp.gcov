@@ -1,0 +1,66 @@
+-:    0:Source:src/config_dnsmasq/logger.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:/// Copyright (c) 2024 WAGO GmbH & Co. KG
+-:    3:///
+-:    4:/// PROPRIETARY RIGHTS of WAGO GmbH & Co. KG are involved in
+-:    5:/// the subject matter of this material. All manufacturing, reproduction,
+-:    6:/// use, and sales rights pertaining to this subject matter are governed
+-:    7:/// by the license agreement. The recipient of this software implicitly
+-:    8:/// accepts the terms of the license.
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///
+-:   12:///  \brief    Write logging data.
+-:   13:///
+-:   14:///  \author   MSc, WAGO GmbH & Co. KG.
+-:   15:///  \author   MOe, WAGO GmbH & Co. KG.
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18:#include "logger.hpp"
+-:   19:
+-:   20:#include <syslog.h>
+-:   21:
+-:   22:namespace configdnsmasq
+-:   23:{
+-:   24:
+function _ZN13configdnsmasq6loggerC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   25:  logger::logger(::std::string const& identifier)
+call    0 never executed
+-:   26:  {
+#####:   27:    identifier_ = identifier;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   28:    openlog(identifier_.c_str(), LOG_CONS | LOG_NDELAY, LOG_SYSLOG);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:   29:  }
+call    0 never executed
+-:   30:
+#####:   31:  logger::~logger()
+-:   32:  {
+#####:   33:    closelog();
+#####:   34:  }
+------------------
+_ZN13configdnsmasq6loggerD0Ev:
+function _ZN13configdnsmasq6loggerD0Ev called 0 returned 0% blocks executed 0%
+#####:   31:  logger::~logger()
+-:   32:  {
+-:   33:    closelog();
+#####:   34:  }
+call    0 never executed
+call    1 never executed
+------------------
+_ZN13configdnsmasq6loggerD2Ev:
+function _ZN13configdnsmasq6loggerD2Ev called 0 returned 0% blocks executed 0%
+#####:   31:  logger::~logger()
+-:   32:  {
+#####:   33:    closelog();
+call    0 never executed
+#####:   34:  }
+call    0 never executed
+------------------
+-:   35:
+-:   36:} /* namespace configdnsmasq */

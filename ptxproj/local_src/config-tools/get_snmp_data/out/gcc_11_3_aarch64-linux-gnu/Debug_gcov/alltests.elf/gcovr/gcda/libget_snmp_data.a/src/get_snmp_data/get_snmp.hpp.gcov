@@ -1,0 +1,59 @@
+-:    0:Source:src/get_snmp_data/get_snmp.hpp
+-:    0:Graph:./out/gcc_11_3_aarch64-linux-gnu/Debug_gcov/alltests.elf/gcovr/gcda/libget_snmp_data.a/src/get_snmp_data/get_snmp.cpp.gcno
+-:    0:Data:./out/gcc_11_3_aarch64-linux-gnu/Debug_gcov/alltests.elf/gcovr/gcda/libget_snmp_data.a/src/get_snmp_data/get_snmp.cpp.gcda
+-:    0:Runs:1
+-:    1:#pragma once
+-:    2://------------------------------------------------------------------------------
+-:    3:/// Copyright (c) 2000 - 2022 WAGO GmbH & Co. KG
+-:    4:///
+-:    5:/// PROPRIETARY RIGHTS of WAGO GmbH & Co. KG are involved in
+-:    6:/// the subject matter of this material. All manufacturing, reproduction,
+-:    7:/// use, and sales rights pertaining to this subject matter are governed
+-:    8:/// by the license agreement. The recipient of this software implicitly
+-:    9:/// accepts the terms of the license.
+-:   10://------------------------------------------------------------------------------
+-:   11://------------------------------------------------------------------------------
+-:   12:///
+-:   13:///  \file     get_snmp_data
+-:   14:///
+-:   15:///  \brief
+-:   16:///
+-:   17:///  \author   SM : WAGO GmbH & Co. KG
+-:   18:///  \author   MOe : WAGO GmbH & Co. KG
+-:   19://------------------------------------------------------------------------------
+-:   20:
+-:   21://------------------------------------------------------------------------------
+-:   22:// Include files
+-:   23://------------------------------------------------------------------------------
+-:   24:
+-:   25:#include <string>
+-:   26:#include <optional>
+-:   27:
+-:   28:#include <SnmpConfig.hpp>
+-:   29:#include <ct_error_handling.h>
+-:   30:
+-:   31:namespace wago::get_snmp_data {
+-:   32:
+-:   33:
+-:   34:template<class T>
+-:   35:struct Result{
+function _ZN4wago13get_snmp_data6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2ES7_ called 0 returned 0% blocks executed 0%
+#####:   36:  explicit Result(T value): value_{::std::move(value)}{}
+call    0 never executed
+call    1 never executed
+function _ZN4wago13get_snmp_data6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2E11eStatusCode called 0 returned 0% blocks executed 0%
+#####:   37:  explicit Result(eStatusCode status): status_{status}{}
+call    0 never executed
+-:   38:  T value_{};
+-:   39:  eStatusCode status_ = SUCCESS;
+-:   40:};
+-:   41:
+-:   42:Result<::std::string> GetParameter(::std::string& paramter_name, ::std::optional<size_t> index, ::wago::snmp_config_lib::SnmpConfig &snmp_config);
+-:   43:
+-:   44:::std::string VersionV1V2cAsString(const wago::snmp_config_lib::VersionV1V2c &version);
+-:   45:::std::string AccessAsString(const wago::snmp_config_lib::Access &access);
+-:   46:::std::string AuthenticationTypeAsStr(const wago::snmp_config_lib::AuthenticationType &type);
+-:   47:::std::string PrivacyAsStr(const wago::snmp_config_lib::Privacy &privacy);
+-:   48:::std::string SecurityLevelAsStr(const wago::snmp_config_lib::SecurityLevel &level);
+-:   49:
+-:   50:}  // namespace wago::get_snmp_data

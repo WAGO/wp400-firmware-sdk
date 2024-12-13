@@ -1,0 +1,281 @@
+-:    0:Source:inc/ctparts/common_main_defaults.h
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     common_main_defaults.h
+-:   12:///
+-:   13:///  \brief    Commonly used prototypes for config tool common main function.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:#ifndef INC_CTPARTS_COMMON_MAIN_DEFAULTS_H_
+-:   18:#define INC_CTPARTS_COMMON_MAIN_DEFAULTS_H_
+-:   19:
+-:   20://------------------------------------------------------------------------------
+-:   21:// include files
+-:   22://------------------------------------------------------------------------------
+-:   23:#include "wc/assertion.h"
+-:   24:#include "ctutil/common_main.h"
+-:   25:
+-:   26://------------------------------------------------------------------------------
+-:   27:// defines; structure, enumeration and type definitions
+-:   28://------------------------------------------------------------------------------
+-:   29:
+-:   30://------------------------------------------------------------------------------
+-:   31:// function prototypes
+-:   32://------------------------------------------------------------------------------
+-:   33:#ifdef __cplusplus
+-:   34:extern "C"
+-:   35:{
+-:   36:#endif // __cplusplus
+-:   37:
+-:   38:  //------------------------------------------------------------------------------
+-:   39:  /// Prototype description<br>
+-:   40:  /// ======================<br>
+-:   41:  /// Prototype to print short info text about program.
+-:   42:  ///
+-:   43:  /// \note The function implementation has to be provided application specific.
+-:   44:  /// \note For programs with only a few options this may be the same as the program help text.
+-:   45:  ///
+-:   46:  /// \param pstContext
+-:   47:  ///   Application specific context. If unused, NULL is allowed.
+-:   48:  /// \param szCallString
+-:   49:  ///   Call string from program call, normally this is "argv[0]".
+-:   50:  ///
+-:   51:  /// \see ctparts_commonMainContext_t
+-:   52:  //------------------------------------------------------------------------------
+-:   53:  void ctparts_PrintInfoText(ctparts_commonMainContext_t * const pstContext,
+-:   54:                             char const * const szCallString);
+-:   55:
+-:   56:  //------------------------------------------------------------------------------
+-:   57:  /// Prototype description<br>
+-:   58:  /// ======================<br>
+-:   59:  /// Prototype to set application specific default application options.
+-:   60:  ///
+-:   61:  /// \note The function implementation has to be provided application specific.
+-:   62:  /// \note An eventually set pointer for a specific options structure have to be released by
+-:   63:  ///       \link ctparts_ReleaseSpecificOptions \endlink.
+-:   64:  ///
+-:   65:  /// \param pstContext
+-:   66:  ///   Application specific context. If unused, NULL is allowed.
+-:   67:  /// \param pstOptions
+-:   68:  ///   Option structure pointer to be equipped with defaults.
+-:   69:  ///
+-:   70:  /// \return
+-:   71:  ///   \link CTUTIL_SUCCESS \endlink in case of successfully set defaults, an error code otherwise.
+-:   72:  ///
+-:   73:  /// \pre
+-:   74:  ///   Application specific option pointer \link ctutil_OptionsSpecific_t \endlink is NULL.
+-:   75:  ///
+-:   76:  /// \post
+-:   77:  ///   Application specific option pointer \link ctutil_OptionsSpecific_t \endlink is NULL
+-:   78:  ///   or a valid structure in case of success.
+-:   79:  ///   Application specific option pointer \link ctutil_OptionsSpecific_t \endlink is NULL in case of an error.
+-:   80:  ///
+-:   81:  /// \see ctutil_Options_t
+-:   82:  /// \see ctutil_OptionsCommon_t
+-:   83:  /// \see ctutil_OptionsSpecific_t
+-:   84:  /// \see ctutil_ReleaseSpecificOptions
+-:   85:  /// \see CTUTIL_SUCCESS
+-:   86:  //------------------------------------------------------------------------------
+-:   87:  statusCode_t ctparts_SetOptionDefaults(ctparts_commonMainContext_t * const pstContext,
+-:   88:                                         ctutil_Options_t * const pstOptions);
+-:   89:
+-:   90:  //------------------------------------------------------------------------------
+-:   91:  /// Prototype description<br>
+-:   92:  /// ======================<br>
+-:   93:  /// Prototype to release application specific application options.
+-:   94:  ///
+-:   95:  /// \note The function implementation has to be provided application specific.
+-:   96:  ///
+-:   97:  /// \param pstContext
+-:   98:  ///   Application specific context. If unused, NULL is allowed.
+-:   99:  /// \param pstOptions
+-:  100:  ///   Option structure pointer.
+-:  101:  ///   Inside user specific option pointer \link ctutil_OptionsSpecific_t \endlink may be NULL.
+-:  102:  ///
+-:  103:  /// \pre
+-:  104:  ///   Application specific option pointer \link ctutil_OptionsSpecific_t \endlink is NULL
+-:  105:  ///   or points to a valid structure.
+-:  106:  ///
+-:  107:  /// \post
+-:  108:  ///   Application specific option pointer \link ctutil_OptionsSpecific_t \endlink is NULL.
+-:  109:  ///
+-:  110:  /// \see ctutil_Options_t
+-:  111:  /// \see ctutil_OptionsCommon_t
+-:  112:  /// \see ctutil_OptionsSpecific_t
+-:  113:  /// \see ctutil_SetOptionDefaults
+-:  114:  //------------------------------------------------------------------------------
+-:  115:  void ctparts_ReleaseSpecificOptions(ctparts_commonMainContext_t * const pstContext,
+-:  116:                                      ctutil_Options_t * const pstOptions);
+-:  117:
+-:  118:  //------------------------------------------------------------------------------
+-:  119:  /// Prototype description<br>
+-:  120:  /// ======================<br>
+-:  121:  /// Prototype to evaluate early options
+-:  122:  /// (options have to been checked before any further operations started).
+-:  123:  ///
+-:  124:  /// \note The function implementation has to be provided application specific.
+-:  125:  /// \note As inner implementation \link ctparts_EvaluateEarlyOptions \endlink
+-:  126:  ///       may be used.
+-:  127:  ///
+-:  128:  /// \param pstContext
+-:  129:  ///   Application specific context. If unused, NULL is allowed.
+-:  130:  /// \param argc
+-:  131:  ///   Argument count, forwarded from outer main function.
+-:  132:  /// \param argv
+-:  133:  ///   Argument vector, forwarded from outer main function.
+-:  134:  /// \param pstOptions
+-:  135:  ///   Option structure pointer.
+-:  136:  ///   Inside user specific option pointer \link ctutil_OptionsSpecific_t \endlink may be NULL.
+-:  137:  ///
+-:  138:  /// \return
+-:  139:  ///   \link CTUTIL_SUCCESS \endlink in case of success, an error code otherwise.
+-:  140:  ///
+-:  141:  /// \see CTUTIL_SUCCESS
+-:  142:  //------------------------------------------------------------------------------
+-:  143:  statusCode_t ctparts_EvaluateEarlyOptions(ctparts_commonMainContext_t * const pstContext,
+-:  144:                                            int const argc,
+-:  145:                                            char * const argv[],
+-:  146:                                            ctutil_Options_t * const pstOptions);
+-:  147:
+-:  148:  //------------------------------------------------------------------------------
+-:  149:  /// Prototype description<br>
+-:  150:  /// ======================<br>
+-:  151:  /// Prototype to evaluate options.
+-:  152:  ///
+-:  153:  /// \note The function implementation has to be provided application specific.
+-:  154:  ///
+-:  155:  /// \param pstContext
+-:  156:  ///   Application specific context. If unused, NULL is allowed.
+-:  157:  /// \param argc
+-:  158:  ///   Argument count, forwarded from outer main function.
+-:  159:  /// \param argv
+-:  160:  ///   Argument vector, forwarded from outer main function.
+-:  161:  /// \param pstOptions
+-:  162:  ///   Option structure pointer.
+-:  163:  ///   Inside user specific option pointer \link ctutil_OptionsSpecific_t \endlink may be NULL.
+-:  164:  ///
+-:  165:  /// \return
+-:  166:  ///   \link CTUTIL_SUCCESS \endlink in case of success, an error code otherwise.
+-:  167:  ///
+-:  168:  /// \see CTUTIL_SUCCESS
+-:  169:  //------------------------------------------------------------------------------
+-:  170:  statusCode_t ctparts_EvaluateOptions(ctparts_commonMainContext_t * const pstContext,
+-:  171:                                       int const argc,
+-:  172:                                       char * const argv[],
+-:  173:                                       ctutil_Options_t * const pstOptions);
+-:  174:
+-:  175:  //------------------------------------------------------------------------------
+-:  176:  /// Prototype description<br>
+-:  177:  /// ======================<br>
+-:  178:  /// Prototype to initialize application specific resources.
+-:  179:  ///
+-:  180:  /// \note The function implementation has to be provided application specific.
+-:  181:  /// \note An eventually set pointer for a specific resources structure have to be released by
+-:  182:  ///       \link ctparts_ReleaseSpecificResources \endlink.
+-:  183:  ///
+-:  184:  /// \param pstContext
+-:  185:  ///   Application specific context. If unused, NULL is allowed.
+-:  186:  /// \param ppstResources
+-:  187:  ///   Pointer to resource structure pointer to be equipped with application specific resource data or pointers.
+-:  188:  ///
+-:  189:  /// \return
+-:  190:  ///   \link CTUTIL_SUCCESS \endlink in case of successfully acquired resources, an error code otherwise.
+-:  191:  ///
+-:  192:  /// \pre
+-:  193:  ///   Application specific resource pointer \link ctutil_ResourcesSpecific_t \endlink points to NULL.
+-:  194:  ///
+-:  195:  /// \post
+-:  196:  ///   Application specific resource pointer \link ctutil_ResourcesSpecific_t \endlink points to NULL
+-:  197:  ///   or a valid structure in case of success.
+-:  198:  ///   Application specific resource pointer \link ctutil_ResourcesSpecific_t \endlink points to NULL in case of an error.
+-:  199:  ///
+-:  200:  /// \see ctutil_Resources_t
+-:  201:  /// \see ctutil_ResourcesCommon_t
+-:  202:  /// \see ctutil_ResourcesSpecific_t
+-:  203:  /// \see ctutil_ReleaseSpecificResources
+-:  204:  /// \see CTUTIL_SUCCESS
+-:  205:  //------------------------------------------------------------------------------
+-:  206:  statusCode_t ctparts_InitSpecificResources(ctparts_commonMainContext_t * const pstContext,
+-:  207:                                             ctutil_ResourcesSpecific_t * * const ppstResources);
+-:  208:
+-:  209:  //------------------------------------------------------------------------------
+-:  210:  /// Prototype description<br>
+-:  211:  /// ======================<br>
+-:  212:  /// Prototype to release application specific application resources.
+-:  213:  ///
+-:  214:  /// \note The function implementation has to be provided application specific.
+-:  215:  ///
+-:  216:  /// \param pstContext
+-:  217:  ///   Application specific context. If unused, NULL is allowed.
+-:  218:  /// \param ppstResources
+-:  219:  ///   Pointer to resource structure pointer. May be pointing to NULL.
+-:  220:  ///
+-:  221:  /// \pre
+-:  222:  ///   Pointer to application specific resource pointer points to NULL or a valid structure.
+-:  223:  ///
+-:  224:  /// \post
+-:  225:  ///   Pointer to application specific resource pointer points to NULL.
+-:  226:  ///
+-:  227:  /// \see ctutil_Resources_t
+-:  228:  /// \see ctutil_ResourcesCommon_t
+-:  229:  /// \see ctutil_ResourcesSpecific_t
+-:  230:  /// \see ctutil_OpenSpecificResources
+-:  231:  //------------------------------------------------------------------------------
+-:  232:  void ctparts_ReleaseSpecificResources(ctparts_commonMainContext_t * const pstContext,
+-:  233:                                        ctutil_ResourcesSpecific_t * * const ppstResources);
+-:  234:
+-:  235:  /// Sets default prototypes into function table for \link ctutil_CommonMain \endlink.
+-:  236:  ///
+-:  237:  /// \note The functions have to be provided application specific, so the equipped prototypes leads to open symbols
+-:  238:  ///       which have to be implemented.
+-:  239:  ///
+-:  240:  /// \param pFunctionTable
+-:  241:  ///   Function table for \link ctutil_CommonMain \endlink to equip with default prototypes.
+-:  242:  ///
+-:  243:  /// \see ctutil_CommonMain
+-:  244:  /// \see commonMainFunctions_t
+-:  245:  //------------------------------------------------------------------------------
+-:  246:  static inline void ctparts_SetDefaultCommonMainFunctions(ctparts_commonMainFunctions_t * const pFunctionTable);
+-:  247:
+-:  248:#ifdef __cplusplus
+-:  249:} // extern "C"
+-:  250:#endif // __cplusplus
+-:  251:
+-:  252://------------------------------------------------------------------------------
+-:  253:// macros
+-:  254://------------------------------------------------------------------------------
+-:  255:
+-:  256://------------------------------------------------------------------------------
+-:  257:// variables' and constants' definitions
+-:  258://------------------------------------------------------------------------------
+-:  259:
+-:  260://------------------------------------------------------------------------------
+-:  261:// function implementation
+-:  262://------------------------------------------------------------------------------
+function ctparts_SetDefaultCommonMainFunctions called 0 returned 0% blocks executed 0%
+#####:  263:static inline void ctparts_SetDefaultCommonMainFunctions(ctparts_commonMainFunctions_t * const pFunctionTable)
+-:  264:{
+#####:  265:  pFunctionTable->pfPrintInfoText            = &ctparts_PrintInfoText;
+#####:  266:  pFunctionTable->pfSetOptionDefaults        = &ctparts_SetOptionDefaults;
+#####:  267:  pFunctionTable->pfReleaseSpecificOptions   = &ctparts_ReleaseSpecificOptions;
+#####:  268:  pFunctionTable->pfEvaluateEarlyOptions     = &ctparts_EvaluateEarlyOptions;
+#####:  269:  pFunctionTable->pfEvaluateOptions          = &ctparts_EvaluateOptions;
+#####:  270:  pFunctionTable->pfInitSpecificResources    = &ctparts_InitSpecificResources;
+#####:  271:  pFunctionTable->pfReleaseSpecificResources = &ctparts_ReleaseSpecificResources;
+-:  272:
+#####:  273:  return;
+-:  274:}
+-:  275:
+-:  276:
+-:  277:#endif /* INC_CTPARTS_COMMON_MAIN_DEFAULTS_H_ */
+-:  278://---- End of source file ------------------------------------------------------
+-:  279:

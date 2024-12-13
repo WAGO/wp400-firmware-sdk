@@ -1,0 +1,1860 @@
+-:    0:Source:test-src/test_util_log.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9://------------------------------------------------------------------------------
+-:   10:///  \file     test.cpp
+-:   11:///
+-:   12:///  \brief    ToDo:
+-:   13:///
+-:   14:///  \author   NiB : WAGO GmbH & Co. KG
+-:   15://------------------------------------------------------------------------------
+-:   16:
+-:   17:#include <gtest/gtest.h>
+-:   18:#include <iostream>
+-:   19:#include <fstream>
+-:   20:#include <algorithm>
+-:   21:#include <vector>
+-:   22://#include <stdlib.h>
+-:   23:#include <util_log.hpp>
+-:   24:
+-:   25://using namespace testing;
+-:   26:
+-:   27://------------------------------------------------------------------------------
+-:   28:class FilesForTesting {
+-:   29:  private:
+-:   30:    const unsigned int lineEnd = 5;
+-:   31:    unsigned int i = 0;
+-:   32:    unsigned int k = 0;
+-:   33:  public:
+function _ZN15FilesForTesting6createERKN5boost10filesystem4pathE called 0 returned 0% blocks executed 0%
+#####:   34:    bool create(const boost::filesystem::path & folderPath) {
+#####:   35:      if(boost::filesystem::is_directory(folderPath)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   36:        k = 1;
+#####:   37:        for(std::string filename : filenames) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+#####:   38:          boost::filesystem::path filePath = folderPath / filename;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:   39:          std::ofstream file(filePath.c_str());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:   40:          for(i = lineBegin; i <= (lineEnd * k); i++) {
+branch  0 never executed
+branch  1 never executed
+#####:   41:            file << i << testStr << std::endl;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+-:   42:          }
+#####:   43:          if(file.is_open()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+#####:   44:            paths.push_back(filePath);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   45:            lines.push_back(i);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   46:            file.close();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   47:          }
+#####:   48:          k++;
+#####:   49:        }
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+-:   50:      }
+-:   51:      else
+-:   52:      {
+#####:   53:        return false;
+-:   54:      }
+#####:   55:      return true;
+-:   56:    };
+function _ZN15FilesForTesting5checkEv called 0 returned 0% blocks executed 0%
+#####:   57:    bool check() {
+#####:   58:      for(const boost::filesystem::path & path : paths) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+#####:   59:        if(!boost::filesystem::exists(path)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+#####:   60:          return false;
+-:   61:        }
+-:   62:      }
+#####:   63:      return true;
+-:   64:    };
+function _ZN15FilesForTesting6removeEv called 0 returned 0% blocks executed 0%
+#####:   65:    void remove() {
+#####:   66:      for(const boost::filesystem::path & path : paths) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+#####:   67:        boost::filesystem::remove(path);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   68:      }
+#####:   69:    };
+-:   70:    const unsigned int lineBegin = 0;
+-:   71:    std::string testStr = ". Line: ---Test---";
+-:   72:    std::vector<std::string> filenames = {"afile.log",
+-:   73:                                          "afile.log.1",
+-:   74:                                          "afile.log.2",
+-:   75:                                          "bfile.log",
+-:   76:                                          "cfile.log",
+-:   77:                                          "dfile.log"};
+-:   78:    unsigned int arrayCount = filenames.size();
+-:   79:    std::vector<boost::filesystem::path> paths;
+-:   80:    std::vector<unsigned int> lines;
+-:   81:};
+-:   82://------------------------------------------------------------------------------
+-:   83:
+function _ZL20ASSERT_EQ_VECTOR_STRSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES7_ called 0 returned 0% blocks executed 0%
+#####:   84:static void ASSERT_EQ_VECTOR_STR(std::vector<std::string> soll,
+-:   85:                                 std::vector<std::string> ist) {
+#####:   86:  ASSERT_EQ(soll.size(), ist.size());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+#####:   87:  for(unsigned int i = 0; i < soll.size(); i++) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   88:    ASSERT_STREQ(soll[i].c_str(), ist[i].c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   89:    ASSERT_EQ(soll[i].size(), ist[i].size());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   90:  }
+-:   91:}
+-:   92:
+function _ZL21ASSERT_EQ_VECTOR_PATHSt6vectorIN5boost10filesystem4pathESaIS2_EES4_ called 0 returned 0% blocks executed 0%
+#####:   93:static void ASSERT_EQ_VECTOR_PATH(std::vector<boost::filesystem::path> soll,
+-:   94:                                  std::vector<boost::filesystem::path> ist) {
+#####:   95:  ASSERT_EQ(soll.size(), ist.size());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+#####:   96:  for(unsigned int i = 0; i < soll.size(); i++) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   97:    ASSERT_STREQ(soll[i].c_str(), ist[i].c_str());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   98:    ASSERT_EQ(soll[i].size(), ist[i].size());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   99:  }
+-:  100:}
+-:  101:
+function _ZL22Count_String_ExistenceRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ called 0 returned 0% blocks executed 0%
+#####:  102:static unsigned int Count_String_Existence(const std::string & msgStr,
+-:  103:                                           const std::string & lineStr){
+#####:  104:  unsigned int count = 0;
+#####:  105:  auto pos = msgStr.find(lineStr);
+call    0 never executed
+#####:  106:  while(pos != std::string::npos) {
+branch  0 never executed
+branch  1 never executed
+#####:  107:    count++;
+#####:  108:    pos = msgStr.find(lineStr, pos+1);
+call    0 never executed
+-:  109:  }
+#####:  110:  return count;
+-:  111:}
+-:  112:
+function _ZL14uInt_To_Stringj called 0 returned 0% blocks executed 0%
+#####:  113:static std::string uInt_To_String(const unsigned int linenumber) {
+#####:  114:  std::stringstream buffer;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  115:  buffer << linenumber;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  116:  return buffer.str();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  117:}
+call    0 never executed
+call    1 never executed
+-:  118:
+function _ZL21Get_String_LinenumberRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_j called 0 returned 0% blocks executed 0%
+#####:  119:static unsigned int Get_String_Linenumber(const std::string & msgStr,
+-:  120:                                          const std::string & lineStr,
+-:  121:                                          const unsigned int linenumber) {
+#####:  122:  unsigned int count = 0;
+#####:  123:  std::string soll = uInt_To_String(linenumber);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  124:  soll.append(lineStr);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  125:  auto pos = msgStr.find(soll);
+call    0 never executed
+#####:  126:  if(pos != std::string::npos) {
+branch  0 never executed
+branch  1 never executed
+#####:  127:    if(pos != 0)
+branch  0 never executed
+branch  1 never executed
+-:  128:    {
+#####:  129:      auto sizeMsg = msgStr.size();
+call    0 never executed
+#####:  130:      auto sizeSoll = soll.size();
+call    0 never executed
+#####:  131:      count = sizeMsg / sizeSoll;
+-:  132:    }
+#####:  133:    count = pos;
+-:  134:  }
+#####:  135:  return count;
+#####:  136:}
+call    0 never executed
+call    1 never executed
+-:  137:
+-:  138://------------------------------------------------------------------------------
+-:  139:class libutil_StringList2JsonArray: public ::testing::Test {
+-:  140:  protected:
+-:  141:    std::string retStr;
+-:  142:    std::string::iterator it;
+-:  143:    std::vector<std::string> emptyList;
+-:  144:    std::vector<std::string> testList = {"name", "test", "123", "!$&?#"};
+-:  145:    std::string testString = R"(["name","test","123","!$&?#"])";
+function _ZN28libutil_StringList2JsonArray5SetUpEv called 2 returned 100% blocks executed 100%
+2:  146:    void SetUp() override {
+2:  147:    }
+-:  148:
+function _ZN28libutil_StringList2JsonArray8TearDownEv called 2 returned 100% blocks executed 100%
+2:  149:    void TearDown() override {
+2:  150:    }
+-:  151:};
+-:  152:
+4:  153:TEST_F(libutil_StringList2JsonArray, emptyList) {
+1:  154:  retStr = StringList2JsonArray(emptyList);
+1*:  155:  ASSERT_TRUE(retStr.empty());
+-:  156:}
+------------------
+_ZN43libutil_StringList2JsonArray_emptyList_TestC2Ev:
+function _ZN43libutil_StringList2JsonArray_emptyList_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  153:TEST_F(libutil_StringList2JsonArray, emptyList) {
+call    0 returned 1
+------------------
+_ZN43libutil_StringList2JsonArray_emptyList_TestD0Ev:
+function _ZN43libutil_StringList2JsonArray_emptyList_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  153:TEST_F(libutil_StringList2JsonArray, emptyList) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN43libutil_StringList2JsonArray_emptyList_TestD2Ev:
+function _ZN43libutil_StringList2JsonArray_emptyList_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  153:TEST_F(libutil_StringList2JsonArray, emptyList) {
+call    0 returned 1
+------------------
+_ZN43libutil_StringList2JsonArray_emptyList_Test8TestBodyEv:
+function _ZN43libutil_StringList2JsonArray_emptyList_Test8TestBodyEv called 1 returned 100% blocks executed 40%
+1:  153:TEST_F(libutil_StringList2JsonArray, emptyList) {
+1:  154:  retStr = StringList2JsonArray(emptyList);
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+1*:  155:  ASSERT_TRUE(retStr.empty());
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 0 (fallthrough)
+branch  4 taken 1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:  156:}
+------------------
+-:  157:
+4:  158:TEST_F(libutil_StringList2JsonArray, testList) {
+1:  159:  retStr = StringList2JsonArray(testList);
+1*:  160:  ASSERT_FALSE(retStr.empty());
+1*:  161:  ASSERT_STREQ(testString.c_str(), retStr.c_str());
+-:  162:}
+------------------
+_ZN42libutil_StringList2JsonArray_testList_TestC2Ev:
+function _ZN42libutil_StringList2JsonArray_testList_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  158:TEST_F(libutil_StringList2JsonArray, testList) {
+call    0 returned 1
+------------------
+_ZN42libutil_StringList2JsonArray_testList_TestD0Ev:
+function _ZN42libutil_StringList2JsonArray_testList_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  158:TEST_F(libutil_StringList2JsonArray, testList) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN42libutil_StringList2JsonArray_testList_TestD2Ev:
+function _ZN42libutil_StringList2JsonArray_testList_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  158:TEST_F(libutil_StringList2JsonArray, testList) {
+call    0 returned 1
+------------------
+_ZN42libutil_StringList2JsonArray_testList_Test8TestBodyEv:
+function _ZN42libutil_StringList2JsonArray_testList_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:  158:TEST_F(libutil_StringList2JsonArray, testList) {
+1:  159:  retStr = StringList2JsonArray(testList);
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+1*:  160:  ASSERT_FALSE(retStr.empty());
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 0 (fallthrough)
+branch  4 taken 1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+1*:  161:  ASSERT_STREQ(testString.c_str(), retStr.c_str());
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 1
+branch  6 taken 0 (fallthrough)
+branch  7 taken 1
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+-:  162:}
+------------------
+-:  163:
+-:  164://------------------------------------------------------------------------------
+-:  165:class libutil: public ::testing::Test {
+-:  166:  protected:
+-:  167:    std::vector<std::string> srcList;
+-:  168:    std::vector<std::string> retStrList;
+-:  169:    std::vector<boost::filesystem::path> retPathList;
+-:  170:    boost::filesystem::path emptyPath;
+function _ZN7libutil5SetUpEv called 9 returned 100% blocks executed 100%
+9:  171:    void SetUp() override {
+9:  172:    }
+-:  173:
+function _ZN7libutil8TearDownEv called 9 returned 100% blocks executed 100%
+9:  174:    void TearDown() override {
+9:  175:    }
+-:  176:};
+-:  177:
+4:  178:TEST_F(libutil, GetFilePaths_emptyFolderPath) {
+1:  179:  auto ret = GetFilePaths(emptyPath);
+1*:  180:  ASSERT_TRUE(ret.empty());
+1:  181:}
+------------------
+_ZN41libutil_GetFilePaths_emptyFolderPath_TestC2Ev:
+function _ZN41libutil_GetFilePaths_emptyFolderPath_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  178:TEST_F(libutil, GetFilePaths_emptyFolderPath) {
+call    0 returned 1
+------------------
+_ZN41libutil_GetFilePaths_emptyFolderPath_TestD0Ev:
+function _ZN41libutil_GetFilePaths_emptyFolderPath_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  178:TEST_F(libutil, GetFilePaths_emptyFolderPath) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN41libutil_GetFilePaths_emptyFolderPath_TestD2Ev:
+function _ZN41libutil_GetFilePaths_emptyFolderPath_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  178:TEST_F(libutil, GetFilePaths_emptyFolderPath) {
+call    0 returned 1
+------------------
+_ZN41libutil_GetFilePaths_emptyFolderPath_Test8TestBodyEv:
+function _ZN41libutil_GetFilePaths_emptyFolderPath_Test8TestBodyEv called 1 returned 100% blocks executed 39%
+1:  178:TEST_F(libutil, GetFilePaths_emptyFolderPath) {
+1:  179:  auto ret = GetFilePaths(emptyPath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  180:  ASSERT_TRUE(ret.empty());
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 0 (fallthrough)
+branch  4 taken 1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+1:  181:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 never executed
+------------------
+-:  182:
+4:  183:TEST_F(libutil, GetFilenames_emptyFolderPath) {
+1:  184:  auto ret = GetFilenames(emptyPath);
+1*:  185:  ASSERT_TRUE(ret.empty());
+1:  186:}
+------------------
+_ZN41libutil_GetFilenames_emptyFolderPath_TestC2Ev:
+function _ZN41libutil_GetFilenames_emptyFolderPath_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  183:TEST_F(libutil, GetFilenames_emptyFolderPath) {
+call    0 returned 1
+------------------
+_ZN41libutil_GetFilenames_emptyFolderPath_TestD0Ev:
+function _ZN41libutil_GetFilenames_emptyFolderPath_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  183:TEST_F(libutil, GetFilenames_emptyFolderPath) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN41libutil_GetFilenames_emptyFolderPath_TestD2Ev:
+function _ZN41libutil_GetFilenames_emptyFolderPath_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  183:TEST_F(libutil, GetFilenames_emptyFolderPath) {
+call    0 returned 1
+------------------
+_ZN41libutil_GetFilenames_emptyFolderPath_Test8TestBodyEv:
+function _ZN41libutil_GetFilenames_emptyFolderPath_Test8TestBodyEv called 1 returned 100% blocks executed 39%
+1:  183:TEST_F(libutil, GetFilenames_emptyFolderPath) {
+1:  184:  auto ret = GetFilenames(emptyPath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  185:  ASSERT_TRUE(ret.empty());
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 0 (fallthrough)
+branch  4 taken 1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+1:  186:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 never executed
+------------------
+-:  187:
+4:  188:TEST_F(libutil, GetNumberOfLines_emptyFolderPath) {
+1:  189:  auto ret = GetNumberOfLines(emptyPath);
+1*:  190:  ASSERT_EQ(0, ret);
+-:  191:}
+------------------
+_ZN45libutil_GetNumberOfLines_emptyFolderPath_TestC2Ev:
+function _ZN45libutil_GetNumberOfLines_emptyFolderPath_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  188:TEST_F(libutil, GetNumberOfLines_emptyFolderPath) {
+call    0 returned 1
+------------------
+_ZN45libutil_GetNumberOfLines_emptyFolderPath_TestD0Ev:
+function _ZN45libutil_GetNumberOfLines_emptyFolderPath_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  188:TEST_F(libutil, GetNumberOfLines_emptyFolderPath) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN45libutil_GetNumberOfLines_emptyFolderPath_TestD2Ev:
+function _ZN45libutil_GetNumberOfLines_emptyFolderPath_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  188:TEST_F(libutil, GetNumberOfLines_emptyFolderPath) {
+call    0 returned 1
+------------------
+_ZN45libutil_GetNumberOfLines_emptyFolderPath_Test8TestBodyEv:
+function _ZN45libutil_GetNumberOfLines_emptyFolderPath_Test8TestBodyEv called 1 returned 100% blocks executed 37%
+1:  188:TEST_F(libutil, GetNumberOfLines_emptyFolderPath) {
+1:  189:  auto ret = GetNumberOfLines(emptyPath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  190:  ASSERT_EQ(0, ret);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  191:}
+------------------
+-:  192:
+4:  193:TEST_F(libutil, ReadFileLineByLine_emptyFolderPath) {
+1:  194:  auto ret = ReadFileLineByLine(emptyPath, 0, std::cout);
+1*:  195:  ASSERT_EQ(0, ret);
+-:  196:}
+------------------
+_ZN47libutil_ReadFileLineByLine_emptyFolderPath_TestC2Ev:
+function _ZN47libutil_ReadFileLineByLine_emptyFolderPath_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  193:TEST_F(libutil, ReadFileLineByLine_emptyFolderPath) {
+call    0 returned 1
+------------------
+_ZN47libutil_ReadFileLineByLine_emptyFolderPath_TestD0Ev:
+function _ZN47libutil_ReadFileLineByLine_emptyFolderPath_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  193:TEST_F(libutil, ReadFileLineByLine_emptyFolderPath) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN47libutil_ReadFileLineByLine_emptyFolderPath_TestD2Ev:
+function _ZN47libutil_ReadFileLineByLine_emptyFolderPath_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  193:TEST_F(libutil, ReadFileLineByLine_emptyFolderPath) {
+call    0 returned 1
+------------------
+_ZN47libutil_ReadFileLineByLine_emptyFolderPath_Test8TestBodyEv:
+function _ZN47libutil_ReadFileLineByLine_emptyFolderPath_Test8TestBodyEv called 1 returned 100% blocks executed 37%
+1:  193:TEST_F(libutil, ReadFileLineByLine_emptyFolderPath) {
+1:  194:  auto ret = ReadFileLineByLine(emptyPath, 0, std::cout);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  195:  ASSERT_EQ(0, ret);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  196:}
+------------------
+-:  197:
+4:  198:TEST_F(libutil, SystemCall_emptyString) {
+1:  199:  auto ret = SystemCall(emptyPath.string());
+1*:  200:  ASSERT_EQ(ERROR, ret);
+-:  201:}
+------------------
+_ZN35libutil_SystemCall_emptyString_TestC2Ev:
+function _ZN35libutil_SystemCall_emptyString_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  198:TEST_F(libutil, SystemCall_emptyString) {
+call    0 returned 1
+------------------
+_ZN35libutil_SystemCall_emptyString_TestD0Ev:
+function _ZN35libutil_SystemCall_emptyString_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  198:TEST_F(libutil, SystemCall_emptyString) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN35libutil_SystemCall_emptyString_TestD2Ev:
+function _ZN35libutil_SystemCall_emptyString_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  198:TEST_F(libutil, SystemCall_emptyString) {
+call    0 returned 1
+------------------
+_ZN35libutil_SystemCall_emptyString_Test8TestBodyEv:
+function _ZN35libutil_SystemCall_emptyString_Test8TestBodyEv called 1 returned 100% blocks executed 39%
+1:  198:TEST_F(libutil, SystemCall_emptyString) {
+1:  199:  auto ret = SystemCall(emptyPath.string());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:  200:  ASSERT_EQ(ERROR, ret);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  201:}
+------------------
+-:  202:
+4:  203:TEST_F(libutil, SavePackageList_emptyString) {
+1:  204:  auto ret = SavePackageList(emptyPath.string());
+1*:  205:  ASSERT_EQ(ERROR, ret);
+-:  206:}
+------------------
+_ZN40libutil_SavePackageList_emptyString_TestC2Ev:
+function _ZN40libutil_SavePackageList_emptyString_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  203:TEST_F(libutil, SavePackageList_emptyString) {
+call    0 returned 1
+------------------
+_ZN40libutil_SavePackageList_emptyString_TestD0Ev:
+function _ZN40libutil_SavePackageList_emptyString_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  203:TEST_F(libutil, SavePackageList_emptyString) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN40libutil_SavePackageList_emptyString_TestD2Ev:
+function _ZN40libutil_SavePackageList_emptyString_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  203:TEST_F(libutil, SavePackageList_emptyString) {
+call    0 returned 1
+------------------
+_ZN40libutil_SavePackageList_emptyString_Test8TestBodyEv:
+function _ZN40libutil_SavePackageList_emptyString_Test8TestBodyEv called 1 returned 100% blocks executed 39%
+1:  203:TEST_F(libutil, SavePackageList_emptyString) {
+1:  204:  auto ret = SavePackageList(emptyPath.string());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:  205:  ASSERT_EQ(ERROR, ret);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  206:}
+------------------
+-:  207:
+4:  208:TEST_F(libutil, CreateNewArchive_emptySrcList) {
+1:  209:  auto ret = CreateNewArchive(srcList, "test");
+1*:  210:  ASSERT_EQ(ERROR, ret);
+-:  211:}
+------------------
+_ZN42libutil_CreateNewArchive_emptySrcList_TestC2Ev:
+function _ZN42libutil_CreateNewArchive_emptySrcList_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  208:TEST_F(libutil, CreateNewArchive_emptySrcList) {
+call    0 returned 1
+------------------
+_ZN42libutil_CreateNewArchive_emptySrcList_TestD0Ev:
+function _ZN42libutil_CreateNewArchive_emptySrcList_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  208:TEST_F(libutil, CreateNewArchive_emptySrcList) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN42libutil_CreateNewArchive_emptySrcList_TestD2Ev:
+function _ZN42libutil_CreateNewArchive_emptySrcList_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  208:TEST_F(libutil, CreateNewArchive_emptySrcList) {
+call    0 returned 1
+------------------
+_ZN42libutil_CreateNewArchive_emptySrcList_Test8TestBodyEv:
+function _ZN42libutil_CreateNewArchive_emptySrcList_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:  208:TEST_F(libutil, CreateNewArchive_emptySrcList) {
+1:  209:  auto ret = CreateNewArchive(srcList, "test");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+1*:  210:  ASSERT_EQ(ERROR, ret);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  211:}
+------------------
+-:  212:
+4:  213:TEST_F(libutil, CreateNewArchive_emptyDst) {
+1:  214:  srcList.emplace_back("Test");
+1:  215:  auto ret = CreateNewArchive(srcList, emptyPath.string());
+1*:  216:  ASSERT_EQ(ERROR, ret);
+-:  217:}
+------------------
+_ZN38libutil_CreateNewArchive_emptyDst_TestC2Ev:
+function _ZN38libutil_CreateNewArchive_emptyDst_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  213:TEST_F(libutil, CreateNewArchive_emptyDst) {
+call    0 returned 1
+------------------
+_ZN38libutil_CreateNewArchive_emptyDst_TestD0Ev:
+function _ZN38libutil_CreateNewArchive_emptyDst_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  213:TEST_F(libutil, CreateNewArchive_emptyDst) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN38libutil_CreateNewArchive_emptyDst_TestD2Ev:
+function _ZN38libutil_CreateNewArchive_emptyDst_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  213:TEST_F(libutil, CreateNewArchive_emptyDst) {
+call    0 returned 1
+------------------
+_ZN38libutil_CreateNewArchive_emptyDst_Test8TestBodyEv:
+function _ZN38libutil_CreateNewArchive_emptyDst_Test8TestBodyEv called 1 returned 100% blocks executed 41%
+1:  213:TEST_F(libutil, CreateNewArchive_emptyDst) {
+1:  214:  srcList.emplace_back("Test");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  215:  auto ret = CreateNewArchive(srcList, emptyPath.string());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:  216:  ASSERT_EQ(ERROR, ret);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  217:}
+------------------
+-:  218:
+4:  219:TEST_F(libutil, FolderToPathExist_emptyDst) {
+1:  220:  auto ret = FolderToPathExist(emptyPath.string());
+1*:  221:  ASSERT_EQ(false, ret);
+-:  222:}
+------------------
+_ZN39libutil_FolderToPathExist_emptyDst_TestC2Ev:
+function _ZN39libutil_FolderToPathExist_emptyDst_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  219:TEST_F(libutil, FolderToPathExist_emptyDst) {
+call    0 returned 1
+------------------
+_ZN39libutil_FolderToPathExist_emptyDst_TestD0Ev:
+function _ZN39libutil_FolderToPathExist_emptyDst_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  219:TEST_F(libutil, FolderToPathExist_emptyDst) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN39libutil_FolderToPathExist_emptyDst_TestD2Ev:
+function _ZN39libutil_FolderToPathExist_emptyDst_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  219:TEST_F(libutil, FolderToPathExist_emptyDst) {
+call    0 returned 1
+------------------
+_ZN39libutil_FolderToPathExist_emptyDst_Test8TestBodyEv:
+function _ZN39libutil_FolderToPathExist_emptyDst_Test8TestBodyEv called 1 returned 100% blocks executed 39%
+1:  219:TEST_F(libutil, FolderToPathExist_emptyDst) {
+1:  220:  auto ret = FolderToPathExist(emptyPath.string());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:  221:  ASSERT_EQ(false, ret);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  222:}
+------------------
+-:  223:
+-:  224://------------------------------------------------------------------------------
+-:  225:class libutil_Target: public ::testing::Test {
+-:  226:  protected:
+-:  227:    boost::filesystem::path tempPath = "/tmp/gtest_log";
+-:  228:    FilesForTesting files;
+-:  229:    unsigned int limit = 0;
+-:  230:    unsigned int soll = 0;
+-:  231:    std::string output;
+function _ZN14libutil_Target5SetUpEv called 0 returned 0% blocks executed 0%
+#####:  232:    void SetUp() override {
+#####:  233:      if(boost::filesystem::exists(tempPath)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  234:        boost::filesystem::remove_all(tempPath);
+call    0 never executed
+-:  235:      }
+#####:  236:      ASSERT_TRUE(boost::filesystem::create_directory(tempPath));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+#####:  237:      ASSERT_TRUE(files.create(tempPath));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+#####:  238:      ASSERT_TRUE(files.check());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:  239:    }
+-:  240:
+function _ZN14libutil_Target8TearDownEv called 0 returned 0% blocks executed 0%
+#####:  241:    void TearDown() override {
+#####:  242:      files.remove();
+call    0 never executed
+#####:  243:      boost::filesystem::remove_all(tempPath);
+call    0 never executed
+#####:  244:    }
+-:  245:};
+-:  246:
+#####:  247:TEST_F(libutil_Target, GetFilePaths_tmpFolderPath) {
+#####:  248:  auto ret = GetFilePaths(tempPath);
+#####:  249:  ASSERT_EQ_VECTOR_PATH(files.paths, ret);
+#####:  250:}
+------------------
+_ZN46libutil_Target_GetFilePaths_tmpFolderPath_TestC2Ev:
+function _ZN46libutil_Target_GetFilePaths_tmpFolderPath_TestC2Ev called 0 returned 0% blocks executed 0%
+#####:  247:TEST_F(libutil_Target, GetFilePaths_tmpFolderPath) {
+call    0 never executed
+------------------
+_ZN46libutil_Target_GetFilePaths_tmpFolderPath_TestD0Ev:
+function _ZN46libutil_Target_GetFilePaths_tmpFolderPath_TestD0Ev called 0 returned 0% blocks executed 0%
+#####:  247:TEST_F(libutil_Target, GetFilePaths_tmpFolderPath) {
+call    0 never executed
+call    1 never executed
+------------------
+_ZN46libutil_Target_GetFilePaths_tmpFolderPath_TestD2Ev:
+function _ZN46libutil_Target_GetFilePaths_tmpFolderPath_TestD2Ev called 0 returned 0% blocks executed 0%
+#####:  247:TEST_F(libutil_Target, GetFilePaths_tmpFolderPath) {
+call    0 never executed
+------------------
+_ZN46libutil_Target_GetFilePaths_tmpFolderPath_Test8TestBodyEv:
+function _ZN46libutil_Target_GetFilePaths_tmpFolderPath_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+#####:  247:TEST_F(libutil_Target, GetFilePaths_tmpFolderPath) {
+#####:  248:  auto ret = GetFilePaths(tempPath);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  249:  ASSERT_EQ_VECTOR_PATH(files.paths, ret);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+#####:  250:}
+call    0 never executed
+call    1 never executed
+------------------
+-:  251:
+#####:  252:TEST_F(libutil_Target, GetFilenames_tmpFolderPath) {
+#####:  253:  auto ret = GetFilenames(tempPath);
+#####:  254:  ASSERT_EQ_VECTOR_STR(files.filenames, ret);
+#####:  255:}
+------------------
+_ZN46libutil_Target_GetFilenames_tmpFolderPath_TestC2Ev:
+function _ZN46libutil_Target_GetFilenames_tmpFolderPath_TestC2Ev called 0 returned 0% blocks executed 0%
+#####:  252:TEST_F(libutil_Target, GetFilenames_tmpFolderPath) {
+call    0 never executed
+------------------
+_ZN46libutil_Target_GetFilenames_tmpFolderPath_TestD0Ev:
+function _ZN46libutil_Target_GetFilenames_tmpFolderPath_TestD0Ev called 0 returned 0% blocks executed 0%
+#####:  252:TEST_F(libutil_Target, GetFilenames_tmpFolderPath) {
+call    0 never executed
+call    1 never executed
+------------------
+_ZN46libutil_Target_GetFilenames_tmpFolderPath_TestD2Ev:
+function _ZN46libutil_Target_GetFilenames_tmpFolderPath_TestD2Ev called 0 returned 0% blocks executed 0%
+#####:  252:TEST_F(libutil_Target, GetFilenames_tmpFolderPath) {
+call    0 never executed
+------------------
+_ZN46libutil_Target_GetFilenames_tmpFolderPath_Test8TestBodyEv:
+function _ZN46libutil_Target_GetFilenames_tmpFolderPath_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+#####:  252:TEST_F(libutil_Target, GetFilenames_tmpFolderPath) {
+#####:  253:  auto ret = GetFilenames(tempPath);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  254:  ASSERT_EQ_VECTOR_STR(files.filenames, ret);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+#####:  255:}
+call    0 never executed
+call    1 never executed
+------------------
+-:  256:
+#####:  257:TEST_F(libutil_Target, GetNumberOfLines_tmpFolderPath_) {
+#####:  258:  for(unsigned int i = 0; i < files.arrayCount; i++){
+#####:  259:    auto ret = GetNumberOfLines(files.paths[i]);
+#####:  260:    ASSERT_EQ(files.lines[i], ret);
+-:  261:  }
+-:  262:}
+------------------
+_ZN51libutil_Target_GetNumberOfLines_tmpFolderPath__TestC2Ev:
+function _ZN51libutil_Target_GetNumberOfLines_tmpFolderPath__TestC2Ev called 0 returned 0% blocks executed 0%
+#####:  257:TEST_F(libutil_Target, GetNumberOfLines_tmpFolderPath_) {
+call    0 never executed
+------------------
+_ZN51libutil_Target_GetNumberOfLines_tmpFolderPath__TestD0Ev:
+function _ZN51libutil_Target_GetNumberOfLines_tmpFolderPath__TestD0Ev called 0 returned 0% blocks executed 0%
+#####:  257:TEST_F(libutil_Target, GetNumberOfLines_tmpFolderPath_) {
+call    0 never executed
+call    1 never executed
+------------------
+_ZN51libutil_Target_GetNumberOfLines_tmpFolderPath__TestD2Ev:
+function _ZN51libutil_Target_GetNumberOfLines_tmpFolderPath__TestD2Ev called 0 returned 0% blocks executed 0%
+#####:  257:TEST_F(libutil_Target, GetNumberOfLines_tmpFolderPath_) {
+call    0 never executed
+------------------
+_ZN51libutil_Target_GetNumberOfLines_tmpFolderPath__Test8TestBodyEv:
+function _ZN51libutil_Target_GetNumberOfLines_tmpFolderPath__Test8TestBodyEv called 0 returned 0% blocks executed 0%
+#####:  257:TEST_F(libutil_Target, GetNumberOfLines_tmpFolderPath_) {
+#####:  258:  for(unsigned int i = 0; i < files.arrayCount; i++){
+branch  0 never executed
+branch  1 never executed
+#####:  259:    auto ret = GetNumberOfLines(files.paths[i]);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  260:    ASSERT_EQ(files.lines[i], ret);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  261:  }
+-:  262:}
+------------------
+-:  263:
+#####:  264:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_unlimit) {
+#####:  265:  limit = 0;
+#####:  266:  for(unsigned int i = 0; i < files.arrayCount; i++){
+#####:  267:      testing::internal::CaptureStdout();
+#####:  268:      auto ret = ReadFileLineByLine(files.paths[i], limit, std::cout);
+#####:  269:      output = testing::internal::GetCapturedStdout();
+-:  270:      // check return value
+#####:  271:      ASSERT_EQ(files.lines[i], ret);
+-:  272:      // check count of cout
+#####:  273:      ASSERT_EQ(ret, Count_String_Existence(output, files.testStr));
+-:  274:      // check begin
+#####:  275:      ASSERT_EQ(0, Get_String_Linenumber(output, files.testStr, files.lineBegin));
+-:  276:  }
+-:  277:}
+------------------
+_ZN60libutil_Target_ReadFileLineByLine_tmpFolderPath_unlimit_TestC2Ev:
+function _ZN60libutil_Target_ReadFileLineByLine_tmpFolderPath_unlimit_TestC2Ev called 0 returned 0% blocks executed 0%
+#####:  264:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_unlimit) {
+call    0 never executed
+------------------
+_ZN60libutil_Target_ReadFileLineByLine_tmpFolderPath_unlimit_TestD0Ev:
+function _ZN60libutil_Target_ReadFileLineByLine_tmpFolderPath_unlimit_TestD0Ev called 0 returned 0% blocks executed 0%
+#####:  264:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_unlimit) {
+call    0 never executed
+call    1 never executed
+------------------
+_ZN60libutil_Target_ReadFileLineByLine_tmpFolderPath_unlimit_TestD2Ev:
+function _ZN60libutil_Target_ReadFileLineByLine_tmpFolderPath_unlimit_TestD2Ev called 0 returned 0% blocks executed 0%
+#####:  264:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_unlimit) {
+call    0 never executed
+------------------
+_ZN60libutil_Target_ReadFileLineByLine_tmpFolderPath_unlimit_Test8TestBodyEv:
+function _ZN60libutil_Target_ReadFileLineByLine_tmpFolderPath_unlimit_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+#####:  264:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_unlimit) {
+#####:  265:  limit = 0;
+#####:  266:  for(unsigned int i = 0; i < files.arrayCount; i++){
+branch  0 never executed
+branch  1 never executed
+#####:  267:      testing::internal::CaptureStdout();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  268:      auto ret = ReadFileLineByLine(files.paths[i], limit, std::cout);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  269:      output = testing::internal::GetCapturedStdout();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+-:  270:      // check return value
+#####:  271:      ASSERT_EQ(files.lines[i], ret);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  272:      // check count of cout
+#####:  273:      ASSERT_EQ(ret, Count_String_Existence(output, files.testStr));
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  274:      // check begin
+#####:  275:      ASSERT_EQ(0, Get_String_Linenumber(output, files.testStr, files.lineBegin));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  276:  }
+-:  277:}
+------------------
+-:  278:
+#####:  279:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_eq_fileline) {
+#####:  280:  for(unsigned int i = 0; i < files.arrayCount; i++){
+#####:  281:      limit = files.lines[i];
+#####:  282:      testing::internal::CaptureStdout();
+#####:  283:      auto ret = ReadFileLineByLine(files.paths[i], limit, std::cout);
+#####:  284:      output = testing::internal::GetCapturedStdout();
+-:  285:      // check return value
+#####:  286:      ASSERT_EQ(files.lines[i], ret);
+-:  287:      // check count of cout
+#####:  288:      ASSERT_EQ(ret, Count_String_Existence(output, files.testStr));
+-:  289:      // check begin
+#####:  290:      ASSERT_EQ(0, Get_String_Linenumber(output, files.testStr, files.lineBegin));
+-:  291:  }
+-:  292:}
+------------------
+_ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_eq_fileline_TestC2Ev:
+function _ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_eq_fileline_TestC2Ev called 0 returned 0% blocks executed 0%
+#####:  279:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_eq_fileline) {
+call    0 never executed
+------------------
+_ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_eq_fileline_TestD0Ev:
+function _ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_eq_fileline_TestD0Ev called 0 returned 0% blocks executed 0%
+#####:  279:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_eq_fileline) {
+call    0 never executed
+call    1 never executed
+------------------
+_ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_eq_fileline_TestD2Ev:
+function _ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_eq_fileline_TestD2Ev called 0 returned 0% blocks executed 0%
+#####:  279:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_eq_fileline) {
+call    0 never executed
+------------------
+_ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_eq_fileline_Test8TestBodyEv:
+function _ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_eq_fileline_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+#####:  279:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_eq_fileline) {
+#####:  280:  for(unsigned int i = 0; i < files.arrayCount; i++){
+branch  0 never executed
+branch  1 never executed
+#####:  281:      limit = files.lines[i];
+call    0 never executed
+#####:  282:      testing::internal::CaptureStdout();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  283:      auto ret = ReadFileLineByLine(files.paths[i], limit, std::cout);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  284:      output = testing::internal::GetCapturedStdout();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+-:  285:      // check return value
+#####:  286:      ASSERT_EQ(files.lines[i], ret);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  287:      // check count of cout
+#####:  288:      ASSERT_EQ(ret, Count_String_Existence(output, files.testStr));
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  289:      // check begin
+#####:  290:      ASSERT_EQ(0, Get_String_Linenumber(output, files.testStr, files.lineBegin));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  291:  }
+-:  292:}
+------------------
+-:  293:
+#####:  294:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_gt_fileline) {
+#####:  295:  for(unsigned int i = 0; i < files.arrayCount; i++){
+#####:  296:      limit = files.lines[i] + 1;
+#####:  297:      soll = files.lines[i];
+#####:  298:      testing::internal::CaptureStdout();
+#####:  299:      auto ret = ReadFileLineByLine(files.paths[i], limit, std::cout);
+#####:  300:      output = testing::internal::GetCapturedStdout();
+-:  301:      // check return value
+#####:  302:      ASSERT_EQ(soll, ret);
+-:  303:      // check count of cout
+#####:  304:      ASSERT_EQ(ret, Count_String_Existence(output, files.testStr));
+-:  305:      // check begin
+#####:  306:      ASSERT_EQ(0, Get_String_Linenumber(output, files.testStr, files.lineBegin));
+-:  307:  }
+-:  308:}
+------------------
+_ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_gt_fileline_TestC2Ev:
+function _ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_gt_fileline_TestC2Ev called 0 returned 0% blocks executed 0%
+#####:  294:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_gt_fileline) {
+call    0 never executed
+------------------
+_ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_gt_fileline_TestD0Ev:
+function _ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_gt_fileline_TestD0Ev called 0 returned 0% blocks executed 0%
+#####:  294:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_gt_fileline) {
+call    0 never executed
+call    1 never executed
+------------------
+_ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_gt_fileline_TestD2Ev:
+function _ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_gt_fileline_TestD2Ev called 0 returned 0% blocks executed 0%
+#####:  294:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_gt_fileline) {
+call    0 never executed
+------------------
+_ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_gt_fileline_Test8TestBodyEv:
+function _ZN70libutil_Target_ReadFileLineByLine_tmpFolderPath_limit_gt_fileline_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+#####:  294:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_gt_fileline) {
+#####:  295:  for(unsigned int i = 0; i < files.arrayCount; i++){
+branch  0 never executed
+branch  1 never executed
+#####:  296:      limit = files.lines[i] + 1;
+call    0 never executed
+#####:  297:      soll = files.lines[i];
+call    0 never executed
+#####:  298:      testing::internal::CaptureStdout();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  299:      auto ret = ReadFileLineByLine(files.paths[i], limit, std::cout);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  300:      output = testing::internal::GetCapturedStdout();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+-:  301:      // check return value
+#####:  302:      ASSERT_EQ(soll, ret);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  303:      // check count of cout
+#####:  304:      ASSERT_EQ(ret, Count_String_Existence(output, files.testStr));
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  305:      // check begin
+#####:  306:      ASSERT_EQ(0, Get_String_Linenumber(output, files.testStr, files.lineBegin));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  307:  }
+-:  308:}
+------------------
+-:  309:
+#####:  310:TEST_F(libutil_Target, ReadFileLineByLine_tmpFolderPath_limit_lt_fileline) {
+#####:  311:  unsigned int diff = 1;
+#####:  312:  for(unsigned int i = 0; i < files.arrayCount; i++){
+#####:  313:      limit = files.lines[i] - diff;
+#####:  314:      soll = limit;
+#####:  315:      testing::internal::CaptureStdout();
+#####:  316:      auto ret = ReadFileLineByLine(files.paths[i], limit, std::cout);
+#####:  317:      output = testing::internal::GetCapturedStdout();
+-:  318:      // check return value
+#####:  319:      ASSERT_EQ(soll, ret);
+-:  320:      // check count of cout
+#####:  321:      ASSERT_EQ(ret, Count_String_Existence(output, files.testStr));
+-:  322:      // check begin
+#####:  323:      ASSERT_EQ(0, Get_String_Linenumber(output, files.testStr, files.lineBegin + diff));
+-:  324:  }
+-:  325:}
+-:  326:

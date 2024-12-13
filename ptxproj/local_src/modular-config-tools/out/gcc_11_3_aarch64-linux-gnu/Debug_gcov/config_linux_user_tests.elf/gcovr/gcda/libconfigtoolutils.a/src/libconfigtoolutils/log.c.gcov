@@ -1,0 +1,127 @@
+-:    0:Source:src/libconfigtoolutils/log.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     log.c
+-:   12:///
+-:   13:///  \brief    Log functionality implementation.
+-:   14:///            This functionality should be moved to a more common library.
+-:   15:///
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "ctutil/log.h"
+-:   23:
+-:   24://------------------------------------------------------------------------------
+-:   25:// defines; structure, enumeration and type definitions
+-:   26://------------------------------------------------------------------------------
+-:   27:#ifdef DEBUGPRINT
+-:   28:#define PRINT_DEBUG_LOG true
+-:   29:#else
+-:   30:#define PRINT_DEBUG_LOG false
+-:   31:#endif
+-:   32:
+-:   33://------------------------------------------------------------------------------
+-:   34:// function prototypes
+-:   35://------------------------------------------------------------------------------
+-:   36:
+-:   37://------------------------------------------------------------------------------
+-:   38:// macros
+-:   39://------------------------------------------------------------------------------
+-:   40:
+-:   41://------------------------------------------------------------------------------
+-:   42:// variables' and constants' definitions
+-:   43://------------------------------------------------------------------------------
+-:   44:
+-:   45://------------------------------------------------------------------------------
+-:   46:// function implementation
+-:   47://------------------------------------------------------------------------------
+-:   48:
+-:   49:// TODO: Move whole functionality to a more common library
+-:   50:
+-:   51:
+function ctutil_Log called 0 returned 0% blocks executed 0%
+#####:   52:void ctutil_Log(ctutil_LogLevelEnum_t const logLevel,
+-:   53:                ctutil_Timestamp_t const * const WC_UNUSED_PARAM(pTimestamp),
+-:   54:                char const * const szFile,
+-:   55:                char const * const szFunction,
+-:   56:                int const line,
+-:   57:                char const * const szMessage)
+-:   58:{
+#####:   59:  char const szFormat[] = "[%u] %s, %s (line %i): %s\n";
+-:   60:  // TODO: Replace by suitable solution (e. g. write to syslog)
+-:   61:  // TODO: Evaluate log level more detailed
+#####:   62:  if(logLevel <= ctutil_LogLevelEnum_warning)
+branch  0 never executed
+branch  1 never executed
+-:   63:  {
+#####:   64:    fprintf(stderr, szFormat, logLevel, szFile, szFunction, line, szMessage);
+call    0 never executed
+-:   65:  }
+#####:   66:  else if(logLevel <= ctutil_LogLevelEnum_info)
+branch  0 never executed
+branch  1 never executed
+-:   67:  {
+#####:   68:    fprintf(stdout, szFormat, logLevel, szFile, szFunction, line, szMessage);
+call    0 never executed
+-:   69:  }
+-:   70:  else
+-:   71:  {
+-:   72:    if(PRINT_DEBUG_LOG)
+-:   73:    {
+-:   74:      fprintf(stdout, szFormat, logLevel, szFile, szFunction, line, szMessage);
+-:   75:    }
+-:   76:  }
+#####:   77:}
+-:   78:
+-:   79:
+function ctutil_LogErrno called 0 returned 0% blocks executed 0%
+#####:   80:void ctutil_LogErrno(ctutil_LogLevelEnum_t const logLevel,
+-:   81:                     ctutil_Timestamp_t const * const WC_UNUSED_PARAM(pTimestamp),
+-:   82:                     char const * const szFile,
+-:   83:                     char const * const szFunction,
+-:   84:                     int const line,
+-:   85:                     int const errorNumber,
+-:   86:                     char const * const szPreText)
+-:   87:{
+#####:   88:  char const szFormat[] = "[%u] %s, %s (line %i): %s (error %i: %s)\n";
+-:   89:  // TODO: Replace by suitable solution (e. g. write to syslog)
+-:   90:  // TODO: Evaluate log level more detailed
+#####:   91:  if(logLevel <= ctutil_LogLevelEnum_warning)
+branch  0 never executed
+branch  1 never executed
+-:   92:  {
+#####:   93:    fprintf(stderr, szFormat, logLevel, szFile, szFunction, line, szPreText, errorNumber, strerror(errorNumber));
+call    0 never executed
+call    1 never executed
+-:   94:  }
+#####:   95:  else if(logLevel <= ctutil_LogLevelEnum_info)
+branch  0 never executed
+branch  1 never executed
+-:   96:  {
+#####:   97:    fprintf(stdout, szFormat, logLevel, szFile, szFunction, line, szPreText, errorNumber, strerror(errorNumber));
+call    0 never executed
+call    1 never executed
+-:   98:  }
+-:   99:  else
+-:  100:  {
+-:  101:    if(PRINT_DEBUG_LOG)
+-:  102:    {
+-:  103:      fprintf(stdout, szFormat, logLevel, szFile, szFunction, line, szPreText, errorNumber, strerror(errorNumber));
+-:  104:    }
+-:  105:  }
+#####:  106:}
+-:  107:
+-:  108:
+-:  109://---- End of source file ------------------------------------------------------
+-:  110:

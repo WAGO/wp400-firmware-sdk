@@ -1,0 +1,37 @@
+-:    0:Source:src/network_config/MessagePrinter.hpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:#pragma once
+-:    3:
+-:    4:#include <ostream>
+-:    5:#include <fstream>
+-:    6:#include <memory>
+-:    7:#include <utility>
+-:    8:#include <iostream>
+-:    9:#include <Status.hpp>
+-:   10:#include "Output.hpp"
+-:   11:
+-:   12:namespace network_config {
+-:   13:
+-:   14:class MessagePrinter {
+-:   15: public:
+-:   16:  MessagePrinter();
+function _ZN14network_config14MessagePrinterD2Ev called 5 returned 100% blocks executed 100%
+5:   17:  ~MessagePrinter() = default;
+call    0 returned 5
+-:   18:
+-:   19:  MessagePrinter(const MessagePrinter&) = delete;
+-:   20:  MessagePrinter& operator=(const MessagePrinter&) = delete;
+-:   21:  MessagePrinter(MessagePrinter&& other) = delete;
+-:   22:  MessagePrinter& operator=(MessagePrinter&&) = delete;
+-:   23:
+-:   24:  void SetDestination(::std::unique_ptr<Output> output);
+-:   25:  void Print(const ::netconf::Status &status);
+-:   26:  void Print(const ::std::string &text);
+-:   27:
+-:   28: private:
+-:   29:  ::std::unique_ptr<Output> output_;
+-:   30:
+-:   31:};
+-:   32:
+-:   33:} /* namespace network_config */
+-:   34:

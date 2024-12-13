@@ -1,0 +1,581 @@
+-:    0:Source:test-src/config_linux_user/test_ShadowEditing.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_ShadowEditing.cc
+-:   12:///
+-:   13:///  \brief    Tests for shadow editing in config tool config_linux_user.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "shadow_functions.h"
+-:   22:#include "resources.h"
+-:   23:#include <gtest/gtest.h>
+-:   24:#include "testutil/file_operations.hpp"
+-:   25:#include <unistd.h>
+-:   26:#include <cstring>
+-:   27:#include <sys/stat.h>
+-:   28:
+-:   29://------------------------------------------------------------------------------
+-:   30:// macros
+-:   31://------------------------------------------------------------------------------
+-:   32:
+-:   33://------------------------------------------------------------------------------
+-:   34:// defines; structure, enumeration and type definitions
+-:   35://------------------------------------------------------------------------------
+-:   36:class ShadowEditingTest_config_linux_user : public ::testing::Test
+-:   37:{
+-:   38:  private:
+-:   39:    std::string tempDir;
+-:   40:    std::string lastErrorFile;
+-:   41:    std::string randSource;
+-:   42:
+-:   43:  protected:
+-:   44:    ctutil_Resources_t stResources;
+-:   45:    char const szShadowLines[3][128] = { "admin:adminpasswordhash:17000:0:99999:7:::",
+-:   46:                                         "root:rootpasswordhash:17000:0:99999:7:::",
+-:   47:                                         "nobody:nobodypasswordhash:17000:0:99999:7:::" };
+-:   48:
+-:   49:  protected:
+function _ZN35ShadowEditingTest_config_linux_userC2Ev called 3 returned 100% blocks executed 100%
+3:   50:    ShadowEditingTest_config_linux_user() {};
+call    0 returned 3
+call    1 returned 3
+call    2 returned 3
+call    3 returned 3
+3*:   51:    virtual ~ShadowEditingTest_config_linux_user() {};
+------------------
+_ZN35ShadowEditingTest_config_linux_userD0Ev:
+function _ZN35ShadowEditingTest_config_linux_userD0Ev called 0 returned 0% blocks executed 0%
+#####:   51:    virtual ~ShadowEditingTest_config_linux_user() {};
+call    0 never executed
+call    1 never executed
+------------------
+_ZN35ShadowEditingTest_config_linux_userD2Ev:
+function _ZN35ShadowEditingTest_config_linux_userD2Ev called 3 returned 100% blocks executed 100%
+3:   51:    virtual ~ShadowEditingTest_config_linux_user() {};
+call    0 returned 3
+call    1 returned 3
+call    2 returned 3
+call    3 returned 3
+------------------
+function _ZN35ShadowEditingTest_config_linux_user5SetUpEv called 3 returned 100% blocks executed 49%
+3:   52:    virtual void SetUp()
+-:   53:    {
+3:   54:      statusCode_t status = CTUTIL_SUCCESS;
+-:   55:
+-:   56:      // Prepare resources
+3:   57:      memset(&(this->stResources), 0, sizeof(this->stResources));
+3:   58:      this->stResources.pstSpecificResources = (ctutil_ResourcesSpecific_t *)malloc(sizeof(ctutil_ResourcesSpecific_t));
+3:   59:      memset(this->stResources.pstSpecificResources, 0, sizeof(*(this->stResources.pstSpecificResources)));
+-:   60:
+3:   61:      tempDir = testutil_CreateTempDir("config_linux_user_");
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+call    4 returned 3
+3:   62:      lastErrorFile = tempDir + "/test_error.txt";
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+call    4 returned 3
+3:   63:      this->stResources.stCommonResources.szLastErrorFile = lastErrorFile.c_str();
+call    0 returned 3
+3:   64:      randSource = tempDir + "/test_rand_source.txt";
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+call    4 returned 3
+3:   65:      status = ctutil_PrepareChangeableFile(randSource.c_str(), &(this->stResources.pstSpecificResources->pShadowFile));
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+3*:   66:      ASSERT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 0 (fallthrough)
+branch  5 taken 3
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 3
+branch 19 taken 3 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:   67:
+-:   68:      // Prepare test files
+3:   69:      testutil_CreateFile(this->stResources.stCommonResources.szLastErrorFile);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+3:   70:      char const * szShadowFilePath = ctutil_GetOriginalFilePath(this->stResources.pstSpecificResources->pShadowFile);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+3:   71:      testutil_CreateFile(szShadowFilePath);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+12:   72:      for(size_t i = 0; i < 3; ++i)
+branch  0 taken 9
+branch  1 taken 3 (fallthrough)
+-:   73:      {
+9:   74:        testutil_AppendToFile(szShadowFilePath, (uint8_t const *)this->szShadowLines[i], strlen(this->szShadowLines[i]));
+call    0 returned 9
+branch  1 taken 9 (fallthrough)
+branch  2 taken 0 (throw)
+9:   75:        testutil_AppendToFile(szShadowFilePath, (uint8_t const *)"\n", 1U);
+call    0 returned 9
+branch  1 taken 9 (fallthrough)
+branch  2 taken 0 (throw)
+-:   76:      }
+3*:   77:      ASSERT_EQ(0, chmod(szShadowFilePath, (S_IRUSR | S_IWUSR)));
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+branch  5 taken 0 (fallthrough)
+branch  6 taken 3
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 3
+branch 20 taken 3 (fallthrough)
+branch 21 taken 0
+call   22 never executed
+call   23 never executed
+call   24 never executed
+3:   78:      sync();
+call    0 returned 3
+-:   79:    }
+function _ZN35ShadowEditingTest_config_linux_user8TearDownEv called 3 returned 100% blocks executed 24%
+3:   80:    virtual void TearDown()
+-:   81:    {
+-:   82:      // Clean test files
+3*:   83:      EXPECT_TRUE(testutil_RemoveFile(ctutil_GetOriginalFilePath(this->stResources.pstSpecificResources->pShadowFile)));
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 3 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 3
+call    7 returned 3
+branch  8 taken 0 (fallthrough)
+branch  9 taken 3
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 returned 3
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+-:   84:      // FIXME: We should clean the temporarily file may be left but if it not exist QEMU will crash when run with Valgrind
+-:   85://      (void)testutil_RemoveFile(ctutil_GetChangeableFilePath(this->stResources.pstSpecificResources->pShadowFile));
+3*:   86:      EXPECT_TRUE(testutil_RemoveFile(this->stResources.stCommonResources.szLastErrorFile));
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+call    4 returned 3
+branch  5 taken 0 (fallthrough)
+branch  6 taken 3
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 returned 3
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+3*:   87:      EXPECT_TRUE(testutil_RemoveDir(tempDir.c_str()));
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 returned 3
+branch  6 taken 0 (fallthrough)
+branch  7 taken 3
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 3
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+-:   88:
+-:   89:      // Clean resources and options
+3:   90:      ctutil_ReleaseFileForChanges(&(this->stResources.pstSpecificResources->pShadowFile));
+call    0 returned 3
+3:   91:      free(this->stResources.pstSpecificResources);
+3:   92:    }
+-:   93:};
+-:   94:
+-:   95://------------------------------------------------------------------------------
+-:   96:// variables' and constants' definitions
+-:   97://------------------------------------------------------------------------------
+-:   98:
+-:   99://------------------------------------------------------------------------------
+-:  100:// test implementation
+-:  101://------------------------------------------------------------------------------
+4:  102:TEST_F(ShadowEditingTest_config_linux_user, CheckSetup)
+-:  103:{
+-:  104:  // Nothing to do here, everything is done in SetUp/TearDown
+1:  105:}
+------------------
+_ZN51ShadowEditingTest_config_linux_user_CheckSetup_TestC2Ev:
+function _ZN51ShadowEditingTest_config_linux_user_CheckSetup_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  102:TEST_F(ShadowEditingTest_config_linux_user, CheckSetup)
+call    0 returned 1
+------------------
+_ZN51ShadowEditingTest_config_linux_user_CheckSetup_TestD0Ev:
+function _ZN51ShadowEditingTest_config_linux_user_CheckSetup_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  102:TEST_F(ShadowEditingTest_config_linux_user, CheckSetup)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN51ShadowEditingTest_config_linux_user_CheckSetup_TestD2Ev:
+function _ZN51ShadowEditingTest_config_linux_user_CheckSetup_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  102:TEST_F(ShadowEditingTest_config_linux_user, CheckSetup)
+call    0 returned 1
+------------------
+_ZN51ShadowEditingTest_config_linux_user_CheckSetup_Test8TestBodyEv:
+function _ZN51ShadowEditingTest_config_linux_user_CheckSetup_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  102:TEST_F(ShadowEditingTest_config_linux_user, CheckSetup)
+-:  103:{
+-:  104:  // Nothing to do here, everything is done in SetUp/TearDown
+1:  105:}
+------------------
+-:  106:
+-:  107:
+4:  108:TEST_F(ShadowEditingTest_config_linux_user, WriteShadowFileWithNewEntry)
+-:  109:{
+-:  110:  // Prepare user entry
+-:  111:  struct spwd stNewUserData;
+1:  112:  memset(&stNewUserData, 0, sizeof(stNewUserData));
+1:  113:  stNewUserData.sp_namp = strdup("nobody");
+1:  114:  stNewUserData.sp_pwdp = strdup("1234");
+1:  115:  stNewUserData.sp_lstchg = 123;
+1:  116:  stNewUserData.sp_min = 0;
+1:  117:  stNewUserData.sp_max = 99999;
+1:  118:  stNewUserData.sp_warn = 7;
+1:  119:  stNewUserData.sp_inact = 0;
+1:  120:  stNewUserData.sp_expire = 0;
+1:  121:  stNewUserData.sp_flag = 0;
+-:  122:
+-:  123:  // Write to shadow
+1:  124:  char const szExpectedNobodyLine[] = "nobody:1234:123:0:99999:7:::";
+1:  125:  statusCode_t const result = WriteShadow(&(this->stResources), &stNewUserData);
+1*:  126:  EXPECT_EQ(CTUTIL_SUCCESS, result);
+1:  127:  ::std::string lineBuffer;
+1:  128:  char const * szShadowFilePath = ctutil_GetOriginalFilePath(this->stResources.pstSpecificResources->pShadowFile);
+1*:  129:  EXPECT_STREQ(this->szShadowLines[0], testutil_GetFirstMatchingLineFromFile(szShadowFilePath, "admin", lineBuffer));
+1*:  130:  EXPECT_STREQ(this->szShadowLines[1], testutil_GetFirstMatchingLineFromFile(szShadowFilePath, "root", lineBuffer));
+1*:  131:  EXPECT_STRNE(this->szShadowLines[2], testutil_GetFirstMatchingLineFromFile(szShadowFilePath, "nobody", lineBuffer));
+1*:  132:  EXPECT_STREQ(szExpectedNobodyLine, testutil_GetFirstMatchingLineFromFile(szShadowFilePath, "nobody", lineBuffer));
+-:  133:
+-:  134:  // Cleanup
+1:  135:  free(stNewUserData.sp_pwdp);
+1:  136:  free(stNewUserData.sp_namp);
+1:  137:}
+------------------
+_ZN68ShadowEditingTest_config_linux_user_WriteShadowFileWithNewEntry_TestC2Ev:
+function _ZN68ShadowEditingTest_config_linux_user_WriteShadowFileWithNewEntry_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  108:TEST_F(ShadowEditingTest_config_linux_user, WriteShadowFileWithNewEntry)
+call    0 returned 1
+------------------
+_ZN68ShadowEditingTest_config_linux_user_WriteShadowFileWithNewEntry_TestD0Ev:
+function _ZN68ShadowEditingTest_config_linux_user_WriteShadowFileWithNewEntry_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  108:TEST_F(ShadowEditingTest_config_linux_user, WriteShadowFileWithNewEntry)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN68ShadowEditingTest_config_linux_user_WriteShadowFileWithNewEntry_TestD2Ev:
+function _ZN68ShadowEditingTest_config_linux_user_WriteShadowFileWithNewEntry_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  108:TEST_F(ShadowEditingTest_config_linux_user, WriteShadowFileWithNewEntry)
+call    0 returned 1
+------------------
+_ZN68ShadowEditingTest_config_linux_user_WriteShadowFileWithNewEntry_Test8TestBodyEv:
+function _ZN68ShadowEditingTest_config_linux_user_WriteShadowFileWithNewEntry_Test8TestBodyEv called 1 returned 100% blocks executed 26%
+1:  108:TEST_F(ShadowEditingTest_config_linux_user, WriteShadowFileWithNewEntry)
+-:  109:{
+-:  110:  // Prepare user entry
+-:  111:  struct spwd stNewUserData;
+1:  112:  memset(&stNewUserData, 0, sizeof(stNewUserData));
+1:  113:  stNewUserData.sp_namp = strdup("nobody");
+1:  114:  stNewUserData.sp_pwdp = strdup("1234");
+1:  115:  stNewUserData.sp_lstchg = 123;
+1:  116:  stNewUserData.sp_min = 0;
+1:  117:  stNewUserData.sp_max = 99999;
+1:  118:  stNewUserData.sp_warn = 7;
+1:  119:  stNewUserData.sp_inact = 0;
+1:  120:  stNewUserData.sp_expire = 0;
+1:  121:  stNewUserData.sp_flag = 0;
+-:  122:
+-:  123:  // Write to shadow
+1:  124:  char const szExpectedNobodyLine[] = "nobody:1234:123:0:99999:7:::";
+1:  125:  statusCode_t const result = WriteShadow(&(this->stResources), &stNewUserData);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  126:  EXPECT_EQ(CTUTIL_SUCCESS, result);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  127:  ::std::string lineBuffer;
+call    0 returned 1
+call    1 never executed
+1:  128:  char const * szShadowFilePath = ctutil_GetOriginalFilePath(this->stResources.pstSpecificResources->pShadowFile);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  129:  EXPECT_STREQ(this->szShadowLines[0], testutil_GetFirstMatchingLineFromFile(szShadowFilePath, "admin", lineBuffer));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1*:  130:  EXPECT_STREQ(this->szShadowLines[1], testutil_GetFirstMatchingLineFromFile(szShadowFilePath, "root", lineBuffer));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1*:  131:  EXPECT_STRNE(this->szShadowLines[2], testutil_GetFirstMatchingLineFromFile(szShadowFilePath, "nobody", lineBuffer));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1*:  132:  EXPECT_STREQ(szExpectedNobodyLine, testutil_GetFirstMatchingLineFromFile(szShadowFilePath, "nobody", lineBuffer));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  133:
+-:  134:  // Cleanup
+1:  135:  free(stNewUserData.sp_pwdp);
+1:  136:  free(stNewUserData.sp_namp);
+call    0 returned 1
+1:  137:}
+------------------
+-:  138:
+-:  139:
+4:  140:TEST_F(ShadowEditingTest_config_linux_user, CheckUnchangedFileRightsAfterWriteShadowFile)
+-:  141:{
+1:  142:  char const * szShadowFilePath = ctutil_GetOriginalFilePath(this->stResources.pstSpecificResources->pShadowFile);
+-:  143:
+-:  144:  // Check initial file rights
+-:  145:  struct stat stOriginalFileStat;
+1:  146:  int const statOriginalResult = lstat(szShadowFilePath, &stOriginalFileStat);
+1*:  147:  ASSERT_EQ(0, statOriginalResult);
+-:  148:
+-:  149:  // Prepare user entry
+-:  150:  struct spwd stNewUserData;
+1:  151:  memset(&stNewUserData, 0, sizeof(stNewUserData));
+1:  152:  stNewUserData.sp_namp = strdup("nobody");
+1:  153:  stNewUserData.sp_pwdp = strdup("1234");
+1:  154:  stNewUserData.sp_lstchg = 123;
+1:  155:  stNewUserData.sp_min = 0;
+1:  156:  stNewUserData.sp_max = 99999;
+1:  157:  stNewUserData.sp_warn = 7;
+1:  158:  stNewUserData.sp_inact = 0;
+1:  159:  stNewUserData.sp_expire = 0;
+1:  160:  stNewUserData.sp_flag = 0;
+-:  161:
+-:  162:  // Write to shadow
+1:  163:  statusCode_t const result = WriteShadow(&(this->stResources), &stNewUserData);
+1*:  164:  EXPECT_EQ(CTUTIL_SUCCESS, result);
+-:  165:  struct stat stModifiedFileStat;
+1:  166:  int const statModifiedResult = lstat(szShadowFilePath, &stModifiedFileStat);
+1*:  167:  ASSERT_EQ(0, statModifiedResult);
+1*:  168:  EXPECT_EQ(stOriginalFileStat.st_mode, stModifiedFileStat.st_mode);
+-:  169:
+-:  170:  // Cleanup
+1:  171:  free(stNewUserData.sp_pwdp);
+1:  172:  free(stNewUserData.sp_namp);
+-:  173:}
+-:  174:
+-:  175:
+-:  176://---- End of source file ------------------------------------------------------
+-:  177:

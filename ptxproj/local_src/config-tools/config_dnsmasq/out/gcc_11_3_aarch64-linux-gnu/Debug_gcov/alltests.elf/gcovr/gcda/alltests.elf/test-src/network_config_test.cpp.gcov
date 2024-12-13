@@ -1,0 +1,1104 @@
+-:    0:Source:test-src/network_config_test.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) 2020-2024 WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:
+-:   10:#include "network_config.hpp"
+-:   11:
+-:   12:#include <gmock/gmock.h>
+-:   13:#include <gtest/gtest.h>
+-:   14:
+-:   15:#include <BaseTypes.hpp>
+-:   16:#include <BridgeConfig.hpp>
+-:   17:#include <IPConfig.hpp>
+-:   18:#include <InterfaceConfig.hpp>
+-:   19:#include <iostream>
+-:   20:#include <ostream>
+-:   21:#include <string>
+-:   22:
+-:   23:#include "defines.hpp"
+-:   24:#include "gmock/gmock-matchers.h"
+-:   25:#include "port_data.hpp"
+-:   26:
+-:   27:namespace {
+-:   28:
+-:   29:constexpr auto default_bridge_config = R"({"br0": ["X1"], "br1": ["X2"]})";
+-:   30:
+-:   31:constexpr auto default_ip_config = R"({
+-:   32:    "br0": {
+-:   33:      "bcast": "0.0.0.0",
+-:   34:      "ipaddr": "0.0.0.0",
+-:   35:      "netmask": "0.0.0.0",
+-:   36:      "source": "dhcp"
+-:   37:    },
+-:   38:    "br1": {
+-:   39:      "bcast": "192.168.20.255",
+-:   40:      "ipaddr": "192.168.20.60",
+-:   41:      "netmask": "255.255.255.0",
+-:   42:      "source": "static"
+-:   43:    }})";
+-:   44:
+-:   45:constexpr auto default_interface_statuses = R"([
+-:   46:    {
+-:   47:        "device": "X1",
+-:   48:        "duplex": "full",
+-:   49:        "link": "up",
+-:   50:        "mac": "00:30:DE:AD:BE:EF",
+-:   51:        "maclearning": "on",
+-:   52:        "speed": 1000,
+-:   53:        "state": "up"
+-:   54:    },
+-:   55:    {
+-:   56:        "device": "X2",
+-:   57:        "duplex": "full",
+-:   58:        "link": "up",
+-:   59:        "mac": "00:30:BA:DE:AF:FE",
+-:   60:        "maclearning": "on",
+-:   61:        "speed": 100,
+-:   62:        "state": "up"
+-:   63:    }
+-:   64:])";
+-:   65:
+-:   66:constexpr auto default_interface_config = R"([
+-:   67:    {
+-:   68:    "autonegotiation": "on",
+-:   69:    "device": "X2",
+-:   70:    "duplex": "full",
+-:   71:    "maclearning": "off",
+-:   72:    "speed": 100,
+-:   73:    "state": "up"
+-:   74:    },
+-:   75:    {
+-:   76:      "autonegotiation": "on",
+-:   77:      "device": "X1",
+-:   78:      "duplex": "full",
+-:   79:      "maclearning": "on",
+-:   80:      "speed": 100,
+-:   81:      "state": "up"
+-:   82:    }
+-:   83:])";
+-:   84:
+function _ZN12_GLOBAL__N_115addEthernetPortERN7netconf3api16InterfaceConfigsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 10 returned 100% blocks executed 58%
+10:   85:void addEthernetPort(napi::InterfaceConfigs& interface_configs, const ::std::string& name) {
+10:   86:  interface_configs.AddInterfaceConfig(netconf::InterfaceBase::DefaultConfig(netconf::Interface::CreateEthernet(name)));
+call    0 returned 10
+call    1 returned 10
+call    2 returned 10
+branch  3 taken 10 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 10
+call    6 returned 10
+call    7 never executed
+call    8 never executed
+10:   87:}
+-:   88:
+function _ZN12_GLOBAL__N_111addPortDataERNSt7__cxx114listIN13configdnsmasq9port_dataESaIS3_EEERKNS1_INS0_12basic_stringIcSt11char_traitsIcESaIcEEESaISB_EEERKNS2_14network_configE called 1 returned 100% blocks executed 75%
+1:   89:void addPortData(::std::list<configdnsmasq::port_data>& port_data_list, const ::std::list<::std::string>& port_names,
+-:   90:                 const configdnsmasq::network_config& net_config) {
+3:   91:  for (const auto& name : port_names) {
+call    0 returned 1
+call    1 returned 1
+call    2 returned 2
+call    3 returned 2
+call    4 returned 3
+branch  5 taken 2
+branch  6 taken 1 (fallthrough)
+2:   92:    configdnsmasq::port_data pd;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:   93:    pd.port_name_ = name;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:   94:    pd.setState(name, net_config.bridge_config_, net_config.interface_configs_);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+call    7 never executed
+2:   95:    pd.setLinkState(name, net_config.bridge_config_, net_config.interface_statuses_);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:   96:    auto ip_config = *net_config.ip_configs_.GetIPConfig(name);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+call    4 returned 2
+2:   97:    pd.setType(ip_config);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:   98:    pd.setIpAddress(ip_config.address_);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:   99:    pd.setNetmask(ip_config.netmask_);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+-:  100:
+2:  101:    port_data_list.push_back(pd);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  102:  }
+call    0 returned 2
+call    1 returned 2
+call    2 never executed
+call    3 never executed
+1:  103:}
+-:  104:
+-:  105:}  // namespace
+-:  106:
+-:  107:namespace configdnsmasq {
+function _ZN13configdnsmasqeqERKNS_9port_dataES2_ called 2 returned 100% blocks executed 94%
+2:  108:inline bool operator==(const port_data& lhs, const port_data& rhs) {
+4:  109:  return lhs.port_name_ == rhs.port_name_ && lhs.ip_addr_ == rhs.ip_addr_ && lhs.netmask_ == rhs.netmask_ &&
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0
+call    4 returned 2
+branch  5 taken 2 (fallthrough)
+branch  6 taken 0
+2:  110:         lhs.ip_addr_bin_ == rhs.ip_addr_bin_ && lhs.netmask_bin_ == rhs.netmask_bin_ &&
+branch  0 taken 2 (fallthrough)
+branch  1 taken 0
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0
+4*:  111:         lhs.link_state_ == rhs.link_state_ && lhs.state_ == rhs.state_ && lhs.type_ == rhs.type_;
+branch  0 taken 2 (fallthrough)
+branch  1 taken 0
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0
+call    4 returned 2
+branch  5 taken 2 (fallthrough)
+branch  6 taken 0
+call    7 returned 2
+branch  8 taken 2 (fallthrough)
+branch  9 taken 0
+-:  112:}
+-:  113:}  // namespace configdnsmasq
+-:  114:
+4:  115:TEST(test_network_config, generate_legal_ports) {
+1:  116:  napi::InterfaceConfigs interface_configs;
+1:  117:  addEthernetPort(interface_configs, "ethX1");
+1:  118:  addEthernetPort(interface_configs, "ethX2");
+1:  119:  addEthernetPort(interface_configs, "ethX15");
+-:  120:
+6:  121:  ::std::vector<::std::string> expected_legal_ports = {"br0", "br1", "br2"};
+-:  122:
+1:  123:  ::std::vector<::std::string> legal_ports;
+1:  124:  configdnsmasq::generate_legal_ports(interface_configs, legal_ports);
+-:  125:
+1*:  126:  ASSERT_THAT(legal_ports, testing::SizeIs(3));
+2*:  127:  ASSERT_THAT(legal_ports, testing::ContainerEq(expected_legal_ports));
+1:  128:}
+------------------
+_ZN45test_network_config_generate_legal_ports_TestC2Ev:
+function _ZN45test_network_config_generate_legal_ports_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  115:TEST(test_network_config, generate_legal_ports) {
+call    0 returned 1
+------------------
+_ZN45test_network_config_generate_legal_ports_TestD0Ev:
+function _ZN45test_network_config_generate_legal_ports_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  115:TEST(test_network_config, generate_legal_ports) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN45test_network_config_generate_legal_ports_TestD2Ev:
+function _ZN45test_network_config_generate_legal_ports_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  115:TEST(test_network_config, generate_legal_ports) {
+call    0 returned 1
+------------------
+_ZN45test_network_config_generate_legal_ports_Test8TestBodyEv:
+function _ZN45test_network_config_generate_legal_ports_Test8TestBodyEv called 1 returned 100% blocks executed 43%
+1:  115:TEST(test_network_config, generate_legal_ports) {
+1:  116:  napi::InterfaceConfigs interface_configs;
+call    0 returned 1
+1:  117:  addEthernetPort(interface_configs, "ethX1");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+1:  118:  addEthernetPort(interface_configs, "ethX2");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+1:  119:  addEthernetPort(interface_configs, "ethX15");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+-:  120:
+6:  121:  ::std::vector<::std::string> expected_legal_ports = {"br0", "br1", "br2"};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 3
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+call   20 never executed
+-:  122:
+1:  123:  ::std::vector<::std::string> legal_ports;
+call    0 returned 1
+1:  124:  configdnsmasq::generate_legal_ports(interface_configs, legal_ports);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  125:
+1*:  126:  ASSERT_THAT(legal_ports, testing::SizeIs(3));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+2*:  127:  ASSERT_THAT(legal_ports, testing::ContainerEq(expected_legal_ports));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+branch 26 taken 1 (fallthrough)
+branch 27 taken 0
+call   28 never executed
+call   29 never executed
+call   30 never executed
+1:  128:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 never executed
+call   10 never executed
+call   11 never executed
+------------------
+-:  129:
+4:  130:TEST(test_network_config, generate_legal_ports_relying_on_ethX_ports_only) {
+1:  131:  napi::InterfaceConfigs interface_configs;
+1:  132:  addEthernetPort(interface_configs, "ethX1");
+1:  133:  addEthernetPort(interface_configs, "ethY1");
+1:  134:  addEthernetPort(interface_configs, "ethX2");
+1:  135:  addEthernetPort(interface_configs, "usb0");
+1:  136:  addEthernetPort(interface_configs, "ethX15");
+-:  137:
+6:  138:  ::std::vector<::std::string> expected_legal_ports = {"br0", "br1", "br2"};
+-:  139:
+1:  140:  ::std::vector<::std::string> legal_ports;
+1:  141:  configdnsmasq::generate_legal_ports(interface_configs, legal_ports);
+-:  142:
+1*:  143:  ASSERT_THAT(legal_ports, testing::SizeIs(3));
+2*:  144:  ASSERT_THAT(legal_ports, testing::ContainerEq(expected_legal_ports));
+1:  145:}
+------------------
+_ZN72test_network_config_generate_legal_ports_relying_on_ethX_ports_only_TestC2Ev:
+function _ZN72test_network_config_generate_legal_ports_relying_on_ethX_ports_only_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  130:TEST(test_network_config, generate_legal_ports_relying_on_ethX_ports_only) {
+call    0 returned 1
+------------------
+_ZN72test_network_config_generate_legal_ports_relying_on_ethX_ports_only_TestD0Ev:
+function _ZN72test_network_config_generate_legal_ports_relying_on_ethX_ports_only_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  130:TEST(test_network_config, generate_legal_ports_relying_on_ethX_ports_only) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN72test_network_config_generate_legal_ports_relying_on_ethX_ports_only_TestD2Ev:
+function _ZN72test_network_config_generate_legal_ports_relying_on_ethX_ports_only_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  130:TEST(test_network_config, generate_legal_ports_relying_on_ethX_ports_only) {
+call    0 returned 1
+------------------
+_ZN72test_network_config_generate_legal_ports_relying_on_ethX_ports_only_Test8TestBodyEv:
+function _ZN72test_network_config_generate_legal_ports_relying_on_ethX_ports_only_Test8TestBodyEv called 1 returned 100% blocks executed 43%
+1:  130:TEST(test_network_config, generate_legal_ports_relying_on_ethX_ports_only) {
+1:  131:  napi::InterfaceConfigs interface_configs;
+call    0 returned 1
+1:  132:  addEthernetPort(interface_configs, "ethX1");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+1:  133:  addEthernetPort(interface_configs, "ethY1");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+1:  134:  addEthernetPort(interface_configs, "ethX2");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+1:  135:  addEthernetPort(interface_configs, "usb0");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+1:  136:  addEthernetPort(interface_configs, "ethX15");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+-:  137:
+6:  138:  ::std::vector<::std::string> expected_legal_ports = {"br0", "br1", "br2"};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 3
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+call   20 never executed
+-:  139:
+1:  140:  ::std::vector<::std::string> legal_ports;
+call    0 returned 1
+1:  141:  configdnsmasq::generate_legal_ports(interface_configs, legal_ports);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  142:
+1*:  143:  ASSERT_THAT(legal_ports, testing::SizeIs(3));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+2*:  144:  ASSERT_THAT(legal_ports, testing::ContainerEq(expected_legal_ports));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+branch 26 taken 1 (fallthrough)
+branch 27 taken 0
+call   28 never executed
+call   29 never executed
+call   30 never executed
+1:  145:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 never executed
+call   10 never executed
+call   11 never executed
+------------------
+-:  146:
+4:  147:TEST(test_network_config, parse_config_parameter) {
+1:  148:  configdnsmasq::network_config net_config;
+1:  149:  configdnsmasq::ip_configuration ipConfig;
+-:  150:
+1:  151:  ::std::list<configdnsmasq::port_data> expected_port_data_list;
+-:  152:
+5:  153:  ::std::list<::std::string> port_names  = {"br0", "br1"};
+5:  154:  ::std::vector<std::string> legal_ports = {"br0", "br1"};
+1:  155:  bool debugmode                         = true;  // Do not read hostname from system.
+1:  156:  napi::MakeBridgeConfig(default_bridge_config, net_config.bridge_config_);
+1:  157:  napi::MakeIPConfigs(default_ip_config, net_config.ip_configs_);
+1:  158:  addEthernetPort(net_config.interface_configs_, "ethX1");
+1:  159:  addEthernetPort(net_config.interface_configs_, "ethX2");
+1:  160:  napi::MakeInterfaceStatuses(default_interface_statuses, net_config.interface_statuses_);
+1:  161:  addPortData(expected_port_data_list, port_names, net_config);
+-:  162:
+1:  163:  configdnsmasq::parse_config_parameter(ipConfig, legal_ports, debugmode, net_config);
+-:  164:
+2*:  165:  ASSERT_THAT(ipConfig.host_name, testing::StrEq("debughostname"));
+2*:  166:  ASSERT_THAT(ipConfig.port_name_list, testing::ContainerEq(port_names));
+2*:  167:  ASSERT_THAT(ipConfig.port_data_list, testing::ContainerEq(expected_port_data_list));
+1:  168:}
+------------------
+_ZN47test_network_config_parse_config_parameter_TestC2Ev:
+function _ZN47test_network_config_parse_config_parameter_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  147:TEST(test_network_config, parse_config_parameter) {
+call    0 returned 1
+------------------
+_ZN47test_network_config_parse_config_parameter_TestD0Ev:
+function _ZN47test_network_config_parse_config_parameter_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  147:TEST(test_network_config, parse_config_parameter) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN47test_network_config_parse_config_parameter_TestD2Ev:
+function _ZN47test_network_config_parse_config_parameter_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  147:TEST(test_network_config, parse_config_parameter) {
+call    0 returned 1
+------------------
+_ZN47test_network_config_parse_config_parameter_Test8TestBodyEv:
+function _ZN47test_network_config_parse_config_parameter_Test8TestBodyEv called 1 returned 100% blocks executed 44%
+1:  147:TEST(test_network_config, parse_config_parameter) {
+1:  148:  configdnsmasq::network_config net_config;
+call    0 returned 1
+1:  149:  configdnsmasq::ip_configuration ipConfig;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  150:
+1:  151:  ::std::list<configdnsmasq::port_data> expected_port_data_list;
+call    0 returned 1
+-:  152:
+5:  153:  ::std::list<::std::string> port_names  = {"br0", "br1"};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 2
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+5:  154:  ::std::vector<std::string> legal_ports = {"br0", "br1"};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 2
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+1:  155:  bool debugmode                         = true;  // Do not read hostname from system.
+1:  156:  napi::MakeBridgeConfig(default_bridge_config, net_config.bridge_config_);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 never executed
+call   11 never executed
+1:  157:  napi::MakeIPConfigs(default_ip_config, net_config.ip_configs_);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 returned 1
+call    8 never executed
+1:  158:  addEthernetPort(net_config.interface_configs_, "ethX1");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+1:  159:  addEthernetPort(net_config.interface_configs_, "ethX2");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+1:  160:  napi::MakeInterfaceStatuses(default_interface_statuses, net_config.interface_statuses_);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 never executed
+call   11 never executed
+1:  161:  addPortData(expected_port_data_list, port_names, net_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  162:
+1:  163:  configdnsmasq::parse_config_parameter(ipConfig, legal_ports, debugmode, net_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  164:
+2*:  165:  ASSERT_THAT(ipConfig.host_name, testing::StrEq("debughostname"));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+branch 26 taken 1 (fallthrough)
+branch 27 taken 0
+call   28 never executed
+call   29 never executed
+call   30 never executed
+2*:  166:  ASSERT_THAT(ipConfig.port_name_list, testing::ContainerEq(port_names));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+branch 26 taken 1 (fallthrough)
+branch 27 taken 0
+call   28 never executed
+call   29 never executed
+call   30 never executed
+2*:  167:  ASSERT_THAT(ipConfig.port_data_list, testing::ContainerEq(expected_port_data_list));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+branch 26 taken 1 (fallthrough)
+branch 27 taken 0
+call   28 never executed
+call   29 never executed
+call   30 never executed
+1:  168:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+------------------
+-:  169:
+4:  170:TEST(test_network_config, provide_complete_network_config_via_program_arguments) {
+1:  171:  prgconf_t prgconf;
+1:  172:  prgconf.bridge_config = default_bridge_config;
+1:  173:  prgconf.ip_config = default_ip_config;
+1:  174:  prgconf.interface_config = default_interface_config;
+1:  175:  prgconf.interface_statuses = default_interface_statuses;
+-:  176:
+1:  177:  auto provisioning = configdnsmasq::is_network_config_provided_via_program_arguments(prgconf);
+1*:  178:  ASSERT_THAT(provisioning, configdnsmasq::COMPLETELY_PROVIDED);
+1:  179:}
+------------------
+_ZN78test_network_config_provide_complete_network_config_via_program_arguments_TestC2Ev:
+function _ZN78test_network_config_provide_complete_network_config_via_program_arguments_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  170:TEST(test_network_config, provide_complete_network_config_via_program_arguments) {
+call    0 returned 1
+------------------
+_ZN78test_network_config_provide_complete_network_config_via_program_arguments_TestD0Ev:
+function _ZN78test_network_config_provide_complete_network_config_via_program_arguments_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  170:TEST(test_network_config, provide_complete_network_config_via_program_arguments) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN78test_network_config_provide_complete_network_config_via_program_arguments_TestD2Ev:
+function _ZN78test_network_config_provide_complete_network_config_via_program_arguments_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  170:TEST(test_network_config, provide_complete_network_config_via_program_arguments) {
+call    0 returned 1
+------------------
+_ZN78test_network_config_provide_complete_network_config_via_program_arguments_Test8TestBodyEv:
+function _ZN78test_network_config_provide_complete_network_config_via_program_arguments_Test8TestBodyEv called 1 returned 100% blocks executed 49%
+1:  170:TEST(test_network_config, provide_complete_network_config_via_program_arguments) {
+1:  171:  prgconf_t prgconf;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  172:  prgconf.bridge_config = default_bridge_config;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  173:  prgconf.ip_config = default_ip_config;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  174:  prgconf.interface_config = default_interface_config;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  175:  prgconf.interface_statuses = default_interface_statuses;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  176:
+1:  177:  auto provisioning = configdnsmasq::is_network_config_provided_via_program_arguments(prgconf);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  178:  ASSERT_THAT(provisioning, configdnsmasq::COMPLETELY_PROVIDED);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+1:  179:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 never executed
+------------------
+-:  180:
+4:  181:TEST(test_network_config, do_not_provide_network_config_via_program_arguments) {
+1:  182:  prgconf_t prgconf;
+1:  183:  auto provisioning = configdnsmasq::is_network_config_provided_via_program_arguments(prgconf);
+1*:  184:  ASSERT_THAT(provisioning, configdnsmasq::NOT_PROVIDED);
+1:  185:}
+------------------
+_ZN76test_network_config_do_not_provide_network_config_via_program_arguments_TestC2Ev:
+function _ZN76test_network_config_do_not_provide_network_config_via_program_arguments_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  181:TEST(test_network_config, do_not_provide_network_config_via_program_arguments) {
+call    0 returned 1
+------------------
+_ZN76test_network_config_do_not_provide_network_config_via_program_arguments_TestD0Ev:
+function _ZN76test_network_config_do_not_provide_network_config_via_program_arguments_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  181:TEST(test_network_config, do_not_provide_network_config_via_program_arguments) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN76test_network_config_do_not_provide_network_config_via_program_arguments_TestD2Ev:
+function _ZN76test_network_config_do_not_provide_network_config_via_program_arguments_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  181:TEST(test_network_config, do_not_provide_network_config_via_program_arguments) {
+call    0 returned 1
+------------------
+_ZN76test_network_config_do_not_provide_network_config_via_program_arguments_Test8TestBodyEv:
+function _ZN76test_network_config_do_not_provide_network_config_via_program_arguments_Test8TestBodyEv called 1 returned 100% blocks executed 44%
+1:  181:TEST(test_network_config, do_not_provide_network_config_via_program_arguments) {
+1:  182:  prgconf_t prgconf;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  183:  auto provisioning = configdnsmasq::is_network_config_provided_via_program_arguments(prgconf);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  184:  ASSERT_THAT(provisioning, configdnsmasq::NOT_PROVIDED);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+1:  185:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 never executed
+------------------
+-:  186:
+4:  187:TEST(test_network_config, provide_only_part_of_the_network_config_via_program_arguments) {
+1:  188:  prgconf_t prgconf;
+1:  189:  prgconf.bridge_config = default_bridge_config;
+1:  190:  prgconf.ip_config = "";
+1:  191:  prgconf.interface_config = "";
+1:  192:  prgconf.interface_statuses = "";
+-:  193:
+1:  194:  auto provisioning = configdnsmasq::is_network_config_provided_via_program_arguments(prgconf);
+1*:  195:  ASSERT_THAT(provisioning, configdnsmasq::PARTIALLY_PROVIDED);
+1:  196:}
+------------------
+_ZN86test_network_config_provide_only_part_of_the_network_config_via_program_arguments_TestC2Ev:
+function _ZN86test_network_config_provide_only_part_of_the_network_config_via_program_arguments_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  187:TEST(test_network_config, provide_only_part_of_the_network_config_via_program_arguments) {
+call    0 returned 1
+------------------
+_ZN86test_network_config_provide_only_part_of_the_network_config_via_program_arguments_TestD0Ev:
+function _ZN86test_network_config_provide_only_part_of_the_network_config_via_program_arguments_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  187:TEST(test_network_config, provide_only_part_of_the_network_config_via_program_arguments) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN86test_network_config_provide_only_part_of_the_network_config_via_program_arguments_TestD2Ev:
+function _ZN86test_network_config_provide_only_part_of_the_network_config_via_program_arguments_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  187:TEST(test_network_config, provide_only_part_of_the_network_config_via_program_arguments) {
+call    0 returned 1
+------------------
+_ZN86test_network_config_provide_only_part_of_the_network_config_via_program_arguments_Test8TestBodyEv:
+function _ZN86test_network_config_provide_only_part_of_the_network_config_via_program_arguments_Test8TestBodyEv called 1 returned 100% blocks executed 49%
+1:  187:TEST(test_network_config, provide_only_part_of_the_network_config_via_program_arguments) {
+1:  188:  prgconf_t prgconf;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  189:  prgconf.bridge_config = default_bridge_config;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  190:  prgconf.ip_config = "";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  191:  prgconf.interface_config = "";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  192:  prgconf.interface_statuses = "";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  193:
+1:  194:  auto provisioning = configdnsmasq::is_network_config_provided_via_program_arguments(prgconf);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  195:  ASSERT_THAT(provisioning, configdnsmasq::PARTIALLY_PROVIDED);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+1:  196:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 never executed
+------------------

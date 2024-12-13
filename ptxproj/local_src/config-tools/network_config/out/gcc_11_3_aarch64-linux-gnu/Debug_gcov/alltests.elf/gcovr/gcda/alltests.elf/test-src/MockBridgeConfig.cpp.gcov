@@ -1,0 +1,82 @@
+-:    0:Source:test-src/MockBridgeConfig.cpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#include "MockBridgeConfig.hpp"
+-:    4:#include "Status.hpp"
+-:    5:#include <memory>
+-:    6:
+-:    7:namespace netconf {
+-:    8:namespace api {
+-:    9:
+function _ZNK7netconf3api10activeMockMUlPNS0_16MockBridgeConfigEE_clES2_ called 4 returned 100% blocks executed 100%
+4:   10:::std::unique_ptr<MockBridgeConfig, void (*)(MockBridgeConfig* mock)> activeMock { nullptr, []([[maybe_unused]]MockBridgeConfig* mock) {
+4:   11:} };
+-:   12:
+function _ZN7netconf3api15GetBridgeConfigERNS0_12BridgeConfigE called 4 returned 100% blocks executed 83%
+4:   13:Status GetBridgeConfig(BridgeConfig& config) {
+4:   14:  if (activeMock){
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+4:   15:    return activeMock->GetBridgeConfig(config);
+call    0 returned 4
+call    1 returned 4
+-:   16:  }
+#####:   17:  return Status{};
+call    0 never executed
+-:   18:}
+-:   19:
+function _ZN7netconf3api15SetBridgeConfigERKNS0_12BridgeConfigE called 3 returned 100% blocks executed 83%
+3:   20:Status SetBridgeConfig(const BridgeConfig &config) {
+3:   21:  if (activeMock){
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0
+3:   22:    return activeMock->SetBridgeConfig(config);
+call    0 returned 3
+call    1 returned 3
+-:   23:  }
+#####:   24:  return Status { StatusCode::BRIDGE_NAME_INVALID };
+call    0 never executed
+-:   25:}
+-:   26:
+function _ZN7netconf3api16MockBridgeConfigC2Ev called 4 returned 100% blocks executed 67%
+4:   27:MockBridgeConfig::MockBridgeConfig() {
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+4:   28:  activeMock.reset(this);
+call    0 returned 4
+4:   29:}
+call    0 never executed
+call    1 never executed
+-:   30:
+4*:   31:MockBridgeConfig::~MockBridgeConfig() {
+4:   32:  activeMock.reset();
+4*:   33:}
+------------------
+_ZN7netconf3api16MockBridgeConfigD0Ev:
+function _ZN7netconf3api16MockBridgeConfigD0Ev called 0 returned 0% blocks executed 0%
+#####:   31:MockBridgeConfig::~MockBridgeConfig() {
+-:   32:  activeMock.reset();
+#####:   33:}
+call    0 never executed
+call    1 never executed
+------------------
+_ZN7netconf3api16MockBridgeConfigD2Ev:
+function _ZN7netconf3api16MockBridgeConfigD2Ev called 4 returned 100% blocks executed 100%
+4:   31:MockBridgeConfig::~MockBridgeConfig() {
+4:   32:  activeMock.reset();
+call    0 returned 4
+4:   33:}
+call    0 returned 4
+call    1 returned 4
+call    2 returned 4
+------------------
+-:   34:
+-:   35:}
+-:   36:}

@@ -1,0 +1,2556 @@
+-:    0:Source:test-src/OptionParserCombinationsTest.cpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#include "OptionParser.hpp"
+-:    4:
+-:    5:#include <array>
+-:    6:#include <gtest/gtest.h>
+-:    7:#include <stdexcept>
+-:    8:
+-:    9:namespace po = boost::program_options;
+-:   10:namespace network_config
+-:   11:{
+-:   12:
+-:   13:  class OptionParserCombinationsTest : public testing::Test
+-:   14:  {
+-:   15:    public:
+function _ZN14network_config28OptionParserCombinationsTestC2Ev called 20 returned 100% blocks executed 83%
+20:   16:      OptionParserCombinationsTest() : vm_{sut_.GetVariableMap()} {
+call    0 returned 20
+call    1 returned 20
+branch  2 taken 20 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 20
+-:   17:
+20:   18:      }
+call    0 never executed
+-:   19:
+function _ZN14network_config28OptionParserCombinationsTest5SetUpEv called 20 returned 100% blocks executed 100%
+20:   20:      void SetUp() override {
+-:   21:
+20:   22:      }
+-:   23:
+-:   24:      OptionParser sut_;
+-:   25:      const po::variables_map& vm_;
+-:   26:  };
+-:   27:
+-:   28:  template<typename ... Args>
+22:   29:  auto createArgPair(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   30:  {
+22:   31:    return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   32:  }
+------------------
+_ZN14network_config13createArgPairIJPKcS2_S2_S2_S2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_:
+function _ZN14network_config13createArgPairIJPKcS2_S2_S2_S2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_ called 1 returned 100% blocks executed 100%
+1:   29:  auto createArgPair(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   30:  {
+1:   31:    return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   32:  }
+------------------
+_ZN14network_config13createArgPairIJPKcS2_S2_S2_S2_S2_S2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_:
+function _ZN14network_config13createArgPairIJPKcS2_S2_S2_S2_S2_S2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_ called 1 returned 100% blocks executed 100%
+1:   29:  auto createArgPair(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   30:  {
+1:   31:    return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   32:  }
+------------------
+_ZN14network_config13createArgPairIJPKcS2_EEESt5arrayIS2_XsZfp_EEDpT_:
+function _ZN14network_config13createArgPairIJPKcS2_EEESt5arrayIS2_XsZfp_EEDpT_ called 4 returned 100% blocks executed 100%
+4:   29:  auto createArgPair(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   30:  {
+4:   31:    return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   32:  }
+------------------
+_ZN14network_config13createArgPairIJPKcS2_S2_S2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_:
+function _ZN14network_config13createArgPairIJPKcS2_S2_S2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_ called 2 returned 100% blocks executed 100%
+2:   29:  auto createArgPair(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   30:  {
+2:   31:    return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   32:  }
+------------------
+_ZN14network_config13createArgPairIJPKcS2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_:
+function _ZN14network_config13createArgPairIJPKcS2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_ called 3 returned 100% blocks executed 100%
+3:   29:  auto createArgPair(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   30:  {
+3:   31:    return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   32:  }
+------------------
+_ZN14network_config13createArgPairIJPKcS2_S2_EEESt5arrayIS2_XsZfp_EEDpT_:
+function _ZN14network_config13createArgPairIJPKcS2_S2_EEESt5arrayIS2_XsZfp_EEDpT_ called 7 returned 100% blocks executed 100%
+7:   29:  auto createArgPair(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   30:  {
+7:   31:    return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   32:  }
+------------------
+_ZN14network_config13createArgPairIJPKcS2_S2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_:
+function _ZN14network_config13createArgPairIJPKcS2_S2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_ called 4 returned 100% blocks executed 100%
+4:   29:  auto createArgPair(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   30:  {
+4:   31:    return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   32:  }
+------------------
+-:   33:
+4:   34:  TEST_F(OptionParserCombinationsTest, GetRequest)
+-:   35:  {
+1:   36:    auto args = createArgPair("program", "--bridge-config", "--get", "--format", "json");
+-:   37:
+1*:   38:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+-:   39:
+1*:   40:    EXPECT_EQ(3, vm_.size());
+1:   41:  }
+------------------
+_ZN14network_config44OptionParserCombinationsTest_GetRequest_TestC2Ev:
+function _ZN14network_config44OptionParserCombinationsTest_GetRequest_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   34:  TEST_F(OptionParserCombinationsTest, GetRequest)
+call    0 returned 1
+------------------
+_ZN14network_config44OptionParserCombinationsTest_GetRequest_TestD0Ev:
+function _ZN14network_config44OptionParserCombinationsTest_GetRequest_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   34:  TEST_F(OptionParserCombinationsTest, GetRequest)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config44OptionParserCombinationsTest_GetRequest_TestD2Ev:
+function _ZN14network_config44OptionParserCombinationsTest_GetRequest_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   34:  TEST_F(OptionParserCombinationsTest, GetRequest)
+call    0 returned 1
+------------------
+_ZN14network_config44OptionParserCombinationsTest_GetRequest_Test8TestBodyEv:
+function _ZN14network_config44OptionParserCombinationsTest_GetRequest_Test8TestBodyEv called 1 returned 100% blocks executed 22%
+1:   34:  TEST_F(OptionParserCombinationsTest, GetRequest)
+-:   35:  {
+1:   36:    auto args = createArgPair("program", "--bridge-config", "--get", "--format", "json");
+call    0 returned 1
+-:   37:
+1*:   38:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 returned 1
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+-:   39:
+1*:   40:    EXPECT_EQ(3, vm_.size());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+1:   41:  }
+------------------
+-:   42:
+4:   43:  TEST_F(OptionParserCombinationsTest, GetRequestDefaultFormatJson)
+-:   44:  {
+1:   45:    auto args = createArgPair("program", "--bridge-config", "--get");
+-:   46:
+1*:   47:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+1*:   48:    EXPECT_EQ(3, vm_.size()); // 2 + default value: --format
+2*:   49:    EXPECT_EQ("text", vm_["format"].as<FormatOption>().value);
+1:   50:  }
+------------------
+_ZN14network_config61OptionParserCombinationsTest_GetRequestDefaultFormatJson_TestC2Ev:
+function _ZN14network_config61OptionParserCombinationsTest_GetRequestDefaultFormatJson_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   43:  TEST_F(OptionParserCombinationsTest, GetRequestDefaultFormatJson)
+call    0 returned 1
+------------------
+_ZN14network_config61OptionParserCombinationsTest_GetRequestDefaultFormatJson_TestD0Ev:
+function _ZN14network_config61OptionParserCombinationsTest_GetRequestDefaultFormatJson_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   43:  TEST_F(OptionParserCombinationsTest, GetRequestDefaultFormatJson)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config61OptionParserCombinationsTest_GetRequestDefaultFormatJson_TestD2Ev:
+function _ZN14network_config61OptionParserCombinationsTest_GetRequestDefaultFormatJson_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   43:  TEST_F(OptionParserCombinationsTest, GetRequestDefaultFormatJson)
+call    0 returned 1
+------------------
+_ZN14network_config61OptionParserCombinationsTest_GetRequestDefaultFormatJson_Test8TestBodyEv:
+function _ZN14network_config61OptionParserCombinationsTest_GetRequestDefaultFormatJson_Test8TestBodyEv called 1 returned 100% blocks executed 24%
+1:   43:  TEST_F(OptionParserCombinationsTest, GetRequestDefaultFormatJson)
+-:   44:  {
+1:   45:    auto args = createArgPair("program", "--bridge-config", "--get");
+call    0 returned 1
+-:   46:
+1*:   47:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 returned 1
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+1*:   48:    EXPECT_EQ(3, vm_.size()); // 2 + default value: --format
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+2*:   49:    EXPECT_EQ("text", vm_["format"].as<FormatOption>().value);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+call   14 returned 1
+branch 15 taken 0 (fallthrough)
+branch 16 taken 1
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 returned 1
+call   30 never executed
+call   31 never executed
+call   32 never executed
+1:   50:  }
+------------------
+-:   51:
+4:   52:  TEST_F(OptionParserCombinationsTest, GetRequestUnexpectedFormat)
+-:   53:  {
+1:   54:    auto args = createArgPair("program", "--bridge-config", "--get", "--format", "xxx");
+-:   55:
+1*:   56:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::validation_error);
+1:   57:  }
+------------------
+_ZN14network_config60OptionParserCombinationsTest_GetRequestUnexpectedFormat_TestC2Ev:
+function _ZN14network_config60OptionParserCombinationsTest_GetRequestUnexpectedFormat_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   52:  TEST_F(OptionParserCombinationsTest, GetRequestUnexpectedFormat)
+call    0 returned 1
+------------------
+_ZN14network_config60OptionParserCombinationsTest_GetRequestUnexpectedFormat_TestD0Ev:
+function _ZN14network_config60OptionParserCombinationsTest_GetRequestUnexpectedFormat_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   52:  TEST_F(OptionParserCombinationsTest, GetRequestUnexpectedFormat)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config60OptionParserCombinationsTest_GetRequestUnexpectedFormat_TestD2Ev:
+function _ZN14network_config60OptionParserCombinationsTest_GetRequestUnexpectedFormat_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   52:  TEST_F(OptionParserCombinationsTest, GetRequestUnexpectedFormat)
+call    0 returned 1
+------------------
+_ZN14network_config60OptionParserCombinationsTest_GetRequestUnexpectedFormat_Test8TestBodyEv:
+function _ZN14network_config60OptionParserCombinationsTest_GetRequestUnexpectedFormat_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:   52:  TEST_F(OptionParserCombinationsTest, GetRequestUnexpectedFormat)
+-:   53:  {
+1:   54:    auto args = createArgPair("program", "--bridge-config", "--get", "--format", "xxx");
+call    0 returned 1
+-:   55:
+1*:   56:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::validation_error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:   57:  }
+------------------
+-:   58:
+4:   59:  TEST_F(OptionParserCombinationsTest, RequestGetCurrentOption)
+-:   60:  {
+1:   61:    auto args = createArgPair("program", "--ip-config", "--get-current");
+-:   62:
+1*:   63:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+1:   64:  }
+------------------
+_ZN14network_config57OptionParserCombinationsTest_RequestGetCurrentOption_TestC2Ev:
+function _ZN14network_config57OptionParserCombinationsTest_RequestGetCurrentOption_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   59:  TEST_F(OptionParserCombinationsTest, RequestGetCurrentOption)
+call    0 returned 1
+------------------
+_ZN14network_config57OptionParserCombinationsTest_RequestGetCurrentOption_TestD0Ev:
+function _ZN14network_config57OptionParserCombinationsTest_RequestGetCurrentOption_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   59:  TEST_F(OptionParserCombinationsTest, RequestGetCurrentOption)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config57OptionParserCombinationsTest_RequestGetCurrentOption_TestD2Ev:
+function _ZN14network_config57OptionParserCombinationsTest_RequestGetCurrentOption_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   59:  TEST_F(OptionParserCombinationsTest, RequestGetCurrentOption)
+call    0 returned 1
+------------------
+_ZN14network_config57OptionParserCombinationsTest_RequestGetCurrentOption_Test8TestBodyEv:
+function _ZN14network_config57OptionParserCombinationsTest_RequestGetCurrentOption_Test8TestBodyEv called 1 returned 100% blocks executed 22%
+1:   59:  TEST_F(OptionParserCombinationsTest, RequestGetCurrentOption)
+-:   60:  {
+1:   61:    auto args = createArgPair("program", "--ip-config", "--get-current");
+call    0 returned 1
+-:   62:
+1*:   63:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 returned 1
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+1:   64:  }
+------------------
+-:   65:
+4:   66:  TEST_F(OptionParserCombinationsTest, SetRequest)
+-:   67:  {
+1:   68:    auto args = createArgPair("program", "--bridge-config", "--set", "{}");
+-:   69:
+1*:   70:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+1*:   71:    EXPECT_EQ(3, vm_.size()); // 2 + default value: --format
+1:   72:  }
+------------------
+_ZN14network_config44OptionParserCombinationsTest_SetRequest_TestC2Ev:
+function _ZN14network_config44OptionParserCombinationsTest_SetRequest_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   66:  TEST_F(OptionParserCombinationsTest, SetRequest)
+call    0 returned 1
+------------------
+_ZN14network_config44OptionParserCombinationsTest_SetRequest_TestD0Ev:
+function _ZN14network_config44OptionParserCombinationsTest_SetRequest_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   66:  TEST_F(OptionParserCombinationsTest, SetRequest)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config44OptionParserCombinationsTest_SetRequest_TestD2Ev:
+function _ZN14network_config44OptionParserCombinationsTest_SetRequest_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   66:  TEST_F(OptionParserCombinationsTest, SetRequest)
+call    0 returned 1
+------------------
+_ZN14network_config44OptionParserCombinationsTest_SetRequest_Test8TestBodyEv:
+function _ZN14network_config44OptionParserCombinationsTest_SetRequest_Test8TestBodyEv called 1 returned 100% blocks executed 22%
+1:   66:  TEST_F(OptionParserCombinationsTest, SetRequest)
+-:   67:  {
+1:   68:    auto args = createArgPair("program", "--bridge-config", "--set", "{}");
+call    0 returned 1
+-:   69:
+1*:   70:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 returned 1
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+1*:   71:    EXPECT_EQ(3, vm_.size()); // 2 + default value: --format
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+1:   72:  }
+------------------
+-:   73:
+4:   74:  TEST_F(OptionParserCombinationsTest, GetBridgeConfigFaultyRequest)
+-:   75:  {
+1:   76:    auto args = createArgPair("program", "--bridge-config", "--get", "--set", "--format=json");
+-:   77:
+1*:   78:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+1:   79:  }
+------------------
+_ZN14network_config62OptionParserCombinationsTest_GetBridgeConfigFaultyRequest_TestC2Ev:
+function _ZN14network_config62OptionParserCombinationsTest_GetBridgeConfigFaultyRequest_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   74:  TEST_F(OptionParserCombinationsTest, GetBridgeConfigFaultyRequest)
+call    0 returned 1
+------------------
+_ZN14network_config62OptionParserCombinationsTest_GetBridgeConfigFaultyRequest_TestD0Ev:
+function _ZN14network_config62OptionParserCombinationsTest_GetBridgeConfigFaultyRequest_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   74:  TEST_F(OptionParserCombinationsTest, GetBridgeConfigFaultyRequest)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config62OptionParserCombinationsTest_GetBridgeConfigFaultyRequest_TestD2Ev:
+function _ZN14network_config62OptionParserCombinationsTest_GetBridgeConfigFaultyRequest_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   74:  TEST_F(OptionParserCombinationsTest, GetBridgeConfigFaultyRequest)
+call    0 returned 1
+------------------
+_ZN14network_config62OptionParserCombinationsTest_GetBridgeConfigFaultyRequest_Test8TestBodyEv:
+function _ZN14network_config62OptionParserCombinationsTest_GetBridgeConfigFaultyRequest_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:   74:  TEST_F(OptionParserCombinationsTest, GetBridgeConfigFaultyRequest)
+-:   75:  {
+1:   76:    auto args = createArgPair("program", "--bridge-config", "--get", "--set", "--format=json");
+call    0 returned 1
+-:   77:
+1*:   78:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:   79:  }
+------------------
+-:   80:
+4:   81:  TEST_F(OptionParserCombinationsTest, RequestMultiplePrimaryOptions)
+-:   82:  {
+1:   83:    auto args = createArgPair("program", "--bridge-config", "--ip-config", "--get");
+-:   84:
+1*:   85:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+1:   86:  }
+------------------
+_ZN14network_config63OptionParserCombinationsTest_RequestMultiplePrimaryOptions_TestC2Ev:
+function _ZN14network_config63OptionParserCombinationsTest_RequestMultiplePrimaryOptions_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   81:  TEST_F(OptionParserCombinationsTest, RequestMultiplePrimaryOptions)
+call    0 returned 1
+------------------
+_ZN14network_config63OptionParserCombinationsTest_RequestMultiplePrimaryOptions_TestD0Ev:
+function _ZN14network_config63OptionParserCombinationsTest_RequestMultiplePrimaryOptions_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   81:  TEST_F(OptionParserCombinationsTest, RequestMultiplePrimaryOptions)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config63OptionParserCombinationsTest_RequestMultiplePrimaryOptions_TestD2Ev:
+function _ZN14network_config63OptionParserCombinationsTest_RequestMultiplePrimaryOptions_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   81:  TEST_F(OptionParserCombinationsTest, RequestMultiplePrimaryOptions)
+call    0 returned 1
+------------------
+_ZN14network_config63OptionParserCombinationsTest_RequestMultiplePrimaryOptions_Test8TestBodyEv:
+function _ZN14network_config63OptionParserCombinationsTest_RequestMultiplePrimaryOptions_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:   81:  TEST_F(OptionParserCombinationsTest, RequestMultiplePrimaryOptions)
+-:   82:  {
+1:   83:    auto args = createArgPair("program", "--bridge-config", "--ip-config", "--get");
+call    0 returned 1
+-:   84:
+1*:   85:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:   86:  }
+------------------
+-:   87:
+4:   88:  TEST_F(OptionParserCombinationsTest, RequestUnknownOption)
+-:   89:  {
+1:   90:    auto args = createArgPair("program", "--firewall-config", "--get");
+-:   91:
+1*:   92:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+1:   93:  }
+------------------
+_ZN14network_config54OptionParserCombinationsTest_RequestUnknownOption_TestC2Ev:
+function _ZN14network_config54OptionParserCombinationsTest_RequestUnknownOption_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   88:  TEST_F(OptionParserCombinationsTest, RequestUnknownOption)
+call    0 returned 1
+------------------
+_ZN14network_config54OptionParserCombinationsTest_RequestUnknownOption_TestD0Ev:
+function _ZN14network_config54OptionParserCombinationsTest_RequestUnknownOption_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   88:  TEST_F(OptionParserCombinationsTest, RequestUnknownOption)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config54OptionParserCombinationsTest_RequestUnknownOption_TestD2Ev:
+function _ZN14network_config54OptionParserCombinationsTest_RequestUnknownOption_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   88:  TEST_F(OptionParserCombinationsTest, RequestUnknownOption)
+call    0 returned 1
+------------------
+_ZN14network_config54OptionParserCombinationsTest_RequestUnknownOption_Test8TestBodyEv:
+function _ZN14network_config54OptionParserCombinationsTest_RequestUnknownOption_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:   88:  TEST_F(OptionParserCombinationsTest, RequestUnknownOption)
+-:   89:  {
+1:   90:    auto args = createArgPair("program", "--firewall-config", "--get");
+call    0 returned 1
+-:   91:
+1*:   92:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:   93:  }
+------------------
+-:   94:
+4:   95:  TEST_F(OptionParserCombinationsTest, RequestDuplicateOption)
+-:   96:  {
+1:   97:    auto args = createArgPair("program", "--set", "{}", "--ip-config", "--set", "{}");
+-:   98:
+1*:   99:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+1:  100:  }
+------------------
+_ZN14network_config56OptionParserCombinationsTest_RequestDuplicateOption_TestC2Ev:
+function _ZN14network_config56OptionParserCombinationsTest_RequestDuplicateOption_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   95:  TEST_F(OptionParserCombinationsTest, RequestDuplicateOption)
+call    0 returned 1
+------------------
+_ZN14network_config56OptionParserCombinationsTest_RequestDuplicateOption_TestD0Ev:
+function _ZN14network_config56OptionParserCombinationsTest_RequestDuplicateOption_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   95:  TEST_F(OptionParserCombinationsTest, RequestDuplicateOption)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config56OptionParserCombinationsTest_RequestDuplicateOption_TestD2Ev:
+function _ZN14network_config56OptionParserCombinationsTest_RequestDuplicateOption_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   95:  TEST_F(OptionParserCombinationsTest, RequestDuplicateOption)
+call    0 returned 1
+------------------
+_ZN14network_config56OptionParserCombinationsTest_RequestDuplicateOption_Test8TestBodyEv:
+function _ZN14network_config56OptionParserCombinationsTest_RequestDuplicateOption_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:   95:  TEST_F(OptionParserCombinationsTest, RequestDuplicateOption)
+-:   96:  {
+1:   97:    auto args = createArgPair("program", "--set", "{}", "--ip-config", "--set", "{}");
+call    0 returned 1
+-:   98:
+1*:   99:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:  100:  }
+------------------
+-:  101:
+4:  102:  TEST_F(OptionParserCombinationsTest, RequestMissingOption)
+-:  103:  {
+1:  104:    auto args = createArgPair("program", "--ip-config");
+-:  105:
+1*:  106:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+1:  107:  }
+------------------
+_ZN14network_config54OptionParserCombinationsTest_RequestMissingOption_TestC2Ev:
+function _ZN14network_config54OptionParserCombinationsTest_RequestMissingOption_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  102:  TEST_F(OptionParserCombinationsTest, RequestMissingOption)
+call    0 returned 1
+------------------
+_ZN14network_config54OptionParserCombinationsTest_RequestMissingOption_TestD0Ev:
+function _ZN14network_config54OptionParserCombinationsTest_RequestMissingOption_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  102:  TEST_F(OptionParserCombinationsTest, RequestMissingOption)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config54OptionParserCombinationsTest_RequestMissingOption_TestD2Ev:
+function _ZN14network_config54OptionParserCombinationsTest_RequestMissingOption_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  102:  TEST_F(OptionParserCombinationsTest, RequestMissingOption)
+call    0 returned 1
+------------------
+_ZN14network_config54OptionParserCombinationsTest_RequestMissingOption_Test8TestBodyEv:
+function _ZN14network_config54OptionParserCombinationsTest_RequestMissingOption_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:  102:  TEST_F(OptionParserCombinationsTest, RequestMissingOption)
+-:  103:  {
+1:  104:    auto args = createArgPair("program", "--ip-config");
+call    0 returned 1
+-:  105:
+1*:  106:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:  107:  }
+------------------
+-:  108:
+4:  109:  TEST_F(OptionParserCombinationsTest, RequestMissingSetValue)
+-:  110:  {
+1:  111:    auto args = createArgPair("program", "--ip-config", "--set");
+-:  112:
+1*:  113:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+1:  114:  }
+------------------
+_ZN14network_config56OptionParserCombinationsTest_RequestMissingSetValue_TestC2Ev:
+function _ZN14network_config56OptionParserCombinationsTest_RequestMissingSetValue_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  109:  TEST_F(OptionParserCombinationsTest, RequestMissingSetValue)
+call    0 returned 1
+------------------
+_ZN14network_config56OptionParserCombinationsTest_RequestMissingSetValue_TestD0Ev:
+function _ZN14network_config56OptionParserCombinationsTest_RequestMissingSetValue_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  109:  TEST_F(OptionParserCombinationsTest, RequestMissingSetValue)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config56OptionParserCombinationsTest_RequestMissingSetValue_TestD2Ev:
+function _ZN14network_config56OptionParserCombinationsTest_RequestMissingSetValue_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  109:  TEST_F(OptionParserCombinationsTest, RequestMissingSetValue)
+call    0 returned 1
+------------------
+_ZN14network_config56OptionParserCombinationsTest_RequestMissingSetValue_Test8TestBodyEv:
+function _ZN14network_config56OptionParserCombinationsTest_RequestMissingSetValue_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:  109:  TEST_F(OptionParserCombinationsTest, RequestMissingSetValue)
+-:  110:  {
+1:  111:    auto args = createArgPair("program", "--ip-config", "--set");
+call    0 returned 1
+-:  112:
+1*:  113:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:  114:  }
+------------------
+-:  115:
+4:  116:  TEST_F(OptionParserCombinationsTest, IllegalSetOfBothNetmaskAndPrefix)
+-:  117:  {
+1:  118:    auto args = createArgPair(
+-:  119:        "program", "--ip-config", "--set", "--device", "br0",
+-:  120:        "--netmask", "255.255.255.0", "--prefix", "24");
+-:  121:
+1*:  122:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+1:  123:  }
+------------------
+_ZN14network_config66OptionParserCombinationsTest_IllegalSetOfBothNetmaskAndPrefix_TestC2Ev:
+function _ZN14network_config66OptionParserCombinationsTest_IllegalSetOfBothNetmaskAndPrefix_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  116:  TEST_F(OptionParserCombinationsTest, IllegalSetOfBothNetmaskAndPrefix)
+call    0 returned 1
+------------------
+_ZN14network_config66OptionParserCombinationsTest_IllegalSetOfBothNetmaskAndPrefix_TestD0Ev:
+function _ZN14network_config66OptionParserCombinationsTest_IllegalSetOfBothNetmaskAndPrefix_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  116:  TEST_F(OptionParserCombinationsTest, IllegalSetOfBothNetmaskAndPrefix)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config66OptionParserCombinationsTest_IllegalSetOfBothNetmaskAndPrefix_TestD2Ev:
+function _ZN14network_config66OptionParserCombinationsTest_IllegalSetOfBothNetmaskAndPrefix_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  116:  TEST_F(OptionParserCombinationsTest, IllegalSetOfBothNetmaskAndPrefix)
+call    0 returned 1
+------------------
+_ZN14network_config66OptionParserCombinationsTest_IllegalSetOfBothNetmaskAndPrefix_Test8TestBodyEv:
+function _ZN14network_config66OptionParserCombinationsTest_IllegalSetOfBothNetmaskAndPrefix_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:  116:  TEST_F(OptionParserCombinationsTest, IllegalSetOfBothNetmaskAndPrefix)
+-:  117:  {
+1:  118:    auto args = createArgPair(
+call    0 returned 1
+-:  119:        "program", "--ip-config", "--set", "--device", "br0",
+-:  120:        "--netmask", "255.255.255.0", "--prefix", "24");
+-:  121:
+1*:  122:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:  123:  }
+------------------
+-:  124:
+4:  125:  TEST_F(OptionParserCombinationsTest, Backup)
+-:  126:  {
+1:  127:    auto args = createArgPair("program", "--backup", "/the/file/path");
+-:  128:
+1*:  129:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+1*:  130:    EXPECT_EQ(2, vm_.size()); // 2 + default value: --format
+1:  131:  }
+------------------
+_ZN14network_config40OptionParserCombinationsTest_Backup_TestC2Ev:
+function _ZN14network_config40OptionParserCombinationsTest_Backup_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  125:  TEST_F(OptionParserCombinationsTest, Backup)
+call    0 returned 1
+------------------
+_ZN14network_config40OptionParserCombinationsTest_Backup_TestD0Ev:
+function _ZN14network_config40OptionParserCombinationsTest_Backup_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  125:  TEST_F(OptionParserCombinationsTest, Backup)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config40OptionParserCombinationsTest_Backup_TestD2Ev:
+function _ZN14network_config40OptionParserCombinationsTest_Backup_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  125:  TEST_F(OptionParserCombinationsTest, Backup)
+call    0 returned 1
+------------------
+_ZN14network_config40OptionParserCombinationsTest_Backup_Test8TestBodyEv:
+function _ZN14network_config40OptionParserCombinationsTest_Backup_Test8TestBodyEv called 1 returned 100% blocks executed 22%
+1:  125:  TEST_F(OptionParserCombinationsTest, Backup)
+-:  126:  {
+1:  127:    auto args = createArgPair("program", "--backup", "/the/file/path");
+call    0 returned 1
+-:  128:
+1*:  129:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 returned 1
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+1*:  130:    EXPECT_EQ(2, vm_.size()); // 2 + default value: --format
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+1:  131:  }
+------------------
+-:  132:
+4:  133:  TEST_F(OptionParserCombinationsTest, Retore)
+-:  134:  {
+1:  135:    auto args = createArgPair("program", "--restore", "/the/file/path");
+-:  136:
+1*:  137:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+1*:  138:    EXPECT_EQ(2, vm_.size()); // 2 + default value: --format
+1:  139:  }
+------------------
+_ZN14network_config40OptionParserCombinationsTest_Retore_TestC2Ev:
+function _ZN14network_config40OptionParserCombinationsTest_Retore_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  133:  TEST_F(OptionParserCombinationsTest, Retore)
+call    0 returned 1
+------------------
+_ZN14network_config40OptionParserCombinationsTest_Retore_TestD0Ev:
+function _ZN14network_config40OptionParserCombinationsTest_Retore_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  133:  TEST_F(OptionParserCombinationsTest, Retore)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config40OptionParserCombinationsTest_Retore_TestD2Ev:
+function _ZN14network_config40OptionParserCombinationsTest_Retore_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  133:  TEST_F(OptionParserCombinationsTest, Retore)
+call    0 returned 1
+------------------
+_ZN14network_config40OptionParserCombinationsTest_Retore_Test8TestBodyEv:
+function _ZN14network_config40OptionParserCombinationsTest_Retore_Test8TestBodyEv called 1 returned 100% blocks executed 22%
+1:  133:  TEST_F(OptionParserCombinationsTest, Retore)
+-:  134:  {
+1:  135:    auto args = createArgPair("program", "--restore", "/the/file/path");
+call    0 returned 1
+-:  136:
+1*:  137:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 returned 1
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+1*:  138:    EXPECT_EQ(2, vm_.size()); // 2 + default value: --format
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+1:  139:  }
+------------------
+-:  140:
+4:  141:  TEST_F(OptionParserCombinationsTest, BackupFailsWithoutFilepath)
+-:  142:  {
+1:  143:    auto args = createArgPair("program", "--backup");
+-:  144:
+1*:  145:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+1:  146:  }
+------------------
+_ZN14network_config60OptionParserCombinationsTest_BackupFailsWithoutFilepath_TestC2Ev:
+function _ZN14network_config60OptionParserCombinationsTest_BackupFailsWithoutFilepath_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  141:  TEST_F(OptionParserCombinationsTest, BackupFailsWithoutFilepath)
+call    0 returned 1
+------------------
+_ZN14network_config60OptionParserCombinationsTest_BackupFailsWithoutFilepath_TestD0Ev:
+function _ZN14network_config60OptionParserCombinationsTest_BackupFailsWithoutFilepath_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  141:  TEST_F(OptionParserCombinationsTest, BackupFailsWithoutFilepath)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config60OptionParserCombinationsTest_BackupFailsWithoutFilepath_TestD2Ev:
+function _ZN14network_config60OptionParserCombinationsTest_BackupFailsWithoutFilepath_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  141:  TEST_F(OptionParserCombinationsTest, BackupFailsWithoutFilepath)
+call    0 returned 1
+------------------
+_ZN14network_config60OptionParserCombinationsTest_BackupFailsWithoutFilepath_Test8TestBodyEv:
+function _ZN14network_config60OptionParserCombinationsTest_BackupFailsWithoutFilepath_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:  141:  TEST_F(OptionParserCombinationsTest, BackupFailsWithoutFilepath)
+-:  142:  {
+1:  143:    auto args = createArgPair("program", "--backup");
+call    0 returned 1
+-:  144:
+1*:  145:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:  146:  }
+------------------
+-:  147:
+4:  148:  TEST_F(OptionParserCombinationsTest, SetFixIp)
+-:  149:  {
+1:  150:    auto args = createArgPair("program", "--fix-ip");
+-:  151:
+1*:  152:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+1*:  153:    EXPECT_EQ(2, vm_.size()); // 2 + default value: --format
+1:  154:  }
+------------------
+_ZN14network_config42OptionParserCombinationsTest_SetFixIp_TestC2Ev:
+function _ZN14network_config42OptionParserCombinationsTest_SetFixIp_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  148:  TEST_F(OptionParserCombinationsTest, SetFixIp)
+call    0 returned 1
+------------------
+_ZN14network_config42OptionParserCombinationsTest_SetFixIp_TestD0Ev:
+function _ZN14network_config42OptionParserCombinationsTest_SetFixIp_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  148:  TEST_F(OptionParserCombinationsTest, SetFixIp)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config42OptionParserCombinationsTest_SetFixIp_TestD2Ev:
+function _ZN14network_config42OptionParserCombinationsTest_SetFixIp_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  148:  TEST_F(OptionParserCombinationsTest, SetFixIp)
+call    0 returned 1
+------------------
+_ZN14network_config42OptionParserCombinationsTest_SetFixIp_Test8TestBodyEv:
+function _ZN14network_config42OptionParserCombinationsTest_SetFixIp_Test8TestBodyEv called 1 returned 100% blocks executed 22%
+1:  148:  TEST_F(OptionParserCombinationsTest, SetFixIp)
+-:  149:  {
+1:  150:    auto args = createArgPair("program", "--fix-ip");
+call    0 returned 1
+-:  151:
+1*:  152:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 returned 1
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+1*:  153:    EXPECT_EQ(2, vm_.size()); // 2 + default value: --format
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+1:  154:  }
+------------------
+-:  155:
+4:  156:  TEST_F(OptionParserCombinationsTest, GetMacAddress)
+-:  157:  {
+1:  158:    auto args = createArgPair("program", "--mac-address", "--get", "--device=br0");
+-:  159:
+1*:  160:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+1*:  161:    EXPECT_EQ(4, vm_.size()); // 3 + default value: --format
+1:  162:  }
+------------------
+_ZN14network_config47OptionParserCombinationsTest_GetMacAddress_TestC2Ev:
+function _ZN14network_config47OptionParserCombinationsTest_GetMacAddress_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  156:  TEST_F(OptionParserCombinationsTest, GetMacAddress)
+call    0 returned 1
+------------------
+_ZN14network_config47OptionParserCombinationsTest_GetMacAddress_TestD0Ev:
+function _ZN14network_config47OptionParserCombinationsTest_GetMacAddress_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  156:  TEST_F(OptionParserCombinationsTest, GetMacAddress)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config47OptionParserCombinationsTest_GetMacAddress_TestD2Ev:
+function _ZN14network_config47OptionParserCombinationsTest_GetMacAddress_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  156:  TEST_F(OptionParserCombinationsTest, GetMacAddress)
+call    0 returned 1
+------------------
+_ZN14network_config47OptionParserCombinationsTest_GetMacAddress_Test8TestBodyEv:
+function _ZN14network_config47OptionParserCombinationsTest_GetMacAddress_Test8TestBodyEv called 1 returned 100% blocks executed 22%
+1:  156:  TEST_F(OptionParserCombinationsTest, GetMacAddress)
+-:  157:  {
+1:  158:    auto args = createArgPair("program", "--mac-address", "--get", "--device=br0");
+call    0 returned 1
+-:  159:
+1*:  160:    EXPECT_NO_THROW(sut_.Parse(args.size(), args.data()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 returned 1
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+1*:  161:    EXPECT_EQ(4, vm_.size()); // 3 + default value: --format
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+1:  162:  }
+------------------
+-:  163:
+4:  164:  TEST_F(OptionParserCombinationsTest, GetMacAddressMissingGetOption)
+-:  165:  {
+1:  166:    auto args = createArgPair("program", "--mac-address");
+-:  167:
+1*:  168:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+1:  169:  }
+------------------
+_ZN14network_config63OptionParserCombinationsTest_GetMacAddressMissingGetOption_TestC2Ev:
+function _ZN14network_config63OptionParserCombinationsTest_GetMacAddressMissingGetOption_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  164:  TEST_F(OptionParserCombinationsTest, GetMacAddressMissingGetOption)
+call    0 returned 1
+------------------
+_ZN14network_config63OptionParserCombinationsTest_GetMacAddressMissingGetOption_TestD0Ev:
+function _ZN14network_config63OptionParserCombinationsTest_GetMacAddressMissingGetOption_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  164:  TEST_F(OptionParserCombinationsTest, GetMacAddressMissingGetOption)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config63OptionParserCombinationsTest_GetMacAddressMissingGetOption_TestD2Ev:
+function _ZN14network_config63OptionParserCombinationsTest_GetMacAddressMissingGetOption_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  164:  TEST_F(OptionParserCombinationsTest, GetMacAddressMissingGetOption)
+call    0 returned 1
+------------------
+_ZN14network_config63OptionParserCombinationsTest_GetMacAddressMissingGetOption_Test8TestBodyEv:
+function _ZN14network_config63OptionParserCombinationsTest_GetMacAddressMissingGetOption_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:  164:  TEST_F(OptionParserCombinationsTest, GetMacAddressMissingGetOption)
+-:  165:  {
+1:  166:    auto args = createArgPair("program", "--mac-address");
+call    0 returned 1
+-:  167:
+1*:  168:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:  169:  }
+------------------
+-:  170:
+4:  171:  TEST_F(OptionParserCombinationsTest, GetMacAddressMissingGetOptionValue)
+-:  172:  {
+1:  173:    auto args = createArgPair("program", "--mac-address", "--get");
+-:  174:
+1*:  175:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+1:  176:  }
+------------------
+_ZN14network_config68OptionParserCombinationsTest_GetMacAddressMissingGetOptionValue_TestC2Ev:
+function _ZN14network_config68OptionParserCombinationsTest_GetMacAddressMissingGetOptionValue_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  171:  TEST_F(OptionParserCombinationsTest, GetMacAddressMissingGetOptionValue)
+call    0 returned 1
+------------------
+_ZN14network_config68OptionParserCombinationsTest_GetMacAddressMissingGetOptionValue_TestD0Ev:
+function _ZN14network_config68OptionParserCombinationsTest_GetMacAddressMissingGetOptionValue_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  171:  TEST_F(OptionParserCombinationsTest, GetMacAddressMissingGetOptionValue)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config68OptionParserCombinationsTest_GetMacAddressMissingGetOptionValue_TestD2Ev:
+function _ZN14network_config68OptionParserCombinationsTest_GetMacAddressMissingGetOptionValue_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  171:  TEST_F(OptionParserCombinationsTest, GetMacAddressMissingGetOptionValue)
+call    0 returned 1
+------------------
+_ZN14network_config68OptionParserCombinationsTest_GetMacAddressMissingGetOptionValue_Test8TestBodyEv:
+function _ZN14network_config68OptionParserCombinationsTest_GetMacAddressMissingGetOptionValue_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:  171:  TEST_F(OptionParserCombinationsTest, GetMacAddressMissingGetOptionValue)
+-:  172:  {
+1:  173:    auto args = createArgPair("program", "--mac-address", "--get");
+call    0 returned 1
+-:  174:
+1*:  175:    EXPECT_THROW(sut_.Parse(args.size(), args.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+1:  176:  }
+------------------
+-:  177:
+4:  178:  TEST_F(OptionParserCombinationsTest, QuietAndErrMsgDstDontGoAlong)
+-:  179:  {
+1:  180:    auto args_nok = createArgPair("program", "--mac-address", "--device=br0", "--get", "--quiet", "--error-msg-dst", "file.txt");
+1*:  181:    EXPECT_THROW(sut_.Parse(args_nok.size(), args_nok.data()), po::error);
+-:  182:
+1:  183:    auto args_ok1 = createArgPair("program", "--mac-address", "--device=br0", "--get", "--quiet");
+1*:  184:    EXPECT_NO_THROW(sut_.Parse(args_ok1.size(), args_ok1.data()));
+-:  185:
+1:  186:    auto args_ok2 = createArgPair("program", "--mac-address", "--get", "--device=br0", "--error-msg-dst", "file.txt");
+1*:  187:    EXPECT_NO_THROW(sut_.Parse(args_ok2.size(), args_ok2.data()));
+1:  188:  }
+------------------
+_ZN14network_config62OptionParserCombinationsTest_QuietAndErrMsgDstDontGoAlong_TestC2Ev:
+function _ZN14network_config62OptionParserCombinationsTest_QuietAndErrMsgDstDontGoAlong_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  178:  TEST_F(OptionParserCombinationsTest, QuietAndErrMsgDstDontGoAlong)
+call    0 returned 1
+------------------
+_ZN14network_config62OptionParserCombinationsTest_QuietAndErrMsgDstDontGoAlong_TestD0Ev:
+function _ZN14network_config62OptionParserCombinationsTest_QuietAndErrMsgDstDontGoAlong_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  178:  TEST_F(OptionParserCombinationsTest, QuietAndErrMsgDstDontGoAlong)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config62OptionParserCombinationsTest_QuietAndErrMsgDstDontGoAlong_TestD2Ev:
+function _ZN14network_config62OptionParserCombinationsTest_QuietAndErrMsgDstDontGoAlong_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  178:  TEST_F(OptionParserCombinationsTest, QuietAndErrMsgDstDontGoAlong)
+call    0 returned 1
+------------------
+_ZN14network_config62OptionParserCombinationsTest_QuietAndErrMsgDstDontGoAlong_Test8TestBodyEv:
+function _ZN14network_config62OptionParserCombinationsTest_QuietAndErrMsgDstDontGoAlong_Test8TestBodyEv called 1 returned 100% blocks executed 23%
+1:  178:  TEST_F(OptionParserCombinationsTest, QuietAndErrMsgDstDontGoAlong)
+-:  179:  {
+1:  180:    auto args_nok = createArgPair("program", "--mac-address", "--device=br0", "--get", "--quiet", "--error-msg-dst", "file.txt");
+call    0 returned 1
+1*:  181:    EXPECT_THROW(sut_.Parse(args_nok.size(), args_nok.data()), po::error);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1 (throw)
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+branch 27 never executed
+branch 28 never executed
+call   29 never executed
+call   30 never executed
+call   31 returned 1
+branch 32 taken 1
+branch 33 taken 0
+branch 34 taken 0
+call   35 returned 1
+call   36 returned 1
+call   37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+call   52 never executed
+branch 53 never executed
+branch 54 never executed
+call   55 never executed
+branch 56 never executed
+branch 57 never executed
+call   58 never executed
+call   59 never executed
+call   60 never executed
+branch 61 never executed
+branch 62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+call   69 never executed
+call   70 never executed
+call   71 never executed
+-:  182:
+1:  183:    auto args_ok1 = createArgPair("program", "--mac-address", "--device=br0", "--get", "--quiet");
+call    0 returned 1
+1*:  184:    EXPECT_NO_THROW(sut_.Parse(args_ok1.size(), args_ok1.data()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 returned 1
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+-:  185:
+1:  186:    auto args_ok2 = createArgPair("program", "--mac-address", "--get", "--device=br0", "--error-msg-dst", "file.txt");
+call    0 returned 1
+1*:  187:    EXPECT_NO_THROW(sut_.Parse(args_ok2.size(), args_ok2.data()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 returned 1
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+branch 35 never executed
+branch 36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+call   44 never executed
+branch 45 never executed
+branch 46 never executed
+call   47 never executed
+call   48 never executed
+branch 49 never executed
+branch 50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+call   55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+1:  188:  }
+------------------
+-:  189:
+-:  190:
+-:  191:}  // namespace network_config

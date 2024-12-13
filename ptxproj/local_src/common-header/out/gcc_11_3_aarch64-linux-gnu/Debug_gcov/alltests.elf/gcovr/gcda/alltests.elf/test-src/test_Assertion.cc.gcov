@@ -1,0 +1,939 @@
+-:    0:Source:test-src/test_Assertion.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project common-header (PTXdist package libcommonheader).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_Assertion.cc
+-:   12:///
+-:   13:///  \brief    Test for assertion helper macros.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include <gtest/gtest.h>
+-:   22:#include "wc/preprocessing.h"
+-:   23:#include "test_Assertion.h"
+-:   24:#include "c-modules/test_AssertionMod.h"
+-:   25:#include "cpp-modules/test_AssertionMod.hpp"
+-:   26:
+-:   27:#ifdef __cplusplus // C++
+-:   28:#include <cassert>
+-:   29:#else // C
+-:   30:#include <assert.h>
+-:   31:#endif
+-:   32:
+-:   33://------------------------------------------------------------------------------
+-:   34:// defines; structure, enumeration and type definitions
+-:   35://------------------------------------------------------------------------------
+-:   36:
+-:   37://------------------------------------------------------------------------------
+-:   38:// function prototypes
+-:   39://------------------------------------------------------------------------------
+-:   40:
+-:   41://------------------------------------------------------------------------------
+-:   42:// macros
+-:   43://------------------------------------------------------------------------------
+-:   44:
+-:   45://------------------------------------------------------------------------------
+-:   46:// variables' and constants' definitions
+-:   47://------------------------------------------------------------------------------
+-:   48:
+-:   49://------------------------------------------------------------------------------
+-:   50:// function implementation
+-:   51://------------------------------------------------------------------------------
+function wc_Fail called 27 returned 78% blocks executed 25%
+27:   52:void wc_Fail(char const * const szReason,
+-:   53:             char const * const szFile,
+-:   54:             char const * const szFunction,
+-:   55:             int const line)
+-:   56:{
+27*:   57:  EXPECT_STREQ(WC_ASSERT_PREFIX WC_STR(ONE) "==" WC_STR(ZERO), szReason);
+call    0 returned 27
+branch  1 taken 27 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 27
+branch  4 taken 0 (fallthrough)
+branch  5 taken 27
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 27
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   58:#ifndef DISABLE_WC_FAIL_SOURCE
+27*:   59:  EXPECT_NE(nullptr, szFile);
+call    0 returned 27
+branch  1 taken 27 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 27
+branch  4 taken 0 (fallthrough)
+branch  5 taken 27
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 27
+call   19 never executed
+call   20 never executed
+call   21 never executed
+27*:   60:  EXPECT_NE('\0', szFile[0]);
+call    0 returned 27
+branch  1 taken 27 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 27
+branch  4 taken 0 (fallthrough)
+branch  5 taken 27
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 27
+call   19 never executed
+call   20 never executed
+call   21 never executed
+27*:   61:  EXPECT_NE(nullptr, szFunction);
+call    0 returned 27
+branch  1 taken 27 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 27
+branch  4 taken 0 (fallthrough)
+branch  5 taken 27
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 27
+call   19 never executed
+call   20 never executed
+call   21 never executed
+27*:   62:  EXPECT_NE('\0', szFunction[0]);
+call    0 returned 27
+branch  1 taken 27 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 27
+branch  4 taken 0 (fallthrough)
+branch  5 taken 27
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 27
+call   19 never executed
+call   20 never executed
+call   21 never executed
+27*:   63:  EXPECT_LT(0U, line);
+call    0 returned 27
+branch  1 taken 27 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 27
+branch  4 taken 0 (fallthrough)
+branch  5 taken 27
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 27
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   64:#endif
+-:   65:
+-:   66:  // Trigger standard assert
+27*:   67:  ASSERT_DEATH_IF_SUPPORTED(assert(false), "");
+call    0 returned 27
+branch  1 taken 27 (fallthrough)
+branch  2 taken 0
+call    3 returned 27
+branch  4 taken 27 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 27
+branch  7 taken 27 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 27
+branch 10 taken 0 (fallthrough)
+branch 11 taken 27
+branch 12 taken 27 (fallthrough)
+branch 13 taken 0
+call   14 returned 27
+call   15 returned 27
+branch 16 taken 27 (fallthrough)
+branch 17 taken 0 (throw)
+branch 18 taken 21
+branch 19 taken 6
+branch 20 taken 0
+call   21 returned 21
+branch 22 taken 21 (fallthrough)
+branch 23 taken 0 (throw)
+call   24 returned 21
+branch 25 taken 21 (fallthrough)
+branch 26 taken 0 (throw)
+call   27 returned 21
+branch 28 taken 21 (fallthrough)
+branch 29 taken 0 (throw)
+branch 30 taken 0 (fallthrough)
+branch 31 taken 21
+call   32 returned 6
+call   33 returned 6
+branch 34 taken 6 (fallthrough)
+branch 35 taken 0 (throw)
+call   36 returned 6
+branch 37 taken 6 (fallthrough)
+branch 38 taken 0 (throw)
+branch 39 taken 6 (fallthrough)
+branch 40 taken 0
+call   41 returned 0
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+call   46 returned 21
+branch 47 taken 21 (fallthrough)
+branch 48 taken 0
+call   49 never executed
+call   50 never executed
+call   51 never executed
+branch 52 never executed
+branch 53 never executed
+call   54 never executed
+branch 55 never executed
+branch 56 never executed
+call   57 never executed
+call   58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+call   67 never executed
+call   68 never executed
+branch 69 never executed
+branch 70 never executed
+call   71 never executed
+call   72 never executed
+branch 73 never executed
+branch 74 never executed
+call   75 never executed
+branch 76 never executed
+branch 77 never executed
+call   78 never executed
+call   79 never executed
+call   80 never executed
+branch 81 never executed
+branch 82 never executed
+call   83 never executed
+branch 84 never executed
+branch 85 never executed
+call   86 never executed
+call   87 never executed
+call   88 never executed
+call   89 never executed
+call   90 never executed
+call   91 never executed
+call   92 never executed
+-:   68:}
+-:   69:
+-:   70:
+28:   71:TEST(Assert, SucceedC)
+-:   72:{
+7:   73:  TriggerSuccessC();
+7:   74:}
+------------------
+_ZN20Assert_SucceedC_TestC2Ev:
+function _ZN20Assert_SucceedC_TestC2Ev called 7 returned 100% blocks executed 100%
+7:   71:TEST(Assert, SucceedC)
+call    0 returned 7
+------------------
+_ZN20Assert_SucceedC_TestD0Ev:
+function _ZN20Assert_SucceedC_TestD0Ev called 7 returned 100% blocks executed 100%
+7:   71:TEST(Assert, SucceedC)
+call    0 returned 7
+call    1 returned 7
+------------------
+_ZN20Assert_SucceedC_TestD2Ev:
+function _ZN20Assert_SucceedC_TestD2Ev called 7 returned 100% blocks executed 100%
+7:   71:TEST(Assert, SucceedC)
+call    0 returned 7
+------------------
+_ZN20Assert_SucceedC_Test8TestBodyEv:
+function _ZN20Assert_SucceedC_Test8TestBodyEv called 7 returned 100% blocks executed 100%
+7:   71:TEST(Assert, SucceedC)
+-:   72:{
+7:   73:  TriggerSuccessC();
+call    0 returned 7
+7:   74:}
+------------------
+-:   75:
+-:   76:
+26:   77:TEST(Assert, FailC_DeathTest)
+-:   78:{
+-:   79:#ifndef NDEBUG
+7*:   80:  ASSERT_NO_FATAL_FAILURE(TriggerFailC());
+-:   81:#endif
+-:   82:}
+------------------
+_ZN27Assert_FailC_DeathTest_TestC2Ev:
+function _ZN27Assert_FailC_DeathTest_TestC2Ev called 7 returned 100% blocks executed 100%
+7:   77:TEST(Assert, FailC_DeathTest)
+call    0 returned 7
+------------------
+_ZN27Assert_FailC_DeathTest_TestD0Ev:
+function _ZN27Assert_FailC_DeathTest_TestD0Ev called 6 returned 100% blocks executed 100%
+6:   77:TEST(Assert, FailC_DeathTest)
+call    0 returned 6
+call    1 returned 6
+------------------
+_ZN27Assert_FailC_DeathTest_TestD2Ev:
+function _ZN27Assert_FailC_DeathTest_TestD2Ev called 6 returned 100% blocks executed 100%
+6:   77:TEST(Assert, FailC_DeathTest)
+call    0 returned 6
+------------------
+_ZN27Assert_FailC_DeathTest_Test8TestBodyEv:
+function _ZN27Assert_FailC_DeathTest_Test8TestBodyEv called 7 returned 86% blocks executed 48%
+7:   77:TEST(Assert, FailC_DeathTest)
+-:   78:{
+-:   79:#ifndef NDEBUG
+7*:   80:  ASSERT_NO_FATAL_FAILURE(TriggerFailC());
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0
+call    3 returned 7
+branch  4 taken 7 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 7
+branch  7 taken 7 (fallthrough)
+branch  8 taken 0 (throw)
+branch  9 taken 7 (fallthrough)
+branch 10 taken 0
+call   11 returned 6
+branch 12 taken 6 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 6
+branch 15 taken 0 (fallthrough)
+branch 16 taken 6
+call   17 returned 6
+branch 18 taken 6 (fallthrough)
+branch 19 taken 0
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:   81:#endif
+-:   82:}
+------------------
+-:   83:
+-:   84:
+20:   85:TEST(AssertReturn, SucceedC)
+-:   86:{
+5:   87:  int result = 0;
+5:   88:  result = TriggerSuccessReturnC(15);
+5*:   89:  EXPECT_EQ(-1, result);
+5:   90:}
+------------------
+_ZN26AssertReturn_SucceedC_TestC2Ev:
+function _ZN26AssertReturn_SucceedC_TestC2Ev called 5 returned 100% blocks executed 100%
+5:   85:TEST(AssertReturn, SucceedC)
+call    0 returned 5
+------------------
+_ZN26AssertReturn_SucceedC_TestD0Ev:
+function _ZN26AssertReturn_SucceedC_TestD0Ev called 5 returned 100% blocks executed 100%
+5:   85:TEST(AssertReturn, SucceedC)
+call    0 returned 5
+call    1 returned 5
+------------------
+_ZN26AssertReturn_SucceedC_TestD2Ev:
+function _ZN26AssertReturn_SucceedC_TestD2Ev called 5 returned 100% blocks executed 100%
+5:   85:TEST(AssertReturn, SucceedC)
+call    0 returned 5
+------------------
+_ZN26AssertReturn_SucceedC_Test8TestBodyEv:
+function _ZN26AssertReturn_SucceedC_Test8TestBodyEv called 5 returned 100% blocks executed 28%
+5:   85:TEST(AssertReturn, SucceedC)
+-:   86:{
+5:   87:  int result = 0;
+5:   88:  result = TriggerSuccessReturnC(15);
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+5*:   89:  EXPECT_EQ(-1, result);
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 5
+branch  4 taken 0 (fallthrough)
+branch  5 taken 5
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 5
+call   19 never executed
+call   20 never executed
+call   21 never executed
+5:   90:}
+------------------
+-:   91:
+-:   92:
+18:   93:TEST(AssertReturn, FailC_DeathTest)
+-:   94:{
+-:   95:#ifndef NDEBUG
+5:   96:  int result = 0;
+5*:   97:  ASSERT_NO_FATAL_FAILURE(result = TriggerFailReturnC(15));
+4*:   98:  EXPECT_EQ(15, result);
+-:   99:#endif
+-:  100:}
+------------------
+_ZN33AssertReturn_FailC_DeathTest_TestC2Ev:
+function _ZN33AssertReturn_FailC_DeathTest_TestC2Ev called 5 returned 100% blocks executed 100%
+5:   93:TEST(AssertReturn, FailC_DeathTest)
+call    0 returned 5
+------------------
+_ZN33AssertReturn_FailC_DeathTest_TestD0Ev:
+function _ZN33AssertReturn_FailC_DeathTest_TestD0Ev called 4 returned 100% blocks executed 100%
+4:   93:TEST(AssertReturn, FailC_DeathTest)
+call    0 returned 4
+call    1 returned 4
+------------------
+_ZN33AssertReturn_FailC_DeathTest_TestD2Ev:
+function _ZN33AssertReturn_FailC_DeathTest_TestD2Ev called 4 returned 100% blocks executed 100%
+4:   93:TEST(AssertReturn, FailC_DeathTest)
+call    0 returned 4
+------------------
+_ZN33AssertReturn_FailC_DeathTest_Test8TestBodyEv:
+function _ZN33AssertReturn_FailC_DeathTest_Test8TestBodyEv called 5 returned 80% blocks executed 38%
+5:   93:TEST(AssertReturn, FailC_DeathTest)
+-:   94:{
+-:   95:#ifndef NDEBUG
+5:   96:  int result = 0;
+5*:   97:  ASSERT_NO_FATAL_FAILURE(result = TriggerFailReturnC(15));
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 5 (fallthrough)
+branch  4 taken 0
+call    5 returned 5
+branch  6 taken 5 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 5
+branch  9 taken 5 (fallthrough)
+branch 10 taken 0 (throw)
+branch 11 taken 5 (fallthrough)
+branch 12 taken 0
+call   13 returned 4
+branch 14 taken 4 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 4
+branch 17 taken 0 (fallthrough)
+branch 18 taken 4
+call   19 returned 4
+branch 20 taken 4 (fallthrough)
+branch 21 taken 0
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+branch 26 never executed
+branch 27 never executed
+call   28 never executed
+branch 29 never executed
+branch 30 never executed
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+4*:   98:  EXPECT_EQ(15, result);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+branch  4 taken 0 (fallthrough)
+branch  5 taken 4
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 4
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   99:#endif
+-:  100:}
+------------------
+-:  101:
+-:  102:
+12:  103:TEST(AssertReturnVoid, SucceedC)
+-:  104:{
+3:  105:  TriggerSuccessReturnVoidC();
+3:  106:}
+------------------
+_ZN30AssertReturnVoid_SucceedC_TestC2Ev:
+function _ZN30AssertReturnVoid_SucceedC_TestC2Ev called 3 returned 100% blocks executed 100%
+3:  103:TEST(AssertReturnVoid, SucceedC)
+call    0 returned 3
+------------------
+_ZN30AssertReturnVoid_SucceedC_TestD0Ev:
+function _ZN30AssertReturnVoid_SucceedC_TestD0Ev called 3 returned 100% blocks executed 100%
+3:  103:TEST(AssertReturnVoid, SucceedC)
+call    0 returned 3
+call    1 returned 3
+------------------
+_ZN30AssertReturnVoid_SucceedC_TestD2Ev:
+function _ZN30AssertReturnVoid_SucceedC_TestD2Ev called 3 returned 100% blocks executed 100%
+3:  103:TEST(AssertReturnVoid, SucceedC)
+call    0 returned 3
+------------------
+_ZN30AssertReturnVoid_SucceedC_Test8TestBodyEv:
+function _ZN30AssertReturnVoid_SucceedC_Test8TestBodyEv called 3 returned 100% blocks executed 100%
+3:  103:TEST(AssertReturnVoid, SucceedC)
+-:  104:{
+3:  105:  TriggerSuccessReturnVoidC();
+call    0 returned 3
+3:  106:}
+------------------
+-:  107:
+-:  108:
+10:  109:TEST(AssertReturnVoid, FailC_DeathTest)
+-:  110:{
+-:  111:#ifndef NDEBUG
+3*:  112:  ASSERT_NO_FATAL_FAILURE(TriggerFailReturnVoidC());
+-:  113:#endif
+-:  114:}
+------------------
+_ZN37AssertReturnVoid_FailC_DeathTest_TestC2Ev:
+function _ZN37AssertReturnVoid_FailC_DeathTest_TestC2Ev called 3 returned 100% blocks executed 100%
+3:  109:TEST(AssertReturnVoid, FailC_DeathTest)
+call    0 returned 3
+------------------
+_ZN37AssertReturnVoid_FailC_DeathTest_TestD0Ev:
+function _ZN37AssertReturnVoid_FailC_DeathTest_TestD0Ev called 2 returned 100% blocks executed 100%
+2:  109:TEST(AssertReturnVoid, FailC_DeathTest)
+call    0 returned 2
+call    1 returned 2
+------------------
+_ZN37AssertReturnVoid_FailC_DeathTest_TestD2Ev:
+function _ZN37AssertReturnVoid_FailC_DeathTest_TestD2Ev called 2 returned 100% blocks executed 100%
+2:  109:TEST(AssertReturnVoid, FailC_DeathTest)
+call    0 returned 2
+------------------
+_ZN37AssertReturnVoid_FailC_DeathTest_Test8TestBodyEv:
+function _ZN37AssertReturnVoid_FailC_DeathTest_Test8TestBodyEv called 3 returned 67% blocks executed 48%
+3:  109:TEST(AssertReturnVoid, FailC_DeathTest)
+-:  110:{
+-:  111:#ifndef NDEBUG
+3*:  112:  ASSERT_NO_FATAL_FAILURE(TriggerFailReturnVoidC());
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0
+call    3 returned 3
+branch  4 taken 3 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 3
+branch  7 taken 3 (fallthrough)
+branch  8 taken 0 (throw)
+branch  9 taken 3 (fallthrough)
+branch 10 taken 0
+call   11 returned 2
+branch 12 taken 2 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 2
+branch 15 taken 0 (fallthrough)
+branch 16 taken 2
+call   17 returned 2
+branch 18 taken 2 (fallthrough)
+branch 19 taken 0
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:  113:#endif
+-:  114:}
+------------------
+-:  115:
+-:  116:
+24:  117:TEST(Assert, SucceedCPP)
+-:  118:{
+6:  119:  TriggerSuccessCPP();
+6:  120:}
+------------------
+_ZN22Assert_SucceedCPP_TestC2Ev:
+function _ZN22Assert_SucceedCPP_TestC2Ev called 6 returned 100% blocks executed 100%
+6:  117:TEST(Assert, SucceedCPP)
+call    0 returned 6
+------------------
+_ZN22Assert_SucceedCPP_TestD0Ev:
+function _ZN22Assert_SucceedCPP_TestD0Ev called 6 returned 100% blocks executed 100%
+6:  117:TEST(Assert, SucceedCPP)
+call    0 returned 6
+call    1 returned 6
+------------------
+_ZN22Assert_SucceedCPP_TestD2Ev:
+function _ZN22Assert_SucceedCPP_TestD2Ev called 6 returned 100% blocks executed 100%
+6:  117:TEST(Assert, SucceedCPP)
+call    0 returned 6
+------------------
+_ZN22Assert_SucceedCPP_Test8TestBodyEv:
+function _ZN22Assert_SucceedCPP_Test8TestBodyEv called 6 returned 100% blocks executed 100%
+6:  117:TEST(Assert, SucceedCPP)
+-:  118:{
+6:  119:  TriggerSuccessCPP();
+call    0 returned 6
+6:  120:}
+------------------
+-:  121:
+-:  122:
+22:  123:TEST(Assert, FailCPP_DeathTest)
+-:  124:{
+-:  125:#ifndef NDEBUG
+6*:  126:  ASSERT_NO_FATAL_FAILURE(TriggerFailCPP());
+-:  127:#endif
+-:  128:}
+------------------
+_ZN29Assert_FailCPP_DeathTest_TestC2Ev:
+function _ZN29Assert_FailCPP_DeathTest_TestC2Ev called 6 returned 100% blocks executed 100%
+6:  123:TEST(Assert, FailCPP_DeathTest)
+call    0 returned 6
+------------------
+_ZN29Assert_FailCPP_DeathTest_TestD0Ev:
+function _ZN29Assert_FailCPP_DeathTest_TestD0Ev called 5 returned 100% blocks executed 100%
+5:  123:TEST(Assert, FailCPP_DeathTest)
+call    0 returned 5
+call    1 returned 5
+------------------
+_ZN29Assert_FailCPP_DeathTest_TestD2Ev:
+function _ZN29Assert_FailCPP_DeathTest_TestD2Ev called 5 returned 100% blocks executed 100%
+5:  123:TEST(Assert, FailCPP_DeathTest)
+call    0 returned 5
+------------------
+_ZN29Assert_FailCPP_DeathTest_Test8TestBodyEv:
+function _ZN29Assert_FailCPP_DeathTest_Test8TestBodyEv called 6 returned 83% blocks executed 48%
+6:  123:TEST(Assert, FailCPP_DeathTest)
+-:  124:{
+-:  125:#ifndef NDEBUG
+6*:  126:  ASSERT_NO_FATAL_FAILURE(TriggerFailCPP());
+call    0 returned 6
+branch  1 taken 6 (fallthrough)
+branch  2 taken 0
+call    3 returned 6
+branch  4 taken 6 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 6
+branch  7 taken 6 (fallthrough)
+branch  8 taken 0 (throw)
+branch  9 taken 6 (fallthrough)
+branch 10 taken 0
+call   11 returned 5
+branch 12 taken 5 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 5
+branch 15 taken 0 (fallthrough)
+branch 16 taken 5
+call   17 returned 5
+branch 18 taken 5 (fallthrough)
+branch 19 taken 0
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:  127:#endif
+-:  128:}
+------------------
+-:  129:
+-:  130:
+16:  131:TEST(AssertReturn, SucceedCPP)
+-:  132:{
+4:  133:  int result = 0;
+4:  134:  result = TriggerSuccessReturnCPP(15);
+4*:  135:  EXPECT_EQ(-1, result);
+4:  136:}
+------------------
+_ZN28AssertReturn_SucceedCPP_TestC2Ev:
+function _ZN28AssertReturn_SucceedCPP_TestC2Ev called 4 returned 100% blocks executed 100%
+4:  131:TEST(AssertReturn, SucceedCPP)
+call    0 returned 4
+------------------
+_ZN28AssertReturn_SucceedCPP_TestD0Ev:
+function _ZN28AssertReturn_SucceedCPP_TestD0Ev called 4 returned 100% blocks executed 100%
+4:  131:TEST(AssertReturn, SucceedCPP)
+call    0 returned 4
+call    1 returned 4
+------------------
+_ZN28AssertReturn_SucceedCPP_TestD2Ev:
+function _ZN28AssertReturn_SucceedCPP_TestD2Ev called 4 returned 100% blocks executed 100%
+4:  131:TEST(AssertReturn, SucceedCPP)
+call    0 returned 4
+------------------
+_ZN28AssertReturn_SucceedCPP_Test8TestBodyEv:
+function _ZN28AssertReturn_SucceedCPP_Test8TestBodyEv called 4 returned 100% blocks executed 28%
+4:  131:TEST(AssertReturn, SucceedCPP)
+-:  132:{
+4:  133:  int result = 0;
+4:  134:  result = TriggerSuccessReturnCPP(15);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+4*:  135:  EXPECT_EQ(-1, result);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+branch  4 taken 0 (fallthrough)
+branch  5 taken 4
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 4
+call   19 never executed
+call   20 never executed
+call   21 never executed
+4:  136:}
+------------------
+-:  137:
+-:  138:
+14:  139:TEST(AssertReturn, FailCPP_DeathTest)
+-:  140:{
+-:  141:#ifndef NDEBUG
+4:  142:  int result = 0;
+4*:  143:  ASSERT_NO_FATAL_FAILURE(result = TriggerFailReturnCPP(15));
+3*:  144:  EXPECT_EQ(15, result);
+-:  145:#endif
+-:  146:}
+------------------
+_ZN35AssertReturn_FailCPP_DeathTest_TestC2Ev:
+function _ZN35AssertReturn_FailCPP_DeathTest_TestC2Ev called 4 returned 100% blocks executed 100%
+4:  139:TEST(AssertReturn, FailCPP_DeathTest)
+call    0 returned 4
+------------------
+_ZN35AssertReturn_FailCPP_DeathTest_TestD0Ev:
+function _ZN35AssertReturn_FailCPP_DeathTest_TestD0Ev called 3 returned 100% blocks executed 100%
+3:  139:TEST(AssertReturn, FailCPP_DeathTest)
+call    0 returned 3
+call    1 returned 3
+------------------
+_ZN35AssertReturn_FailCPP_DeathTest_TestD2Ev:
+function _ZN35AssertReturn_FailCPP_DeathTest_TestD2Ev called 3 returned 100% blocks executed 100%
+3:  139:TEST(AssertReturn, FailCPP_DeathTest)
+call    0 returned 3
+------------------
+_ZN35AssertReturn_FailCPP_DeathTest_Test8TestBodyEv:
+function _ZN35AssertReturn_FailCPP_DeathTest_Test8TestBodyEv called 4 returned 75% blocks executed 38%
+4:  139:TEST(AssertReturn, FailCPP_DeathTest)
+-:  140:{
+-:  141:#ifndef NDEBUG
+4:  142:  int result = 0;
+4*:  143:  ASSERT_NO_FATAL_FAILURE(result = TriggerFailReturnCPP(15));
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 4 (fallthrough)
+branch  4 taken 0
+call    5 returned 4
+branch  6 taken 4 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 4
+branch  9 taken 4 (fallthrough)
+branch 10 taken 0 (throw)
+branch 11 taken 4 (fallthrough)
+branch 12 taken 0
+call   13 returned 3
+branch 14 taken 3 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 3
+branch 17 taken 0 (fallthrough)
+branch 18 taken 3
+call   19 returned 3
+branch 20 taken 3 (fallthrough)
+branch 21 taken 0
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+branch 26 never executed
+branch 27 never executed
+call   28 never executed
+branch 29 never executed
+branch 30 never executed
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+3*:  144:  EXPECT_EQ(15, result);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 0 (fallthrough)
+branch  5 taken 3
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 3
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  145:#endif
+-:  146:}
+------------------
+-:  147:
+-:  148:
+8:  149:TEST(AssertReturnVoid, SucceedCPP)
+-:  150:{
+2:  151:  TriggerSuccessReturnVoidCPP();
+2:  152:}
+------------------
+_ZN32AssertReturnVoid_SucceedCPP_TestC2Ev:
+function _ZN32AssertReturnVoid_SucceedCPP_TestC2Ev called 2 returned 100% blocks executed 100%
+2:  149:TEST(AssertReturnVoid, SucceedCPP)
+call    0 returned 2
+------------------
+_ZN32AssertReturnVoid_SucceedCPP_TestD0Ev:
+function _ZN32AssertReturnVoid_SucceedCPP_TestD0Ev called 2 returned 100% blocks executed 100%
+2:  149:TEST(AssertReturnVoid, SucceedCPP)
+call    0 returned 2
+call    1 returned 2
+------------------
+_ZN32AssertReturnVoid_SucceedCPP_TestD2Ev:
+function _ZN32AssertReturnVoid_SucceedCPP_TestD2Ev called 2 returned 100% blocks executed 100%
+2:  149:TEST(AssertReturnVoid, SucceedCPP)
+call    0 returned 2
+------------------
+_ZN32AssertReturnVoid_SucceedCPP_Test8TestBodyEv:
+function _ZN32AssertReturnVoid_SucceedCPP_Test8TestBodyEv called 2 returned 100% blocks executed 100%
+2:  149:TEST(AssertReturnVoid, SucceedCPP)
+-:  150:{
+2:  151:  TriggerSuccessReturnVoidCPP();
+call    0 returned 2
+2:  152:}
+------------------
+-:  153:
+-:  154:
+6:  155:TEST(AssertReturnVoid, FailCPP_DeathTest)
+-:  156:{
+-:  157:#ifndef NDEBUG
+2*:  158:  ASSERT_NO_FATAL_FAILURE(TriggerFailReturnVoidCPP());
+-:  159:#endif
+-:  160:}
+-:  161:
+-:  162:
+-:  163://---- End of source file ------------------------------------------------------
+-:  164:

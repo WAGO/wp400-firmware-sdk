@@ -1,0 +1,55 @@
+-:    0:Source:src/network_config/handler/IPConfigHandler.hpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#pragma once
+-:    4:
+-:    5:#include <functional>
+-:    6:#include <string>
+-:    7:#include <boost/program_options.hpp>
+-:    8:
+-:    9:#include "IPConfig.hpp"
+-:   10:#include "IHandler.hpp"
+-:   11:#include "OptionParser.hpp"
+-:   12:
+-:   13:namespace network_config {
+-:   14:
+-:   15:class IPConfigHandler : public IHandler {
+-:   16: public:
+-:   17:  using TypeFilter = boost::optional<netconf::DeviceTypes>;
+-:   18:  explicit IPConfigHandler(const OptionParser &parser);
+3*:   19:  ~IPConfigHandler() override = default;
+------------------
+_ZN14network_config15IPConfigHandlerD0Ev:
+function _ZN14network_config15IPConfigHandlerD0Ev called 0 returned 0% blocks executed 0%
+#####:   19:  ~IPConfigHandler() override = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN14network_config15IPConfigHandlerD2Ev:
+function _ZN14network_config15IPConfigHandlerD2Ev called 3 returned 100% blocks executed 100%
+3:   19:  ~IPConfigHandler() override = default;
+call    0 returned 3
+call    1 returned 3
+------------------
+-:   20:
+-:   21:  IPConfigHandler(const IPConfigHandler&) = delete;
+-:   22:  IPConfigHandler& operator=(const IPConfigHandler&) = delete;
+-:   23:  IPConfigHandler(IPConfigHandler&& other) noexcept;
+-:   24:  IPConfigHandler& operator=(IPConfigHandler&&) = delete;
+-:   25:
+-:   26:  void Execute() override;
+-:   27: private:
+-:   28:  void GetConfig(TypeFilter filter);
+-:   29:  void GetCurrentConfig(TypeFilter filter);
+-:   30:  void ParseConfig(netconf::api::IPConfigs &ip_configs);
+-:   31:  void SetConfig();
+-:   32:  netconf::api::IPConfigs CreateIPConfigs();
+-:   33:  ::std::string ConstructString(const netconf::IPConfig& ip_config, const ::std::string& format) const;
+-:   34:  ::std::string ConstructString(const netconf::api::IPConfigs& ip_configs, const ::std::string& format) const;
+-:   35:
+-:   36:  ::std::function<void()> execute_;
+-:   37:  const ::boost::program_options::variables_map &vm_;
+-:   38:  const OptionParser &parser_;
+-:   39:};
+-:   40:
+-:   41:} /* namespace network_config */

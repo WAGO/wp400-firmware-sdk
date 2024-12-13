@@ -1,0 +1,1669 @@
+-:    0:Source:test-src/detect_feature/test_ParamEvaluation.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2019-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_ParamEvaluation.cc
+-:   12:///
+-:   13:///  \brief    Tests for parameter evaluation of config tool detect_feature.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "ctparts/common_main_defaults.h"
+-:   22:#include "params.h"
+-:   23:#include "testutil/common_parameter_checks.h"
+-:   24:#include <gtest/gtest.h>
+-:   25:#include <string.h>
+-:   26:
+-:   27://------------------------------------------------------------------------------
+-:   28:// macros
+-:   29://------------------------------------------------------------------------------
+-:   30:
+-:   31://------------------------------------------------------------------------------
+-:   32:// defines; structure, enumeration and type definitions
+-:   33://------------------------------------------------------------------------------
+-:   34:class OptionEvaluationTest_detect_feature : public ::testing::Test
+-:   35:{
+-:   36:  protected:
+-:   37:    ctutil_Options_t stOptions;
+-:   38:
+-:   39:  protected:
+function _ZN35OptionEvaluationTest_detect_featureC2Ev called 14 returned 100% blocks executed 100%
+14:   40:    OptionEvaluationTest_detect_feature() {};
+call    0 returned 14
+14*:   41:    virtual ~OptionEvaluationTest_detect_feature() {};
+------------------
+_ZN35OptionEvaluationTest_detect_featureD0Ev:
+function _ZN35OptionEvaluationTest_detect_featureD0Ev called 0 returned 0% blocks executed 0%
+#####:   41:    virtual ~OptionEvaluationTest_detect_feature() {};
+call    0 never executed
+call    1 never executed
+------------------
+_ZN35OptionEvaluationTest_detect_featureD2Ev:
+function _ZN35OptionEvaluationTest_detect_featureD2Ev called 14 returned 100% blocks executed 100%
+14:   41:    virtual ~OptionEvaluationTest_detect_feature() {};
+call    0 returned 14
+------------------
+function _ZN35OptionEvaluationTest_detect_feature5SetUpEv called 14 returned 100% blocks executed 37%
+14:   42:    virtual void SetUp()
+-:   43:    {
+14:   44:      memset(&stOptions, 0, sizeof(stOptions));
+14:   45:      statusCode_t status = CTUTIL_SUCCESS;
+14:   46:      status = ctparts_SetOptionDefaults(NULL, &(this->stOptions));
+call    0 returned 14
+branch  1 taken 14 (fallthrough)
+branch  2 taken 0 (throw)
+14*:   47:      ASSERT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 14
+branch  1 taken 14 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 14
+branch  4 taken 0 (fallthrough)
+branch  5 taken 14
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 14
+branch 19 taken 14 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:   48:    }
+function _ZN35OptionEvaluationTest_detect_feature8TearDownEv called 14 returned 100% blocks executed 100%
+14:   49:    virtual void TearDown()
+-:   50:    {
+14:   51:      ctparts_ReleaseSpecificOptions(NULL, &(this->stOptions));
+call    0 returned 14
+14:   52:    }
+-:   53:};
+-:   54:
+-:   55://------------------------------------------------------------------------------
+-:   56:// variables' and constants' definitions
+-:   57://------------------------------------------------------------------------------
+-:   58:
+-:   59://------------------------------------------------------------------------------
+-:   60:// test implementation
+-:   61://------------------------------------------------------------------------------
+4:   62:TEST(OptionEvaluationBasicTest_detect_feature, SetOptionDefaultsAndRelease)
+-:   63:{
+-:   64:  ctutil_Options_t stOptions;
+1:   65:  memset(&stOptions, 0, sizeof(stOptions));
+1:   66:  stOptions.stCommonOptions.infoPrint = false;
+1:   67:  stOptions.stCommonOptions.quiet = false;
+1:   68:  stOptions.stCommonOptions.extractFromUri = false;
+1:   69:  statusCode_t status = CTUTIL_SUCCESS;
+1:   70:  status = ctparts_SetOptionDefaults(NULL, &stOptions);
+1*:   71:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+1*:   72:  EXPECT_TRUE(stOptions.stCommonOptions.infoPrint); // Default for config tools (print if no other parameter given)
+1*:   73:  EXPECT_FALSE(stOptions.stCommonOptions.quiet); // Default for new config tools
+1*:   74:  EXPECT_FALSE(stOptions.stCommonOptions.extractFromUri); // Default for new config tools
+1*:   75:  EXPECT_NE((void *)NULL, stOptions.pstSpecificOptions); // Needed because specific options possible
+1:   76:  ctparts_ReleaseSpecificOptions(NULL, &stOptions);
+1*:   77:  EXPECT_EQ((void *)NULL, stOptions.pstSpecificOptions); // Pointer have to be reseted to NULL
+-:   78:}
+------------------
+_ZN73OptionEvaluationBasicTest_detect_feature_SetOptionDefaultsAndRelease_TestC2Ev:
+function _ZN73OptionEvaluationBasicTest_detect_feature_SetOptionDefaultsAndRelease_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST(OptionEvaluationBasicTest_detect_feature, SetOptionDefaultsAndRelease)
+call    0 returned 1
+------------------
+_ZN73OptionEvaluationBasicTest_detect_feature_SetOptionDefaultsAndRelease_TestD0Ev:
+function _ZN73OptionEvaluationBasicTest_detect_feature_SetOptionDefaultsAndRelease_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST(OptionEvaluationBasicTest_detect_feature, SetOptionDefaultsAndRelease)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN73OptionEvaluationBasicTest_detect_feature_SetOptionDefaultsAndRelease_TestD2Ev:
+function _ZN73OptionEvaluationBasicTest_detect_feature_SetOptionDefaultsAndRelease_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST(OptionEvaluationBasicTest_detect_feature, SetOptionDefaultsAndRelease)
+call    0 returned 1
+------------------
+_ZN73OptionEvaluationBasicTest_detect_feature_SetOptionDefaultsAndRelease_Test8TestBodyEv:
+function _ZN73OptionEvaluationBasicTest_detect_feature_SetOptionDefaultsAndRelease_Test8TestBodyEv called 1 returned 100% blocks executed 21%
+1:   62:TEST(OptionEvaluationBasicTest_detect_feature, SetOptionDefaultsAndRelease)
+-:   63:{
+-:   64:  ctutil_Options_t stOptions;
+1:   65:  memset(&stOptions, 0, sizeof(stOptions));
+1:   66:  stOptions.stCommonOptions.infoPrint = false;
+1:   67:  stOptions.stCommonOptions.quiet = false;
+1:   68:  stOptions.stCommonOptions.extractFromUri = false;
+1:   69:  statusCode_t status = CTUTIL_SUCCESS;
+1:   70:  status = ctparts_SetOptionDefaults(NULL, &stOptions);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   71:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1*:   72:  EXPECT_TRUE(stOptions.stCommonOptions.infoPrint); // Default for config tools (print if no other parameter given)
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1*:   73:  EXPECT_FALSE(stOptions.stCommonOptions.quiet); // Default for new config tools
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1*:   74:  EXPECT_FALSE(stOptions.stCommonOptions.extractFromUri); // Default for new config tools
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1*:   75:  EXPECT_NE((void *)NULL, stOptions.pstSpecificOptions); // Needed because specific options possible
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   76:  ctparts_ReleaseSpecificOptions(NULL, &stOptions);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   77:  EXPECT_EQ((void *)NULL, stOptions.pstSpecificOptions); // Pointer have to be reseted to NULL
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   78:}
+------------------
+-:   79:
+-:   80:
+4:   81:TEST_F(OptionEvaluationTest_detect_feature, CheckSetup)
+-:   82:{
+-:   83:  // Nothing else to do here, everything is done in SetUp/TearDown
+1:   84:}
+------------------
+_ZN51OptionEvaluationTest_detect_feature_CheckSetup_TestC2Ev:
+function _ZN51OptionEvaluationTest_detect_feature_CheckSetup_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST_F(OptionEvaluationTest_detect_feature, CheckSetup)
+call    0 returned 1
+------------------
+_ZN51OptionEvaluationTest_detect_feature_CheckSetup_TestD0Ev:
+function _ZN51OptionEvaluationTest_detect_feature_CheckSetup_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST_F(OptionEvaluationTest_detect_feature, CheckSetup)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN51OptionEvaluationTest_detect_feature_CheckSetup_TestD2Ev:
+function _ZN51OptionEvaluationTest_detect_feature_CheckSetup_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST_F(OptionEvaluationTest_detect_feature, CheckSetup)
+call    0 returned 1
+------------------
+_ZN51OptionEvaluationTest_detect_feature_CheckSetup_Test8TestBodyEv:
+function _ZN51OptionEvaluationTest_detect_feature_CheckSetup_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:   81:TEST_F(OptionEvaluationTest_detect_feature, CheckSetup)
+-:   82:{
+-:   83:  // Nothing else to do here, everything is done in SetUp/TearDown
+1:   84:}
+------------------
+-:   85:
+-:   86:
+4:   87:TEST_F(OptionEvaluationTest_detect_feature, EvaluateEarlyOptions)
+-:   88:{
+1:   89:  char szArg00[] = "test";
+1:   90:  char szArg01[] = "otherOptionsShouldBeIgnored";
+1:   91:  char szArg02[] = "encoded%28Options%29MustNotBeDecodedByDefault";
+-:   92:  char * const arszArgs[]
+-:   93:  {
+-:   94:    szArg00,
+-:   95:    szArg01,
+-:   96:    szArg02,
+1:   97:  };
+1:   98:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:   99:
+-:  100:  // Don't use szArg01, Arguments decoded in place!
+1:  101:  char const * const szArg01Copy = "otherOptionsShouldBeIgnored";
+-:  102:  // Don't use szArg02, Arguments decoded in place!
+1:  103:  char const * const szArg02Copy = "encoded%28Options%29MustNotBeDecodedByDefault";
+1:  104:  testutil::TestCommonEarlyOptionsDefault(argCount, arszArgs, szArg01Copy, szArg02Copy, &(this->stOptions));
+1:  105:}
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateEarlyOptions_TestC2Ev:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateEarlyOptions_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   87:TEST_F(OptionEvaluationTest_detect_feature, EvaluateEarlyOptions)
+call    0 returned 1
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateEarlyOptions_TestD0Ev:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateEarlyOptions_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   87:TEST_F(OptionEvaluationTest_detect_feature, EvaluateEarlyOptions)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateEarlyOptions_TestD2Ev:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateEarlyOptions_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   87:TEST_F(OptionEvaluationTest_detect_feature, EvaluateEarlyOptions)
+call    0 returned 1
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateEarlyOptions_Test8TestBodyEv:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateEarlyOptions_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:   87:TEST_F(OptionEvaluationTest_detect_feature, EvaluateEarlyOptions)
+-:   88:{
+1:   89:  char szArg00[] = "test";
+1:   90:  char szArg01[] = "otherOptionsShouldBeIgnored";
+1:   91:  char szArg02[] = "encoded%28Options%29MustNotBeDecodedByDefault";
+-:   92:  char * const arszArgs[]
+-:   93:  {
+-:   94:    szArg00,
+-:   95:    szArg01,
+-:   96:    szArg02,
+1:   97:  };
+1:   98:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:   99:
+-:  100:  // Don't use szArg01, Arguments decoded in place!
+1:  101:  char const * const szArg01Copy = "otherOptionsShouldBeIgnored";
+-:  102:  // Don't use szArg02, Arguments decoded in place!
+1:  103:  char const * const szArg02Copy = "encoded%28Options%29MustNotBeDecodedByDefault";
+1:  104:  testutil::TestCommonEarlyOptionsDefault(argCount, arszArgs, szArg01Copy, szArg02Copy, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  105:}
+------------------
+-:  106:
+-:  107:
+4:  108:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsEmpty)
+-:  109:{
+1:  110:  char szArg00[] = "test";
+-:  111:  char * const arszArgs[]
+-:  112:  {
+-:  113:    szArg00,
+1:  114:  };
+1:  115:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  116:
+1:  117:  testutil::TestCommonOptionsEmpty(argCount, arszArgs, &(this->stOptions));
+1:  118:}
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsEmpty_TestC2Ev:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsEmpty_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  108:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsEmpty)
+call    0 returned 1
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsEmpty_TestD0Ev:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsEmpty_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  108:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsEmpty)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsEmpty_TestD2Ev:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsEmpty_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  108:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsEmpty)
+call    0 returned 1
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsEmpty_Test8TestBodyEv:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsEmpty_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  108:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsEmpty)
+-:  109:{
+1:  110:  char szArg00[] = "test";
+-:  111:  char * const arszArgs[]
+-:  112:  {
+-:  113:    szArg00,
+1:  114:  };
+1:  115:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  116:
+1:  117:  testutil::TestCommonOptionsEmpty(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  118:}
+------------------
+-:  119:
+-:  120:
+4:  121:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsQuiet)
+-:  122:{
+1:  123:  char szArg00[] = "test";
+1:  124:  char szArg01[] = "--quiet";
+-:  125:  char * const arszArgs[]
+-:  126:  {
+-:  127:    szArg00,
+-:  128:    szArg01,
+1:  129:  };
+1:  130:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  131:
+1:  132:  testutil::TestCommonOptionsQuiet(argCount, arszArgs, &(this->stOptions));
+1:  133:}
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsQuiet_TestC2Ev:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsQuiet_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  121:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsQuiet)
+call    0 returned 1
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsQuiet_TestD0Ev:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsQuiet_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  121:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsQuiet)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsQuiet_TestD2Ev:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsQuiet_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  121:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsQuiet)
+call    0 returned 1
+------------------
+_ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsQuiet_Test8TestBodyEv:
+function _ZN61OptionEvaluationTest_detect_feature_EvaluateOptionsQuiet_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  121:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsQuiet)
+-:  122:{
+1:  123:  char szArg00[] = "test";
+1:  124:  char szArg01[] = "--quiet";
+-:  125:  char * const arszArgs[]
+-:  126:  {
+-:  127:    szArg00,
+-:  128:    szArg01,
+1:  129:  };
+1:  130:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  131:
+1:  132:  testutil::TestCommonOptionsQuiet(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  133:}
+------------------
+-:  134:
+-:  135:
+4:  136:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsQuietShort)
+-:  137:{
+1:  138:  char szArg00[] = "test";
+1:  139:  char szArg01[] = "-q";
+-:  140:  char * const arszArgs[]
+-:  141:  {
+-:  142:    szArg00,
+-:  143:    szArg01,
+1:  144:  };
+1:  145:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  146:
+1:  147:  testutil::TestCommonOptionsQuiet(argCount, arszArgs, &(this->stOptions));
+1:  148:}
+------------------
+_ZN66OptionEvaluationTest_detect_feature_EvaluateOptionsQuietShort_TestC2Ev:
+function _ZN66OptionEvaluationTest_detect_feature_EvaluateOptionsQuietShort_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  136:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsQuietShort)
+call    0 returned 1
+------------------
+_ZN66OptionEvaluationTest_detect_feature_EvaluateOptionsQuietShort_TestD0Ev:
+function _ZN66OptionEvaluationTest_detect_feature_EvaluateOptionsQuietShort_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  136:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsQuietShort)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN66OptionEvaluationTest_detect_feature_EvaluateOptionsQuietShort_TestD2Ev:
+function _ZN66OptionEvaluationTest_detect_feature_EvaluateOptionsQuietShort_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  136:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsQuietShort)
+call    0 returned 1
+------------------
+_ZN66OptionEvaluationTest_detect_feature_EvaluateOptionsQuietShort_Test8TestBodyEv:
+function _ZN66OptionEvaluationTest_detect_feature_EvaluateOptionsQuietShort_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  136:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsQuietShort)
+-:  137:{
+1:  138:  char szArg00[] = "test";
+1:  139:  char szArg01[] = "-q";
+-:  140:  char * const arszArgs[]
+-:  141:  {
+-:  142:    szArg00,
+-:  143:    szArg01,
+1:  144:  };
+1:  145:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  146:
+1:  147:  testutil::TestCommonOptionsQuiet(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  148:}
+------------------
+-:  149:
+-:  150:
+4:  151:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsHelp)
+-:  152:{
+1:  153:  char szArg00[] = "test";
+1:  154:  char szArg01[] = "--help";
+-:  155:  char * const arszArgs[]
+-:  156:  {
+-:  157:    szArg00,
+-:  158:    szArg01,
+1:  159:  };
+1:  160:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  161:
+1:  162:  testutil::TestCommonOptionsHelp(argCount, arszArgs, &(this->stOptions));
+1:  163:}
+------------------
+_ZN60OptionEvaluationTest_detect_feature_EvaluateOptionsHelp_TestC2Ev:
+function _ZN60OptionEvaluationTest_detect_feature_EvaluateOptionsHelp_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  151:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsHelp)
+call    0 returned 1
+------------------
+_ZN60OptionEvaluationTest_detect_feature_EvaluateOptionsHelp_TestD0Ev:
+function _ZN60OptionEvaluationTest_detect_feature_EvaluateOptionsHelp_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  151:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsHelp)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN60OptionEvaluationTest_detect_feature_EvaluateOptionsHelp_TestD2Ev:
+function _ZN60OptionEvaluationTest_detect_feature_EvaluateOptionsHelp_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  151:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsHelp)
+call    0 returned 1
+------------------
+_ZN60OptionEvaluationTest_detect_feature_EvaluateOptionsHelp_Test8TestBodyEv:
+function _ZN60OptionEvaluationTest_detect_feature_EvaluateOptionsHelp_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  151:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsHelp)
+-:  152:{
+1:  153:  char szArg00[] = "test";
+1:  154:  char szArg01[] = "--help";
+-:  155:  char * const arszArgs[]
+-:  156:  {
+-:  157:    szArg00,
+-:  158:    szArg01,
+1:  159:  };
+1:  160:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  161:
+1:  162:  testutil::TestCommonOptionsHelp(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  163:}
+------------------
+-:  164:
+-:  165:
+4:  166:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsHelpShort)
+-:  167:{
+1:  168:  char szArg00[] = "test";
+1:  169:  char szArg01[] = "-h";
+-:  170:  char * const arszArgs[]
+-:  171:  {
+-:  172:    szArg00,
+-:  173:    szArg01,
+1:  174:  };
+1:  175:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  176:
+1:  177:  testutil::TestCommonOptionsHelp(argCount, arszArgs, &(this->stOptions));
+1:  178:}
+------------------
+_ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsHelpShort_TestC2Ev:
+function _ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsHelpShort_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  166:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsHelpShort)
+call    0 returned 1
+------------------
+_ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsHelpShort_TestD0Ev:
+function _ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsHelpShort_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  166:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsHelpShort)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsHelpShort_TestD2Ev:
+function _ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsHelpShort_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  166:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsHelpShort)
+call    0 returned 1
+------------------
+_ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsHelpShort_Test8TestBodyEv:
+function _ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsHelpShort_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  166:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsHelpShort)
+-:  167:{
+1:  168:  char szArg00[] = "test";
+1:  169:  char szArg01[] = "-h";
+-:  170:  char * const arszArgs[]
+-:  171:  {
+-:  172:    szArg00,
+-:  173:    szArg01,
+1:  174:  };
+1:  175:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  176:
+1:  177:  testutil::TestCommonOptionsHelp(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  178:}
+------------------
+-:  179:
+-:  180:
+function _ZL25TestOptionsFeatureRequestiPKPcP14ctutil_Options called 2 returned 100% blocks executed 24%
+2:  181:static void TestOptionsFeatureRequest(int const argCount,
+-:  182:                                      char * const arszArgs[],
+-:  183:                                      ctutil_Options_t * const pstOptions)
+-:  184:{
+2:  185:  statusCode_t status = CTUTIL_SUCCESS;
+2:  186:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  187:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2:  188:  testing::internal::CaptureStdout();
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  189:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+4*:  190:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+call    4 returned 2
+branch  5 taken 2 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 2
+branch  8 taken 0 (fallthrough)
+branch  9 taken 2
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 2
+call   23 never executed
+call   24 never executed
+call   25 never executed
+2*:  191:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2*:  192:  ASSERT_LT(2, argCount);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+branch 19 taken 2 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+2*:  193:  EXPECT_STREQ(arszArgs[2], pstOptions->pstSpecificOptions->szFeature);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2*:  194:  EXPECT_FALSE(pstOptions->pstSpecificOptions->listMode);
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 0 (fallthrough)
+branch  3 taken 2
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 2
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  195:}
+-:  196:
+-:  197:
+4:  198:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureRequest)
+-:  199:{
+1:  200:  char szArg00[] = "test";
+1:  201:  char szArg01[] = "--feature";
+1:  202:  char szArg02[] = "test-feature";
+-:  203:  char * const arszArgs[]
+-:  204:  {
+-:  205:    szArg00,
+-:  206:    szArg01,
+-:  207:    szArg02,
+1:  208:  };
+1:  209:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  210:
+1:  211:  TestOptionsFeatureRequest(argCount, arszArgs, &(this->stOptions));
+1:  212:}
+------------------
+_ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequest_TestC2Ev:
+function _ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequest_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  198:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureRequest)
+call    0 returned 1
+------------------
+_ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequest_TestD0Ev:
+function _ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequest_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  198:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureRequest)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequest_TestD2Ev:
+function _ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequest_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  198:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureRequest)
+call    0 returned 1
+------------------
+_ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequest_Test8TestBodyEv:
+function _ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequest_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  198:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureRequest)
+-:  199:{
+1:  200:  char szArg00[] = "test";
+1:  201:  char szArg01[] = "--feature";
+1:  202:  char szArg02[] = "test-feature";
+-:  203:  char * const arszArgs[]
+-:  204:  {
+-:  205:    szArg00,
+-:  206:    szArg01,
+-:  207:    szArg02,
+1:  208:  };
+1:  209:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  210:
+1:  211:  TestOptionsFeatureRequest(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  212:}
+------------------
+-:  213:
+-:  214:
+4:  215:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureRequestShort)
+-:  216:{
+1:  217:  char szArg00[] = "test";
+1:  218:  char szArg01[] = "-f";
+1:  219:  char szArg02[] = "test-feature";
+-:  220:  char * const arszArgs[]
+-:  221:  {
+-:  222:    szArg00,
+-:  223:    szArg01,
+-:  224:    szArg02,
+1:  225:  };
+1:  226:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  227:
+1:  228:  TestOptionsFeatureRequest(argCount, arszArgs, &(this->stOptions));
+1:  229:}
+------------------
+_ZN75OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequestShort_TestC2Ev:
+function _ZN75OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequestShort_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  215:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureRequestShort)
+call    0 returned 1
+------------------
+_ZN75OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequestShort_TestD0Ev:
+function _ZN75OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequestShort_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  215:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureRequestShort)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN75OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequestShort_TestD2Ev:
+function _ZN75OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequestShort_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  215:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureRequestShort)
+call    0 returned 1
+------------------
+_ZN75OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequestShort_Test8TestBodyEv:
+function _ZN75OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureRequestShort_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  215:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureRequestShort)
+-:  216:{
+1:  217:  char szArg00[] = "test";
+1:  218:  char szArg01[] = "-f";
+1:  219:  char szArg02[] = "test-feature";
+-:  220:  char * const arszArgs[]
+-:  221:  {
+-:  222:    szArg00,
+-:  223:    szArg01,
+-:  224:    szArg02,
+1:  225:  };
+1:  226:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  227:
+1:  228:  TestOptionsFeatureRequest(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  229:}
+------------------
+-:  230:
+-:  231:
+function _ZL22TestOptionsFeatureListiPKPcP14ctutil_Options called 2 returned 100% blocks executed 23%
+2:  232:static void TestOptionsFeatureList(int const argCount,
+-:  233:                                   char * const arszArgs[],
+-:  234:                                   ctutil_Options_t * const pstOptions)
+-:  235:{
+2:  236:  statusCode_t status = CTUTIL_SUCCESS;
+2:  237:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  238:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2:  239:  testing::internal::CaptureStdout();
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  240:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+4*:  241:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+call    4 returned 2
+branch  5 taken 2 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 2
+branch  8 taken 0 (fallthrough)
+branch  9 taken 2
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 2
+call   23 never executed
+call   24 never executed
+call   25 never executed
+2*:  242:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2*:  243:  EXPECT_TRUE(pstOptions->pstSpecificOptions->listMode);
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 0 (fallthrough)
+branch  3 taken 2
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 2
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+2*:  244:  EXPECT_EQ(nullptr, pstOptions->pstSpecificOptions->szFeature);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2:  245:}
+-:  246:
+-:  247:
+4:  248:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureList)
+-:  249:{
+1:  250:  char szArg00[] = "test";
+1:  251:  char szArg01[] = "--list";
+-:  252:  char * const arszArgs[]
+-:  253:  {
+-:  254:    szArg00,
+-:  255:    szArg01,
+1:  256:  };
+1:  257:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  258:
+1:  259:  TestOptionsFeatureList(argCount, arszArgs, &(this->stOptions));
+1:  260:}
+------------------
+_ZN67OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureList_TestC2Ev:
+function _ZN67OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureList_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  248:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureList)
+call    0 returned 1
+------------------
+_ZN67OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureList_TestD0Ev:
+function _ZN67OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureList_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  248:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureList)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN67OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureList_TestD2Ev:
+function _ZN67OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureList_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  248:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureList)
+call    0 returned 1
+------------------
+_ZN67OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureList_Test8TestBodyEv:
+function _ZN67OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureList_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  248:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureList)
+-:  249:{
+1:  250:  char szArg00[] = "test";
+1:  251:  char szArg01[] = "--list";
+-:  252:  char * const arszArgs[]
+-:  253:  {
+-:  254:    szArg00,
+-:  255:    szArg01,
+1:  256:  };
+1:  257:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  258:
+1:  259:  TestOptionsFeatureList(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  260:}
+------------------
+-:  261:
+-:  262:
+4:  263:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureListShort)
+-:  264:{
+1:  265:  char szArg00[] = "test";
+1:  266:  char szArg01[] = "-l";
+-:  267:  char * const arszArgs[]
+-:  268:  {
+-:  269:    szArg00,
+-:  270:    szArg01,
+1:  271:  };
+1:  272:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  273:
+1:  274:  TestOptionsFeatureList(argCount, arszArgs, &(this->stOptions));
+1:  275:}
+------------------
+_ZN72OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureListShort_TestC2Ev:
+function _ZN72OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureListShort_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  263:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureListShort)
+call    0 returned 1
+------------------
+_ZN72OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureListShort_TestD0Ev:
+function _ZN72OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureListShort_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  263:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureListShort)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN72OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureListShort_TestD2Ev:
+function _ZN72OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureListShort_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  263:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureListShort)
+call    0 returned 1
+------------------
+_ZN72OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureListShort_Test8TestBodyEv:
+function _ZN72OptionEvaluationTest_detect_feature_EvaluateOptionsFeatureListShort_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  263:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsFeatureListShort)
+-:  264:{
+1:  265:  char szArg00[] = "test";
+1:  266:  char szArg01[] = "-l";
+-:  267:  char * const arszArgs[]
+-:  268:  {
+-:  269:    szArg00,
+-:  270:    szArg01,
+1:  271:  };
+1:  272:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  273:
+1:  274:  TestOptionsFeatureList(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  275:}
+------------------
+-:  276:
+-:  277:
+function _ZL20TestOptionsOnlyValueiPKPcP14ctutil_Options called 2 returned 100% blocks executed 23%
+2:  278:static void TestOptionsOnlyValue(int const argCount,
+-:  279:                                 char * const arszArgs[],
+-:  280:                                 ctutil_Options_t * const pstOptions)
+-:  281:{
+2:  282:  statusCode_t status = CTUTIL_SUCCESS;
+2:  283:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  284:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2:  285:  testing::internal::CaptureStdout();
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  286:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+4*:  287:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+call    4 returned 2
+branch  5 taken 2 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 2
+branch  8 taken 0 (fallthrough)
+branch  9 taken 2
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 2
+call   23 never executed
+call   24 never executed
+call   25 never executed
+2*:  288:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2*:  289:  EXPECT_NE(nullptr, pstOptions->pstSpecificOptions->szFeature);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2*:  290:  EXPECT_TRUE(pstOptions->pstSpecificOptions->onlyValue);
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 0 (fallthrough)
+branch  3 taken 2
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 2
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+2:  291:}
+-:  292:
+-:  293:
+4:  294:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValue)
+-:  295:{
+1:  296:  char szArg00[] = "test";
+1:  297:  char szArg01[] = "-f";
+1:  298:  char szArg02[] = "testfeaturename";
+1:  299:  char szArg03[] = "--only-value";
+-:  300:  char * const arszArgs[]
+-:  301:  {
+-:  302:    szArg00,
+-:  303:    szArg01,
+-:  304:    szArg02,
+-:  305:    szArg03,
+1:  306:  };
+1:  307:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  308:
+1:  309:  TestOptionsOnlyValue(argCount, arszArgs, &(this->stOptions));
+1:  310:}
+------------------
+_ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValue_TestC2Ev:
+function _ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValue_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  294:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValue)
+call    0 returned 1
+------------------
+_ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValue_TestD0Ev:
+function _ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValue_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  294:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValue)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValue_TestD2Ev:
+function _ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValue_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  294:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValue)
+call    0 returned 1
+------------------
+_ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValue_Test8TestBodyEv:
+function _ZN65OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValue_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  294:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValue)
+-:  295:{
+1:  296:  char szArg00[] = "test";
+1:  297:  char szArg01[] = "-f";
+1:  298:  char szArg02[] = "testfeaturename";
+1:  299:  char szArg03[] = "--only-value";
+-:  300:  char * const arszArgs[]
+-:  301:  {
+-:  302:    szArg00,
+-:  303:    szArg01,
+-:  304:    szArg02,
+-:  305:    szArg03,
+1:  306:  };
+1:  307:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  308:
+1:  309:  TestOptionsOnlyValue(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  310:}
+------------------
+-:  311:
+-:  312:
+4:  313:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValueShort)
+-:  314:{
+1:  315:  char szArg00[] = "test";
+1:  316:  char szArg01[] = "-f";
+1:  317:  char szArg02[] = "testfeaturename";
+1:  318:  char szArg03[] = "-o";
+-:  319:  char * const arszArgs[]
+-:  320:  {
+-:  321:    szArg00,
+-:  322:    szArg01,
+-:  323:    szArg02,
+-:  324:    szArg03,
+1:  325:  };
+1:  326:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  327:
+1:  328:  TestOptionsOnlyValue(argCount, arszArgs, &(this->stOptions));
+1:  329:}
+------------------
+_ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueShort_TestC2Ev:
+function _ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueShort_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  313:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValueShort)
+call    0 returned 1
+------------------
+_ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueShort_TestD0Ev:
+function _ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueShort_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  313:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValueShort)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueShort_TestD2Ev:
+function _ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueShort_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  313:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValueShort)
+call    0 returned 1
+------------------
+_ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueShort_Test8TestBodyEv:
+function _ZN70OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueShort_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  313:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValueShort)
+-:  314:{
+1:  315:  char szArg00[] = "test";
+1:  316:  char szArg01[] = "-f";
+1:  317:  char szArg02[] = "testfeaturename";
+1:  318:  char szArg03[] = "-o";
+-:  319:  char * const arszArgs[]
+-:  320:  {
+-:  321:    szArg00,
+-:  322:    szArg01,
+-:  323:    szArg02,
+-:  324:    szArg03,
+1:  325:  };
+1:  326:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  327:
+1:  328:  TestOptionsOnlyValue(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  329:}
+------------------
+-:  330:
+-:  331:
+-:  332:
+4:  333:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValueFeatureDependency)
+-:  334:{
+1:  335:  char szArg00[] = "test";
+1:  336:  char szArg01[] = "-o";
+1:  337:  char szArg02[] = "-l";
+-:  338:  char * const arszArgs[]
+-:  339:  {
+-:  340:    szArg00,
+-:  341:    szArg01,
+-:  342:    szArg02,
+1:  343:  };
+1:  344:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  345:
+1:  346:  statusCode_t status = CTUTIL_SUCCESS;
+1:  347:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  348:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  349:  testing::internal::CaptureStdout();
+1:  350:  testing::internal::CaptureStderr();
+1:  351:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  352:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+2*:  353:  EXPECT_STRNE("", testing::internal::GetCapturedStderr().c_str()); // Expected no ASSERT before GetCapturedStderr!
+1*:  354:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1*:  355:  EXPECT_EQ(nullptr, this->stOptions.pstSpecificOptions->szFeature);
+1*:  356:  EXPECT_FALSE(this->stOptions.pstSpecificOptions->onlyValue);
+1:  357:}
+------------------
+_ZN82OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueFeatureDependency_TestC2Ev:
+function _ZN82OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueFeatureDependency_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  333:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValueFeatureDependency)
+call    0 returned 1
+------------------
+_ZN82OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueFeatureDependency_TestD0Ev:
+function _ZN82OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueFeatureDependency_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  333:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValueFeatureDependency)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN82OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueFeatureDependency_TestD2Ev:
+function _ZN82OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueFeatureDependency_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  333:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValueFeatureDependency)
+call    0 returned 1
+------------------
+_ZN82OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueFeatureDependency_Test8TestBodyEv:
+function _ZN82OptionEvaluationTest_detect_feature_EvaluateOptionsOnlyValueFeatureDependency_Test8TestBodyEv called 1 returned 100% blocks executed 24%
+1:  333:TEST_F(OptionEvaluationTest_detect_feature, EvaluateOptionsOnlyValueFeatureDependency)
+-:  334:{
+1:  335:  char szArg00[] = "test";
+1:  336:  char szArg01[] = "-o";
+1:  337:  char szArg02[] = "-l";
+-:  338:  char * const arszArgs[]
+-:  339:  {
+-:  340:    szArg00,
+-:  341:    szArg01,
+-:  342:    szArg02,
+1:  343:  };
+1:  344:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  345:
+1:  346:  statusCode_t status = CTUTIL_SUCCESS;
+1:  347:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  348:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  349:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  350:  testing::internal::CaptureStderr();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  351:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  352:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+2*:  353:  EXPECT_STRNE("", testing::internal::GetCapturedStderr().c_str()); // Expected no ASSERT before GetCapturedStderr!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  354:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  355:  EXPECT_EQ(nullptr, this->stOptions.pstSpecificOptions->szFeature);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  356:  EXPECT_FALSE(this->stOptions.pstSpecificOptions->onlyValue);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:  357:}
+------------------
+-:  358:
+-:  359:
+-:  360://---- End of source file ------------------------------------------------------
+-:  361:

@@ -1,0 +1,1713 @@
+-:    0:Source:src/ConfigConversion.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:
+-:   10:#include "ConfigConversion.hpp"
+-:   11:
+-:   12:#include <regex>
+-:   13:#include <map>
+-:   14:#include <string>
+-:   15:#include "SnmpConfig.hpp"
+-:   16:
+-:   17:namespace wago::snmp_config_lib {
+-:   18:
+-:   19:namespace {
+-:   20:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_126AuthenticationTypeToStringENS0_18AuthenticationTypeE called 6 returned 100% blocks executed 56%
+6:   21:::std::string AuthenticationTypeToString(AuthenticationType a) {
+-:   22:  static ::std::map<AuthenticationType, ::std::string> lookup = {
+#####:   23:    {AuthenticationType::MD5, "MD5"},
+#####:   24:    {AuthenticationType::SHA, "SHA"},
+#####:   25:    {AuthenticationType::SHA224, "SHA224"},
+#####:   26:    {AuthenticationType::SHA256, "SHA256"},
+#####:   27:    {AuthenticationType::SHA384, "SHA384"},
+#####:   28:    {AuthenticationType::SHA512, "SHA512"}
+12:   29:  };
+branch  0 taken 1 (fallthrough)
+branch  1 taken 5
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 1
+branch 15 taken 1 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0 (throw)
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+branch 30 taken 6 (fallthrough)
+branch 31 taken 1
+call   32 returned 6
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+6:   30:  return lookup.at(a);
+call    0 returned 6
+call    1 returned 6
+-:   31:}
+-:   32:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_126StringToAuthenticationTypeERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 7 returned 100% blocks executed 60%
+7:   33:AuthenticationType StringToAuthenticationType(::std::string &a) {
+-:   34:  static ::std::map<::std::string, AuthenticationType> lookup = {
+#####:   35:    {"MD5", AuthenticationType::MD5 },
+#####:   36:    {"SHA", AuthenticationType::SHA, },
+#####:   37:    {"SHA224", AuthenticationType::SHA224},
+#####:   38:    {"SHA256", AuthenticationType::SHA256},
+#####:   39:    {"SHA384", AuthenticationType::SHA384},
+#####:   40:    {"SHA512", AuthenticationType::SHA512}
+13:   41:  };
+branch  0 taken 1 (fallthrough)
+branch  1 taken 6
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 1
+branch 15 taken 1 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0 (throw)
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+branch 30 taken 6 (fallthrough)
+branch 31 taken 1
+call   32 returned 6
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+7:   42:  return lookup.count(a) > 0 ? lookup.at(a) : AuthenticationType::None;
+call    0 returned 7
+branch  1 taken 6 (fallthrough)
+branch  2 taken 1
+call    3 returned 6
+-:   43:}
+-:   44:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_130SecurityLevelToStringShortFormENS0_13SecurityLevelE called 4 returned 100% blocks executed 83%
+4:   45:constexpr const char* SecurityLevelToStringShortForm(SecurityLevel s) {
+4:   46:  switch (s) {
+branch  0 taken 1
+branch  1 taken 1
+branch  2 taken 2
+branch  3 taken 0
+1:   47:    case SecurityLevel::NoAuthNoPriv:
+1:   48:      return "noauth";
+1:   49:    case SecurityLevel::AuthNoPriv:
+1:   50:      return "auth";
+2:   51:    case SecurityLevel::AuthPriv:
+2:   52:      return "priv";
+#####:   53:    default:
+#####:   54:      return "";
+-:   55:  }
+-:   56:}
+-:   57:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_115PrivacyToStringENS0_7PrivacyE called 4 returned 100% blocks executed 56%
+4:   58:::std::string PrivacyToString(Privacy p) {
+-:   59:  static ::std::map<Privacy, ::std::string> lookup = {
+#####:   60:    {Privacy::AES, "AES"},
+#####:   61:    {Privacy::DES, "DES"},
+#####:   62:    {Privacy::AES128, "AES128"},
+#####:   63:    {Privacy::AES192, "AES192"},
+#####:   64:    {Privacy::AES192C, "AES192C"},
+#####:   65:    {Privacy::AES256, "AES256"},
+#####:   66:    {Privacy::AES256C, "AES256C"},
+11:   67:  };
+branch  0 taken 1 (fallthrough)
+branch  1 taken 3
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 1
+branch 15 taken 1 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0 (throw)
+call   26 returned 1
+call   27 returned 1
+branch 28 taken 1 (fallthrough)
+branch 29 taken 0 (throw)
+call   30 returned 1
+call   31 returned 1
+call   32 returned 1
+branch 33 taken 7 (fallthrough)
+branch 34 taken 1
+call   35 returned 7
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+-:   68:
+4:   69:  return lookup.at(p);
+call    0 returned 4
+call    1 returned 4
+-:   70:}
+-:   71:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_115StringToPrivacyERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 6 returned 100% blocks executed 60%
+6:   72:Privacy StringToPrivacy(::std::string &a) {
+-:   73:   static ::std::map<::std::string, Privacy> lookup = {
+#####:   74:    { "AES", Privacy::AES},
+#####:   75:    { "DES", Privacy::DES},
+#####:   76:    { "AES128", Privacy::AES128},
+#####:   77:    { "AES192", Privacy::AES192},
+#####:   78:    { "AES192C", Privacy::AES192C},
+#####:   79:    { "AES256", Privacy::AES256},
+#####:   80:    { "AES256C", Privacy::AES256C},
+13:   81:  };
+branch  0 taken 1 (fallthrough)
+branch  1 taken 5
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 1
+branch 15 taken 1 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0 (throw)
+call   26 returned 1
+call   27 returned 1
+branch 28 taken 1 (fallthrough)
+branch 29 taken 0 (throw)
+call   30 returned 1
+call   31 returned 1
+call   32 returned 1
+branch 33 taken 7 (fallthrough)
+branch 34 taken 1
+call   35 returned 7
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+-:   82:
+6:   83:  return lookup.count(a) > 0 ? lookup.at(a) : Privacy::None;
+call    0 returned 6
+branch  1 taken 4 (fallthrough)
+branch  2 taken 2
+call    3 returned 4
+-:   84:}
+-:   85:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_121SecurityLevelToStringENS0_13SecurityLevelE called 4 returned 100% blocks executed 83%
+4:   86:constexpr const char* SecurityLevelToString(SecurityLevel s) {
+4:   87:  switch (s) {
+branch  0 taken 1
+branch  1 taken 1
+branch  2 taken 2
+branch  3 taken 0
+1:   88:    case SecurityLevel::NoAuthNoPriv:
+1:   89:      return "noAuthNoPriv";
+1:   90:    case SecurityLevel::AuthNoPriv:
+1:   91:      return "authNoPriv";
+2:   92:    case SecurityLevel::AuthPriv:
+2:   93:      return "authPriv";
+#####:   94:    default:
+#####:   95:      return "";
+-:   96:  }
+-:   97:}
+-:   98:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_123BasicParametersToStringERKNS0_10SnmpConfigE called 2 returned 100% blocks executed 93%
+2:   99:::std::string BasicParametersToString(const SnmpConfig &s) {
+2:  100:  ::std::stringstream ss;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  101:  ss << "sysServices " << s.sys_service_ << "\n";
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+2:  102:  ss << "sysName " << s.sys_name_ << "\n";
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+2:  103:  ss << "sysDescr " << s.sys_descr_ << "\n";
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+2:  104:  ss << "sysLocation " << s.sys_location_ << "\n";
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+2:  105:  ss << "sysContact " << s.sys_contact_ << "\n";
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+2:  106:  ss << "sysObjectID " << s.sys_objectID_ << "\n";
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+4:  107:  return ss.str();
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  108:}
+call    0 returned 2
+call    1 never executed
+-:  109:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_126TrapV1V2cParameterToStringERKNS0_10SnmpConfigE called 2 returned 100% blocks executed 89%
+2:  110:::std::string TrapV1V2cParameterToString(const SnmpConfig &s) {
+2:  111:  ::std::stringstream ss;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+4:  112:  for (auto &trap : s.trap_receivers_V1V2c_) {
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+call    3 returned 2
+call    4 returned 4
+branch  5 taken 2
+branch  6 taken 2 (fallthrough)
+2:  113:    if (trap.version_ == VersionV1V2c::V1) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+1:  114:      ss << "trapsink " << trap.host_ << " " << trap.community_ << "\n";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+-:  115:    }
+2:  116:    if (trap.version_ == VersionV1V2c::V2c) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+1:  117:      ss << "trap2sink " << trap.host_ << " " << trap.community_ << "\n";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+-:  118:    }
+-:  119:  }
+4:  120:  return ss.str();
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  121:}
+call    0 returned 2
+call    1 never executed
+-:  122:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_126CommunityParameterToStringERKNS0_10SnmpConfigE called 2 returned 100% blocks executed 88%
+2:  123:::std::string CommunityParameterToString(const SnmpConfig &s) {
+2:  124:  ::std::stringstream ss;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+4:  125:  for (auto &community : s.communities_) {
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+call    3 returned 2
+call    4 returned 4
+branch  5 taken 2
+branch  6 taken 2 (fallthrough)
+2:  126:    if (community.access_ == Access::ReadWrite) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+1:  127:      ss << "rwcommunity " << community.name_ << "\n";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+-:  128:    }
+2:  129:    if (community.access_ == Access::ReadOnly) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+1:  130:      ss << "rocommunity " << community.name_ << "\n";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+-:  131:    }
+-:  132:  }
+4:  133:  return ss.str();
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  134:}
+call    0 returned 2
+call    1 never executed
+-:  135:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_121UserParameterToStringERKNS0_10SnmpConfigE called 2 returned 100% blocks executed 71%
+2:  136:::std::string UserParameterToString(const SnmpConfig &s) {
+2:  137:  ::std::stringstream ss;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+6:  138:  for (auto &user : s.user_) {
+call    0 returned 2
+call    1 returned 2
+call    2 returned 4
+call    3 returned 4
+call    4 returned 6
+branch  5 taken 4
+branch  6 taken 2 (fallthrough)
+-:  139:
+-:  140:    // CreateUser
+4:  141:    ss << "createUser " << user.name_;
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+branch  4 taken 4 (fallthrough)
+branch  5 taken 0 (throw)
+4:  142:    switch (user.security_level_) {
+branch  0 taken 1
+branch  1 taken 2
+branch  2 taken 1
+1:  143:      case SecurityLevel::AuthNoPriv:
+1:  144:        ss << " " << AuthenticationTypeToString(user.authentication_type_) << " " << user.authentication_key_;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+call   16 never executed
+1:  145:        break;
+2:  146:      case SecurityLevel::AuthPriv:
+2:  147:        ss << " " << AuthenticationTypeToString(user.authentication_type_) << " " << user.authentication_key_;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 2
+branch 10 taken 2 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 2
+branch 13 taken 2 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 2
+call   16 never executed
+2:  148:        if (user.privacy_key_.empty()) {
+call    0 returned 2
+branch  1 taken 0 (fallthrough)
+branch  2 taken 2
+#####:  149:          ss << " " << PrivacyToString(user.privacy_) << " " << user.authentication_key_;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+-:  150:        } else {
+2:  151:          ss << " " << PrivacyToString(user.privacy_) << " " << user.privacy_key_;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 2
+branch 10 taken 2 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 2
+branch 13 taken 2 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 2
+call   16 never executed
+-:  152:        }
+2:  153:        break;
+1:  154:      default:
+1:  155:        break;
+-:  156:    }
+4:  157:    ss << "\n";
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+-:  158:
+-:  159:    // set RW/RO user excess
+4:  160:    if (user.access_ == Access::ReadWrite) {
+branch  0 taken 3 (fallthrough)
+branch  1 taken 1
+3:  161:      ss << "rwuser " << user.name_ << " " << SecurityLevelToStringShortForm(user.security_level_) << "\n";
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 3 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 3
+branch  7 taken 3 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 3
+call   10 returned 3
+branch 11 taken 3 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 3
+branch 14 taken 3 (fallthrough)
+branch 15 taken 0 (throw)
+-:  162:    }
+4:  163:    if (user.access_ == Access::ReadOnly) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 3
+1:  164:      ss << "rouser " << user.name_ << " " << SecurityLevelToStringShortForm(user.security_level_) << "\n";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+-:  165:    }
+-:  166:
+-:  167:  }
+4:  168:  return ss.str();
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  169:}
+call    0 returned 2
+call    1 never executed
+-:  170:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_123TrapV3ParameterToStringERKNS0_10SnmpConfigE called 2 returned 100% blocks executed 68%
+2:  171:::std::string TrapV3ParameterToString(const SnmpConfig &s) {
+2:  172:  ::std::stringstream ss;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+6:  173:  for (auto &trap : s.trap_receivers_V3_) {
+call    0 returned 2
+call    1 returned 2
+call    2 returned 4
+call    3 returned 4
+call    4 returned 6
+branch  5 taken 4
+branch  6 taken 2 (fallthrough)
+4:  174:    ss << "trapsess -v 3 -u " << trap.name_;
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+branch  4 taken 4 (fallthrough)
+branch  5 taken 0 (throw)
+-:  175:
+4:  176:    switch (trap.security_level_) {
+branch  0 taken 1
+branch  1 taken 2
+branch  2 taken 1
+1:  177:      case SecurityLevel::AuthNoPriv:
+1:  178:        ss << " -a " << AuthenticationTypeToString(trap.authentication_type_) << " -A "
+call    0 returned 1
+call    1 never executed
+1:  179:           << trap.authentication_key_;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+1:  180:        break;
+2:  181:      case SecurityLevel::AuthPriv:
+2:  182:        ss << " -a " << AuthenticationTypeToString(trap.authentication_type_) << " -A "
+call    0 returned 2
+call    1 never executed
+2:  183:           << trap.authentication_key_;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 2
+branch 10 taken 2 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 2
+branch 13 taken 2 (fallthrough)
+branch 14 taken 0 (throw)
+2:  184:        if (trap.privacy_key_.empty()) {
+call    0 returned 2
+branch  1 taken 0 (fallthrough)
+branch  2 taken 2
+#####:  185:          ss << " -x " << PrivacyToString(trap.privacy_) << " -X " << trap.authentication_key_;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+call   16 never executed
+-:  186:        } else {
+2:  187:          ss << " -x " << PrivacyToString(trap.privacy_) << " -X " << trap.privacy_key_;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 2
+branch 10 taken 2 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 2
+branch 13 taken 2 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 2
+call   16 never executed
+-:  188:        }
+2:  189:        break;
+1:  190:      default:
+1:  191:        break;
+-:  192:    }
+-:  193:
+4:  194:    ss << " -l " << SecurityLevelToString(trap.security_level_) << " " << trap.host_ << "\n";
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+branch  8 taken 4 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 4
+branch 11 taken 4 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 4
+branch 14 taken 4 (fallthrough)
+branch 15 taken 0 (throw)
+-:  195:  }
+4:  196:  return ss.str();
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  197:}
+call    0 returned 2
+call    1 never executed
+-:  198:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_112SplitBySpaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 23 returned 100% blocks executed 75%
+23:  199:::std::vector<::std::string> SplitBySpace(const ::std::string &str) {
+-:  200:
+23:  201:  ::std::vector<::std::string> units;
+call    0 returned 23
+23:  202:  ::std::string::const_iterator search_start(str.cbegin());
+call    0 returned 23
+-:  203:
+23:  204:  ::std::regex exp { R"regex(\S+)regex" };
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0 (throw)
+23:  205:  ::std::smatch res;
+call    0 returned 23
+113:  206:  while (regex_search(search_start, str.cend(), res, exp)) {
+call    0 returned 113
+call    1 returned 113
+branch  2 taken 113 (fallthrough)
+branch  3 taken 0 (throw)
+branch  4 taken 90
+branch  5 taken 23 (fallthrough)
+90:  207:    units.emplace_back(res[0]);
+call    0 returned 90
+branch  1 taken 90 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 90
+branch  4 taken 90 (fallthrough)
+branch  5 taken 0 (throw)
+90:  208:    search_start = res.suffix().first;
+call    0 returned 90
+branch  1 taken 90 (fallthrough)
+branch  2 taken 0 (throw)
+-:  209:  }
+-:  210:
+46:  211:  return units;
+23:  212:}
+call    0 returned 23
+call    1 returned 23
+call    2 never executed
+call    3 never executed
+call    4 never executed
+-:  213:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_133GetSpaceDelimitedParameterByIndexERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEj called 6 returned 100% blocks executed 53%
+6:  214:::std::string GetSpaceDelimitedParameterByIndex(const ::std::string &str, ::std::uint32_t index) {
+6:  215:  auto parameter = SplitBySpace(str);
+call    0 returned 6
+branch  1 taken 6 (fallthrough)
+branch  2 taken 0 (throw)
+12*:  216:  return (parameter.size() > index) ? parameter[index] : "";
+call    0 returned 6
+branch  1 taken 6 (fallthrough)
+branch  2 taken 0
+call    3 returned 6
+call    4 returned 6
+branch  5 taken 6 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+branch 11 taken 0 (fallthrough)
+branch 12 taken 6
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+6:  217:}
+call    0 returned 6
+call    1 never executed
+-:  218:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_129ExtractAnyTrapV1V2cParametersERKNS0_10ConfigLineERNS0_10SnmpConfigENS0_12VersionV1V2cE called 5 returned 100% blocks executed 58%
+5:  219:void ExtractAnyTrapV1V2cParameters(const ConfigLine &l, SnmpConfig &s, const VersionV1V2c version) {
+5:  220:  if (SplitBySpace(l.values_).size() == 2) {
+call    0 returned 5
+call    1 returned 5
+call    2 returned 5
+branch  3 taken 3 (fallthrough)
+branch  4 taken 2
+3:  221:    auto host = GetSpaceDelimitedParameterByIndex(l.values_, 0);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+3:  222:    auto community = GetSpaceDelimitedParameterByIndex(l.values_, 1);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+3:  223:    s.trap_receivers_V1V2c_.emplace_back(TrapReceiverV1V2c { host, community, version });
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 3 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 3
+branch  7 taken 3 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 3
+branch 10 taken 3 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 3
+call   13 returned 3
+call   14 returned 3
+call   15 never executed
+call   16 never executed
+call   17 never executed
+3:  224:  }
+call    0 returned 3
+call    1 returned 3
+call    2 never executed
+call    3 never executed
+5:  225:}
+-:  226:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_121StringToSecurityLevelERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 4 returned 100% blocks executed 100%
+4:  227:SecurityLevel StringToSecurityLevel(::std::string &s) {
+-:  228:
+4:  229:  if (s == "authPriv") {
+call    0 returned 4
+branch  1 taken 2 (fallthrough)
+branch  2 taken 2
+2:  230:    return SecurityLevel::AuthPriv;
+-:  231:  }
+2:  232:  if (s == "authNoPriv") {
+call    0 returned 2
+branch  1 taken 1 (fallthrough)
+branch  2 taken 1
+1:  233:    return SecurityLevel::AuthNoPriv;
+-:  234:  }
+1:  235:  return SecurityLevel::NoAuthNoPriv;
+-:  236:
+-:  237:}
+-:  238:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_18GetValueEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EE called 24 returned 100% blocks executed 88%
+24:  239:::std::string GetValue(::std::string &&key, ::std::vector<::std::string> values) {
+24:  240:  auto it = ::std::find(values.cbegin(), values.cend(), key);
+call    0 returned 24
+call    1 returned 24
+call    2 returned 24
+branch  3 taken 24 (fallthrough)
+branch  4 taken 0 (throw)
+24:  241:  if (it != values.end() && it++ != values.end()) {
+call    0 returned 24
+call    1 returned 24
+branch  2 taken 18 (fallthrough)
+branch  3 taken 6
+call    4 returned 18
+call    5 returned 18
+call    6 returned 18
+branch  7 taken 18 (fallthrough)
+branch  8 taken 0
+branch  9 taken 18 (fallthrough)
+branch 10 taken 6
+18:  242:    return *it;
+call    0 returned 18
+call    1 returned 18
+branch  2 taken 18 (fallthrough)
+branch  3 taken 0 (throw)
+-:  243:  }
+6:  244:  return "";
+call    0 returned 6
+call    1 returned 6
+branch  2 taken 6 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 6
+call    5 never executed
+-:  245:}
+-:  246:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_126ExtractAnyTrapV3ParametersERKNS0_10ConfigLineERNS0_10SnmpConfigE called 4 returned 100% blocks executed 47%
+4:  247:void ExtractAnyTrapV3Parameters(const ConfigLine &l, SnmpConfig &s) {
+-:  248:
+4:  249:  auto values = SplitBySpace(l.values_);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+-:  250:
+8:  251:  ::std::string name = GetValue("-u", values);
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+branch  8 taken 4 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 4
+call   11 returned 4
+8:  252:  ::std::string value = GetValue("-l", values);
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+branch  8 taken 4 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 4
+call   11 returned 4
+4:  253:  SecurityLevel security_level = StringToSecurityLevel(value);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+4:  254:  value = GetValue("-a", values);
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+branch  8 taken 4 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 4
+call   11 returned 4
+call   12 returned 4
+call   13 returned 4
+call   14 returned 4
+call   15 never executed
+call   16 never executed
+call   17 never executed
+4:  255:  AuthenticationType auth_type = StringToAuthenticationType(value);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+8:  256:  ::std::string auth_key = GetValue("-A", values);
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+branch  8 taken 4 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 4
+call   11 returned 4
+4:  257:  value = GetValue("-x", values);
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+branch  8 taken 4 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 4
+call   11 returned 4
+call   12 returned 4
+call   13 returned 4
+call   14 returned 4
+call   15 never executed
+call   16 never executed
+call   17 never executed
+4:  258:  Privacy privacy = StringToPrivacy(value);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+8:  259:  ::std::string privacy_key = GetValue("-X", values);
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+branch  8 taken 4 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 4
+call   11 returned 4
+4:  260:  ::std::string host = values.back();
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+-:  261:
+4:  262:  s.trap_receivers_V3_.emplace_back(TrapReceiverV3 { name, security_level, auth_type, auth_key, privacy, privacy_key,
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+branch  4 taken 4 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 4
+branch  7 taken 4 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 4
+branch 10 taken 4 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 4
+branch 13 taken 4 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 4
+branch 16 taken 4 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 4
+call   19 returned 4
+call   20 returned 4
+call   21 returned 4
+call   22 returned 4
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:  263:      host });
+-:  264:
+4:  265:}
+call    0 returned 4
+call    1 returned 4
+call    2 returned 4
+call    3 returned 4
+call    4 returned 4
+call    5 returned 4
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+-:  266:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_121GetOrCreateUserByNameERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorINS0_4UserESaISA_EE called 8 returned 100% blocks executed 84%
+8:  267:std::vector<User>::iterator GetOrCreateUserByName(::std::string &name, ::std::vector<User> &users) {
+function _ZZN4wago15snmp_config_lib12_GLOBAL__N_121GetOrCreateUserByNameERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorINS0_4UserESaISA_EEENKUlRSA_E_clESE_ called 16 returned 100% blocks executed 100%
+8:  268:  auto it = ::std::find_if(users.begin(), users.end(), [&](User &u) {
+call    0 returned 8
+call    1 returned 8
+call    2 returned 8
+branch  3 taken 8 (fallthrough)
+branch  4 taken 0 (throw)
+16:  269:    return u.name_ == name;
+call    0 returned 16
+-:  270:  });
+8:  271:  if (it != users.end()) {
+call    0 returned 8
+call    1 returned 8
+branch  2 taken 4 (fallthrough)
+branch  3 taken 4
+4:  272:    return it;
+-:  273:  }
+4:  274:  users.emplace_back(User { name });
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+branch  4 taken 4 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 4
+call    7 never executed
+4:  275:  return ::std::prev(users.end());
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+-:  276:}
+-:  277:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_130ExtractAnyUserCreateParametersERKNS0_10ConfigLineERNS0_10SnmpConfigE called 4 returned 100% blocks executed 82%
+4:  278:void ExtractAnyUserCreateParameters(const ConfigLine &l, SnmpConfig &s) {
+-:  279:
+4:  280:  auto values = SplitBySpace(l.values_);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+-:  281:
+4:  282:  auto name = values[0];
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+-:  283:
+4:  284:  SecurityLevel security_level = SecurityLevel::NoAuthNoPriv;
+4:  285:  AuthenticationType auth_type = AuthenticationType::None;
+4:  286:  ::std::string auth_key;
+call    0 returned 4
+4:  287:  Privacy privacy = Privacy::None;
+4:  288:  ::std::string privacy_key;
+call    0 returned 4
+-:  289:
+4:  290:  if (values.size() == 5) {
+call    0 returned 4
+branch  1 taken 2 (fallthrough)
+branch  2 taken 2
+2:  291:    security_level = SecurityLevel::AuthPriv;
+2:  292:  } else if (values.size() == 3) {
+call    0 returned 2
+branch  1 taken 1 (fallthrough)
+branch  2 taken 1
+1:  293:    security_level = SecurityLevel::AuthNoPriv;
+-:  294:  } else {
+1:  295:    security_level = SecurityLevel::NoAuthNoPriv;
+-:  296:  }
+-:  297:
+4:  298:  if (security_level == SecurityLevel::AuthPriv || security_level == SecurityLevel::AuthNoPriv) {
+branch  0 taken 2 (fallthrough)
+branch  1 taken 2
+branch  2 taken 1 (fallthrough)
+branch  3 taken 1
+3:  299:    auth_type = StringToAuthenticationType(values[1]);
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+3:  300:    auth_key = values[2];
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+-:  301:  }
+-:  302:
+4:  303:  if (security_level == SecurityLevel::AuthPriv) {
+branch  0 taken 2 (fallthrough)
+branch  1 taken 2
+2:  304:    privacy = StringToPrivacy(values[3]);
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0 (throw)
+2:  305:    privacy_key = values[4];
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0 (throw)
+-:  306:  }
+-:  307:
+4:  308:  auto it = GetOrCreateUserByName(name, s.user_);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+4:  309:  (*it).authentication_type_ = auth_type;
+call    0 returned 4
+4:  310:  (*it).authentication_key_ = auth_key;
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+4:  311:  (*it).privacy_ = privacy;
+call    0 returned 4
+4:  312:  (*it).privacy_key_ = privacy_key;
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+4:  313:  (*it).security_level_ = security_level;
+call    0 returned 4
+-:  314:
+4:  315:}
+call    0 returned 4
+call    1 returned 4
+call    2 returned 4
+call    3 returned 4
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+-:  316:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_116SetAccessForUserERKNS0_10ConfigLineERNS0_10SnmpConfigENS0_6AccessE called 4 returned 100% blocks executed 78%
+4:  317:void SetAccessForUser(const ConfigLine &l, SnmpConfig &s, Access access) {
+4:  318:  auto values = SplitBySpace(l.values_);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+4:  319:  auto it = GetOrCreateUserByName(values[0], s.user_);
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+4:  320:  (*it).access_ = access;
+call    0 returned 4
+4:  321:}
+call    0 returned 4
+call    1 never executed
+-:  322:
+-:  323:}  // namespace
+-:  324:
+-:  325:template<typename T>
+-:  326:using extractor_fn = ::std::function<void(const ConfigLine&, T&)>;
+-:  327:
+-:  328:template<typename T>
+function _ZN4wago15snmp_config_lib15FillByExtractorINS0_10SnmpConfigEEEvRT_RKSt6vectorINS0_10ConfigLineESaIS6_EERKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8functionIFvRKS6_S4_EESt4lessISH_ESaISt4pairIKSH_SM_EEE called 7 returned 100% blocks executed 100%
+7:  329:inline void FillByExtractor(T &to, const std::vector<ConfigLine> &from,
+-:  330:                            const ::std::map<std::string, extractor_fn<T>> &extractors) {
+54:  331:  for (auto &line : from) {
+call    0 returned 7
+call    1 returned 7
+call    2 returned 47
+call    3 returned 47
+call    4 returned 54
+branch  5 taken 47
+branch  6 taken 7 (fallthrough)
+47:  332:    if (extractors.count(line.parameter_) > 0) {
+call    0 returned 47
+branch  1 taken 47 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 31 (fallthrough)
+branch  4 taken 16
+31:  333:      extractors.at(line.parameter_)(line, to);
+call    0 returned 31
+branch  1 taken 31 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 31
+branch  4 taken 31 (fallthrough)
+branch  5 taken 0 (throw)
+-:  334:    }
+-:  335:  }
+7:  336:}
+-:  337:
+function _ZN4wago15snmp_config_lib18ExtractConfigLinesERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 7 returned 100% blocks executed 62%
+7:  338:std::vector<ConfigLine> ExtractConfigLines(const ::std::string &config) {
+-:  339:
+7:  340:  std::vector<ConfigLine> config_lines;
+call    0 returned 7
+7:  341:  std::regex config_regex { R"regex((\S+)\ *(.*))regex" };
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0 (throw)
+-:  342:
+7:  343:  auto configs_begin = std::sregex_iterator(config.begin(), config.end(), config_regex);
+call    0 returned 7
+call    1 returned 7
+call    2 returned 7
+branch  3 taken 7 (fallthrough)
+branch  4 taken 0 (throw)
+7:  344:  auto configs_end = std::sregex_iterator();
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0 (throw)
+54:  345:  for (auto i = configs_begin; i != configs_end; ++i) {
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 47
+branch  4 taken 47 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 54
+branch  7 taken 47
+branch  8 taken 7 (fallthrough)
+47:  346:    std::smatch match = *i;
+call    0 returned 47
+call    1 returned 47
+branch  2 taken 47 (fallthrough)
+branch  3 taken 0 (throw)
+47:  347:    ConfigLine cl { { match[1] }, { match[2] } };
+call    0 returned 47
+branch  1 taken 47 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 47
+branch  4 taken 47 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 47
+branch  7 taken 47 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 47
+branch 10 taken 47 (fallthrough)
+branch 11 taken 0 (throw)
+47:  348:    config_lines.push_back(std::move(cl));
+call    0 returned 47
+call    1 returned 47
+branch  2 taken 47 (fallthrough)
+branch  3 taken 0 (throw)
+54:  349:  }
+call    0 returned 47
+call    1 returned 47
+call    2 returned 7
+call    3 never executed
+call    4 never executed
+call    5 never executed
+14:  350:  return config_lines;
+7:  351:}
+call    0 returned 7
+call    1 returned 7
+call    2 returned 7
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+-:  352:
+function _ZN4wago15snmp_config_lib21ExtractBasicParamtersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigE called 2 returned 100% blocks executed 55%
+2:  353:void ExtractBasicParamters(const std::vector<ConfigLine> &lines, SnmpConfig &snmp_config) {
+-:  354:
+function _ZZN4wago15snmp_config_lib21ExtractBasicParamtersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E_clESA_S8_ called 2 returned 100% blocks executed 100%
+2:  355:  static const ::std::map<std::string, extractor_fn<SnmpConfig>> extractors { { "sysName", [](const ConfigLine &l,
+-:  356:                                                                                              SnmpConfig &s) {
+2:  357:    s.sys_name_ = l.values_;
+call    0 returned 2
+function _ZZN4wago15snmp_config_lib21ExtractBasicParamtersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E0_clESA_S8_ called 2 returned 100% blocks executed 100%
+4:  358:  } }, { "sysDescr", [](const ConfigLine &l, SnmpConfig &s) {
+2:  359:    s.sys_descr_ = l.values_;
+call    0 returned 2
+function _ZZN4wago15snmp_config_lib21ExtractBasicParamtersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E1_clESA_S8_ called 2 returned 100% blocks executed 100%
+4:  360:  } }, { "sysLocation", [](const ConfigLine &l, SnmpConfig &s) {
+2:  361:    s.sys_location_ = l.values_;
+call    0 returned 2
+function _ZZN4wago15snmp_config_lib21ExtractBasicParamtersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E2_clESA_S8_ called 2 returned 100% blocks executed 100%
+4:  362:  } }, { "sysObjectID", [](const ConfigLine &l, SnmpConfig &s) {
+2:  363:    s.sys_objectID_ = l.values_;
+call    0 returned 2
+function _ZZN4wago15snmp_config_lib21ExtractBasicParamtersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E3_clESA_S8_ called 2 returned 100% blocks executed 100%
+4:  364:  } }, { "sysServices", [](const ConfigLine &l, SnmpConfig &s) {
+2:  365:    s.sys_service_ = l.values_;
+call    0 returned 2
+function _ZZN4wago15snmp_config_lib21ExtractBasicParamtersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E4_clESA_S8_ called 2 returned 100% blocks executed 100%
+4:  366:  } }, { "sysContact", [](const ConfigLine &l, SnmpConfig &s) {
+2:  367:    s.sys_contact_ = l.values_;
+call    0 returned 2
+8:  368:  } } };
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 1
+branch 15 taken 1 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0 (throw)
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+branch 30 taken 6 (fallthrough)
+branch 31 taken 1
+call   32 returned 6
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+-:  369:
+2:  370:  FillByExtractor(snmp_config, lines, extractors);
+call    0 returned 2
+2:  371:}
+-:  372:
+function _ZN4wago15snmp_config_lib26ExtractTrapV1V2cParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigE called 2 returned 100% blocks executed 57%
+2:  373:void ExtractTrapV1V2cParameters(const std::vector<ConfigLine> &lines, SnmpConfig &snmp_config) {
+-:  374:
+function _ZZN4wago15snmp_config_lib26ExtractTrapV1V2cParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E_clESA_S8_ called 2 returned 100% blocks executed 100%
+2:  375:  static const ::std::map<std::string, extractor_fn<SnmpConfig>> extractors { { "trapsink", [](const ConfigLine &l,
+-:  376:                                                                                               SnmpConfig &s) {
+2:  377:    ExtractAnyTrapV1V2cParameters(l, s, VersionV1V2c::V1);
+call    0 returned 2
+function _ZZN4wago15snmp_config_lib26ExtractTrapV1V2cParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E0_clESA_S8_ called 3 returned 100% blocks executed 100%
+5:  378:  } }, { "trap2sink", [](const ConfigLine &l, SnmpConfig &s) {
+3:  379:    ExtractAnyTrapV1V2cParameters(l, s, VersionV1V2c::V2c);
+call    0 returned 3
+4:  380:  } } };
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 2 (fallthrough)
+branch 19 taken 1
+call   20 returned 2
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+-:  381:
+2:  382:  FillByExtractor(snmp_config, lines, extractors);
+call    0 returned 2
+2:  383:}
+-:  384:
+function _ZN4wago15snmp_config_lib26ExtractCommunityParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigE called 1 returned 100% blocks executed 57%
+1:  385:void ExtractCommunityParameters(const std::vector<ConfigLine> &lines, SnmpConfig &snmp_config) {
+-:  386:
+function _ZZN4wago15snmp_config_lib26ExtractCommunityParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E_clESA_S8_ called 1 returned 100% blocks executed 58%
+1:  387:  static const ::std::map<std::string, extractor_fn<SnmpConfig>> extractors { { "rwcommunity", [](const ConfigLine &l,
+-:  388:                                                                                                  SnmpConfig &s) {
+1:  389:    s.communities_.emplace_back(Community { l.values_, Access::ReadWrite });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+function _ZZN4wago15snmp_config_lib26ExtractCommunityParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E0_clESA_S8_ called 1 returned 100% blocks executed 58%
+1:  390:  } }, { "rocommunity", [](const ConfigLine &l, SnmpConfig &s) {
+1:  391:    s.communities_.emplace_back(Community { l.values_, Access::ReadOnly });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+4:  392:  } } };
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 2 (fallthrough)
+branch 19 taken 1
+call   20 returned 2
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+-:  393:
+1:  394:  FillByExtractor(snmp_config, lines, extractors);
+call    0 returned 1
+1:  395:}
+-:  396:
+function _ZN4wago15snmp_config_lib21ExtractUserParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigE called 1 returned 100% blocks executed 56%
+1:  397:void ExtractUserParameters(const std::vector<ConfigLine> &lines, SnmpConfig &snmp_config) {
+function _ZZN4wago15snmp_config_lib21ExtractUserParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E_clESA_S8_ called 4 returned 100% blocks executed 100%
+4:  398:  static const ::std::map<std::string, extractor_fn<SnmpConfig>> extractors { { "createUser", [](const ConfigLine &l,
+-:  399:                                                                                                 SnmpConfig &s) {
+4:  400:    ExtractAnyUserCreateParameters(l, s);
+call    0 returned 4
+function _ZZN4wago15snmp_config_lib21ExtractUserParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E0_clESA_S8_ called 3 returned 100% blocks executed 100%
+7:  401:  } }, { "rwuser", [](const ConfigLine &l, SnmpConfig &s) {
+3:  402:    SetAccessForUser(l, s, Access::ReadWrite);
+call    0 returned 3
+function _ZZN4wago15snmp_config_lib21ExtractUserParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E1_clESA_S8_ called 1 returned 100% blocks executed 100%
+4:  403:  } }, { "rouser", [](const ConfigLine &l, SnmpConfig &s) {
+1:  404:    SetAccessForUser(l, s, Access::ReadOnly);
+call    0 returned 1
+4:  405:  } } };
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 1
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+branch 21 taken 3 (fallthrough)
+branch 22 taken 1
+call   23 returned 3
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+-:  406:
+1:  407:  FillByExtractor(snmp_config, lines, extractors);
+call    0 returned 1
+1:  408:}
+-:  409:
+function _ZN4wago15snmp_config_lib23ExtractTrapV3ParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigE called 1 returned 100% blocks executed 57%
+1:  410:void ExtractTrapV3Parameters(const std::vector<ConfigLine> &lines, SnmpConfig &snmp_config) {
+function _ZZN4wago15snmp_config_lib23ExtractTrapV3ParametersERKSt6vectorINS0_10ConfigLineESaIS2_EERNS0_10SnmpConfigEENKUlRKS2_S8_E_clESA_S8_ called 4 returned 100% blocks executed 100%
+4:  411:  static const ::std::map<std::string, extractor_fn<SnmpConfig>> extractors { { "trapsess", [](const ConfigLine &l,
+-:  412:                                                                                               SnmpConfig &s) {
+4:  413:    ExtractAnyTrapV3Parameters(l, s);
+call    0 returned 4
+2:  414:  } } };
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+branch 15 taken 1 (fallthrough)
+branch 16 taken 1
+call   17 returned 1
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+-:  415:
+1:  416:  FillByExtractor(snmp_config, lines, extractors);
+call    0 returned 1
+1:  417:}
+-:  418:
+function _ZN4wago15snmp_config_lib34SnmpBasicAndV1V2cParameterToStringB5cxx11ERKNS0_10SnmpConfigE called 2 returned 100% blocks executed 57%
+2:  419:std::string SnmpBasicAndV1V2cParameterToString(const SnmpConfig &snmp_config) {
+-:  420:
+2:  421:  std::string s;
+call    0 returned 2
+2:  422:  s += BasicParametersToString(snmp_config);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+call    7 never executed
+2:  423:  s += CommunityParameterToString(snmp_config);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+call    7 never executed
+2:  424:  s += TrapV1V2cParameterToString(snmp_config);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+call    7 never executed
+-:  425:
+2:  426:  return s;
+=====:  427:}
+call    0 never executed
+-:  428:
+function _ZN4wago15snmp_config_lib23SnmpV3ParameterToStringB5cxx11ERKNS0_10SnmpConfigE called 2 returned 100% blocks executed 59%
+2:  429:std::string SnmpV3ParameterToString(const SnmpConfig &snmp_config) {
+-:  430:
+2:  431:  std::string s;
+call    0 returned 2
+2:  432:  s += UserParameterToString(snmp_config);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+call    7 never executed
+2:  433:  s += TrapV3ParameterToString(snmp_config);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 2
+call    7 never executed
+-:  434:
+2:  435:  return s;
+=====:  436:}
+call    0 never executed
+-:  437:
+-:  438:}  // namespace wago::snmp_config_lib

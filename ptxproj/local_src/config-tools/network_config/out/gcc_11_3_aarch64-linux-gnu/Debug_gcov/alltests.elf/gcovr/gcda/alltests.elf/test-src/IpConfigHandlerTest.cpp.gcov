@@ -1,0 +1,667 @@
+-:    0:Source:test-src/IpConfigHandlerTest.cpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#include <gtest/gtest.h>
+-:    4:#include <BaseTypes.hpp>
+-:    5:#include <IPConfig.hpp>
+-:    6:#include <iostream>
+-:    7:#include "IPConfigHandler.hpp"
+-:    8:#include "IPConfigMock.hpp"
+-:    9:#include "gmock/gmock-more-actions.h"
+-:   10:
+-:   11:namespace network_config {
+-:   12:
+-:   13:using testing::Return;
+-:   14:using testing::_;
+-:   15:using testing::DoAll;
+-:   16:
+-:   17:template<typename ... Args>
+3:   18:auto CreateProgramArgs(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   19:{
+3:   20:  return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   21:}
+------------------
+_ZN14network_config17CreateProgramArgsIJPKcS2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_:
+function _ZN14network_config17CreateProgramArgsIJPKcS2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_ called 1 returned 100% blocks executed 100%
+1:   18:auto CreateProgramArgs(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   19:{
+1:   20:  return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   21:}
+------------------
+_ZN14network_config17CreateProgramArgsIJPKcS2_S2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_:
+function _ZN14network_config17CreateProgramArgsIJPKcS2_S2_S2_S2_EEESt5arrayIS2_XsZfp_EEDpT_ called 2 returned 100% blocks executed 100%
+2:   18:auto CreateProgramArgs(Args ... args) -> ::std::array<const char*, sizeof...(args)>
+-:   19:{
+2:   20:  return ::std::array<const char*, sizeof...(args)>{{args...}};
+-:   21:}
+------------------
+-:   22:
+-:   23:class IPConfigHandlerTest : public ::testing::Test {
+-:   24: public:
+-:   25:  netconf::api::MockIPConfig ip_config_mock_;
+-:   26:  OptionParser opt_parser;
+-:   27:
+function _ZN14network_config19IPConfigHandlerTest5SetUpEv called 3 returned 100% blocks executed 100%
+3:   28:  void SetUp() override{
+-:   29:
+3:   30:  }
+-:   31:
+-:   32:  template<typename ... Args>
+3:   33:  IPConfigHandler CreateWithParams(Args ... args) {
+3:   34:    auto arg_array = CreateProgramArgs("program", args...);
+3:   35:    opt_parser.Parse(arg_array.size(), arg_array.data());
+6:   36:    return IPConfigHandler(opt_parser);
+-:   37:  }
+------------------
+_ZN14network_config19IPConfigHandlerTest16CreateWithParamsIJPKcS3_S3_EEENS_15IPConfigHandlerEDpT_:
+function _ZN14network_config19IPConfigHandlerTest16CreateWithParamsIJPKcS3_S3_EEENS_15IPConfigHandlerEDpT_ called 1 returned 100% blocks executed 100%
+1:   33:  IPConfigHandler CreateWithParams(Args ... args) {
+1:   34:    auto arg_array = CreateProgramArgs("program", args...);
+call    0 returned 1
+1:   35:    opt_parser.Parse(arg_array.size(), arg_array.data());
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+2:   36:    return IPConfigHandler(opt_parser);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   37:  }
+------------------
+_ZN14network_config19IPConfigHandlerTest16CreateWithParamsIJPKcS3_S3_S3_EEENS_15IPConfigHandlerEDpT_:
+function _ZN14network_config19IPConfigHandlerTest16CreateWithParamsIJPKcS3_S3_S3_EEENS_15IPConfigHandlerEDpT_ called 2 returned 100% blocks executed 100%
+2:   33:  IPConfigHandler CreateWithParams(Args ... args) {
+2:   34:    auto arg_array = CreateProgramArgs("program", args...);
+call    0 returned 2
+2:   35:    opt_parser.Parse(arg_array.size(), arg_array.data());
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+branch  3 taken 2 (fallthrough)
+branch  4 taken 0 (throw)
+4:   36:    return IPConfigHandler(opt_parser);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+-:   37:  }
+------------------
+-:   38:
+-:   39:};
+-:   40:
+-:   41:
+4:   42:TEST_F(IPConfigHandlerTest, SetWithBridgeDuplicateFails)
+-:   43:{
+1:   44:  auto sut = CreateWithParams("--ip-config","-fjson", "--set", R"( {"br0": {"bcast": "192.168.1.255","ipaddr": "192.168.1.17","netmask": "255.255.255.0","source": "static"},"br0": {"bcast": "192.168.255.255","ipaddr": "192.168.2.17","netmask": "255.255.0.0","source": "static"}})");
+1:   45:  EXPECT_CALL(ip_config_mock_, SetIPConfigs(_)).Times(0);
+1*:   46:  EXPECT_ANY_THROW(sut.Execute());
+-:   47:
+1:   48:}
+------------------
+_ZN14network_config52IPConfigHandlerTest_SetWithBridgeDuplicateFails_TestC2Ev:
+function _ZN14network_config52IPConfigHandlerTest_SetWithBridgeDuplicateFails_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   42:TEST_F(IPConfigHandlerTest, SetWithBridgeDuplicateFails)
+call    0 returned 1
+------------------
+_ZN14network_config52IPConfigHandlerTest_SetWithBridgeDuplicateFails_TestD0Ev:
+function _ZN14network_config52IPConfigHandlerTest_SetWithBridgeDuplicateFails_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   42:TEST_F(IPConfigHandlerTest, SetWithBridgeDuplicateFails)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config52IPConfigHandlerTest_SetWithBridgeDuplicateFails_TestD2Ev:
+function _ZN14network_config52IPConfigHandlerTest_SetWithBridgeDuplicateFails_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   42:TEST_F(IPConfigHandlerTest, SetWithBridgeDuplicateFails)
+call    0 returned 1
+------------------
+_ZN14network_config52IPConfigHandlerTest_SetWithBridgeDuplicateFails_Test8TestBodyEv:
+function _ZN14network_config52IPConfigHandlerTest_SetWithBridgeDuplicateFails_Test8TestBodyEv called 1 returned 100% blocks executed 49%
+1:   42:TEST_F(IPConfigHandlerTest, SetWithBridgeDuplicateFails)
+-:   43:{
+1:   44:  auto sut = CreateWithParams("--ip-config","-fjson", "--set", R"( {"br0": {"bcast": "192.168.1.255","ipaddr": "192.168.1.17","netmask": "255.255.255.0","source": "static"},"br0": {"bcast": "192.168.255.255","ipaddr": "192.168.2.17","netmask": "255.255.0.0","source": "static"}})");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   45:  EXPECT_CALL(ip_config_mock_, SetIPConfigs(_)).Times(0);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+call   18 never executed
+call   19 never executed
+1*:   46:  EXPECT_ANY_THROW(sut.Execute());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1 (throw)
+branch 13 taken 0 (fallthrough)
+branch 14 taken 1
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+call   26 returned 1
+call   27 returned 1
+branch 28 taken 1 (fallthrough)
+branch 29 taken 0 (throw)
+call   30 never executed
+call   31 never executed
+-:   47:
+1:   48:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   49:
+4:   50:TEST_F(IPConfigHandlerTest, SetWithTwoBridges)
+-:   51:{
+1:   52:  auto sut = CreateWithParams("--ip-config","-fjson", "--set", R"( {"br0": {"bcast": "192.168.1.255","ipaddr": "192.168.1.17","netmask": "255.255.255.0","source": "static"},"br1": {"bcast": "192.168.255.255","ipaddr": "192.168.2.17","netmask": "255.255.0.0","source": "static"}})");
+-:   53:
+1:   54:  EXPECT_CALL(ip_config_mock_, SetIPConfigs(_)).WillOnce(Return(netconf::Status{}));
+1*:   55:  EXPECT_NO_THROW(sut.Execute());
+-:   56:
+-:   57:
+1:   58:}
+------------------
+_ZN14network_config42IPConfigHandlerTest_SetWithTwoBridges_TestC2Ev:
+function _ZN14network_config42IPConfigHandlerTest_SetWithTwoBridges_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   50:TEST_F(IPConfigHandlerTest, SetWithTwoBridges)
+call    0 returned 1
+------------------
+_ZN14network_config42IPConfigHandlerTest_SetWithTwoBridges_TestD0Ev:
+function _ZN14network_config42IPConfigHandlerTest_SetWithTwoBridges_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   50:TEST_F(IPConfigHandlerTest, SetWithTwoBridges)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config42IPConfigHandlerTest_SetWithTwoBridges_TestD2Ev:
+function _ZN14network_config42IPConfigHandlerTest_SetWithTwoBridges_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   50:TEST_F(IPConfigHandlerTest, SetWithTwoBridges)
+call    0 returned 1
+------------------
+_ZN14network_config42IPConfigHandlerTest_SetWithTwoBridges_Test8TestBodyEv:
+function _ZN14network_config42IPConfigHandlerTest_SetWithTwoBridges_Test8TestBodyEv called 1 returned 100% blocks executed 29%
+1:   50:TEST_F(IPConfigHandlerTest, SetWithTwoBridges)
+-:   51:{
+1:   52:  auto sut = CreateWithParams("--ip-config","-fjson", "--set", R"( {"br0": {"bcast": "192.168.1.255","ipaddr": "192.168.1.17","netmask": "255.255.255.0","source": "static"},"br1": {"bcast": "192.168.255.255","ipaddr": "192.168.2.17","netmask": "255.255.0.0","source": "static"}})");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   53:
+1:   54:  EXPECT_CALL(ip_config_mock_, SetIPConfigs(_)).WillOnce(Return(netconf::Status{}));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+call   14 returned 1
+branch 15 taken 1 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+call   27 returned 1
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+call   32 never executed
+1*:   55:  EXPECT_NO_THROW(sut.Execute());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 returned 1
+branch 29 never executed
+branch 30 never executed
+call   31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+call   46 never executed
+branch 47 never executed
+branch 48 never executed
+call   49 never executed
+branch 50 never executed
+branch 51 never executed
+call   52 never executed
+call   53 never executed
+call   54 never executed
+branch 55 never executed
+branch 56 never executed
+call   57 never executed
+branch 58 never executed
+branch 59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+-:   56:
+-:   57:
+1:   58:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   59:
+4:   60:TEST_F(IPConfigHandlerTest, GetDHCPClientID)
+-:   61:{
+1:   62:  auto sut = CreateWithParams("--ip-config", "--get", "--device=br1");
+1:   63:  testing::internal::CaptureStdout();
+-:   64:
+1:   65:  netconf::api::IPConfigs ip_configs;
+1:   66:  netconf::api::MakeIPConfigs(R"({"br1": {"bcast": "0.0.0.0","ipaddr": "0.0.0.0","netmask": "0.0.0.0","source": "dhcp","dhcp-client-id":"testclientid"}, "br0": {"bcast": "192.168.1.255","ipaddr": "192.168.1.17","netmask": "255.255.255.0","source": "static"}})",ip_configs);
+1:   67:  EXPECT_CALL(ip_config_mock_, GetIPConfigs(_)).WillOnce(DoAll(testing::SetArgReferee<0>(ip_configs),Return(netconf::Status{})));
+1*:   68:  EXPECT_NO_THROW(sut.Execute());
+-:   69:
+2:   70:  std::string output = testing::internal::GetCapturedStdout();
+2*:   71:  EXPECT_THAT(output, testing::HasSubstr("bcast=0.0.0.0"));
+2*:   72:  EXPECT_THAT(output, testing::HasSubstr("ipaddr=0.0.0.0"));
+2*:   73:  EXPECT_THAT(output, testing::HasSubstr("netmask=0.0.0.0"));
+2*:   74:  EXPECT_THAT(output, testing::HasSubstr("source=dhcp"));
+2*:   75:  EXPECT_THAT(output, testing::HasSubstr("dhcp-client-id=testclientid"));
+1:   76:}
+------------------
+_ZN14network_config40IPConfigHandlerTest_GetDHCPClientID_TestC2Ev:
+function _ZN14network_config40IPConfigHandlerTest_GetDHCPClientID_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   60:TEST_F(IPConfigHandlerTest, GetDHCPClientID)
+call    0 returned 1
+------------------
+_ZN14network_config40IPConfigHandlerTest_GetDHCPClientID_TestD0Ev:
+function _ZN14network_config40IPConfigHandlerTest_GetDHCPClientID_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   60:TEST_F(IPConfigHandlerTest, GetDHCPClientID)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config40IPConfigHandlerTest_GetDHCPClientID_TestD2Ev:
+function _ZN14network_config40IPConfigHandlerTest_GetDHCPClientID_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   60:TEST_F(IPConfigHandlerTest, GetDHCPClientID)
+call    0 returned 1
+------------------
+_ZN14network_config40IPConfigHandlerTest_GetDHCPClientID_Test8TestBodyEv:
+function _ZN14network_config40IPConfigHandlerTest_GetDHCPClientID_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:   60:TEST_F(IPConfigHandlerTest, GetDHCPClientID)
+-:   61:{
+1:   62:  auto sut = CreateWithParams("--ip-config", "--get", "--device=br1");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   63:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   64:
+1:   65:  netconf::api::IPConfigs ip_configs;
+call    0 returned 1
+1:   66:  netconf::api::MakeIPConfigs(R"({"br1": {"bcast": "0.0.0.0","ipaddr": "0.0.0.0","netmask": "0.0.0.0","source": "dhcp","dhcp-client-id":"testclientid"}, "br0": {"bcast": "192.168.1.255","ipaddr": "192.168.1.17","netmask": "255.255.255.0","source": "static"}})",ip_configs);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 returned 1
+call    8 never executed
+1:   67:  EXPECT_CALL(ip_config_mock_, GetIPConfigs(_)).WillOnce(DoAll(testing::SetArgReferee<0>(ip_configs),Return(netconf::Status{})));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0 (throw)
+call   26 returned 1
+branch 27 taken 1 (fallthrough)
+branch 28 taken 0 (throw)
+call   29 returned 1
+call   30 returned 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+call   34 returned 1
+call   35 returned 1
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+call   40 never executed
+call   41 never executed
+call   42 never executed
+1*:   68:  EXPECT_NO_THROW(sut.Execute());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 returned 1
+branch 29 never executed
+branch 30 never executed
+call   31 never executed
+call   32 never executed
+branch 33 never executed
+branch 34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+call   41 never executed
+call   42 never executed
+branch 43 never executed
+branch 44 never executed
+call   45 never executed
+call   46 never executed
+branch 47 never executed
+branch 48 never executed
+call   49 never executed
+branch 50 never executed
+branch 51 never executed
+call   52 never executed
+call   53 never executed
+call   54 never executed
+branch 55 never executed
+branch 56 never executed
+call   57 never executed
+branch 58 never executed
+branch 59 never executed
+call   60 never executed
+call   61 never executed
+call   62 never executed
+call   63 never executed
+call   64 never executed
+call   65 never executed
+call   66 never executed
+-:   69:
+2:   70:  std::string output = testing::internal::GetCapturedStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 never executed
+2*:   71:  EXPECT_THAT(output, testing::HasSubstr("bcast=0.0.0.0"));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+2*:   72:  EXPECT_THAT(output, testing::HasSubstr("ipaddr=0.0.0.0"));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+2*:   73:  EXPECT_THAT(output, testing::HasSubstr("netmask=0.0.0.0"));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+2*:   74:  EXPECT_THAT(output, testing::HasSubstr("source=dhcp"));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+2*:   75:  EXPECT_THAT(output, testing::HasSubstr("dhcp-client-id=testclientid"));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+1:   76:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:   77:
+-:   78:
+-:   79:
+-:   80:}

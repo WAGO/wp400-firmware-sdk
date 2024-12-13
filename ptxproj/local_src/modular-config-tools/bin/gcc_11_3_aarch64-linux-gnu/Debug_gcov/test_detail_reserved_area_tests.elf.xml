@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuites tests="10" failures="0" disabled="0" errors="0" time="0.056" timestamp="2024-12-02T18:45:22.011" name="AllTests">
+  <testsuite name="modular-config-tools.MainFunctionalityTest_reserved_area" tests="2" failures="0" disabled="0" skipped="0" errors="0" time="0.02" timestamp="2024-12-02T18:45:22.028">
+    <testcase name="CheckSetup" file="test-src/reserved_area/test_MainFunctionality.cc" line="84" status="run" result="completed" time="0.007" timestamp="2024-12-02T18:45:22.029" classname="modular-config-tools.MainFunctionalityTest_reserved_area"/>
+    <testcase name="NoOptionQuiet" file="test-src/reserved_area/test_MainFunctionality.cc" line="90" status="run" result="completed" time="0.009" timestamp="2024-12-02T18:45:22.039" classname="modular-config-tools.MainFunctionalityTest_reserved_area"/>
+  </testsuite>
+  <testsuite name="modular-config-tools.OptionEvaluationBasicTest_reserved_area" tests="1" failures="0" disabled="0" skipped="0" errors="0" time="0.001" timestamp="2024-12-02T18:45:22.050">
+    <testcase name="SetOptionDefaultsAndRelease" file="test-src/reserved_area/test_ParamEvaluation.cc" line="62" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:45:22.050" classname="modular-config-tools.OptionEvaluationBasicTest_reserved_area"/>
+  </testsuite>
+  <testsuite name="modular-config-tools.OptionEvaluationTest_reserved_area" tests="7" failures="0" disabled="0" skipped="0" errors="0" time="0.016" timestamp="2024-12-02T18:45:22.052">
+    <testcase name="CheckSetup" file="test-src/reserved_area/test_ParamEvaluation.cc" line="81" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:45:22.052" classname="modular-config-tools.OptionEvaluationTest_reserved_area"/>
+    <testcase name="EvaluateEarlyOptions" file="test-src/reserved_area/test_ParamEvaluation.cc" line="87" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:45:22.053" classname="modular-config-tools.OptionEvaluationTest_reserved_area"/>
+    <testcase name="EvaluateOptionsEmpty" file="test-src/reserved_area/test_ParamEvaluation.cc" line="108" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:45:22.056" classname="modular-config-tools.OptionEvaluationTest_reserved_area"/>
+    <testcase name="EvaluateOptionsQuiet" file="test-src/reserved_area/test_ParamEvaluation.cc" line="121" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:45:22.058" classname="modular-config-tools.OptionEvaluationTest_reserved_area"/>
+    <testcase name="EvaluateOptionsQuietShort" file="test-src/reserved_area/test_ParamEvaluation.cc" line="136" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:45:22.060" classname="modular-config-tools.OptionEvaluationTest_reserved_area"/>
+    <testcase name="EvaluateOptionsHelp" file="test-src/reserved_area/test_ParamEvaluation.cc" line="151" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:45:22.061" classname="modular-config-tools.OptionEvaluationTest_reserved_area"/>
+    <testcase name="EvaluateOptionsHelpShort" file="test-src/reserved_area/test_ParamEvaluation.cc" line="166" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:45:22.067" classname="modular-config-tools.OptionEvaluationTest_reserved_area"/>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,174 @@
+-:    0:Source:src/config_dnsmasq/error_handling.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:/// Copyright (c) 2024 WAGO GmbH & Co. KG
+-:    3:///
+-:    4:/// PROPRIETARY RIGHTS of WAGO GmbH & Co. KG are involved in
+-:    5:/// the subject matter of this material. All manufacturing, reproduction,
+-:    6:/// use, and sales rights pertaining to this subject matter are governed
+-:    7:/// by the license agreement. The recipient of this software implicitly
+-:    8:/// accepts the terms of the license.
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     error_handling.c
+-:   12:///
+-:   13:///  \brief    Error handling.
+-:   14:///
+-:   15:///  \author   MSc : WAGO GmbH & Co. KG
+-:   16:///  \author   MOe : WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19:#include "error_handling.hpp"
+-:   20:
+-:   21:#include <syslog.h>
+-:   22:
+-:   23:#include <cassert>
+-:   24:#include <map>
+-:   25:
+-:   26:namespace configdnsmasq {
+-:   27:namespace {
+-:   28:
+-:   29:::std::unique_ptr<configdnsmasq::logger> log;
+-:   30:
+-:   31:const ::std::map<eStatusCode, ::std::string> status_codes = { // NOLINT(cert-err58-cpp)
+-:   32:    {MISSING_PARAMETER, "MISSING_PARAMETER"},
+-:   33:    {INVALID_PARAMETER, "INVALID_PARAMETER"},
+-:   34:    {FILE_OPEN_ERROR, "FILE_OPEN_ERROR"},
+-:   35:    {FILE_READ_ERROR, "FILE_READ_ERROR"},
+-:   36:    {FILE_CLOSE_ERROR, "FILE_CLOSE_ERROR"},
+-:   37:    {NOT_FOUND, "NOT_FOUND"},
+-:   38:    {SYSTEM_CALL_ERROR, "SYSTEM_CALL_ERROR"},
+-:   39:    {CONFIG_FILE_INCONSISTENT, "CONFIG_FILE_INCONSISTENT"},
+-:   40:    {TIMEOUT, "TIMEOUT"},
+-:   41:    {FILE_WRITE_ERROR, "FILE_WRITE_ERROR"},
+-:   42:    {NARROW_SPACE_WARNING, "NARROW_SPACE_WARNING"},
+-:   43:    {NOT_ENOUGH_SPACE_ERROR, "NOT_ENOUGH_SPACE_ERROR"},
+-:   44:};
+-:   45:}
+-:   46:
+function _ZN13configdnsmasq8erh_initERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   47:void erh_init(const ::std::string &prgname) {
+#####:   48:  log = ::std::make_unique<configdnsmasq::logger>(prgname);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+#####:   49:}
+-:   50:
+function _ZN13configdnsmasq13erh_set_errorE11eStatusCodeRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb called 0 returned 0% blocks executed 0%
+#####:   51:void erh_set_error(eStatusCode code, const std::string &message, bool exit_on_error) {
+#####:   52:  erh_log(::std::string{"exit_on_error: "} + (exit_on_error ? "true" : "false"));
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+-:   53:
+#####:   54:  auto m = (boost::format("%s: " + message) % log->identifier_).str();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+-:   55:
+#####:   56:  ct_liblog_setLastError(m.c_str());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+-:   57:
+#####:   58:  auto status_str = status_codes.count(code) == 1 ? status_codes.at(code) : "";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+branch 15 never executed
+branch 16 never executed
+branch 17 never executed
+branch 18 never executed
+-:   59:
+#####:   60:  fprintf(stderr, "%s: %s; code: %d\n", status_str.c_str(), m.c_str(), code);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+#####:   61:  syslog(LOG_DEBUG, "%s: %s; code: %d\n", status_str.c_str(), message.c_str(), code);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+-:   62:
+#####:   63:  if (exit_on_error) {
+branch  0 never executed
+branch  1 never executed
+#####:   64:    exit(code);
+call    0 never executed
+-:   65:  }
+#####:   66:}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:   67:
+function _ZN13configdnsmasq10erh_assertEb11eStatusCodeRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb called 11 returned 100% blocks executed 67%
+11:   68:void erh_assert(bool condition, eStatusCode code, const std::string &message, bool exit_on_error) {
+11:   69:  if (!condition) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 11
+#####:   70:    erh_set_error(code, message, exit_on_error);
+call    0 never executed
+-:   71:  }
+11:   72:}
+-:   73:
+function _ZN13configdnsmasq10erh_assertEb11eStatusCodeRKN5boost12basic_formatIcSt11char_traitsIcESaIcEEEb called 8 returned 100% blocks executed 71%
+8:   74:void erh_assert(bool condition, eStatusCode code, const boost::format &message, bool exit_on_error) {
+8:   75:  erh_assert(condition, code, message.str(), exit_on_error);
+call    0 returned 8
+call    1 returned 8
+branch  2 taken 8 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 8
+call    5 never executed
+8:   76:}
+-:   77:
+function _ZN13configdnsmasq7erh_logERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 1 returned 100% blocks executed 100%
+1:   78:void erh_log(const std::string &message) {
+1:   79:  syslog(LOG_DEBUG, "%s\n", message.c_str());
+call    0 returned 1
+call    1 returned 1
+1:   80:}
+-:   81:
+-:   82:}  // namespace configdnsmasq

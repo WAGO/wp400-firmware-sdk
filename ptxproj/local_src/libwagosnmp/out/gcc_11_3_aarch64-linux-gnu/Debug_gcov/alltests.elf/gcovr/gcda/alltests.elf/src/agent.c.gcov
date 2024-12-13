@@ -1,0 +1,759 @@
+-:    0:Source:src/agent.c
+-:    1://------------------------------------------------------------------------------
+-:    2:/// Copyright (c) WAGO GmbH & Co. KG
+-:    3:///
+-:    4:/// PROPRIETARY RIGHTS are involved in the subject matter of this material.
+-:    5:/// All manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:/// subject matter are governed by the license agreement. The recipient of this
+-:    7:/// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9://------------------------------------------------------------------------------
+-:   10:///
+-:   11:///  \file     server.c
+-:   12:///
+-:   13:///  \version  $Rev$
+-:   14:///
+-:   15:///  \brief    <Insert description here>
+-:   16:///
+-:   17:///  \author   <author> : WAGO GmbH & Co. KG
+-:   18://------------------------------------------------------------------------------
+-:   19:
+-:   20:#define _GNU_SOURCE
+-:   21:#include <errno.h>
+-:   22:// clang-format off
+-:   23:// dont reorder the net-snmp includes, otherwise it will not compile
+-:   24:#include <net-snmp/net-snmp-config.h>
+-:   25:#include <net-snmp/net-snmp-includes.h>
+-:   26:#include <net-snmp/agent/net-snmp-agent-includes.h>
+-:   27:// clang-format on
+-:   28:#include <pthread.h>
+-:   29:#include <unistd.h>
+-:   30:
+-:   31:#include "wagosnmp_API.h"
+-:   32:#include "wagosnmp_internal.h"
+-:   33:
+-:   34:typedef struct stHandlerList tHandlerList;
+-:   35:
+-:   36:struct stHandlerList {
+-:   37:  netsnmp_handler_registration *handler;
+-:   38:  tHandlerList *pNext;
+-:   39:};
+-:   40:
+-:   41:static tHandlerList *pHandlerListRoot = NULL;
+-:   42:static pthread_t stThreadID = 0;
+-:   43:static mqd_t trap_queue = -1;
+-:   44:static sem_t *oidMutex = NULL;
+-:   45:static int oidShmFd = -1;
+-:   46:static tOidShm *pOidShm = NULL;
+-:   47:static size_t localShmSize = sizeof(tOidShm);
+-:   48:
+-:   49:PUBLIC_SYM void deinit_libwagosnmp_AgentEntry(void);
+-:   50:
+-:   51:static void _Reset(void);
+-:   52:
+-:   53:/* deinit function for snmpd-plugin. For init function see libwagosnmp.c */
+function deinit_libwagosnmp_AgentEntry called 0 returned 0% blocks executed 0%
+#####:   54:void deinit_libwagosnmp_AgentEntry(void)
+-:   55:{
+#####:   56:    snmp_log(LOG_INFO, "Deinit\n");
+call    0 never executed
+-:   57:
+#####:   58:    if(agent_init_alarm_register != 0) {
+branch  0 never executed
+branch  1 never executed
+#####:   59:      snmp_alarm_unregister(agent_init_alarm_register);
+call    0 never executed
+#####:   60:      agent_init_alarm_register = 0;
+-:   61:    }
+-:   62:
+#####:   63:    if(stThreadID != 0) {
+branch  0 never executed
+branch  1 never executed
+#####:   64:      pthread_cancel(stThreadID);
+call    0 never executed
+#####:   65:      pthread_join(stThreadID, NULL);
+call    0 never executed
+-:   66:    }
+#####:   67:    _Reset();
+call    0 never executed
+#####:   68:    mq_unlink(TRAP_AGENT_MQ);
+call    0 never executed
+#####:   69:}
+-:   70:
+-:   71:
+-:   72:int __attribute__((weak)) netsnmp_unregister_handler(netsnmp_handler_registration *reginfo) {
+-:   73:  (void)reginfo;
+#####:   74:  return 1;
+-:   75:}
+-:   76:
+-:   77:netsnmp_handler_registration *__attribute__((weak))
+-:   78:netsnmp_create_handler_registration(const char *name, Netsnmp_Node_Handler *handler_access_method, const oid *reg_oid,
+-:   79:                                    size_t reg_oid_len, int modes) {
+-:   80:  (void)name;
+-:   81:  (void)handler_access_method;
+-:   82:  (void)reg_oid;
+-:   83:  (void)reg_oid_len;
+-:   84:  (void)modes;
+#####:   85:  return NULL;
+-:   86:}
+-:   87:
+-:   88:int __attribute__((weak)) netsnmp_register_instance(netsnmp_handler_registration *reginfo) {
+-:   89:  (void)reginfo;
+#####:   90:  return 1;
+-:   91:}
+-:   92:
+-:   93:int __attribute__((weak))
+-:   94:netsnmp_set_request_error(netsnmp_agent_request_info *reqinfo, netsnmp_request_info *request, int error_value) {
+-:   95:  (void)reqinfo;
+-:   96:  (void)request;
+-:   97:  (void)error_value;
+#####:   98:  return 1;
+-:   99:}
+-:  100:
+-:  101:int __attribute__((weak)) netsnmp_send_traps(int trap, int specific, const oid *enterprise, int enterprise_length,
+-:  102:                                             netsnmp_variable_list *vars, const char *context, int flags) {
+-:  103:  (void)trap;
+-:  104:  (void)specific;
+-:  105:  (void)enterprise;
+-:  106:  (void)enterprise_length;
+-:  107:  (void)vars;
+-:  108:  (void)context;
+-:  109:  (void)flags;
+#####:  110:  return 1;
+-:  111:}
+-:  112:void __attribute__((weak)) send_easy_trap(int a, int b) {
+-:  113:  (void)a;
+-:  114:  (void)b;
+#####:  115:}
+-:  116:
+function _TrapSend called 0 returned 0% blocks executed 0%
+#####:  117:static void _TrapSend(tWagoSnmpMsg *trap) {
+#####:  118:  netsnmp_variable_list *notification_vars = NULL;
+-:  119:
+#####:  120:  if (trap->variable.type != ASN_NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  121:    snmp_varlist_add_variable(&notification_vars, trap->variable.sOID, trap->variable.sOID_length, trap->variable.type,
+#####:  122:                              (u_char *)trap->variable.buf, trap->variable.len);
+call    0 never executed
+-:  123:  }
+#####:  124:  netsnmp_send_traps(trap->trap_type, trap->specific_type, trap->enterprise, trap->enterprise_length, notification_vars,
+call    0 never executed
+-:  125:                     NULL, 0);
+#####:  126:  snmp_free_varbind(notification_vars);
+call    0 never executed
+#####:  127:}
+-:  128:
+function _OidHandler called 0 returned 0% blocks executed 0%
+#####:  129:static int _OidHandler(netsnmp_mib_handler *handler, netsnmp_handler_registration *reginfo,
+-:  130:                       netsnmp_agent_request_info *reqinfo, netsnmp_request_info *requests) {
+-:  131:  (void)(handler);
+-:  132:  (void)(reginfo);
+#####:  133:  int ret            = SNMP_ERR_NOERROR;
+#####:  134:  tOidObject *object = NULL;
+-:  135:
+-:  136:  /*build_oid_string(szOID, requests->requestvb->name, requests->requestvb->name_length);
+-:  137:  pagent_oid = find_agent_oid(szOID);
+-:  138:  */
+#####:  139:  AGENT_MutexLock();
+call    0 never executed
+#####:  140:  object = AGENT_GetOidObject(requests->requestvb->name, requests->requestvb->name_length);
+call    0 never executed
+#####:  141:  if (object != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  142:    switch (reqinfo->mode) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+#####:  143:      case MODE_GET:
+-:  144:      case MODE_GETNEXT:
+#####:  145:        snmp_set_var_typed_value(requests->requestvb, object->type, object->buf, object->len);
+call    0 never executed
+-:  146:
+#####:  147:        break;
+#####:  148:      case MODE_SET_RESERVE1:
+-:  149:        // check type
+#####:  150:        if (object->type != requests->requestvb->type) {
+branch  0 never executed
+branch  1 never executed
+#####:  151:          netsnmp_set_request_error(reqinfo, requests, SNMP_ERR_WRONGTYPE);
+call    0 never executed
+#####:  152:          ret = SNMP_ERR_WRONGTYPE;
+-:  153:        }
+-:  154:
+#####:  155:        break;
+#####:  156:      case MODE_SET_RESERVE2:
+-:  157:        // no storage for old value -> no action
+#####:  158:        break;
+#####:  159:      case MODE_SET_ACTION:
+-:  160:        // update current value
+#####:  161:        if (object->readOnly == 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  162:          AGENT_SetOidObjectValue(object, requests->requestvb);
+call    0 never executed
+-:  163:        } else {
+#####:  164:          netsnmp_set_request_error(reqinfo, requests, SNMP_ERR_NOTWRITABLE);
+call    0 never executed
+-:  165:        }
+#####:  166:        break;
+#####:  167:      case MODE_SET_UNDO:
+-:  168:        // restore information -> no action
+#####:  169:        break;
+#####:  170:      case MODE_SET_COMMIT:
+-:  171:        // commit set value -> no action
+#####:  172:        break;
+#####:  173:      case MODE_SET_FREE:
+-:  174:        // free set value -> no action
+#####:  175:        break;
+-:  176:    }
+-:  177:  } else {
+-:  178:    // error
+#####:  179:    netsnmp_set_request_error(reqinfo, requests, SNMP_ERR_RESOURCEUNAVAILABLE);
+call    0 never executed
+-:  180:  }
+#####:  181:  AGENT_MutexUnlock();
+call    0 never executed
+#####:  182:  return ret;
+-:  183:}
+-:  184:
+function _AddHandlerToList called 0 returned 0% blocks executed 0%
+#####:  185:static void _AddHandlerToList(netsnmp_handler_registration *new_handler) {
+#####:  186:  tHandlerList *pNew = malloc(sizeof(tHandlerList));
+#####:  187:  pNew->handler      = new_handler;
+#####:  188:  pNew->pNext        = NULL;
+#####:  189:  if (pHandlerListRoot == NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  190:    pHandlerListRoot = pNew;
+-:  191:  } else {
+#####:  192:    tHandlerList *pAct = pHandlerListRoot;
+#####:  193:    while (pAct->pNext != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  194:      pAct = pAct->pNext;
+-:  195:    }
+#####:  196:    pAct->pNext = pNew;
+-:  197:  }
+#####:  198:}
+-:  199:
+function _RegisterOIDHandler called 0 returned 0% blocks executed 0%
+#####:  200:static void _RegisterOIDHandler(oid *anOID, size_t anOID_length) {
+#####:  201:  netsnmp_handler_registration *new_handler = NULL;
+-:  202:  new_handler =
+#####:  203:      netsnmp_create_handler_registration(WAGOSNMP_AGENT_NAME, _OidHandler, anOID, anOID_length, HANDLER_CAN_RWRITE);
+call    0 never executed
+#####:  204:  if (new_handler) {
+branch  0 never executed
+branch  1 never executed
+-:  205:    // register handler
+#####:  206:    /*iTmpRet =*/netsnmp_register_instance(new_handler);
+call    0 never executed
+#####:  207:    _AddHandlerToList(new_handler);
+call    0 never executed
+-:  208:  }
+#####:  209:}
+-:  210:
+function _RegisterOID called 0 returned 0% blocks executed 0%
+#####:  211:static void _RegisterOID(tWagoSnmpMsg *msg) {
+#####:  212:  AGENT_CreateShm();
+call    0 never executed
+#####:  213:  AGENT_RemapShm();
+call    0 never executed
+#####:  214:  AGENT_MutexLock();
+call    0 never executed
+#####:  215:  if (oidShmFd >= 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  216:    tOidObject *pAct = AGENT_GetOidObject(msg->variable.sOID, msg->variable.sOID_length);
+call    0 never executed
+#####:  217:    if (pAct != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  218:      _RegisterOIDHandler(pAct->anOID, pAct->anOID_length);
+call    0 never executed
+-:  219:    }
+-:  220:  }
+#####:  221:  AGENT_MutexUnlock();
+call    0 never executed
+#####:  222:}
+-:  223:
+function _Reset called 0 returned 0% blocks executed 0%
+#####:  224:static void _Reset(void) {
+#####:  225:  tHandlerList *pAct = pHandlerListRoot;
+-:  226:
+#####:  227:  while (pAct != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  228:    tHandlerList *del = pAct;
+#####:  229:    netsnmp_unregister_handler(del->handler);
+call    0 never executed
+#####:  230:    pAct = pAct->pNext;
+#####:  231:    free(del);
+-:  232:  }
+#####:  233:  pHandlerListRoot = NULL;
+#####:  234:  AGENT_CloseMutex();
+call    0 never executed
+#####:  235:  AGENT_CloseShm();
+call    0 never executed
+#####:  236:}
+-:  237:
+function _ServerMain called 0 returned 0% blocks executed 0%
+#####:  238:static void *_ServerMain(void) {
+#####:  239:  while (1) {
+-:  240:    struct pollfd fdrec;
+#####:  241:    fdrec.fd      = trap_queue;
+#####:  242:    fdrec.events  = POLLIN;
+#####:  243:    fdrec.revents = 0;
+-:  244:    // wait for message (forever) used because we opened fd in O_NONBLOCK mode
+#####:  245:    if (0 < poll(&fdrec, 1, -1)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  246:      tWagoSnmpMsg stMessage;
+#####:  247:      if (0 < mq_receive(trap_queue, (char *)&stMessage, sizeof(tWagoSnmpMsg), NULL)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  248:        switch (stMessage.type) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+#####:  249:          case MSG_TYPE_TRAP_EASY:
+#####:  250:            send_easy_trap(6, stMessage.specific_type);
+call    0 never executed
+#####:  251:            break;
+#####:  252:          case MSG_TYPE_TRAP:
+#####:  253:            _TrapSend(&stMessage);
+call    0 never executed
+#####:  254:            break;
+#####:  255:          case MSG_TYPE_REGISTER_OID:
+#####:  256:            _RegisterOID(&stMessage);
+call    0 never executed
+#####:  257:            break;
+#####:  258:          case MSG_TYPE_RESET:
+#####:  259:            _Reset();
+call    0 never executed
+#####:  260:            break;
+#####:  261:          case MSG_TYPE_NONE:
+-:  262:          default:
+#####:  263:            break;
+-:  264:        }
+-:  265:      }
+-:  266:    }
+-:  267:  }
+-:  268:
+-:  269:  return 0;
+-:  270:}
+-:  271:
+function _OpenServerQueue called 0 returned 0% blocks executed 0%
+#####:  272:static mqd_t _OpenServerQueue(const char *name, long int msgsz, long int maxmsg) {
+#####:  273:  mqd_t ret = -1;
+-:  274:  struct mq_attr mqAttr;
+-:  275:
+#####:  276:  mqAttr.mq_flags   = 0;
+#####:  277:  mqAttr.mq_maxmsg  = maxmsg;  // create a good size for the message buffer
+#####:  278:  mqAttr.mq_msgsize = msgsz;
+#####:  279:  ret               = mq_open(name, OPEN_SERVER_MODE, CREAT_MODE, &mqAttr);
+call    0 never executed
+#####:  280:  if (ret < 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  281:    mq_unlink(name);
+call    0 never executed
+#####:  282:    ret = mq_open(name, OPEN_SERVER_MODE, CREAT_MODE, &mqAttr);
+call    0 never executed
+-:  283:  }
+-:  284:
+#####:  285:  return ret;
+-:  286:}
+-:  287:
+function _InitExistingShm called 0 returned 0% blocks executed 0%
+#####:  288:static void _InitExistingShm(void) {
+#####:  289:  AGENT_MutexLock();
+call    0 never executed
+#####:  290:  AGENT_CreateShm();
+call    0 never executed
+#####:  291:  if (oidShmFd >= 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  292:    tOidObject *pAct = AGENT_GetNextOidObject(NULL);
+call    0 never executed
+#####:  293:    while (pAct != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  294:      _RegisterOIDHandler(pAct->anOID, pAct->anOID_length);
+call    0 never executed
+#####:  295:      pAct = AGENT_GetNextOidObject(pAct);
+call    0 never executed
+-:  296:    }
+-:  297:  }
+#####:  298:  AGENT_MutexUnlock();
+call    0 never executed
+#####:  299:}
+-:  300:
+function AGENT_InitServerCommunication called 0 returned 0% blocks executed 0%
+#####:  301:INTERNAL_SYM void AGENT_InitServerCommunication(unsigned int clientreg, void *clientarg) {
+-:  302:  (void)clientreg;
+-:  303:  (void)clientarg;
+#####:  304:  snmp_log(LOG_INFO, "Init WAGO snmp plugin\n");
+call    0 never executed
+-:  305:
+#####:  306:  if(stThreadID == 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  307:    _InitExistingShm();
+call    0 never executed
+-:  308:
+#####:  309:    trap_queue = _OpenServerQueue(TRAP_AGENT_MQ, sizeof(tWagoSnmpMsg), 1);
+call    0 never executed
+-:  310:
+#####:  311:    if((pthread_create(&stThreadID, NULL, _ServerMain, NULL)) == -1)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  312:      DEBUGMSGTL(("plcsnmp_trap_agent", "error while starting thread\n"));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+-:  313:    else {
+#####:  314:      DEBUGMSGTL(("plcsnmp_trap_agent", "starting thread ok; id: %lu\n", stThreadID));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+#####:  315:      pthread_setname_np(stThreadID, "wago-snmp-agent");
+call    0 never executed
+-:  316:    }
+-:  317:  } else {
+#####:  318:    DEBUGMSGTL(("plcsnmp_trap_agent", "The WAGO snmp plugin seems to be initialized already!\n"));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+-:  319:  }
+#####:  320:}
+-:  321:
+function AGENT_CreateMutex called 0 returned 0% blocks executed 0%
+#####:  322:INTERNAL_SYM int AGENT_CreateMutex(void) {
+#####:  323:  int ret = 0;
+#####:  324:  if (oidMutex == NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  325:    oidMutex = sem_open(WAGO_SNMP_OID_MUTEX, O_RDWR | O_CREAT | O_EXCL, 0666, 1);
+call    0 never executed
+#####:  326:    if (oidMutex == SEM_FAILED) {
+branch  0 never executed
+branch  1 never executed
+#####:  327:      if (errno == EEXIST) {
+branch  0 never executed
+branch  1 never executed
+#####:  328:        oidMutex = sem_open(WAGO_SNMP_OID_MUTEX, O_RDWR);
+call    0 never executed
+-:  329:      }
+#####:  330:      if (oidMutex == SEM_FAILED) {
+branch  0 never executed
+branch  1 never executed
+#####:  331:        ret      = -1;
+#####:  332:        oidMutex = NULL;
+-:  333:      }
+-:  334:    }
+-:  335:  }
+#####:  336:  return ret;
+-:  337:}
+-:  338:
+function AGENT_MutexLock called 0 returned 0% blocks executed 0%
+#####:  339:INTERNAL_SYM void AGENT_MutexLock(void) {
+#####:  340:  if (AGENT_CreateMutex() >= 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  341:    sem_wait(oidMutex);
+call    0 never executed
+-:  342:  }
+#####:  343:}
+function AGENT_MutexUnlock called 0 returned 0% blocks executed 0%
+#####:  344:INTERNAL_SYM void AGENT_MutexUnlock(void) {
+#####:  345:  if (AGENT_CreateMutex() >= 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  346:    sem_post(oidMutex);
+call    0 never executed
+-:  347:  }
+#####:  348:}
+-:  349:
+function AGENT_CloseMutex called 0 returned 0% blocks executed 0%
+#####:  350:INTERNAL_SYM void AGENT_CloseMutex(void) {
+#####:  351:  if (oidMutex != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  352:    sem_close(oidMutex);
+call    0 never executed
+#####:  353:    oidMutex = NULL;
+-:  354:  }
+#####:  355:}
+-:  356:
+function AGENT_DestroyMutex called 0 returned 0% blocks executed 0%
+#####:  357:INTERNAL_SYM void AGENT_DestroyMutex(void) {
+#####:  358:  if (AGENT_CreateMutex() >= 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  359:    AGENT_CloseMutex();
+call    0 never executed
+#####:  360:    sem_unlink(WAGO_SNMP_OID_MUTEX);
+call    0 never executed
+-:  361:  }
+#####:  362:}
+-:  363:
+function AGENT_RemapShm called 0 returned 0% blocks executed 0%
+#####:  364:INTERNAL_SYM void AGENT_RemapShm(void) {
+-:  365:  size_t newSize;
+-:  366:  // Compile Errors
+-:  367:  // pOidShm = mremap(pOidShm,localShmSize,pOidShm->oidShmSize, MREMAP_MAYMOVE);
+#####:  368:  newSize = pOidShm->oidShmSize;
+#####:  369:  munmap(pOidShm, localShmSize);
+call    0 never executed
+#####:  370:  pOidShm      = mmap(0, newSize, PROT_READ | PROT_WRITE, MAP_SHARED, oidShmFd, 0);
+call    0 never executed
+#####:  371:  localShmSize = newSize;
+#####:  372:}
+-:  373:
+function AGENT_CreateShm called 0 returned 0% blocks executed 0%
+#####:  374:INTERNAL_SYM void AGENT_CreateShm() {
+#####:  375:  if (oidShmFd < 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  376:    oidShmFd = shm_open(WAGO_SNMP_OID_SHM, O_RDWR | O_CREAT | O_EXCL, 0666);
+call    0 never executed
+#####:  377:    if (oidShmFd < 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  378:      if (errno == EEXIST) {
+branch  0 never executed
+branch  1 never executed
+#####:  379:        oidShmFd = shm_open(WAGO_SNMP_OID_SHM, O_RDWR, 0666);
+call    0 never executed
+#####:  380:        pOidShm  = mmap(0, sizeof(tOidShm), PROT_READ | PROT_WRITE, MAP_SHARED, oidShmFd, 0);
+call    0 never executed
+#####:  381:        AGENT_RemapShm();
+call    0 never executed
+-:  382:      }
+-:  383:    } else {
+#####:  384:      ftruncate(oidShmFd, sizeof(tOidShm));
+call    0 never executed
+#####:  385:      pOidShm             = mmap(0, sizeof(tOidShm), PROT_READ | PROT_WRITE, MAP_SHARED, oidShmFd, 0);
+call    0 never executed
+#####:  386:      pOidShm->oidShmSize = sizeof(tOidShm);
+#####:  387:      localShmSize        = pOidShm->oidShmSize;
+#####:  388:      pOidShm->oidCount   = 0;
+-:  389:    }
+-:  390:  }
+#####:  391:}
+-:  392:
+function AGENT_CloseShm called 0 returned 0% blocks executed 0%
+#####:  393:INTERNAL_SYM void AGENT_CloseShm(void) {
+#####:  394:  if (oidShmFd >= 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  395:    munmap(pOidShm, pOidShm->oidShmSize);
+call    0 never executed
+#####:  396:    pOidShm = NULL;
+#####:  397:    close(oidShmFd);
+call    0 never executed
+#####:  398:    oidShmFd     = -1;
+#####:  399:    localShmSize = sizeof(tOidShm);
+-:  400:  }
+#####:  401:}
+-:  402:
+function AGENT_DestroyShm called 0 returned 0% blocks executed 0%
+#####:  403:INTERNAL_SYM void AGENT_DestroyShm(void) {
+#####:  404:  AGENT_CloseShm();
+call    0 never executed
+#####:  405:  shm_unlink(WAGO_SNMP_OID_SHM);
+call    0 never executed
+#####:  406:}
+-:  407:
+-:  408:/* adding size bytes to SHM*/
+function AGENT_ExtendShm called 0 returned 0% blocks executed 0%
+#####:  409:INTERNAL_SYM int AGENT_ExtendShm(size_t size) {
+#####:  410:  int ret = -1;
+#####:  411:  if (oidShmFd >= 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  412:    size_t newSize = size + pOidShm->oidShmSize;
+#####:  413:    ftruncate(oidShmFd, (ssize_t)newSize);
+call    0 never executed
+-:  414:    // Compile Errors
+-:  415:    // pOidShm = mremap(pOidShm, pOidShm->oidShmSize,newSize, MREMAP_MAYMOVE);
+#####:  416:    munmap(pOidShm, pOidShm->oidShmSize);
+call    0 never executed
+#####:  417:    pOidShm             = mmap(0, newSize, PROT_READ | PROT_WRITE, MAP_SHARED, oidShmFd, 0);
+call    0 never executed
+#####:  418:    pOidShm->oidShmSize = newSize;
+#####:  419:    ret                 = 0;
+-:  420:  }
+-:  421:
+#####:  422:  return ret;
+-:  423:}
+-:  424:
+function AGENT_GetNextOidObject called 0 returned 0% blocks executed 0%
+#####:  425:INTERNAL_SYM tOidObject *AGENT_GetNextOidObject(tOidObject *pAct) {
+#####:  426:  if (pAct == NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  427:    if (pOidShm->oidCount > 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  428:      return &pOidShm->oidStart[0];
+-:  429:    } else {
+#####:  430:      return NULL;
+-:  431:    }
+-:  432:  }
+-:  433:  // if this is the last index
+#####:  434:  if (pOidShm->oidCount <= (pAct->index + 1)) {
+branch  0 never executed
+branch  1 never executed
+#####:  435:    return NULL;
+-:  436:  }
+-:  437:
+-:  438:  // CALC_OBJ_SIZE(step,pAct->len,pAct->len <= OID_BUFFER_LEN);
+#####:  439:  pAct = (tOidObject *)(((uintptr_t)pAct) + pAct->objLen);
+#####:  440:  return pAct;
+-:  441:}
+-:  442:
+function AGENT_GetOidObject called 0 returned 0% blocks executed 0%
+#####:  443:INTERNAL_SYM tOidObject *AGENT_GetOidObject(oid *anOID, size_t anOID_len) {
+#####:  444:  tOidObject *ret = NULL;
+#####:  445:  AGENT_CreateShm();
+call    0 never executed
+#####:  446:  if (oidShmFd >= 0) {
+branch  0 never executed
+branch  1 never executed
+#####:  447:    tOidObject *pAct = AGENT_GetNextOidObject(NULL);
+call    0 never executed
+#####:  448:    while (pAct != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  449:      if (0 == snmp_oid_compare(anOID, anOID_len, pAct->anOID, pAct->anOID_length)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  450:        ret = pAct;
+#####:  451:        break;
+-:  452:      }
+#####:  453:      pAct = AGENT_GetNextOidObject(pAct);
+call    0 never executed
+-:  454:    }
+-:  455:  }
+#####:  456:  return ret;
+-:  457:}
+-:  458:
+function AGENT_GetFreeOidObject called 0 returned 0% blocks executed 0%
+#####:  459:INTERNAL_SYM tOidObject *AGENT_GetFreeOidObject(size_t size) {
+-:  460:  tOidObject *pAct;
+#####:  461:  tOidObject *pLast = NULL;
+-:  462:  /*pAct = AGENT_GetNextOidObject(NULL);
+-:  463:  while(pAct != NULL)
+-:  464:  {
+-:  465:    pLast = pAct;
+-:  466:    pAct = AGENT_GetNextOidObject(pAct);
+-:  467:  }*/
+#####:  468:  AGENT_ExtendShm(size);
+call    0 never executed
+#####:  469:  pAct = AGENT_GetNextOidObject(NULL);
+call    0 never executed
+#####:  470:  while (pAct != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  471:    pLast = pAct;
+#####:  472:    pAct  = AGENT_GetNextOidObject(pAct);
+call    0 never executed
+-:  473:  }
+#####:  474:  pOidShm->oidCount++;
+#####:  475:  pAct = AGENT_GetNextOidObject(pLast);
+call    0 never executed
+#####:  476:  if (pAct != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  477:    pAct->objLen = size;
+#####:  478:    pAct->index  = pOidShm->oidCount - 1;
+-:  479:  }
+#####:  480:  return pAct;
+-:  481:}
+-:  482:
+function AGENT_SetOidObjectValue called 0 returned 0% blocks executed 0%
+#####:  483:INTERNAL_SYM void AGENT_SetOidObjectValue(tOidObject *object, netsnmp_variable_list *stData) {
+#####:  484:  size_t bufferLen = object->objLen - sizeof(tOidObject) + OID_BUFFER_LEN;
+#####:  485:  object->type     = stData->type;
+#####:  486:  if (bufferLen >= stData->val_len) {
+branch  0 never executed
+branch  1 never executed
+#####:  487:    memcpy(object->buf, stData->val.string, stData->val_len);
+#####:  488:    object->len                  = stData->val_len;
+#####:  489:    object->buf[stData->val_len] = 0;
+-:  490:  } else {
+#####:  491:    memcpy(object->buf, stData->val.string, bufferLen);
+#####:  492:    object->len            = bufferLen;
+#####:  493:    object->buf[bufferLen] = 0;
+-:  494:  }
+#####:  495:}
+-:  496:
+function AGENT_CreateNewOidObject called 0 returned 0% blocks executed 0%
+#####:  497:INTERNAL_SYM tWagoSnmpReturnCode AGENT_CreateNewOidObject(oid *anOID, size_t anOID_len, netsnmp_variable_list *stData,
+-:  498:                                                          uint8_t readOnly) {
+#####:  499:  tWagoSnmpReturnCode result = WAGOSNMP_RETURN_ERROR_SHM;
+#####:  500:  AGENT_CreateShm();
+call    0 never executed
+-:  501:
+#####:  502:  if (oidShmFd >= 0) {
+branch  0 never executed
+branch  1 never executed
+-:  503:    tOidObject *pObj;
+-:  504:    size_t objectSize;
+-:  505:
+#####:  506:    CALC_OBJ_SIZE(objectSize, stData->val_len, stData->val.string == stData->buf);
+branch  0 never executed
+branch  1 never executed
+#####:  507:    AGENT_MutexLock();
+call    0 never executed
+#####:  508:    pObj = AGENT_GetFreeOidObject(objectSize);
+call    0 never executed
+-:  509:
+#####:  510:    if (pObj != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  511:      pObj->readOnly = readOnly;
+#####:  512:      memcpy(pObj->anOID, anOID, anOID_len * sizeof(oid));
+#####:  513:      pObj->anOID_length = anOID_len;
+#####:  514:      AGENT_SetOidObjectValue(pObj, stData);
+call    0 never executed
+#####:  515:      result = WAGOSNMP_RETURN_OK;
+-:  516:    }
+#####:  517:    AGENT_MutexUnlock();
+call    0 never executed
+-:  518:  }
+-:  519:
+#####:  520:  return result;
+-:  521:}
+-:  522:
+-:  523://---- End of source file ------------------------------------------------------

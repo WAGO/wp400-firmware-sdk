@@ -1,0 +1,176 @@
+-:    0:Source:test-src/c-modules/test_StructuringMod.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project common-header (PTXdist package libcommonheader).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_StructuringMod.c
+-:   12:///
+-:   13:///  \brief    Test module for structuring helper macros (C).
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "test_StructuringMod.h"
+-:   22:
+-:   23://------------------------------------------------------------------------------
+-:   24:// defines; structure, enumeration and type definitions
+-:   25://------------------------------------------------------------------------------
+-:   26:
+-:   27://------------------------------------------------------------------------------
+-:   28:// function prototypes
+-:   29://------------------------------------------------------------------------------
+-:   30:
+-:   31://------------------------------------------------------------------------------
+-:   32:// macros
+-:   33://------------------------------------------------------------------------------
+-:   34:
+-:   35://------------------------------------------------------------------------------
+-:   36:// variables' and constants' definitions
+-:   37://------------------------------------------------------------------------------
+-:   38:static struct TestStructC stTestContainer = { 7.88L };
+-:   39:static struct TestStructC const stTestContainerR = { 3.22L };
+-:   40:static double const arDoubles[2] = { 1.23L, 4.56L }; //lint -e 551 to avoid error for not accessed
+-:   41:
+-:   42://------------------------------------------------------------------------------
+-:   43:// function implementation
+-:   44://------------------------------------------------------------------------------
+function BreakScopePlainC called 1 returned 100% blocks executed 86%
+1:   45:size_t BreakScopePlainC()
+-:   46:{
+1:   47:  size_t counter = 0U;
+2:   48:  WC_BREAKABLE_SCOPE
+branch  0 taken 1
+branch  1 taken 1 (fallthrough)
+-:   49:  {
+1:   50:    if(counter >= 2)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+-:   51:    {
+#####:   52:      break;
+-:   53:    }
+1:   54:    counter++;
+-:   55:  }
+-:   56:
+1:   57:  return counter;
+-:   58:}
+-:   59:
+-:   60:
+function BreakLoopOnValueMatchPlainC called 1 returned 100% blocks executed 100%
+1:   61:size_t BreakLoopOnValueMatchPlainC(size_t const value)
+-:   62:{
+1:   63:  size_t counter = 0U;
+-:   64:  WC_LOOP_UNITL_BREAK
+-:   65:  {
+43:   66:    if(counter == value)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 42
+-:   67:    {
+1:   68:      break;
+-:   69:    }
+42:   70:    counter++;
+-:   71:  }
+-:   72:
+1:   73:  return counter;
+-:   74:}
+-:   75:
+-:   76:
+function GetSizeOfMemberPlainC called 1 returned 100% blocks executed 100%
+1:   77:size_t GetSizeOfMemberPlainC()
+-:   78:{
+1:   79:  return sizeof(stTestContainer.doubleMember);
+-:   80:}
+-:   81:
+-:   82:
+function GetSizeOfMemberMacroC called 1 returned 100% blocks executed 100%
+1:   83:size_t GetSizeOfMemberMacroC()
+-:   84:{
+1:   85:  return WC_SIZEOF_MEMBER(struct TestStructC, doubleMember);
+-:   86:}
+-:   87:
+-:   88:
+function GetSizeOfElementPlainC called 1 returned 100% blocks executed 100%
+1:   89:size_t GetSizeOfElementPlainC()
+-:   90:{
+1:   91:  return sizeof(double);
+-:   92:}
+-:   93:
+-:   94:
+function GetSizeOfElementMacroC called 1 returned 100% blocks executed 100%
+1:   95:size_t GetSizeOfElementMacroC()
+-:   96:{
+1:   97:  return WC_SIZEOF_ELEMENT(arDoubles);
+-:   98:}
+-:   99:
+-:  100:
+function GetArrayLengthPlainC called 1 returned 100% blocks executed 100%
+1:  101:size_t GetArrayLengthPlainC()
+-:  102:{
+1:  103:  return (sizeof(arDoubles) / sizeof(double));
+-:  104:}
+-:  105:
+-:  106:
+function GetArrayLengthMacroC called 1 returned 100% blocks executed 100%
+1:  107:size_t GetArrayLengthMacroC()
+-:  108:{
+1:  109:  return WC_ARRAY_LENGTH(arDoubles);
+-:  110:}
+-:  111:
+-:  112:
+function GetArrayPointerPlainC called 1 returned 100% blocks executed 100%
+1:  113:int  * GetArrayPointerPlainC(int array[])
+-:  114:{
+1:  115:  return &(array[0]);
+-:  116:}
+-:  117:
+-:  118:
+function GetArrayPointerMacroC called 1 returned 100% blocks executed 100%
+1:  119:int  * GetArrayPointerMacroC(int array[])
+-:  120:{
+1:  121:  return WC_ARRAY_TO_PTR(array);
+-:  122:}
+-:  123:
+-:  124:
+function GetContainerAddressPlainC called 1 returned 100% blocks executed 100%
+1:  125:void * GetContainerAddressPlainC()
+-:  126:{
+1:  127:  return &stTestContainer;
+-:  128:}
+-:  129:
+-:  130:
+function GetContainerAddressMacroC called 1 returned 100% blocks executed 100%
+1:  131:void * GetContainerAddressMacroC()
+-:  132:{
+-:  133:#pragma GCC diagnostic push
+-:  134:#pragma GCC diagnostic ignored "-Wcast-align"
+1:  135:  return WC_CONTAINER_OF(struct TestStructC, doubleMember, &(stTestContainer.doubleMember));
+-:  136:#pragma GCC diagnostic pop
+-:  137:}
+-:  138:
+-:  139:
+function GetContainerAddressReadonlyPlainC called 1 returned 100% blocks executed 100%
+1:  140:void const * GetContainerAddressReadonlyPlainC()
+-:  141:{
+1:  142:  return &stTestContainerR;
+-:  143:}
+-:  144:
+-:  145:
+function GetContainerAddressReadonlyMacroC called 1 returned 100% blocks executed 100%
+1:  146:void const * GetContainerAddressReadonlyMacroC()
+-:  147:{
+-:  148:#pragma GCC diagnostic push
+-:  149:#pragma GCC diagnostic ignored "-Wcast-align"
+1:  150:  return WC_CONTAINER_OF_R(struct TestStructC, doubleMember, &(stTestContainerR.doubleMember));
+-:  151:#pragma GCC diagnostic pop
+-:  152:}
+-:  153:
+-:  154:
+-:  155://---- End of source file ------------------------------------------------------

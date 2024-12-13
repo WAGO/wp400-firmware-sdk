@@ -1,0 +1,78 @@
+#!/bin/sh
+
+#-----------------------------------------------------------------------------#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# Copyright (c) 2021-2022 WAGO GmbH & Co. KG
+#-----------------------------------------------------------------------------#
+#-----------------------------------------------------------------------------#
+# Script:   /usr/bin/startx
+#
+# Brief:    starting up Xorg and cwm
+#
+# Author:   elrest Automationssysteme GmbH
+#
+#-----------------------------------------------------------------------------#
+
+. /etc/profile > /dev/null 2>&1
+
+# Xorg
+DAEMON="X"
+# WindowManager
+WM="cwm"
+export HOME=/root
+export DISPLAY=:0
+unset DBUS_SESSION_BUS_ADDRESS
+unset SESSION_MANAGER
+
+PIDXORG=$(pidof Xorg)
+# start X
+if [ -z "$PIDXORG" ]; then
+  echo "STARTING Xorg"
+  # look for usb mouse pugged in
+  grep -w "EV=17" /proc/bus/input/devices
+  if [ "$?" == "0" ]; then
+  #/usr/bin/X &
+  start-stop-daemon -S -x "$DAEMON" --oknodo --background > /dev/null 2>&1
+  else
+  #/usr/bin/X -nocursor &
+  start-stop-daemon -S -x "$DAEMON" --oknodo --background -- -nocursor > /dev/null 2>&1
+  fi
+  PIDXORG=$(pidof Xorg)
+  while [ -z "$PIDXORG" ]; do
+    usleep 250000
+    PIDXORG=$(pidof Xorg)
+  done
+  sleep 2
+fi
+
+# start cwm windowmanager
+PIDWM=$(pidof cwm)
+if [ -z "$PIDWM" ]; then
+  start-stop-daemon -S -x "$WM" --oknodo --background > /dev/null 2>&1
+fi
+
+# wait for cwm
+PIDWM=$(pidof cwm)
+while [ -z "$PIDWM" ]; do
+  usleep 250000
+  PIDWM=$(pidof cwm)
+done
+sleep 2
+
+# rotation
+ROTATION=$(/etc/config-tools/get_display orientation)
+if [ "$ROTATION" == "landscape" ]; then
+xrandr -o normal
+elif [ "$ROTATION" == "landscape180" ]; then
+xrandr -o inverted
+elif [ "$ROTATION" == "portrait" ]; then
+xrandr -o right
+elif [ "$ROTATION" == "portrait270" ]; then
+xrandr -o left
+fi
+
+# start services 
+/etc/script/start_application.sh &

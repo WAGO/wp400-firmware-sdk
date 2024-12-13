@@ -1,0 +1,126 @@
+-:    0:Source:test-src/StreamTee.hpp
+-:    1:#pragma once
+-:    2:
+-:    3:#include <fstream>
+-:    4:#include <boost/iostreams/tee.hpp>
+-:    5:#include <boost/iostreams/stream.hpp>
+-:    6:
+-:    7:class StreamTee{
+-:    8:
+-:    9:  using TeeDevice = boost::iostreams::tee_device<::std::ostream, ::std::ofstream> ;
+-:   10:  using TeeStream = boost::iostreams::stream<TeeDevice> ;
+-:   11: public:
+4*:   12:  StreamTee(::std::ostream& s, ::std::string& filename):
+4*:   13:    filestream_{filename},
+4*:   14:    tmp_stream_{s.rdbuf()},
+4*:   15:    outputDevice_{tmp_stream_, filestream_},
+4*:   16:    logger_{outputDevice_},
+4*:   17:    orig_stream_{s}
+-:   18:    {
+4*:   19:      s.rdbuf(logger_.rdbuf());
+4*:   20:    }
+------------------
+_ZN9StreamTeeC2ERSoRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:
+function _ZN9StreamTeeC2ERSoRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 4 returned 100% blocks executed 64%
+4:   12:  StreamTee(::std::ostream& s, ::std::string& filename):
+4:   13:    filestream_{filename},
+call    0 returned 4
+4:   14:    tmp_stream_{s.rdbuf()},
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+branch  4 taken 4 (fallthrough)
+branch  5 taken 0 (throw)
+4:   15:    outputDevice_{tmp_stream_, filestream_},
+call    0 returned 4
+4:   16:    logger_{outputDevice_},
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+4:   17:    orig_stream_{s}
+-:   18:    {
+4:   19:      s.rdbuf(logger_.rdbuf());
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+branch  4 taken 4 (fallthrough)
+branch  5 taken 0 (throw)
+4:   20:    }
+call    0 never executed
+call    1 never executed
+call    2 never executed
+------------------
+_ZN9StreamTeeC2ERSoRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:
+function _ZN9StreamTeeC2ERSoRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   12:  StreamTee(::std::ostream& s, ::std::string& filename):
+#####:   13:    filestream_{filename},
+call    0 never executed
+#####:   14:    tmp_stream_{s.rdbuf()},
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:   15:    outputDevice_{tmp_stream_, filestream_},
+call    0 never executed
+#####:   16:    logger_{outputDevice_},
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   17:    orig_stream_{s}
+-:   18:    {
+#####:   19:      s.rdbuf(logger_.rdbuf());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:   20:    }
+call    0 never executed
+call    1 never executed
+call    2 never executed
+------------------
+-:   21:
+4*:   22:  ~StreamTee(){
+4*:   23:    orig_stream_.rdbuf(tmp_stream_.rdbuf());
+4*:   24:    filestream_.close();
+4*:   25:  }
+------------------
+_ZN9StreamTeeD2Ev:
+function _ZN9StreamTeeD2Ev called 4 returned 100% blocks executed 100%
+4:   22:  ~StreamTee(){
+4:   23:    orig_stream_.rdbuf(tmp_stream_.rdbuf());
+call    0 returned 4
+call    1 returned 4
+4:   24:    filestream_.close();
+call    0 returned 4
+4:   25:  }
+call    0 returned 4
+call    1 returned 4
+call    2 returned 4
+------------------
+_ZN9StreamTeeD2Ev:
+function _ZN9StreamTeeD2Ev called 0 returned 0% blocks executed 0%
+#####:   22:  ~StreamTee(){
+#####:   23:    orig_stream_.rdbuf(tmp_stream_.rdbuf());
+call    0 never executed
+call    1 never executed
+#####:   24:    filestream_.close();
+call    0 never executed
+#####:   25:  }
+call    0 never executed
+call    1 never executed
+call    2 never executed
+------------------
+-:   26:
+-:   27:  ::std::ofstream filestream_;
+-:   28:  ::std::ostream tmp_stream_;
+-:   29:  TeeDevice outputDevice_;
+-:   30:  TeeStream logger_;
+-:   31:  ::std::ostream& orig_stream_;
+-:   32:
+-:   33:};

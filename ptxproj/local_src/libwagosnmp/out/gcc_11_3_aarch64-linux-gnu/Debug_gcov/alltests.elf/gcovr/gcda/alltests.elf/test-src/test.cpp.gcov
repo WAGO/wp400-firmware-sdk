@@ -1,0 +1,946 @@
+-:    0:Source:test-src/test.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9://------------------------------------------------------------------------------
+-:   10:///  \file     test.cpp
+-:   11:///
+-:   12:///  \brief    Simple tests to show googletest working in PTXdist packet.
+-:   13:///
+-:   14:///  \author   Jens Breitenstein : WAGO GmbH & Co. KG
+-:   15://------------------------------------------------------------------------------
+-:   16:
+-:   17://------------------------------------------------------------------------------
+-:   18:// include files
+-:   19://------------------------------------------------------------------------------
+-:   20:#include <gtest/gtest.h>
+-:   21:#include <net-snmp/net-snmp-config.h>
+-:   22:#include <net-snmp/net-snmp-features.h>
+-:   23:#include <net-snmp/net-snmp-includes.h>
+-:   24:
+-:   25:#include <cstring>
+-:   26:#include <string>
+-:   27:#include <array>
+-:   28:
+-:   29:extern "C" {
+-:   30:#include "wagosnmp_API.h"
+-:   31:// It should not be necessary to include internal header, but in order to use libwagosnmp_Int32ToTlv,
+-:   32:// some definitions from asn are required.
+-:   33:#include "wagosnmp_internal.h"
+-:   34:}
+-:   35:
+-:   36://------------------------------------------------------------------------------
+-:   37:// defines; structure, enumeration and type definitions
+-:   38://------------------------------------------------------------------------------
+-:   39:
+-:   40://------------------------------------------------------------------------------
+-:   41:// function prototypes
+-:   42://------------------------------------------------------------------------------
+-:   43:
+-:   44://------------------------------------------------------------------------------
+-:   45:// macros
+-:   46://------------------------------------------------------------------------------
+-:   47:
+-:   48://------------------------------------------------------------------------------
+-:   49:// variables' and constants' definitions
+-:   50://------------------------------------------------------------------------------
+-:   51:
+-:   52://------------------------------------------------------------------------------
+-:   53:// function implementation
+-:   54://------------------------------------------------------------------------------
+4:   55:TEST(Tlv, size) {
+1:   56:  printf("sizeof netsnmp_variable_list: %lu\n", sizeof(netsnmp_variable_list));
+1:   57:  printf("sizeof tWagoSnmpTlv: %lu\n", sizeof(tWagoSnmpTlv));
+-:   58:  static_assert(sizeof(tWagoSnmpTlv) >= sizeof(netsnmp_variable_list), "tWagoSnmpTlv is too small to hold netsnmp_variable_list");
+1:   59:}
+------------------
+_ZN13Tlv_size_TestC2Ev:
+function _ZN13Tlv_size_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   55:TEST(Tlv, size) {
+call    0 returned 1
+------------------
+_ZN13Tlv_size_TestD0Ev:
+function _ZN13Tlv_size_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   55:TEST(Tlv, size) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN13Tlv_size_TestD2Ev:
+function _ZN13Tlv_size_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   55:TEST(Tlv, size) {
+call    0 returned 1
+------------------
+_ZN13Tlv_size_Test8TestBodyEv:
+function _ZN13Tlv_size_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:   55:TEST(Tlv, size) {
+1:   56:  printf("sizeof netsnmp_variable_list: %lu\n", sizeof(netsnmp_variable_list));
+call    0 returned 1
+1:   57:  printf("sizeof tWagoSnmpTlv: %lu\n", sizeof(tWagoSnmpTlv));
+call    0 returned 1
+-:   58:  static_assert(sizeof(tWagoSnmpTlv) >= sizeof(netsnmp_variable_list), "tWagoSnmpTlv is too small to hold netsnmp_variable_list");
+1:   59:}
+------------------
+-:   60:
+4:   61:TEST(Tlv, callSo) {
+-:   62:  // setup
+-:   63:
+-:   64:  // test
+1*:   65:  ASSERT_EQ(WAGOSNMP_RETURN_BAD_DATATYPE, libwagosnmp_Int32ToTlv(0, ASN_BOOLEAN, NULL));
+-:   66:
+-:   67:  // teardown
+-:   68:}
+------------------
+_ZN15Tlv_callSo_TestC2Ev:
+function _ZN15Tlv_callSo_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   61:TEST(Tlv, callSo) {
+call    0 returned 1
+------------------
+_ZN15Tlv_callSo_TestD0Ev:
+function _ZN15Tlv_callSo_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   61:TEST(Tlv, callSo) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN15Tlv_callSo_TestD2Ev:
+function _ZN15Tlv_callSo_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   61:TEST(Tlv, callSo) {
+call    0 returned 1
+------------------
+_ZN15Tlv_callSo_Test8TestBodyEv:
+function _ZN15Tlv_callSo_Test8TestBodyEv called 1 returned 100% blocks executed 35%
+1:   61:TEST(Tlv, callSo) {
+-:   62:  // setup
+-:   63:
+-:   64:  // test
+1*:   65:  ASSERT_EQ(WAGOSNMP_RETURN_BAD_DATATYPE, libwagosnmp_Int32ToTlv(0, ASN_BOOLEAN, NULL));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:   66:
+-:   67:  // teardown
+-:   68:}
+------------------
+-:   69:
+4:   70:TEST(Tlv, CallSoWithParameter) {
+-:   71:  // setup
+-:   72:  tWagoSnmpTlv tlvData;
+1:   73:  memset(&tlvData, 0, sizeof(tlvData));
+1:   74:  int32_t input = 12;
+-:   75:
+-:   76:  // test
+1*:   77:  ASSERT_EQ(WAGOSNMP_RETURN_OK, libwagosnmp_Int32ToTlv(input, ASN_INTEGER, &tlvData));
+-:   78:
+-:   79:  // teardown
+-:   80:}
+------------------
+_ZN28Tlv_CallSoWithParameter_TestC2Ev:
+function _ZN28Tlv_CallSoWithParameter_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   70:TEST(Tlv, CallSoWithParameter) {
+call    0 returned 1
+------------------
+_ZN28Tlv_CallSoWithParameter_TestD0Ev:
+function _ZN28Tlv_CallSoWithParameter_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   70:TEST(Tlv, CallSoWithParameter) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN28Tlv_CallSoWithParameter_TestD2Ev:
+function _ZN28Tlv_CallSoWithParameter_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   70:TEST(Tlv, CallSoWithParameter) {
+call    0 returned 1
+------------------
+_ZN28Tlv_CallSoWithParameter_Test8TestBodyEv:
+function _ZN28Tlv_CallSoWithParameter_Test8TestBodyEv called 1 returned 100% blocks executed 34%
+1:   70:TEST(Tlv, CallSoWithParameter) {
+-:   71:  // setup
+-:   72:  tWagoSnmpTlv tlvData;
+1:   73:  memset(&tlvData, 0, sizeof(tlvData));
+1:   74:  int32_t input = 12;
+-:   75:
+-:   76:  // test
+1*:   77:  ASSERT_EQ(WAGOSNMP_RETURN_OK, libwagosnmp_Int32ToTlv(input, ASN_INTEGER, &tlvData));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:   78:
+-:   79:  // teardown
+-:   80:}
+------------------
+-:   81:
+4:   82:TEST(Tlv, Uninitialized_DeathTest) {
+-:   83:  // setup
+-:   84:  tWagoSnmpTlv tlvData;
+1:   85:  memset(&tlvData, 0xCC, sizeof(tlvData));
+1:   86:  int32_t input = 12;
+-:   87:
+-:   88:  // test
+1*:   89:  ASSERT_DEATH(libwagosnmp_Int32ToTlv(input, ASN_INTEGER, &tlvData), "");
+-:   90:
+-:   91:  // teardown
+-:   92:}
+------------------
+_ZN32Tlv_Uninitialized_DeathTest_TestC2Ev:
+function _ZN32Tlv_Uninitialized_DeathTest_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   82:TEST(Tlv, Uninitialized_DeathTest) {
+call    0 returned 1
+------------------
+_ZN32Tlv_Uninitialized_DeathTest_TestD0Ev:
+function _ZN32Tlv_Uninitialized_DeathTest_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   82:TEST(Tlv, Uninitialized_DeathTest) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN32Tlv_Uninitialized_DeathTest_TestD2Ev:
+function _ZN32Tlv_Uninitialized_DeathTest_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   82:TEST(Tlv, Uninitialized_DeathTest) {
+call    0 returned 1
+------------------
+_ZN32Tlv_Uninitialized_DeathTest_Test8TestBodyEv:
+function _ZN32Tlv_Uninitialized_DeathTest_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:   82:TEST(Tlv, Uninitialized_DeathTest) {
+-:   83:  // setup
+-:   84:  tWagoSnmpTlv tlvData;
+1:   85:  memset(&tlvData, 0xCC, sizeof(tlvData));
+1:   86:  int32_t input = 12;
+-:   87:
+-:   88:  // test
+1*:   89:  ASSERT_DEATH(libwagosnmp_Int32ToTlv(input, ASN_INTEGER, &tlvData), "");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+branch 20 taken 1
+branch 21 taken 0
+branch 22 taken 0
+call   23 returned 1
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0 (throw)
+call   26 returned 1
+branch 27 taken 1 (fallthrough)
+branch 28 taken 0 (throw)
+call   29 returned 1
+branch 30 taken 1 (fallthrough)
+branch 31 taken 0 (throw)
+branch 32 taken 0 (fallthrough)
+branch 33 taken 1
+call   34 never executed
+call   35 never executed
+branch 36 never executed
+branch 37 never executed
+call   38 never executed
+branch 39 never executed
+branch 40 never executed
+branch 41 never executed
+branch 42 never executed
+call   43 never executed
+branch 44 never executed
+branch 45 never executed
+call   46 never executed
+branch 47 never executed
+branch 48 never executed
+call   49 never executed
+call   50 returned 1
+branch 51 taken 1 (fallthrough)
+branch 52 taken 0
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+branch 57 never executed
+branch 58 never executed
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+branch 63 never executed
+branch 64 never executed
+call   65 never executed
+call   66 never executed
+call   67 never executed
+branch 68 never executed
+branch 69 never executed
+call   70 never executed
+call   71 never executed
+branch 72 never executed
+branch 73 never executed
+call   74 never executed
+call   75 never executed
+call   76 never executed
+branch 77 never executed
+branch 78 never executed
+call   79 never executed
+call   80 never executed
+branch 81 never executed
+branch 82 never executed
+call   83 never executed
+branch 84 never executed
+branch 85 never executed
+call   86 never executed
+call   87 never executed
+call   88 never executed
+branch 89 never executed
+branch 90 never executed
+call   91 never executed
+branch 92 never executed
+branch 93 never executed
+call   94 never executed
+call   95 never executed
+call   96 never executed
+call   97 never executed
+call   98 never executed
+call   99 never executed
+call   100 never executed
+-:   90:
+-:   91:  // teardown
+-:   92:}
+------------------
+-:   93:
+4:   94:TEST(Tlv, ConversionInt) {
+-:   95:  // setup
+-:   96:  tWagoSnmpTlv tlvData;
+1:   97:  memset(&tlvData, 0, sizeof(tlvData));
+1:   98:  int32_t input  = 12;
+1:   99:  int32_t output = 0;
+-:  100:
+-:  101:  // test
+1*:  102:  ASSERT_EQ(WAGOSNMP_RETURN_OK, libwagosnmp_Int32ToTlv(input, ASN_INTEGER, &tlvData));
+1*:  103:  ASSERT_EQ(WAGOSNMP_RETURN_OK, libwagosnmp_TlvToInt32(&tlvData, &output));
+1*:  104:  ASSERT_EQ(input, output);
+-:  105:
+-:  106:  // teardown
+-:  107:}
+------------------
+_ZN22Tlv_ConversionInt_TestC2Ev:
+function _ZN22Tlv_ConversionInt_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(Tlv, ConversionInt) {
+call    0 returned 1
+------------------
+_ZN22Tlv_ConversionInt_TestD0Ev:
+function _ZN22Tlv_ConversionInt_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(Tlv, ConversionInt) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN22Tlv_ConversionInt_TestD2Ev:
+function _ZN22Tlv_ConversionInt_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(Tlv, ConversionInt) {
+call    0 returned 1
+------------------
+_ZN22Tlv_ConversionInt_Test8TestBodyEv:
+function _ZN22Tlv_ConversionInt_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:   94:TEST(Tlv, ConversionInt) {
+-:   95:  // setup
+-:   96:  tWagoSnmpTlv tlvData;
+1:   97:  memset(&tlvData, 0, sizeof(tlvData));
+1:   98:  int32_t input  = 12;
+1:   99:  int32_t output = 0;
+-:  100:
+-:  101:  // test
+1*:  102:  ASSERT_EQ(WAGOSNMP_RETURN_OK, libwagosnmp_Int32ToTlv(input, ASN_INTEGER, &tlvData));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+1*:  103:  ASSERT_EQ(WAGOSNMP_RETURN_OK, libwagosnmp_TlvToInt32(&tlvData, &output));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+1*:  104:  ASSERT_EQ(input, output);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  105:
+-:  106:  // teardown
+-:  107:}
+------------------
+-:  108:
+4:  109:TEST(Tlv, ConversionString) {
+-:  110:  // setup
+-:  111:  tWagoSnmpTlv tlvData;
+1:  112:  ::std::string input;
+1:  113:  ::std::array<char, WAGOSNMP_MAX_STR_LEN + 1> output{};
+1:  114:  memset(output.data(), 'x', output.size());
+-:  115:
+256:  116:  for(int length = 1; length <= WAGOSNMP_MAX_STR_LEN; length++) {
+255:  117:    input.append(1, 'a');
+255:  118:    memset(&tlvData, 0, sizeof(tlvData));
+-:  119:    // test
+255*:  120:    ASSERT_EQ(WAGOSNMP_RETURN_OK, libwagosnmp_StrToTlv(input.c_str(), ASN_OCTET_STR, &tlvData));
+255*:  121:    ASSERT_EQ(WAGOSNMP_RETURN_OK, libwagosnmp_TlvToStr(&tlvData, output.data(), WAGOSNMP_MAX_STR_LEN));
+255*:  122:    ASSERT_EQ(strnlen(output.data(), output.size()), length);
+255*:  123:    ASSERT_STREQ(input.c_str(), output.data());
+255:  124:    libwagosnmp_TlvDeinit(&tlvData);
+-:  125:  }
+-:  126:
+-:  127:  // teardown
+1:  128:}
+------------------
+_ZN25Tlv_ConversionString_TestC2Ev:
+function _ZN25Tlv_ConversionString_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  109:TEST(Tlv, ConversionString) {
+call    0 returned 1
+------------------
+_ZN25Tlv_ConversionString_TestD0Ev:
+function _ZN25Tlv_ConversionString_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  109:TEST(Tlv, ConversionString) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN25Tlv_ConversionString_TestD2Ev:
+function _ZN25Tlv_ConversionString_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  109:TEST(Tlv, ConversionString) {
+call    0 returned 1
+------------------
+_ZN25Tlv_ConversionString_Test8TestBodyEv:
+function _ZN25Tlv_ConversionString_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:  109:TEST(Tlv, ConversionString) {
+-:  110:  // setup
+-:  111:  tWagoSnmpTlv tlvData;
+1:  112:  ::std::string input;
+call    0 returned 1
+1:  113:  ::std::array<char, WAGOSNMP_MAX_STR_LEN + 1> output{};
+1:  114:  memset(output.data(), 'x', output.size());
+call    0 returned 1
+call    1 returned 1
+-:  115:
+256:  116:  for(int length = 1; length <= WAGOSNMP_MAX_STR_LEN; length++) {
+branch  0 taken 255
+branch  1 taken 1 (fallthrough)
+255:  117:    input.append(1, 'a');
+call    0 returned 255
+branch  1 taken 255 (fallthrough)
+branch  2 taken 0 (throw)
+255:  118:    memset(&tlvData, 0, sizeof(tlvData));
+-:  119:    // test
+255*:  120:    ASSERT_EQ(WAGOSNMP_RETURN_OK, libwagosnmp_StrToTlv(input.c_str(), ASN_OCTET_STR, &tlvData));
+call    0 returned 255
+call    1 returned 255
+branch  2 taken 255 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 255
+branch  5 taken 255 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 255
+branch  8 taken 0 (fallthrough)
+branch  9 taken 255
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 255
+branch 23 taken 255 (fallthrough)
+branch 24 taken 0
+call   25 never executed
+call   26 never executed
+call   27 never executed
+255*:  121:    ASSERT_EQ(WAGOSNMP_RETURN_OK, libwagosnmp_TlvToStr(&tlvData, output.data(), WAGOSNMP_MAX_STR_LEN));
+call    0 returned 255
+call    1 returned 255
+branch  2 taken 255 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 255
+branch  5 taken 255 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 255
+branch  8 taken 0 (fallthrough)
+branch  9 taken 255
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 255
+branch 23 taken 255 (fallthrough)
+branch 24 taken 0
+call   25 never executed
+call   26 never executed
+call   27 never executed
+255*:  122:    ASSERT_EQ(strnlen(output.data(), output.size()), length);
+call    0 returned 255
+call    1 returned 255
+call    2 returned 255
+branch  3 taken 255 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 255
+branch  6 taken 0 (fallthrough)
+branch  7 taken 255
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 255
+branch 21 taken 255 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+255*:  123:    ASSERT_STREQ(input.c_str(), output.data());
+call    0 returned 255
+call    1 returned 255
+call    2 returned 255
+branch  3 taken 255 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 255
+branch  6 taken 0 (fallthrough)
+branch  7 taken 255
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 255
+branch 21 taken 255 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+255:  124:    libwagosnmp_TlvDeinit(&tlvData);
+call    0 returned 255
+branch  1 taken 255 (fallthrough)
+branch  2 taken 0 (throw)
+-:  125:  }
+-:  126:
+-:  127:  // teardown
+1:  128:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 never executed
+------------------
+-:  129:
+-:  130:struct SecAuthParams {
+-:  131:  SnmpAuhtenticationProtocol auth;
+-:  132:  SnmpPrivacyProtocol priv;
+-:  133:  tWagoSnmpSecLevel secLevel;
+-:  134:  oid* expectedAuthProto;
+-:  135:  int expectedAuthProtoLen;
+-:  136:  oid* expectedPrivProto;
+-:  137:  int expectedPrivProtoLen;
+-:  138:};
+-:  139:
+-:  140:class SetAuthPrivTestFixture : public ::testing::TestWithParam<SecAuthParams> {
+-:  141: protected:
+-:  142:  tWagoSnmpTranceiver transceiver;
+-:  143:  netsnmp_session session;
+-:  144:  ::std::string pass{"asdfASDF"};
+-:  145:
+function _ZN22SetAuthPrivTestFixture5SetUpEv called 3 returned 100% blocks executed 100%
+3:  146:  void SetUp() override {
+3:  147:    transceiver.sAuthPass  = const_cast<char*>(pass.c_str());
+call    0 returned 3
+3:  148:    transceiver.sPrivPass  = const_cast<char*>(pass.c_str());
+call    0 returned 3
+3:  149:    transceiver.szAuthPass = pass.size();
+call    0 returned 3
+3:  150:    transceiver.szPrivPass = pass.size();
+call    0 returned 3
+3:  151:  }
+-:  152:};
+-:  153:
+7:  154:TEST_P(SetAuthPrivTestFixture, ShouldInitializeSessionSecAuthFields) {
+3:  155:  ::std::memset(&session, 0, sizeof(session));
+-:  156:
+3:  157:  auto param = GetParam();
+-:  158:
+3:  159:  transceiver.typAuthProt = param.auth;
+3:  160:  transceiver.typPrivProt = param.priv;
+3:  161:  transceiver.typSecLevel = param.secLevel;
+3:  162:  session.securityLevel   = param.secLevel;
+-:  163:
+3:  164:  auto res = INTERNAL_SetAuthPriv(&transceiver, &session);
+-:  165:
+3*:  166:  EXPECT_EQ(res, WAGOSNMP_RETURN_OK);
+3*:  167:  EXPECT_EQ(session.securityAuthProto, param.expectedAuthProto);
+3*:  168:  EXPECT_EQ(session.securityPrivProto, param.expectedPrivProto);
+3*:  169:  EXPECT_EQ(session.securityAuthProtoLen, param.expectedAuthProtoLen);
+3*:  170:  EXPECT_EQ(session.securityPrivProtoLen, param.expectedPrivProtoLen);
+3:  171:}
+------------------
+_ZN64SetAuthPrivTestFixture_ShouldInitializeSessionSecAuthFields_Test8TestBodyEv:
+function _ZN64SetAuthPrivTestFixture_ShouldInitializeSessionSecAuthFields_Test8TestBodyEv called 3 returned 100% blocks executed 23%
+3:  154:TEST_P(SetAuthPrivTestFixture, ShouldInitializeSessionSecAuthFields) {
+3:  155:  ::std::memset(&session, 0, sizeof(session));
+-:  156:
+3:  157:  auto param = GetParam();
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+-:  158:
+3:  159:  transceiver.typAuthProt = param.auth;
+3:  160:  transceiver.typPrivProt = param.priv;
+3:  161:  transceiver.typSecLevel = param.secLevel;
+3:  162:  session.securityLevel   = param.secLevel;
+-:  163:
+3:  164:  auto res = INTERNAL_SetAuthPriv(&transceiver, &session);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+-:  165:
+3*:  166:  EXPECT_EQ(res, WAGOSNMP_RETURN_OK);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 0 (fallthrough)
+branch  5 taken 3
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 3
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3*:  167:  EXPECT_EQ(session.securityAuthProto, param.expectedAuthProto);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 0 (fallthrough)
+branch  5 taken 3
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 3
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3*:  168:  EXPECT_EQ(session.securityPrivProto, param.expectedPrivProto);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 0 (fallthrough)
+branch  5 taken 3
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 3
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3*:  169:  EXPECT_EQ(session.securityAuthProtoLen, param.expectedAuthProtoLen);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 0 (fallthrough)
+branch  5 taken 3
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 3
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3*:  170:  EXPECT_EQ(session.securityPrivProtoLen, param.expectedPrivProtoLen);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+branch  4 taken 0 (fallthrough)
+branch  5 taken 3
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 3
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  171:}
+------------------
+_ZN64SetAuthPrivTestFixture_ShouldInitializeSessionSecAuthFields_Test13AddToRegistryEv:
+function _ZN64SetAuthPrivTestFixture_ShouldInitializeSessionSecAuthFields_Test13AddToRegistryEv called 1 returned 100% blocks executed 55%
+1:  154:TEST_P(SetAuthPrivTestFixture, ShouldInitializeSessionSecAuthFields) {
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0 (throw)
+call   26 returned 1
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 returned 1
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+------------------
+_ZN64SetAuthPrivTestFixture_ShouldInitializeSessionSecAuthFields_TestC2Ev:
+function _ZN64SetAuthPrivTestFixture_ShouldInitializeSessionSecAuthFields_TestC2Ev called 3 returned 100% blocks executed 100%
+3:  154:TEST_P(SetAuthPrivTestFixture, ShouldInitializeSessionSecAuthFields) {
+call    0 returned 3
+------------------
+-:  172:
+5*:  173:INSTANTIATE_TEST_CASE_P(SecAuthTest, SetAuthPrivTestFixture,
+------------------
+_ZL57gtest_SecAuthTestSetAuthPrivTestFixture_EvalGenerateName_RKN7testing13TestParamInfoI13SecAuthParamsEE:
+function _ZL57gtest_SecAuthTestSetAuthPrivTestFixture_EvalGenerateName_RKN7testing13TestParamInfoI13SecAuthParamsEE called 3 returned 100% blocks executed 50%
+3*:  173:INSTANTIATE_TEST_CASE_P(SecAuthTest, SetAuthPrivTestFixture,
+call    0 returned 3
+branch  1 taken 0 (fallthrough)
+branch  2 taken 3
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 returned 3
+------------------
+_ZL54gtest_SecAuthTestSetAuthPrivTestFixture_EvalGenerator_v:
+function _ZL54gtest_SecAuthTestSetAuthPrivTestFixture_EvalGenerator_v called 1 returned 100% blocks executed 100%
+2:  173:INSTANTIATE_TEST_CASE_P(SecAuthTest, SetAuthPrivTestFixture,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+------------------
+-:  174:                        ::testing::Values(SecAuthParams{AUTH_NONE, PRIVACY_NONE, SNMP_SEC_LEVEL_NOAUTH,
+-:  175:                                                        &usmNoAuthProtocol[0], USM_AUTH_PROTO_NOAUTH_LEN,
+-:  176:                                                        &usmNoPrivProtocol[0], USM_PRIV_PROTO_NOPRIV_LEN},
+-:  177:                                          SecAuthParams{AUTH_SHA512, PRIVACY_AES256, SNMP_SEC_LEVEL_AUTHPRIV,
+-:  178:                                                        &usmHMAC384SHA512AuthProtocol[0], USM_AUTH_PROTO_SHA_LEN,
+-:  179:                                                        &usmAES256PrivProtocol[0], 9},
+-:  180:                                          SecAuthParams{AUTH_SHA384, PRIVACY_AES256C, SNMP_SEC_LEVEL_AUTHPRIV,
+-:  181:                                                        &usmHMAC256SHA384AuthProtocol[0], USM_AUTH_PROTO_SHA_LEN,
+-:  182:                                                        &usmAES256CiscoPrivProtocol[0], 11}));
+-:  183:
+-:  184://---- End of source file ------------------------------------------------------

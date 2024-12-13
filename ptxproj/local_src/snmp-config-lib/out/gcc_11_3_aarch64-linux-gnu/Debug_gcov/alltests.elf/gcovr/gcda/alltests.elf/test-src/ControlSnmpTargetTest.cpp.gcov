@@ -1,0 +1,572 @@
+-:    0:Source:test-src/ControlSnmpTargetTest.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:
+-:   10:#include <gtest/gtest.h>
+-:   11:#include <gmock/gmock.h>
+-:   12:#include <glib.h>
+-:   13:#include <filesystem>
+-:   14:
+-:   15:#include "ControlSnmp.hpp"
+-:   16:#include "Constants.hpp"
+-:   17:
+-:   18:
+-:   19:namespace wago::snmp_config_lib {
+-:   20:
+-:   21:namespace fs = std::filesystem;
+-:   22:
+function _ZN4wago15snmp_config_libL13SymlinkExistsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   23:static bool SymlinkExists(const ::std::string &link_path) {
+#####:   24:  return fs::exists(link_path);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:   25:}
+-:   26:
+function _ZN4wago15snmp_config_libL9IsRunningERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   27:static bool IsRunning(const ::std::string &process) {
+-:   28:
+#####:   29:  ::std::string command_line = "pidof " + process;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   30:
+#####:   31:  gint exit_status = 0;
+#####:   32:  gchar *p_stdout = nullptr;
+#####:   33:  gchar *p_stderr = nullptr;
+#####:   34:  GError *p_error = nullptr;
+-:   35:
+#####:   36:  g_spawn_command_line_sync(command_line.c_str(), &p_stdout, &p_stderr, &exit_status, &p_error);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+-:   37:
+-:   38:  char *end;
+#####:   39:  int pid = ::std::strtol(p_stdout, &end, 0);
+call    0 never executed
+-:   40:
+#####:   41:  return (pid > 0);
+#####:   42:}
+call    0 never executed
+call    1 never executed
+-:   43:
+function _ZN4wago15snmp_config_libL19AssertSnmpIsEnabledEb called 0 returned 0% blocks executed 0%
+#####:   44:static void AssertSnmpIsEnabled(bool enabled) {
+#####:   45:  auto snmp_paths = Constants::GetSnmpFilePaths();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   46:  auto snmp_trap_paths = Constants::GetSnmpTrapFilePaths();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   47:
+#####:   48:  if (enabled) {
+branch  0 never executed
+branch  1 never executed
+#####:   49:    EXPECT_TRUE(SymlinkExists(snmp_paths.rc_d));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   50:    EXPECT_TRUE(SymlinkExists(snmp_trap_paths.rc_d));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   51:    EXPECT_TRUE(IsRunning(snmp_paths.daemon));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   52:    EXPECT_TRUE(IsRunning(snmp_trap_paths.daemon));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   53:  } else {
+#####:   54:    EXPECT_FALSE(SymlinkExists(snmp_paths.rc_d));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   55:    EXPECT_FALSE(SymlinkExists(snmp_trap_paths.rc_d));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   56:    EXPECT_FALSE(IsRunning(snmp_paths.daemon));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   57:    EXPECT_FALSE(IsRunning(snmp_trap_paths.daemon));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   58:  }
+#####:   59:}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:   60:
+#####:   61:TEST(ControlSnmpTest_Target, EnableDisableSnmp) {
+-:   62:
+#####:   63:  StartDaemons();
+#####:   64:  EXPECT_TRUE(IsSnmpRunning());
+#####:   65:  AssertSnmpIsEnabled(true);
+-:   66:
+#####:   67:  StopDaemons();
+#####:   68:  EXPECT_FALSE(IsSnmpRunning());
+#####:   69:  AssertSnmpIsEnabled(false);
+-:   70:
+#####:   71:  StartDaemons();
+#####:   72:  EXPECT_TRUE(IsSnmpRunning());
+#####:   73:  AssertSnmpIsEnabled(true);
+-:   74:
+#####:   75:  StartDaemons();
+#####:   76:  EXPECT_TRUE(IsSnmpRunning());
+#####:   77:  AssertSnmpIsEnabled(true);
+-:   78:
+#####:   79:  StopDaemons();
+#####:   80:  EXPECT_FALSE(IsSnmpRunning());
+#####:   81:  AssertSnmpIsEnabled(false);
+-:   82:
+#####:   83:  StopDaemons();
+#####:   84:  EXPECT_FALSE(IsSnmpRunning());
+#####:   85:  AssertSnmpIsEnabled(false);
+-:   86:
+#####:   87:}
+------------------
+_ZN4wago15snmp_config_lib45ControlSnmpTest_Target_EnableDisableSnmp_TestC2Ev:
+function _ZN4wago15snmp_config_lib45ControlSnmpTest_Target_EnableDisableSnmp_TestC2Ev called 0 returned 0% blocks executed 0%
+#####:   61:TEST(ControlSnmpTest_Target, EnableDisableSnmp) {
+call    0 never executed
+------------------
+_ZN4wago15snmp_config_lib45ControlSnmpTest_Target_EnableDisableSnmp_TestD0Ev:
+function _ZN4wago15snmp_config_lib45ControlSnmpTest_Target_EnableDisableSnmp_TestD0Ev called 0 returned 0% blocks executed 0%
+#####:   61:TEST(ControlSnmpTest_Target, EnableDisableSnmp) {
+call    0 never executed
+call    1 never executed
+------------------
+_ZN4wago15snmp_config_lib45ControlSnmpTest_Target_EnableDisableSnmp_TestD2Ev:
+function _ZN4wago15snmp_config_lib45ControlSnmpTest_Target_EnableDisableSnmp_TestD2Ev called 0 returned 0% blocks executed 0%
+#####:   61:TEST(ControlSnmpTest_Target, EnableDisableSnmp) {
+call    0 never executed
+------------------
+_ZN4wago15snmp_config_lib45ControlSnmpTest_Target_EnableDisableSnmp_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib45ControlSnmpTest_Target_EnableDisableSnmp_Test8TestBodyEv called 0 returned 0% blocks executed 0%
+#####:   61:TEST(ControlSnmpTest_Target, EnableDisableSnmp) {
+-:   62:
+#####:   63:  StartDaemons();
+call    0 never executed
+#####:   64:  EXPECT_TRUE(IsSnmpRunning());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   65:  AssertSnmpIsEnabled(true);
+call    0 never executed
+-:   66:
+#####:   67:  StopDaemons();
+call    0 never executed
+#####:   68:  EXPECT_FALSE(IsSnmpRunning());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   69:  AssertSnmpIsEnabled(false);
+call    0 never executed
+-:   70:
+#####:   71:  StartDaemons();
+call    0 never executed
+#####:   72:  EXPECT_TRUE(IsSnmpRunning());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   73:  AssertSnmpIsEnabled(true);
+call    0 never executed
+-:   74:
+#####:   75:  StartDaemons();
+call    0 never executed
+#####:   76:  EXPECT_TRUE(IsSnmpRunning());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   77:  AssertSnmpIsEnabled(true);
+call    0 never executed
+-:   78:
+#####:   79:  StopDaemons();
+call    0 never executed
+#####:   80:  EXPECT_FALSE(IsSnmpRunning());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   81:  AssertSnmpIsEnabled(false);
+call    0 never executed
+-:   82:
+#####:   83:  StopDaemons();
+call    0 never executed
+#####:   84:  EXPECT_FALSE(IsSnmpRunning());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+#####:   85:  AssertSnmpIsEnabled(false);
+call    0 never executed
+-:   86:
+#####:   87:}
+------------------
+-:   88:
+-:   89:}  // wago::util

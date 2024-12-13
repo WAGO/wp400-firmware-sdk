@@ -1,0 +1,1032 @@
+-:    0:Source:src/libwagosnmp.c
+-:    1://------------------------------------------------------------------------------
+-:    2:/// Copyright (c) WAGO GmbH & Co. KG
+-:    3:///
+-:    4:/// PROPRIETARY RIGHTS are involved in the subject matter of this material.
+-:    5:/// All manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:/// subject matter are governed by the license agreement. The recipient of this
+-:    7:/// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:#include <errno.h>
+-:   10:#include <stdio.h>
+-:   11:#include <stdlib.h>
+-:   12:#include <stdalign.h>
+-:   13:#include <string.h>
+-:   14:
+-:   15:#include "wagosnmp_API.h"
+-:   16:#include "wagosnmp_internal.h"
+-:   17:
+-:   18:PUBLIC_SYM void init_libwagosnmp_AgentEntry(void);
+-:   19:
+-:   20:/* init_function for snmpd-plugin. For deinit function see agent.c */
+function init_libwagosnmp_AgentEntry called 0 returned 0% blocks executed 0%
+#####:   21:void init_libwagosnmp_AgentEntry(void) {
+#####:   22:  DEBUGMSGTL(("plcsnmp_trap_agent", "init_libwagosnmp_AgentEntry: snmp_alarm_register\n"));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+#####:   23:  agent_init_alarm_register = snmp_alarm_register(3, 0, AGENT_InitServerCommunication, NULL);
+call    0 never executed
+#####:   24:}
+-:   25:
+function libwagosnmp_Shutdown called 0 returned 0% blocks executed 0%
+#####:   26:void libwagosnmp_Shutdown(void) {
+#####:   27:  snmp_shutdown(WAGOSNMP_INIT_NAME);
+call    0 never executed
+#####:   28:  INTERNAL_ResetSnmpAgent();
+call    0 never executed
+#####:   29:  snmp_is_initialized       = PTHREAD_ONCE_INIT;
+#####:   30:  snmp_agent_is_initialized = PTHREAD_ONCE_INIT;
+#####:   31:}
+-:   32:
+function libwagosnmp_GetErrorString called 0 returned 0% blocks executed 0%
+#####:   33:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_GetErrorString(tWagoSnmpReturnCode code, char *str, size_t szString) {
+-:   34:  typedef struct {
+-:   35:    tWagoSnmpReturnCode code;
+-:   36:    char const *string;
+-:   37:  } tRetToStr;
+#####:   38:  tWagoSnmpReturnCode ret = WAGOSNMP_RETURN_OK;
+-:   39:#define RET_TO_STRING(x) \
+-:   40:  { .code = x, .string = #x }
+-:   41:  static const tRetToStr strings[] = {RET_TO_STRING(WAGOSNMP_RETURN_OK),
+-:   42:                                      RET_TO_STRING(WAGOSNMP_RETURN_INIT_SESSION_ERROR),
+-:   43:                                      RET_TO_STRING(WAGOSNMP_RETURN_BAD_MSG_TYPE),
+-:   44:                                      RET_TO_STRING(WAGOSNMP_RETURN_PARSE_OID_ERROR),
+-:   45:                                      RET_TO_STRING(WAGOSNMP_RETURN_TRANSCEIVE_ERROR),
+-:   46:                                      RET_TO_STRING(WAGOSNMP_RETURN_BAD_DATATYPE),
+-:   47:                                      RET_TO_STRING(WAGOSNMP_RETURN_WARN_STR_VAL_TOO_LONG),
+-:   48:                                      RET_TO_STRING(WAGOSNMP_RETURN_ERR_MALLOC),
+-:   49:                                      RET_TO_STRING(WAGOSNMP_RETURN_BAD_STR_VALUE),
+-:   50:                                      RET_TO_STRING(WAGOSNMP_RETURN_ERROR_UNINIT_DATA),
+-:   51:                                      RET_TO_STRING(WAGOSNMP_RETURN_TIMEOUT),
+-:   52:                                      RET_TO_STRING(WAGOSNMP_RETURN_PACKAGE_ERROR),
+-:   53:                                      RET_TO_STRING(WAGOSNMP_RETURN_FB_ERROR),
+-:   54:                                      RET_TO_STRING(WAGOSNMP_RETURN_AUTH_ERR),
+-:   55:                                      RET_TO_STRING(WAGOSNMP_RETURN_PRIV_ERR),
+-:   56:                                      RET_TO_STRING(WAGOSNMP_RETURN_ERROR_BUFFER_TOO_SMALL),
+-:   57:                                      RET_TO_STRING(WAGOSNMP_RETURN_ERROR_CONVERT),
+-:   58:                                      RET_TO_STRING(WAGOSNMP_RETURN_ERROR_BAD_ENGINE_ID),
+-:   59:                                      RET_TO_STRING(WAGOSNMP_RETURN_ERROR_INVALID_ENGINE_ID),
+-:   60:                                      RET_TO_STRING(WAGOSNMP_RETURN_ERROR_INVALID_ENGINE_ID),
+-:   61:                                      RET_TO_STRING(WAGOSNMP_RETURN_ERROR_EXIST),
+-:   62:                                      RET_TO_STRING(WAGOSNMP_RETURN_ERROR_SHM),
+-:   63:                                      RET_TO_STRING(WAGOSNMP_RETURN_NOT_FOUND),
+-:   64:                                      RET_TO_STRING(WAGOSNMP_RETURN_ERROR_PARAMETER)};
+-:   65:  size_t i;
+#####:   66:  char unknown[]   = "UNKNOWN";
+#####:   67:  char const *pStr = unknown;
+#####:   68:  for (i = 0; i < sizeof(strings) / sizeof(tRetToStr); i++) {
+branch  0 never executed
+branch  1 never executed
+#####:   69:    if (strings[i].code == code) {
+branch  0 never executed
+branch  1 never executed
+#####:   70:      pStr = strings[i].string;
+#####:   71:      break;
+-:   72:    }
+-:   73:  }
+-:   74:
+#####:   75:  i = strlen(pStr) + 1;
+#####:   76:  if (szString < i) {
+branch  0 never executed
+branch  1 never executed
+#####:   77:    ret = WAGOSNMP_RETURN_WARN_STR_VAL_TOO_LONG;
+-:   78:  }
+#####:   79:  strncpy(str, pStr, szString);
+#####:   80:  str[szString - 1] = 0;
+#####:   81:  return ret;
+-:   82:}
+-:   83:
+function libwagosnmp_TlvInit called 0 returned 0% blocks executed 0%
+#####:   84:PUBLIC_SYM void libwagosnmp_TlvInit(tWagoSnmpTlv *stTlvData) {
+#####:   85:  memset(stTlvData, 0, sizeof(netsnmp_variable_list));
+#####:   86:}
+-:   87:
+function libwagosnmp_TlvDeinit called 255 returned 100% blocks executed 100%
+255:   88:PUBLIC_SYM void libwagosnmp_TlvDeinit(tWagoSnmpTlv *stTlvData) {
+255:   89:  (void)libwagosnmp_NullToTlv(stTlvData);
+call    0 returned 255
+255:   90:}
+-:   91:
+function libwagosnmp_TlvGetType called 0 returned 0% blocks executed 0%
+#####:   92:PUBLIC_SYM tWagoSnmpDataType libwagosnmp_TlvGetType(tWagoSnmpTlv *stTlvData) {
+#####:   93:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+#####:   94:  return (tWagoSnmpDataType)stData->type;
+-:   95:}
+-:   96:
+function libwagosnmp_CloneTlv called 0 returned 0% blocks executed 0%
+#####:   97:PUBLIC_SYM void libwagosnmp_CloneTlv(tWagoSnmpTlv *dst, tWagoSnmpTlv *src) {
+#####:   98:  INTERNAL_ReTwist(SNMP_TLV(src));
+call    0 never executed
+#####:   99:   (void)snmp_clone_var(SNMP_TLV(src), SNMP_TLV(dst));
+call    0 never executed
+#####:  100:  INTERNAL_DeTwist(SNMP_TLV(src));
+call    0 never executed
+#####:  101:  INTERNAL_DeTwist(SNMP_TLV(dst));
+call    0 never executed
+#####:  102:}
+-:  103:
+-:  104://-- Function: PLCSNMP_MANAGER_null_to_tlv -----------------------------------------
+-:  105:///
+-:  106:///  PLC-Function SNMPM_NULL_TO_TLV
+-:  107:///
+-:  108:///
+-:  109:///
+-:  110:///   FUNCTION SNMPM_NULL_TO_TLV : INT
+-:  111:///   (* This function convert a given ULINT value into the TLV-structure
+-:  112:///
+-:  113:///     Return values:
+-:  114:///       0: Successful executed
+-:  115:///
+-:  116:///       7 : Not enough memory on device
+-:  117:///   *)
+-:  118:///   VAR_IN_OUT
+-:  119:///     stData  : tSNMPM_TLV;       (* Container for TLV *)
+-:  120:///   END_VAR
+-:  121:///   VAR
+-:  122:///   END_VAR
+-:  123:///
+-:  124:///  Body:
+-:  125:///   ;
+-:  126://-----------------------------------------------------------------------------
+function libwagosnmp_NullToTlv called 257 returned 100% blocks executed 86%
+257:  127:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_NullToTlv(tWagoSnmpTlv *stTlvData) {
+257:  128:  tWagoSnmpReturnCode ret       = WAGOSNMP_RETURN_OK;
+257:  129:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+257:  130:  u_char zero                   = 0;
+257:  131:  INTERNAL_ReTwist(stData);
+call    0 returned 257
+257:  132:  if (INTERNAL_SetVarTypedValue(stData, ASN_NULL, &zero, sizeof(zero))) {
+call    0 returned 257
+branch  1 taken 0 (fallthrough)
+branch  2 taken 257
+#####:  133:    ret = WAGOSNMP_RETURN_ERR_MALLOC;
+-:  134:  }
+257:  135:  INTERNAL_DeTwist(stData);
+call    0 returned 257
+257:  136:  return ret;
+-:  137:}
+-:  138:
+function libwagosnmp_Int32ToTlv called 3 returned 100% blocks executed 89%
+3:  139:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_Int32ToTlv(int32_t input, tWagoSnmpDataType eType, tWagoSnmpTlv *stTlvData) {
+3:  140:  tWagoSnmpReturnCode ret       = WAGOSNMP_RETURN_OK;
+3:  141:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+-:  142:
+3:  143:  if (eType != ASN_INTEGER) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 2
+1:  144:    return WAGOSNMP_RETURN_BAD_DATATYPE;
+-:  145:  }
+-:  146:
+2:  147:  INTERNAL_ReTwist(stData);
+call    0 returned 2
+2:  148:  if (INTERNAL_SetVarTypedValue(stData, eType, &input, sizeof(int))) {
+call    0 returned 2
+branch  1 taken 0 (fallthrough)
+branch  2 taken 2
+#####:  149:    ret = WAGOSNMP_RETURN_ERR_MALLOC;
+-:  150:  }
+2:  151:  INTERNAL_DeTwist(stData);
+call    0 returned 2
+2:  152:  return ret;
+-:  153:}
+-:  154:
+function libwagosnmp_Uint32ToTlv called 0 returned 0% blocks executed 0%
+#####:  155:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_Uint32ToTlv(uint32_t input, tWagoSnmpDataType eType,
+-:  156:                                                       tWagoSnmpTlv *stTlvData) {
+#####:  157:  tWagoSnmpReturnCode ret       = WAGOSNMP_RETURN_OK;
+#####:  158:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+-:  159:
+#####:  160:  if ((eType != ASN_UNSIGNED) && (eType != ASN_TIMETICKS) && (eType != ASN_COUNTER) && (eType != ASN_UINTEGER)) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+#####:  161:    return WAGOSNMP_RETURN_BAD_DATATYPE;
+-:  162:  }
+-:  163:
+#####:  164:  INTERNAL_ReTwist(stData);
+call    0 never executed
+#####:  165:  if (INTERNAL_SetVarTypedValue(stData, eType, &input, sizeof(uint32_t))) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  166:    ret = WAGOSNMP_RETURN_ERR_MALLOC;
+-:  167:  }
+#####:  168:  INTERNAL_DeTwist(stData);
+call    0 never executed
+#####:  169:  return ret;
+-:  170:}
+-:  171:
+-:  172://-- Function: PLCSNMP_MANAGER_str_to_tlv -----------------------------------------
+-:  173:///
+-:  174:///  PLC-Function SNMPM_STRING_TO_TLV
+-:  175:///  try to convert all given STRING-Values into the given data-type
+-:  176:///
+-:  177://-----------------------------------------------------------------------------
+function libwagosnmp_StrToTlv called 256 returned 100% blocks executed 23%
+256:  178:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_StrToTlv(const char *str, tWagoSnmpDataType eType, tWagoSnmpTlv *stTlvData) {
+256:  179:  tWagoSnmpReturnCode ret       = WAGOSNMP_RETURN_OK;
+256:  180:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+-:  181:  alignas(long long int) u_char val_buf[WAGOSNMP_MAX_STR_LEN + 1];
+-:  182:  union {
+-:  183:    void *ptr;
+-:  184:    int *pInt;
+-:  185:    unsigned int *pUint;
+-:  186:    unsigned long long int *pUllint;
+256:  187:  } buf = {.ptr = val_buf};
+-:  188:
+256:  189:  const void *pValue = buf.ptr;
+256:  190:  size_t val_len       = 0;
+-:  191:
+-:  192:  oid anOID[MAX_OID_LEN];
+256:  193:  INIT_SNMP_ONCE;
+call    0 returned 256
+256:  194:  INTERNAL_ReTwist(stData);
+call    0 returned 256
+-:  195:
+256:  196:  switch (eType) {
+branch  0 taken 0
+branch  1 taken 0
+branch  2 taken 0
+branch  3 taken 256
+branch  4 taken 0
+branch  5 taken 0
+#####:  197:    case ASN_INTEGER:
+-:  198:    case ASN_UNSIGNED:
+-:  199:    case ASN_TIMETICKS:
+-:  200:    case ASN_COUNTER:
+-:  201:    case ASN_UINTEGER: {
+#####:  202:      char *endptr = NULL;
+#####:  203:      if (eType == ASN_INTEGER) {
+branch  0 never executed
+branch  1 never executed
+#####:  204:        errno  = 0;
+#####:  205:        long l = strtol(str, &endptr, 0);
+call    0 never executed
+#####:  206:        if (l > INT_MAX || l < INT_MIN) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  207:          ret = WAGOSNMP_RETURN_BAD_STR_VALUE;
+-:  208:        }
+#####:  209:        *buf.pInt = (int)l;
+-:  210:      } else {
+#####:  211:        errno           = 0;
+#####:  212:        unsigned long l = strtoul(str, &endptr, 0);
+call    0 never executed
+#####:  213:        if (l > UINT_MAX) {
+branch  0 never executed
+branch  1 never executed
+#####:  214:          ret = WAGOSNMP_RETURN_BAD_STR_VALUE;
+-:  215:        }
+#####:  216:        *buf.pUint = (unsigned int)l;
+-:  217:      }
+#####:  218:      if ((errno != 0) || (endptr == str)) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  219:        ret = WAGOSNMP_RETURN_BAD_STR_VALUE;
+-:  220:      }
+#####:  221:      val_len = sizeof(int);
+#####:  222:    } break;
+#####:  223:    case ASN_OBJECT_ID:
+-:  224:    case ASN_PRIV_IMPLIED_OBJECT_ID:
+-:  225:    case ASN_PRIV_INCL_RANGE:
+-:  226:    case ASN_PRIV_EXCL_RANGE: {
+#####:  227:      size_t anOID_len = MAX_OID_LEN;
+#####:  228:      SNMP_MutexLock();
+call    0 never executed
+#####:  229:      if (!snmp_parse_oid(str, anOID, &anOID_len)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  230:        ret = WAGOSNMP_RETURN_BAD_STR_VALUE;
+-:  231:      }
+#####:  232:      SNMP_MutexUnlock();
+call    0 never executed
+#####:  233:      pValue  = anOID;
+#####:  234:      val_len = anOID_len * (sizeof(oid));
+#####:  235:      break;
+-:  236:    }
+#####:  237:    case ASN_IPADDRESS: /* snmp_build_var_op treats IPADDR like a string */
+-:  238:    {
+-:  239:      unsigned char IPaddr[4];
+#####:  240:      if (4 == sscanf(str, "%hhu.%hhu.%hhu.%hhu", &IPaddr[0], &IPaddr[1], &IPaddr[2], &IPaddr[3])) {
+branch  0 never executed
+branch  1 never executed
+#####:  241:        memcpy(val_buf, IPaddr, sizeof(IPaddr));
+#####:  242:        val_len = sizeof(IPaddr);
+-:  243:      } else {
+#####:  244:        ret = WAGOSNMP_RETURN_BAD_STR_VALUE;
+-:  245:      }
+#####:  246:      break;
+-:  247:    }
+256:  248:    case ASN_PRIV_IMPLIED_OCTET_STR:
+-:  249:    case ASN_OCTET_STR:
+-:  250:    case ASN_BIT_STR:
+-:  251:    case ASN_OPAQUE:
+-:  252:    case ASN_NSAP:
+256:  253:      pValue  = str;
+256:  254:      val_len = strlen(str);
+256:  255:      break;
+#####:  256:    case ASN_COUNTER64: {
+#####:  257:      char *endptr = NULL;
+#####:  258:      errno        = 0;
+#####:  259:      *buf.pUllint = strtoull(str, &endptr, 0);
+call    0 never executed
+#####:  260:      if ((errno != 0) || (endptr == str)) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  261:        ret = WAGOSNMP_RETURN_BAD_STR_VALUE;
+-:  262:      }
+#####:  263:      val_len = sizeof(*buf.pUllint);
+#####:  264:      break;
+-:  265:    }
+#####:  266:    default:
+#####:  267:      ret = WAGOSNMP_RETURN_BAD_DATATYPE;
+#####:  268:      break;
+-:  269:  }
+-:  270:
+256:  271:  if (ret == WAGOSNMP_RETURN_OK) {
+branch  0 taken 256 (fallthrough)
+branch  1 taken 0
+256:  272:    if (INTERNAL_SetVarTypedValue(stData, eType, pValue, val_len)) {
+call    0 returned 256
+branch  1 taken 0 (fallthrough)
+branch  2 taken 256
+#####:  273:      ret = WAGOSNMP_RETURN_ERR_MALLOC;
+-:  274:    }
+-:  275:  }
+-:  276:
+256:  277:  INTERNAL_DeTwist(stData);
+call    0 returned 256
+-:  278:
+256:  279:  return ret;
+-:  280:}
+-:  281:
+-:  282://-- Function: PLCSNMP_MANAGER_tlv_to_dint -----------------------------------------
+-:  283:///
+-:  284:///  PLC-Function SNMPM_TLV_TO_DINT
+-:  285:///
+-:  286://-----------------------------------------------------------------------------
+function libwagosnmp_TlvToInt32 called 1 returned 100% blocks executed 86%
+1:  287:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_TlvToInt32(tWagoSnmpTlv *stTlvData, int32_t *input) {
+1:  288:  tWagoSnmpReturnCode ret       = WAGOSNMP_RETURN_OK;
+1:  289:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+1:  290:  INTERNAL_ReTwist(stData);
+call    0 returned 1
+1:  291:  if (stData->type == ASN_INTEGER) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+1:  292:    *input = (int32_t) *(stData->val.integer);
+-:  293:  } else {
+#####:  294:    ret = WAGOSNMP_RETURN_BAD_DATATYPE;
+-:  295:  }
+1:  296:  INTERNAL_DeTwist(stData);
+call    0 returned 1
+1:  297:  return ret;
+-:  298:}
+-:  299:
+-:  300://-- Function: PLCSNMP_MANAGER_tlv_to_udint -----------------------------------------
+-:  301:///
+-:  302:///  PLC-Function SNMPM_TLV_TO_DINT
+-:  303:///
+-:  304://-----------------------------------------------------------------------------
+function libwagosnmp_TlvToUint32 called 0 returned 0% blocks executed 0%
+#####:  305:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_TlvToUint32(tWagoSnmpTlv *stTlvData, uint32_t *input) {
+#####:  306:  tWagoSnmpReturnCode ret       = WAGOSNMP_RETURN_OK;
+#####:  307:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+#####:  308:  INTERNAL_ReTwist(stData);
+call    0 never executed
+#####:  309:  if ((stData->type == ASN_UNSIGNED) || (stData->type == ASN_TIMETICKS) || (stData->type == ASN_COUNTER) ||
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:  310:      (stData->type == ASN_UINTEGER)) {
+branch  0 never executed
+branch  1 never executed
+#####:  311:    *input = (uint32_t) * (stData->val.integer);
+-:  312:  } else {
+#####:  313:    ret = WAGOSNMP_RETURN_BAD_DATATYPE;
+-:  314:  }
+#####:  315:  INTERNAL_DeTwist(stData);
+call    0 never executed
+#####:  316:  return ret;
+-:  317:}
+-:  318:
+-:  319://-- Function: PLCSNMP_MANAGER_tlv_to_str -----------------------------------------
+-:  320:///
+-:  321:///  PLC-Function SNMPM_TLV_TO_STRING
+-:  322:///
+-:  323://-----------------------------------------------------------------------------
+function libwagosnmp_TlvToStr called 255 returned 100% blocks executed 71%
+255:  324:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_TlvToStr(tWagoSnmpTlv *stTlvData, char *value, size_t szValue) {
+255:  325:  tWagoSnmpReturnCode ret       = WAGOSNMP_RETURN_OK;
+255:  326:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+-:  327:
+255:  328:  size_t len = stData->val_len;
+-:  329:  char buf[WAGOSNMP_MAX_STR_LEN + 64];
+255:  330:  memset(buf, 0, sizeof(buf));
+-:  331:
+255:  332:  if (len == 0) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 255
+#####:  333:    return WAGOSNMP_RETURN_ERROR_UNINIT_DATA;
+-:  334:  }
+255:  335:  if (len > WAGOSNMP_MAX_STR_LEN) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 255
+#####:  336:    ret = WAGOSNMP_RETURN_WARN_STR_VAL_TOO_LONG;
+#####:  337:    len = WAGOSNMP_MAX_STR_LEN;
+-:  338:  }
+255:  339:  if (len > szValue) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 255
+#####:  340:    return WAGOSNMP_RETURN_ERROR_BUFFER_TOO_SMALL;
+-:  341:  }
+255:  342:  if(value == NULL) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 255
+#####:  343:    return WAGOSNMP_RETURN_ERR_MALLOC;
+-:  344:  }
+-:  345:
+255:  346:  INTERNAL_ReTwist(stData);
+call    0 returned 255
+-:  347:
+255:  348:  if (-1 == INTERNAL_SnprintValue(buf, sizeof(buf), stData)) {
+call    0 returned 255
+branch  1 taken 0 (fallthrough)
+branch  2 taken 255
+#####:  349:    ret = WAGOSNMP_RETURN_BAD_DATATYPE;
+-:  350:  } else {
+255:  351:    memset(value, 0, szValue + 1);
+255:  352:    char *p = strchr(buf, ':');
+-:  353:
+255:  354:    if (p != NULL) {
+branch  0 taken 255 (fallthrough)
+branch  1 taken 0
+-:  355:      size_t bufsiz;
+255:  356:      p++;
+255:  357:      p++;
+255:  358:      if (stData->type == ASN_OCTET_STR) {
+branch  0 taken 255 (fallthrough)
+branch  1 taken 0
+255:  359:        p = INTERNAL_StripQuotes(p);
+call    0 returned 255
+-:  360:      }
+255:  361:      bufsiz = (size_t)(p - buf); // value_offset
+255:  362:      if (bufsiz <= (sizeof(buf) - WAGOSNMP_MAX_STR_LEN)/*64*/) {
+branch  0 taken 255 (fallthrough)
+branch  1 taken 0
+255:  363:        bufsiz = WAGOSNMP_MAX_STR_LEN;
+-:  364:      } else {
+#####:  365:        bufsiz = WAGOSNMP_MAX_STR_LEN - bufsiz;
+-:  366:      }
+255:  367:      memcpy(value, p, bufsiz);
+-:  368:    } else {
+#####:  369:      ret = WAGOSNMP_RETURN_ERROR_CONVERT;
+-:  370:    }
+-:  371:  }
+-:  372:
+255:  373:  INTERNAL_DeTwist(stData);
+call    0 returned 255
+-:  374:
+255:  375:  return ret;
+-:  376:}
+-:  377:
+function libwagosnmp_Tranceive called 1 returned 100% blocks executed 70%
+1:  378:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_Tranceive(tWagoSnmpTranceiver *trcv) {
+1:  379:  tWagoSnmpReturnCode ret = WAGOSNMP_RETURN_OK;
+1:  380:  netsnmp_session *ss     = NULL;
+1:  381:  netsnmp_pdu *pdu        = NULL;
+-:  382:
+-:  383:  do {
+1:  384:    ret = INTERNAL_GetSnmpSession(trcv, &ss);
+call    0 returned 1
+1*:  385:    if (ret != WAGOSNMP_RETURN_OK) break;
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+1:  386:    ret = INTERNAL_GetSnmpPdu(trcv, &pdu);
+call    0 returned 1
+1:  387:    if (ret != WAGOSNMP_RETURN_OK) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+#####:  388:      snmp_close(ss);
+call    0 never executed
+#####:  389:      break;
+-:  390:    }
+1:  391:    ret = INTERNAL_Tranceive(trcv, pdu, ss);
+call    0 returned 1
+-:  392:  } while (0);
+-:  393:
+1:  394:  return ret;
+-:  395:}
+-:  396:
+function libwagosnmp_SendTrap called 0 returned 0% blocks executed 0%
+#####:  397:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_SendTrap(char *sEnterprise, tWagoSnmpTrapType trap_type,
+-:  398:                                                    uint16_t specific_type, char *sOID, tWagoSnmpTlv *stTlvData) {
+#####:  399:  tWagoSnmpReturnCode ret       = WAGOSNMP_RETURN_OK;
+#####:  400:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+-:  401:  tWagoSnmpMsg trap;
+-:  402:
+#####:  403:  INIT_SNMP_ONCE;
+call    0 never executed
+#####:  404:  trap.enterprise_length = MAX_OID_LEN;
+#####:  405:  SNMP_MutexLock();
+call    0 never executed
+#####:  406:  if (!snmp_parse_oid(sEnterprise, trap.enterprise, &trap.enterprise_length)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  407:    SNMP_MutexUnlock();
+call    0 never executed
+#####:  408:    snmp_perror(sEnterprise);
+call    0 never executed
+#####:  409:    return WAGOSNMP_RETURN_PARSE_OID_ERROR;
+-:  410:  }
+-:  411:
+#####:  412:  if ((sOID[0] != 0) && (stData->type != ASN_NULL)) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  413:    trap.variable.sOID_length = MAX_OID_LEN;
+#####:  414:    if (!snmp_parse_oid(sOID, trap.variable.sOID, &trap.variable.sOID_length)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  415:      SNMP_MutexUnlock();
+call    0 never executed
+#####:  416:      snmp_perror(sOID);
+call    0 never executed
+#####:  417:      return WAGOSNMP_RETURN_PARSE_OID_ERROR;
+-:  418:    }
+#####:  419:    SNMP_MutexUnlock();
+call    0 never executed
+#####:  420:    ret = INTERNAL_ConvertTlvToTrapVar(&trap.variable, stData);
+call    0 never executed
+-:  421:  } else {
+#####:  422:    trap.variable.type = ASN_NULL;
+-:  423:  }
+-:  424:
+#####:  425:  trap.type          = MSG_TYPE_TRAP;
+#####:  426:  trap.trap_type     = trap_type;
+#####:  427:  trap.specific_type = specific_type;
+-:  428:
+#####:  429:  if (0 != INTERNAL_SendTrapMsg(&trap)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  430:    ret = WAGOSNMP_RETURN_TRANSCEIVE_ERROR;
+-:  431:  }
+-:  432:  // snmp_close(&session);
+#####:  433:  return ret;
+-:  434:}
+-:  435:
+function libwagosnmp_SendEntTrap called 0 returned 0% blocks executed 0%
+#####:  436:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_SendEntTrap(uint16_t specific_type) {
+#####:  437:  tWagoSnmpReturnCode ret = WAGOSNMP_RETURN_OK;
+-:  438:  tWagoSnmpMsg easyTrap;
+-:  439:
+-:  440:  /*if(specific_type < 25)
+-:  441:  {
+-:  442:    return WAGOSNMP_RETURN_ERROR_PARAMETER;
+-:  443:  }*/
+-:  444:
+#####:  445:  easyTrap.type          = MSG_TYPE_TRAP_EASY;
+#####:  446:  easyTrap.specific_type = (long int)specific_type;
+-:  447:
+-:  448:  // INIT_SNMP_ONCE;
+#####:  449:  if (0 != INTERNAL_SendTrapMsg(&easyTrap)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  450:    ret = WAGOSNMP_RETURN_TRANSCEIVE_ERROR;
+#####:  451:    perror("Error Send Trap:");
+call    0 never executed
+-:  452:  }
+#####:  453:  return ret;
+-:  454:}
+-:  455:
+function libwagosnmp_SendTrapToAdrV1 called 0 returned 0% blocks executed 0%
+#####:  456:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_SendTrapToAdrV1(char *sHost, char *sCommunity, char *sEnterprise,
+-:  457:                                                           tWagoSnmpTrapType trap_type, uint16_t specific_type,
+-:  458:                                                           char *sOID, tWagoSnmpTlv *stTlvData) {
+-:  459:  netsnmp_session *ss;
+-:  460:  netsnmp_pdu *pdu;
+-:  461:  oid entOID[MAX_OID_LEN];
+-:  462:  size_t entOID_length;
+#####:  463:  tWagoSnmpReturnCode ret       = WAGOSNMP_RETURN_OK;
+#####:  464:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+-:  465:  in_addr_t *myaddr;
+-:  466:
+#####:  467:  if ((trap_type > 6)
+branch  0 never executed
+branch  1 never executed
+-:  468:      /*|| (specific_type < 25 && trap_type == 6)*/) {
+#####:  469:    return WAGOSNMP_RETURN_ERROR_PARAMETER;
+-:  470:  }
+-:  471:
+#####:  472:  ss = INTERNAL_GenerateSession_v1_v2c(sHost, sCommunity, SNMP_VERSION_1);
+call    0 never executed
+#####:  473:  if (ss == NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  474:    return WAGOSNMP_RETURN_INIT_SESSION_ERROR;
+-:  475:  }
+-:  476:
+#####:  477:  pdu = snmp_pdu_create(SNMP_MSG_TRAP);
+call    0 never executed
+#####:  478:  if (!pdu) {
+branch  0 never executed
+branch  1 never executed
+#####:  479:    fprintf(stderr, "Failed to create trap PDU\n");
+call    0 never executed
+#####:  480:    return WAGOSNMP_RETURN_ERR_MALLOC;
+-:  481:  }
+#####:  482:  entOID_length = MAX_OID_LEN;
+#####:  483:  SNMP_MutexLock();
+call    0 never executed
+#####:  484:  if (!snmp_parse_oid(sEnterprise, entOID, &entOID_length)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  485:    SNMP_MutexUnlock();
+call    0 never executed
+#####:  486:    snmp_perror(sEnterprise);
+call    0 never executed
+#####:  487:    return WAGOSNMP_RETURN_PARSE_OID_ERROR;
+-:  488:  }
+#####:  489:  SNMP_MutexUnlock();
+call    0 never executed
+#####:  490:  pdu->enterprise = (oid *)malloc(entOID_length * sizeof(oid));
+#####:  491:  if (!pdu->enterprise) {
+branch  0 never executed
+branch  1 never executed
+#####:  492:    fprintf(stderr, "Failed to allocate memory for enterprise OID\n");
+call    0 never executed
+#####:  493:    return WAGOSNMP_RETURN_ERR_MALLOC;
+-:  494:  }
+#####:  495:  memcpy(pdu->enterprise, entOID, entOID_length * sizeof(oid));
+#####:  496:  pdu->enterprise_length = entOID_length;
+-:  497:
+#####:  498:  pdu->trap_type     = trap_type;
+#####:  499:  pdu->specific_type = specific_type;
+-:  500:
+#####:  501:  myaddr    = (in_addr_t *)pdu->agent_addr;
+#####:  502:  *myaddr   = get_myaddr();
+call    0 never executed
+#####:  503:  pdu->time = (u_long)get_uptime(); // uptime is never negative
+call    0 never executed
+-:  504:
+#####:  505:  ret = INTERNAL_AddVarAndSend(sOID, stData, ss, pdu);
+call    0 never executed
+-:  506:
+#####:  507:  return ret;
+-:  508:}
+-:  509:
+function libwagosnmp_SendTrapToAdrV2c called 0 returned 0% blocks executed 0%
+#####:  510:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_SendTrapToAdrV2c(char *sHost, char *sCommunity, char *sEnterprise,
+-:  511:                                                            char *sOID, tWagoSnmpTlv *stTlvData) {
+-:  512:  netsnmp_session *ss;
+-:  513:  netsnmp_pdu *pdu;
+#####:  514:  tWagoSnmpReturnCode ret       = WAGOSNMP_RETURN_OK;
+#####:  515:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+-:  516:
+#####:  517:  ss = INTERNAL_GenerateSession_v1_v2c(sHost, sCommunity, SNMP_VERSION_2c);
+call    0 never executed
+#####:  518:  if (ss == NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  519:    return WAGOSNMP_RETURN_INIT_SESSION_ERROR;
+-:  520:  }
+-:  521:
+#####:  522:  pdu = INTERNAL_GetTrap2PDU_v2_v3(sEnterprise, &ret);
+call    0 never executed
+#####:  523:  if (ret == WAGOSNMP_RETURN_OK) {
+branch  0 never executed
+branch  1 never executed
+#####:  524:    ret = INTERNAL_AddVarAndSend(sOID, stData, ss, pdu);
+call    0 never executed
+-:  525:  }
+-:  526:
+#####:  527:  return ret;
+-:  528:}
+-:  529:
+function libwagosnmp_SendTrapToAdrV3 called 0 returned 0% blocks executed 0%
+#####:  530:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_SendTrapToAdrV3(char *sHost, char *sEngineId, char *sUsername,
+-:  531:                                                           tWagoSnmpSecLevel authLevel, tWagoSnmpAuthProt authProt,
+-:  532:                                                           char *authPass, tWagoSnmpPrivProt privProt, char *privPass,
+-:  533:                                                           char *sEnterprise, char *sOID, tWagoSnmpTlv *stTlvData) {
+-:  534:  netsnmp_session *ss;
+-:  535:  netsnmp_pdu *pdu;
+#####:  536:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+-:  537:
+#####:  538:  size_t sec_ebuf_len = MAX_ENGINEID_LENGTH;
+-:  539:  u_char sec_ebuf[MAX_ENGINEID_LENGTH];
+-:  540:  u_char engineID[MAX_ENGINEID_LENGTH];
+-:  541:
+-:  542:  tWagoSnmpTranceiver trcv;
+-:  543:
+-:  544:  netsnmp_session tmpss;
+-:  545:  netsnmp_transport *transport;
+-:  546:  tWagoSnmpReturnCode result;
+-:  547:
+#####:  548:  INIT_SNMP_ONCE;
+call    0 never executed
+#####:  549:  snmp_sess_init(&tmpss);
+call    0 never executed
+-:  550:
+#####:  551:  tmpss.version  = SNMP_VERSION_3;
+#####:  552:  tmpss.peername = sHost;
+-:  553:
+#####:  554:  tmpss.securityName    = sUsername;  // s.o.
+#####:  555:  tmpss.securityNameLen = strlen(tmpss.securityName);
+-:  556:
+#####:  557:  tmpss.securityLevel = authLevel;
+#####:  558:  trcv.typSecLevel    = authLevel;
+#####:  559:  trcv.typAuthProt    = authProt;
+#####:  560:  trcv.sAuthPass      = authPass;
+#####:  561:  trcv.typPrivProt    = privProt;
+#####:  562:  trcv.sPrivPass      = privPass;
+#####:  563:  INTERNAL_SetAuthPriv(&trcv, &tmpss);
+call    0 never executed
+-:  564:
+-:  565:  // TODO: refactor hint: the following engineID handling is pretty similar to the one in
+-:  566:  // INTERNAL_GetSnmpSession and could be pulled out into a separate function
+-:  567:
+#####:  568:  tmpss.callback       = INTERNAL_SnmpInput;
+#####:  569:  tmpss.callback_magic = NULL;
+-:  570:
+-:  571:  // FIXME: setup_engineID is not thread-safe and it should only be done once as the engineID is used to identify the
+-:  572:  // device
+#####:  573:  if (setup_engineID(NULL, NULL) <= 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  574:    return WAGOSNMP_RETURN_ERR_MALLOC;
+-:  575:  }
+-:  576:
+#####:  577:  if (tmpss.contextEngineIDLen == 0 || tmpss.contextEngineID == NULL) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  578:    tmpss.contextEngineID    = engineID;
+#####:  579:    tmpss.contextEngineIDLen = snmpv3_get_engineID(engineID, sizeof(engineID));
+call    0 never executed
+-:  580:  }
+-:  581:
+#####:  582:  if (sEngineId != NULL && sEngineId[0] != 0) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  583:    size_t eout_len = 0;
+#####:  584:    u_char *pebuf = sec_ebuf;
+-:  585:
+#####:  586:    if (!snmp_hex_to_binary(&pebuf, &sec_ebuf_len, &eout_len, 0, sEngineId)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  587:      fprintf(stderr, "Bad engine ID value.\n");
+call    0 never executed
+#####:  588:      return WAGOSNMP_RETURN_ERROR_BAD_ENGINE_ID;
+-:  589:    }
+#####:  590:    if (eout_len < 5) {
+branch  0 never executed
+branch  1 never executed
+#####:  591:      fprintf(stderr, "Invalid engine ID value\n");
+call    0 never executed
+#####:  592:      return WAGOSNMP_RETURN_ERROR_INVALID_ENGINE_ID;
+-:  593:    }
+#####:  594:    tmpss.securityEngineID    = pebuf;
+#####:  595:    tmpss.securityEngineIDLen = eout_len;
+-:  596:  }
+-:  597:
+#####:  598:  if (tmpss.securityEngineIDLen == 0 || tmpss.securityEngineID == NULL) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+-:  599:    // no security engine ID provided by caller -> reuse contextEngineID
+#####:  600:    tmpss.securityEngineID = tmpss.contextEngineID;
+#####:  601:    tmpss.securityEngineIDLen = tmpss.contextEngineIDLen;
+-:  602:  }
+-:  603:
+-:  604:  /*
+-:  605:   * set boots and time, which will cause problems if this
+-:  606:   * machine ever reboots and a remote trap receiver has cached our
+-:  607:   * boots and time...  I'll cause a not-in-time-window report to
+-:  608:   * be sent back to this machine.
+-:  609:   */
+#####:  610:  if (tmpss.engineBoots == 0) tmpss.engineBoots = 1;
+branch  0 never executed
+branch  1 never executed
+#####:  611:  if (tmpss.engineTime == 0)         /* not really correct, */
+branch  0 never executed
+branch  1 never executed
+#####:  612:    tmpss.engineTime = get_uptime(); /* but it'll work. Sort of. */
+call    0 never executed
+-:  613:
+#####:  614:  transport = netsnmp_transport_open_client("snmptrap", tmpss.peername);
+call    0 never executed
+#####:  615:  if (transport == NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  616:    result = WAGOSNMP_RETURN_INIT_SESSION_ERROR;
+-:  617:  } else {
+#####:  618:    ss = snmp_add(&tmpss, transport, NULL, NULL);
+call    0 never executed
+-:  619:
+#####:  620:    pdu = INTERNAL_GetTrap2PDU_v2_v3(sEnterprise, &result);
+call    0 never executed
+#####:  621:    if (result == WAGOSNMP_RETURN_OK) {
+branch  0 never executed
+branch  1 never executed
+#####:  622:      result = INTERNAL_AddVarAndSend(sOID, stData, ss, pdu);
+call    0 never executed
+-:  623:    }
+-:  624:  }
+-:  625:
+#####:  626:  return result;
+-:  627:}
+-:  628:
+function libwagosnmp_RegisterCustomOid called 0 returned 0% blocks executed 0%
+#####:  629:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_RegisterCustomOid(char *sOID, tWagoSnmpTlv *stTlvData, uint8_t readOnly) {
+#####:  630:  tWagoSnmpReturnCode result    = WAGOSNMP_RETURN_ERROR_EXIST;
+#####:  631:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+#####:  632:  size_t anOID_len              = MAX_OID_LEN;
+-:  633:  oid anOID[MAX_OID_LEN];
+-:  634:
+#####:  635:  if (!SNMP_TLV_INITALIZED(stTlvData) || SNMP_TLV_IS_NULL(stTlvData)) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  636:    return WAGOSNMP_RETURN_ERROR_PARAMETER;
+-:  637:  }
+-:  638:
+#####:  639:  INIT_SNMP_AGENT_ONCE;
+call    0 never executed
+call    1 never executed
+#####:  640:  INTERNAL_ReTwist(stData);
+call    0 never executed
+#####:  641:  SNMP_MutexLock();
+call    0 never executed
+#####:  642:  if (!snmp_parse_oid(sOID, anOID, &anOID_len)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  643:    SNMP_MutexUnlock();
+call    0 never executed
+#####:  644:    snmp_perror(sOID);
+call    0 never executed
+#####:  645:    return WAGOSNMP_RETURN_PARSE_OID_ERROR;
+-:  646:  }
+#####:  647:  SNMP_MutexUnlock();
+call    0 never executed
+-:  648:
+#####:  649:  if (AGENT_GetOidObject(anOID, anOID_len) == NULL) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  650:    result = AGENT_CreateNewOidObject(anOID, anOID_len, stData, readOnly);
+call    0 never executed
+-:  651:  }
+#####:  652:  if (result == WAGOSNMP_RETURN_OK) {
+branch  0 never executed
+branch  1 never executed
+-:  653:    // FIXME: bad conversion -> mq_send int to tWagoSnmpReturnCode
+#####:  654:    result = INTERNAL_InformForNewOid(AGENT_GetOidObject(anOID, anOID_len));
+call    0 never executed
+call    1 never executed
+-:  655:  }
+#####:  656:  INTERNAL_DeTwist(stData);
+call    0 never executed
+#####:  657:  return result;
+-:  658:}
+-:  659:
+function libwagosnmp_GetCustomOid called 0 returned 0% blocks executed 0%
+#####:  660:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_GetCustomOid(char *sOID, tWagoSnmpTlv *stTlvData) {
+#####:  661:  tWagoSnmpReturnCode result    = WAGOSNMP_RETURN_NOT_FOUND;
+#####:  662:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+#####:  663:  size_t anOID_len              = MAX_OID_LEN;
+-:  664:  oid anOID[MAX_OID_LEN];
+#####:  665:  tOidObject *object = NULL;
+-:  666:
+#####:  667:  INIT_SNMP_AGENT_ONCE;
+call    0 never executed
+call    1 never executed
+#####:  668:  SNMP_MutexLock();
+call    0 never executed
+#####:  669:  if (!snmp_parse_oid(sOID, anOID, &anOID_len)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  670:    SNMP_MutexUnlock();
+call    0 never executed
+#####:  671:    snmp_perror(sOID);
+call    0 never executed
+#####:  672:    return WAGOSNMP_RETURN_PARSE_OID_ERROR;
+-:  673:  }
+#####:  674:  SNMP_MutexUnlock();
+call    0 never executed
+-:  675:
+#####:  676:  INTERNAL_ReTwist(stData);
+call    0 never executed
+#####:  677:  AGENT_MutexLock();
+call    0 never executed
+#####:  678:  object = AGENT_GetOidObject(anOID, anOID_len);
+call    0 never executed
+#####:  679:  if (object != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  680:    if (object->type > UINT8_MAX || INTERNAL_SetVarTypedValue(stData, (u_char)object->type, object->buf, object->len)) {
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+#####:  681:      result = WAGOSNMP_RETURN_ERR_MALLOC;
+-:  682:    } else {
+#####:  683:      result = WAGOSNMP_RETURN_OK;
+-:  684:    }
+-:  685:  }
+#####:  686:  AGENT_MutexUnlock();
+call    0 never executed
+#####:  687:  INTERNAL_DeTwist(stData);
+call    0 never executed
+#####:  688:  return result;
+-:  689:}
+-:  690:
+function libwagosnmp_SetCustomOid called 0 returned 0% blocks executed 0%
+#####:  691:PUBLIC_SYM tWagoSnmpReturnCode libwagosnmp_SetCustomOid(char *sOID, tWagoSnmpTlv *stTlvData) {
+#####:  692:  tWagoSnmpReturnCode result    = WAGOSNMP_RETURN_NOT_FOUND;
+#####:  693:  netsnmp_variable_list *stData = (netsnmp_variable_list *)stTlvData;
+#####:  694:  size_t anOID_len              = MAX_OID_LEN;
+-:  695:  oid anOID[MAX_OID_LEN];
+#####:  696:  tOidObject *object = NULL;
+-:  697:
+#####:  698:  if (!SNMP_TLV_INITALIZED(stData) || SNMP_TLV_IS_NULL(stData)) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  699:    return WAGOSNMP_RETURN_ERROR_PARAMETER;
+-:  700:  }
+-:  701:
+#####:  702:  INIT_SNMP_AGENT_ONCE;
+call    0 never executed
+call    1 never executed
+#####:  703:  SNMP_MutexLock();
+call    0 never executed
+#####:  704:  if (!snmp_parse_oid(sOID, anOID, &anOID_len)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  705:    SNMP_MutexUnlock();
+call    0 never executed
+#####:  706:    snmp_perror(sOID);
+call    0 never executed
+#####:  707:    return WAGOSNMP_RETURN_PARSE_OID_ERROR;
+-:  708:  }
+#####:  709:  SNMP_MutexUnlock();
+call    0 never executed
+-:  710:
+#####:  711:  INTERNAL_ReTwist(stData);
+call    0 never executed
+#####:  712:  AGENT_MutexLock();
+call    0 never executed
+#####:  713:  object = AGENT_GetOidObject(anOID, anOID_len);
+call    0 never executed
+#####:  714:  if (object != NULL) {
+branch  0 never executed
+branch  1 never executed
+#####:  715:    AGENT_SetOidObjectValue(object, stData);
+call    0 never executed
+#####:  716:    result = WAGOSNMP_RETURN_OK;
+-:  717:  }
+#####:  718:  AGENT_MutexUnlock();
+call    0 never executed
+#####:  719:  INTERNAL_DeTwist(stData);
+call    0 never executed
+#####:  720:  return result;
+-:  721:}
+-:  722:

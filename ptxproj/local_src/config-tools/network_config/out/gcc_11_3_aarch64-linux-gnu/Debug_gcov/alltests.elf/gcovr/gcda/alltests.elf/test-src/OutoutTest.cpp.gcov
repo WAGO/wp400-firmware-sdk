@@ -1,0 +1,447 @@
+-:    0:Source:test-src/OutoutTest.cpp
+-:    1:
+-:    2:
+-:    3:#include <gtest/gtest.h>
+-:    4:#include <gsl/gsl>
+-:    5:#include <fstream>
+-:    6:#include "Output.hpp"
+-:    7:#include "StreamTee.hpp"
+-:    8:
+-:    9:namespace network_config {
+-:   10:
+-:   11:
+-:   12:
+-:   13:class OutputTest : public ::testing::Test {
+-:   14: public:
+-:   15:
+-:   16:  ::std::string output_file = "./output.txt";
+-:   17:
+-:   18:
+function _ZN14network_config10OutputTest5SetUpEv called 4 returned 100% blocks executed 100%
+4:   19: void SetUp() override{
+-:   20:
+4:   21: }
+-:   22:
+function _ZN14network_config10OutputTest8TearDownEv called 4 returned 100% blocks executed 100%
+4:   23: void TearDown() override{
+4:   24:   ::std::remove(output_file.c_str());
+call    0 returned 4
+call    1 returned 4
+4:   25: }
+-:   26:
+function _ZN14network_config10OutputTest14GetLogFileTextB5cxx11Ev called 5 returned 100% blocks executed 68%
+5:   27: ::std::string GetLogFileText(){
+5:   28:   std::string str;
+call    0 returned 5
+5:   29:   std::ifstream t(output_file);
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+-:   30:
+5:   31:   t.seekg(0, std::ios::end);
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+5:   32:   str.reserve(::gsl::narrow_cast<::std::string::size_type>(t.tellg()));
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 5
+call    4 returned 5
+branch  5 taken 5 (fallthrough)
+branch  6 taken 0 (throw)
+5:   33:   t.seekg(0, std::ios::beg);
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+-:   34:
+5:   35:   str.assign((std::istreambuf_iterator<char>(t)),
+call    0 returned 5
+call    1 returned 5
+call    2 returned 5
+branch  3 taken 5 (fallthrough)
+branch  4 taken 0 (throw)
+-:   36:               std::istreambuf_iterator<char>());
+10:   37:   return str;
+5:   38: }
+call    0 returned 5
+call    1 never executed
+call    2 never executed
+-:   39:
+function _ZN14network_config10OutputTest12PutToLogFileENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 1 returned 100% blocks executed 47%
+1:   40: void PutToLogFile(::std::string text){
+1:   41:   std::ofstream t(output_file);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   42:   t << text;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   43:   t.flush();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   44:   t.close();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:   45:   ASSERT_EQ(text, GetLogFileText());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+1:   46: }
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 never executed
+-:   47:
+-:   48:};
+-:   49:
+-:   50:
+4:   51:TEST_F(OutputTest, StderrorPrint){
+1:   52:  StreamTee t{::std::cerr, output_file};
+-:   53:
+1:   54:  StderrOutput sut;
+1:   55:  sut.GetStream() << "Hello StderrorPrint" << ::std::endl;
+-:   56:
+2*:   57:  EXPECT_EQ("Hello StderrorPrint\n", GetLogFileText());
+1:   58:}
+------------------
+_ZN14network_config29OutputTest_StderrorPrint_TestC2Ev:
+function _ZN14network_config29OutputTest_StderrorPrint_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   51:TEST_F(OutputTest, StderrorPrint){
+call    0 returned 1
+------------------
+_ZN14network_config29OutputTest_StderrorPrint_TestD0Ev:
+function _ZN14network_config29OutputTest_StderrorPrint_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   51:TEST_F(OutputTest, StderrorPrint){
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config29OutputTest_StderrorPrint_TestD2Ev:
+function _ZN14network_config29OutputTest_StderrorPrint_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   51:TEST_F(OutputTest, StderrorPrint){
+call    0 returned 1
+------------------
+_ZN14network_config29OutputTest_StderrorPrint_Test8TestBodyEv:
+function _ZN14network_config29OutputTest_StderrorPrint_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   51:TEST_F(OutputTest, StderrorPrint){
+1:   52:  StreamTee t{::std::cerr, output_file};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   53:
+1:   54:  StderrOutput sut;
+1:   55:  sut.GetStream() << "Hello StderrorPrint" << ::std::endl;
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+-:   56:
+2*:   57:  EXPECT_EQ("Hello StderrorPrint\n", GetLogFileText());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   58:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:   59:
+4:   60:TEST_F(OutputTest, FilePrint){
+1:   61:  FileOutput sut{output_file};
+1:   62:  sut.GetStream() << "Hello FilePrint" << ::std::endl;
+-:   63:
+2*:   64:  EXPECT_EQ("Hello FilePrint\n", GetLogFileText());
+1:   65:}
+------------------
+_ZN14network_config25OutputTest_FilePrint_TestC2Ev:
+function _ZN14network_config25OutputTest_FilePrint_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   60:TEST_F(OutputTest, FilePrint){
+call    0 returned 1
+------------------
+_ZN14network_config25OutputTest_FilePrint_TestD0Ev:
+function _ZN14network_config25OutputTest_FilePrint_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   60:TEST_F(OutputTest, FilePrint){
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config25OutputTest_FilePrint_TestD2Ev:
+function _ZN14network_config25OutputTest_FilePrint_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   60:TEST_F(OutputTest, FilePrint){
+call    0 returned 1
+------------------
+_ZN14network_config25OutputTest_FilePrint_Test8TestBodyEv:
+function _ZN14network_config25OutputTest_FilePrint_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   60:TEST_F(OutputTest, FilePrint){
+1:   61:  FileOutput sut{output_file};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   62:  sut.GetStream() << "Hello FilePrint" << ::std::endl;
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+-:   63:
+2*:   64:  EXPECT_EQ("Hello FilePrint\n", GetLogFileText());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   65:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   66:
+4:   67:TEST_F(OutputTest, FilePrintOverridesFormerContent){
+1:   68:  PutToLogFile("SomeOtherStuffinFile");
+-:   69:
+1:   70:  FileOutput sut{output_file};
+1:   71:  sut.GetStream() << "Hello FilePrint" << ::std::endl;
+-:   72:
+2*:   73:  EXPECT_EQ("Hello FilePrint\n", GetLogFileText());
+1:   74:}
+------------------
+_ZN14network_config47OutputTest_FilePrintOverridesFormerContent_TestC2Ev:
+function _ZN14network_config47OutputTest_FilePrintOverridesFormerContent_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   67:TEST_F(OutputTest, FilePrintOverridesFormerContent){
+call    0 returned 1
+------------------
+_ZN14network_config47OutputTest_FilePrintOverridesFormerContent_TestD0Ev:
+function _ZN14network_config47OutputTest_FilePrintOverridesFormerContent_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   67:TEST_F(OutputTest, FilePrintOverridesFormerContent){
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config47OutputTest_FilePrintOverridesFormerContent_TestD2Ev:
+function _ZN14network_config47OutputTest_FilePrintOverridesFormerContent_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   67:TEST_F(OutputTest, FilePrintOverridesFormerContent){
+call    0 returned 1
+------------------
+_ZN14network_config47OutputTest_FilePrintOverridesFormerContent_Test8TestBodyEv:
+function _ZN14network_config47OutputTest_FilePrintOverridesFormerContent_Test8TestBodyEv called 1 returned 100% blocks executed 40%
+1:   67:TEST_F(OutputTest, FilePrintOverridesFormerContent){
+1:   68:  PutToLogFile("SomeOtherStuffinFile");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 never executed
+call   10 never executed
+-:   69:
+1:   70:  FileOutput sut{output_file};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   71:  sut.GetStream() << "Hello FilePrint" << ::std::endl;
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+-:   72:
+2*:   73:  EXPECT_EQ("Hello FilePrint\n", GetLogFileText());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   74:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   75:
+4:   76:TEST_F(OutputTest, NullPrint){
+1:   77:  StreamTee t{::std::cout, output_file};
+1:   78:  StreamTee t2{::std::cerr, output_file};
+-:   79:
+1:   80:  NullOutput sut{};
+1:   81:  sut.GetStream() << "Hello FilePrint" << ::std::endl;
+1:   82:  sync();
+2*:   83:  EXPECT_EQ("", GetLogFileText());
+1:   84:}
+------------------
+_ZN14network_config25OutputTest_NullPrint_TestC2Ev:
+function _ZN14network_config25OutputTest_NullPrint_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   76:TEST_F(OutputTest, NullPrint){
+call    0 returned 1
+------------------
+_ZN14network_config25OutputTest_NullPrint_TestD0Ev:
+function _ZN14network_config25OutputTest_NullPrint_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   76:TEST_F(OutputTest, NullPrint){
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config25OutputTest_NullPrint_TestD2Ev:
+function _ZN14network_config25OutputTest_NullPrint_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   76:TEST_F(OutputTest, NullPrint){
+call    0 returned 1
+------------------
+_ZN14network_config25OutputTest_NullPrint_Test8TestBodyEv:
+function _ZN14network_config25OutputTest_NullPrint_Test8TestBodyEv called 1 returned 100% blocks executed 42%
+1:   76:TEST_F(OutputTest, NullPrint){
+1:   77:  StreamTee t{::std::cout, output_file};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   78:  StreamTee t2{::std::cerr, output_file};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   79:
+1:   80:  NullOutput sut{};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   81:  sut.GetStream() << "Hello FilePrint" << ::std::endl;
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+1:   82:  sync();
+call    0 returned 1
+2*:   83:  EXPECT_EQ("", GetLogFileText());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   84:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   85:
+-:   86:}  // namespace network_config
+-:   87:
+-:   88:
+-:   89:

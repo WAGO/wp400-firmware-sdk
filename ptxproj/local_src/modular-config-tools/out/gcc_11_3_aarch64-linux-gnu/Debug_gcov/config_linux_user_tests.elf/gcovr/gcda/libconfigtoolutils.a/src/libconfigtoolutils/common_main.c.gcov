@@ -1,0 +1,280 @@
+-:    0:Source:src/libconfigtoolutils/common_main.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     common_main.c
+-:   12:///
+-:   13:///  \brief    Commonly used, generic config tool main function
+-:   14:///            to prepare config tool specific main.
+-:   15:///
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "wc/assertion.h"
+-:   23:#include "wc/std_includes.h"
+-:   24:#include "ctutil/common_main.h"
+-:   25:#include "ctutil/log.h"
+-:   26:#include "ctparts/ctmain.h"
+-:   27:#include <stdlib.h>
+-:   28:
+-:   29://------------------------------------------------------------------------------
+-:   30:// defines; structure, enumeration and type definitions
+-:   31://------------------------------------------------------------------------------
+-:   32:
+-:   33://------------------------------------------------------------------------------
+-:   34:// function prototypes
+-:   35://------------------------------------------------------------------------------
+-:   36:
+-:   37://------------------------------------------------------------------------------
+-:   38:// macros
+-:   39://------------------------------------------------------------------------------
+-:   40:
+-:   41://------------------------------------------------------------------------------
+-:   42:// variables' and constants' definitions
+-:   43://------------------------------------------------------------------------------
+-:   44:
+-:   45://------------------------------------------------------------------------------
+-:   46:// function implementation
+-:   47://------------------------------------------------------------------------------
+function ctutil_CommonMain called 0 returned 0% blocks executed 0%
+#####:   48:exitCode_t ctutil_CommonMain(int const argc,
+-:   49:                             char * const argv[],
+-:   50:                             ctparts_commonMainFunctions_t const * const pstFunctions,
+-:   51:                             ctparts_commonMainContext_t * const pstContext)
+-:   52:{
+#####:   53:  exitCode_t result = CTUTIL_EXIT_SUCCESS;
+#####:   54:  statusCode_t status = CTUTIL_SUCCESS;
+-:   55:
+#####:   56:  WC_ASSERT(pstFunctions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:   57:
+-:   58:  // Set default options
+-:   59:  ctutil_Options_t stOptions;
+#####:   60:  ctutil_InitOptions(&stOptions);
+call    0 never executed
+#####:   61:  WC_ASSERT(stOptions.pstSpecificOptions == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:   62:  WC_ASSERT(pstFunctions->pfSetOptionDefaults != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:   63:  status = pstFunctions->pfSetOptionDefaults(pstContext, &stOptions);
+call    0 never executed
+#####:   64:  if(ctutil_IsStatusFailure(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   65:  {
+#####:   66:    WC_ASSERT(stOptions.pstSpecificOptions == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:   67:  }
+-:   68:
+-:   69:  // Early option evaluation to check priority options (e. g. argument decoding or quiet option)
+#####:   70:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   71:  {
+#####:   72:    if(pstFunctions->pfEvaluateEarlyOptions != NULL)
+branch  0 never executed
+branch  1 never executed
+-:   73:    {
+#####:   74:      status = pstFunctions->pfEvaluateEarlyOptions(pstContext, argc, argv, &stOptions);
+call    0 never executed
+-:   75:    }
+-:   76:  }
+-:   77:
+-:   78:  // Evaluate commandline options if any
+#####:   79:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   80:  {
+#####:   81:    if(pstFunctions->pfEvaluateOptions != NULL)
+branch  0 never executed
+branch  1 never executed
+-:   82:    {
+#####:   83:      status = pstFunctions->pfEvaluateOptions(pstContext, argc, argv, &stOptions);
+call    0 never executed
+-:   84:    }
+-:   85:  }
+-:   86:
+-:   87:  // Print info text if requested (normally when no action options are given)
+#####:   88:  if(    !stOptions.stCommonOptions.quiet
+branch  0 never executed
+branch  1 never executed
+#####:   89:      && (ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   90:      && stOptions.stCommonOptions.infoPrint)
+branch  0 never executed
+branch  1 never executed
+-:   91:  {
+#####:   92:    if(pstFunctions->pfPrintInfoText != NULL)
+branch  0 never executed
+branch  1 never executed
+-:   93:    {
+#####:   94:      pstFunctions->pfPrintInfoText(pstContext, argv[0]);
+call    0 never executed
+-:   95:    }
+-:   96:  }
+-:   97:
+-:   98:  // Basic init and open of common resources if necessary
+-:   99:  ctutil_Resources_t stResources;
+#####:  100:  bool releaseCommonResources = false;
+#####:  101:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  102:  {
+#####:  103:    if(!stOptions.stCommonOptions.earlyExit)
+branch  0 never executed
+branch  1 never executed
+-:  104:    {
+#####:  105:      ctutil_InitResources(&stResources);
+call    0 never executed
+#####:  106:      status = ctutil_OpenCommonResources(&(stResources.stCommonResources));
+call    0 never executed
+#####:  107:      if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  108:      {
+#####:  109:        releaseCommonResources = true;
+-:  110:      }
+-:  111:    }
+-:  112:  }
+-:  113:
+-:  114:  // Open specific resources if necessary
+#####:  115:  bool releaseSpecificResources = false;
+#####:  116:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  117:  {
+#####:  118:    if(!stOptions.stCommonOptions.earlyExit)
+branch  0 never executed
+branch  1 never executed
+-:  119:    {
+#####:  120:      WC_ASSERT(stResources.pstSpecificResources == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  121:      if(pstFunctions->pfInitSpecificResources != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  122:      {
+#####:  123:        status = pstFunctions->pfInitSpecificResources(pstContext, &(stResources.pstSpecificResources));
+call    0 never executed
+#####:  124:        if(ctutil_IsStatusFailure(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  125:        {
+#####:  126:          WC_ASSERT(stResources.pstSpecificResources == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  127:        }
+-:  128:        else
+-:  129:        {
+#####:  130:          releaseSpecificResources = true;
+-:  131:        }
+-:  132:      }
+-:  133:    }
+-:  134:  }
+-:  135:
+-:  136:  // Check for errors so far
+#####:  137:  if(ctutil_IsStatusFailure(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  138:  {
+#####:  139:    stOptions.stCommonOptions.earlyExit = true;
+#####:  140:    CTUTIL_LOG_STATUS_ERROR(stOptions.stCommonOptions.quiet, status, "Failed to prepare config tool");
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+#####:  141:    result = ctutil_GetExitCodeFromStatus(status);
+call    0 never executed
+-:  142:  }
+-:  143:
+-:  144:  // Check for exit request or enter config tool main
+#####:  145:  if(!stOptions.stCommonOptions.earlyExit)
+branch  0 never executed
+branch  1 never executed
+-:  146:  {
+#####:  147:    result = ctparts_ctMain(argc, argv, &stOptions, &stResources);
+call    0 never executed
+-:  148:  }
+-:  149:
+-:  150:  // Release resources and specific options if any
+#####:  151:  if(releaseSpecificResources)
+branch  0 never executed
+branch  1 never executed
+-:  152:  {
+#####:  153:    WC_ASSERT(pstFunctions->pfReleaseSpecificResources != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  154:    pstFunctions->pfReleaseSpecificResources(pstContext, &(stResources.pstSpecificResources));
+call    0 never executed
+-:  155:  }
+#####:  156:  if(releaseCommonResources)
+branch  0 never executed
+branch  1 never executed
+-:  157:  {
+#####:  158:    ctutil_ReleaseCommonResources(&(stResources.stCommonResources));
+call    0 never executed
+-:  159:  }
+#####:  160:  if(stOptions.pstSpecificOptions != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  161:  {
+#####:  162:    WC_ASSERT(pstFunctions->pfReleaseSpecificOptions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  163:    pstFunctions->pfReleaseSpecificOptions(pstContext, &stOptions);
+call    0 never executed
+-:  164:  }
+-:  165:
+#####:  166:  WC_ASSERT(result >= CTUTIL_EXIT_MIN);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  167:  WC_ASSERT(result <= CTUTIL_EXIT_MAX);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  168:  return result;
+-:  169:}
+-:  170:
+-:  171:
+-:  172://---- End of source file ------------------------------------------------------
+-:  173:

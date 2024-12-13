@@ -1,0 +1,31 @@
+-:    0:Source:src/EventFolder.cpp
+-:    1:
+-:    2:#include "EventFolder.hpp"
+-:    3:
+-:    4:#include "Program.hpp"
+-:    5:
+-:    6:namespace wago::snmp_config_lib {
+-:    7:
+function _ZN4wago15snmp_config_lib18TriggerEventFolderEv called 0 returned 0% blocks executed 0%
+#####:    8:void TriggerEventFolder() {
+#####:    9:  auto run_parts_result = wago::util::Program::Execute("run-parts -a config /etc/config-tools/events/snmp/");
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+-:   10:
+#####:   11:  if (run_parts_result.GetResult() != 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   12:    //TODO(TeamPnd) add error log
+-:   13:  }
+#####:   14:}
+call    0 never executed
+call    1 never executed
+-:   15:
+-:   16:}

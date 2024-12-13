@@ -1,0 +1,49 @@
+## SECTION=multimedia_libs
+
+menuconfig LIBINPUT
+	tristate
+	select HOST_MESON
+	select MTDEV
+	select LIBEVDEV
+	select UDEV
+	select UDEV_LIBUDEV
+	select PYTHON3			if LIBINPUT_TOOL_REPLAY && RUNTIME
+	select PYTHON3_PYYAML		if LIBINPUT_TOOL_REPLAY && RUNTIME
+	prompt "libinput                      "
+	help
+	  libinput is a library to handle input devices in Wayland compositors and to
+	  provide a generic X.Org input driver. It provides device detection, device
+	  handling, input device event processing and abstraction so minimize the amount
+	  of custom input code compositors need to provide the common set of
+	  functionality that users expect.
+
+if LIBINPUT
+
+config LIBINPUT_QUIRKS
+	bool
+	prompt "install device quirks"
+	help
+	  Installing the input device quirks database is useful for systems
+	  that allow connecting external input devices, or for systems that are
+	  contained in the quirks database.
+
+config LIBINPUT_TOOL
+	bool
+	prompt "install libinput tool"
+	help
+	  Install the libinput tool.
+
+config LIBINPUT_TOOL_REPLAY
+	bool
+	depends on LIBINPUT_TOOL
+	prompt "install Python dependencies for 'libinput replay'"
+	help
+	  'libinput replay' is a Python 3 script that has several
+	  dependencies. Enable this option to ensure that all Python
+	  packages needed for 'libinput replay' are available.
+
+config LIBINPUT_WACOM
+	bool
+	prompt "wacom support"
+
+endif

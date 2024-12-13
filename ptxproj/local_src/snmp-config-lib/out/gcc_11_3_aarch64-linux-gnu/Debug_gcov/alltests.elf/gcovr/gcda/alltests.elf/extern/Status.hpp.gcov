@@ -1,0 +1,71 @@
+-:    0:Source:extern/Status.hpp
+-:    1:#pragma once
+-:    2:
+-:    3:#include <string>
+-:    4:#include <vector>
+-:    5:
+-:    6:
+-:    7:namespace wago::snmp_config_lib {
+-:    8:
+-:    9:enum class StatusCode : ::std::uint32_t {
+-:   10:  OK = 0,
+-:   11:  WRONG_PARAMETER_PATTERN = 1,
+-:   12:};
+-:   13:
+-:   14:class Status {
+-:   15: public:
+-:   16:  Status() = default;
+-:   17:  explicit Status(StatusCode code);
+-:   18:  Status(StatusCode code, ::std::string &&additional_information_);
+-:   19:  virtual ~Status() = default;
+-:   20:  Status(const Status &other) = default;
+-:   21:  Status(Status &&other) = default;
+-:   22:  Status& operator=(const Status &other) = default;
+-:   23:  Status& operator=(Status &&other) = default;
+-:   24:
+-:   25:  ::std::string ToString() const;
+-:   26:  bool IsOk() const;
+-:   27:
+-:   28:  bool operator == (const Status &other) const {
+-:   29:    return status_code_ == other.status_code_ && additional_information_ == other.additional_information_;
+-:   30:  }
+-:   31:
+-:   32: private:
+-:   33:  StatusCode status_code_ = StatusCode::OK;
+-:   34:  ::std::string additional_information_;
+-:   35:};
+-:   36:
+-:   37:class Statuses {
+-:   38: public:
+-:   39:  Statuses() = default;
+90*:   40:  virtual ~Statuses() = default;
+------------------
+_ZN4wago15snmp_config_lib8StatusesD0Ev:
+function _ZN4wago15snmp_config_lib8StatusesD0Ev called 0 returned 0% blocks executed 0%
+#####:   40:  virtual ~Statuses() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN4wago15snmp_config_lib8StatusesD2Ev:
+function _ZN4wago15snmp_config_lib8StatusesD2Ev called 90 returned 100% blocks executed 100%
+90:   40:  virtual ~Statuses() = default;
+call    0 returned 90
+------------------
+-:   41:  Statuses(const Statuses &other) = default;
+-:   42:  Statuses(Statuses &&other) = default;
+-:   43:  Statuses& operator=(const Statuses &other) = delete;
+-:   44:  Statuses& operator=(Statuses &&other) = delete;
+-:   45:
+-:   46:  void AddErrorStatus(Status&& status);
+-:   47:  void AddErrorStatuses(Statuses&& statuses);
+-:   48:
+-:   49:  const ::std::vector<Status>& GetStatuses() const;
+-:   50:
+-:   51:  bool IsOk() const;
+-:   52:
+-:   53: private:
+-:   54:  ::std::vector<Status> statuses_;
+-:   55:
+-:   56:};
+-:   57:
+-:   58:}

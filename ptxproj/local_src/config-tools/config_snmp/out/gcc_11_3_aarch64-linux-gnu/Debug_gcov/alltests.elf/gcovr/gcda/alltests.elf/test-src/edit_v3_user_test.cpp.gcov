@@ -1,0 +1,1527 @@
+-:    0:Source:test-src/edit_v3_user_test.cpp
+-:    1:// Copyright (c) 2022 WAGO GmbH & Co. KG
+-:    2:// SPDX-License-Identifier: MPL-2.0
+-:    3:
+-:    4:#include <gmock/gmock.h>
+-:    5:#include <gtest/gtest.h>
+-:    6:
+-:    7:#include "SnmpConfig.hpp"
+-:    8:#include "snmp_config_handler.hpp"
+-:    9:
+-:   10:namespace wago::snmp_config {
+-:   11:using namespace wago::snmp_config_lib;  // NOLINT google-build-using-namespace
+-:   12:using namespace ::testing;              // NOLINT google-build-using-namespace
+-:   13:
+-:   14:// "Following 7 parameters must be given together:",
+-:   15:// "v3-edit: \"add\" | \"delete\"",
+-:   16:// "v3-auth-name-value: string without spaces, min 1, max 32 characters",
+-:   17:// "v3-auth-type-value: \"none\" | \"MD5\" | \"SHA\""
+-:   18:// "v3-auth-key-value: string without spaces, min 8 characters"
+-:   19:// "v3-privacy-value: \"none\" | \"DES\" | \"AES\" "
+-:   20:// "v3-privacy-key-value: string without spaces, min 8 characters; optional - if it is not given, netsnmp will use "
+-:   21:// "auth type value"
+-:   22:
+4:   23:TEST(handle_v3_add_or_delete_user, implicit_add_user) {
+1:   24:  SnmpConfig config{};
+-:   25:
+-:   26:  const parameter_map parameters = {{"v3-edit", "add"},
+-:   27:                                    {"v3-auth-name", "auth-name"},
+-:   28:                                    {"v3-auth-type", "sha"},
+-:   29:                                    {"v3-auth-key", "auth-key"},
+-:   30:                                    {"v3-privacy", "aes"},
+-:   31:                                    {"v3-privacy-key", "privacy-key"},
+9:   32:                                    {"v3-user-access", "read-only"}};
+-:   33:
+-:   34:  User expected_user = {"auth-name",  Access::ReadOnly, SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   35:                        Privacy::AES, "privacy-key"};
+-:   36:
+1:   37:  edit_v3_user_or_trap(parameters, config);
+-:   38:
+2*:   39:  EXPECT_THAT(config.user_, ElementsAre(expected_user));
+1:   40:}
+------------------
+_ZN4wago11snmp_config51handle_v3_add_or_delete_user_implicit_add_user_TestC2Ev:
+function _ZN4wago11snmp_config51handle_v3_add_or_delete_user_implicit_add_user_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   23:TEST(handle_v3_add_or_delete_user, implicit_add_user) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config51handle_v3_add_or_delete_user_implicit_add_user_TestD0Ev:
+function _ZN4wago11snmp_config51handle_v3_add_or_delete_user_implicit_add_user_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   23:TEST(handle_v3_add_or_delete_user, implicit_add_user) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config51handle_v3_add_or_delete_user_implicit_add_user_TestD2Ev:
+function _ZN4wago11snmp_config51handle_v3_add_or_delete_user_implicit_add_user_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   23:TEST(handle_v3_add_or_delete_user, implicit_add_user) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config51handle_v3_add_or_delete_user_implicit_add_user_Test8TestBodyEv:
+function _ZN4wago11snmp_config51handle_v3_add_or_delete_user_implicit_add_user_Test8TestBodyEv called 1 returned 100% blocks executed 42%
+1:   23:TEST(handle_v3_add_or_delete_user, implicit_add_user) {
+1:   24:  SnmpConfig config{};
+call    0 returned 1
+-:   25:
+-:   26:  const parameter_map parameters = {{"v3-edit", "add"},
+-:   27:                                    {"v3-auth-name", "auth-name"},
+-:   28:                                    {"v3-auth-type", "sha"},
+-:   29:                                    {"v3-auth-key", "auth-key"},
+-:   30:                                    {"v3-privacy", "aes"},
+-:   31:                                    {"v3-privacy-key", "privacy-key"},
+9:   32:                                    {"v3-user-access", "read-only"}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 1
+call   22 returned 1
+branch 23 taken 1 (fallthrough)
+branch 24 taken 0 (throw)
+call   25 returned 7
+call   26 never executed
+-:   33:
+-:   34:  User expected_user = {"auth-name",  Access::ReadOnly, SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   35:                        Privacy::AES, "privacy-key"};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+-:   36:
+1:   37:  edit_v3_user_or_trap(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   38:
+2*:   39:  EXPECT_THAT(config.user_, ElementsAre(expected_user));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+1:   40:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   41:
+4:   42:TEST(handle_v3_add_or_delete_user, add_user) {
+1:   43:  SnmpConfig config{};
+-:   44:
+-:   45:  const parameter_map parameters = {{"v3-user-edit", "add"},        {"v3-auth-name", "auth-name"},
+-:   46:                                    {"v3-auth-type", "sha"},        {"v3-auth-key", "auth-key"},
+-:   47:                                    {"v3-privacy", "aes"},          {"v3-privacy-key", "privacy-key"},
+9:   48:                                    {"v3-user-access", "read-only"}};
+-:   49:
+-:   50:  User expected_user = {"auth-name",  Access::ReadOnly, SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   51:                        Privacy::AES, "privacy-key"};
+-:   52:
+1:   53:  edit_v3_user_or_trap(parameters, config);
+-:   54:
+2*:   55:  EXPECT_THAT(config.user_, ElementsAre(expected_user));
+1:   56:}
+------------------
+_ZN4wago11snmp_config42handle_v3_add_or_delete_user_add_user_TestC2Ev:
+function _ZN4wago11snmp_config42handle_v3_add_or_delete_user_add_user_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   42:TEST(handle_v3_add_or_delete_user, add_user) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config42handle_v3_add_or_delete_user_add_user_TestD0Ev:
+function _ZN4wago11snmp_config42handle_v3_add_or_delete_user_add_user_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   42:TEST(handle_v3_add_or_delete_user, add_user) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config42handle_v3_add_or_delete_user_add_user_TestD2Ev:
+function _ZN4wago11snmp_config42handle_v3_add_or_delete_user_add_user_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   42:TEST(handle_v3_add_or_delete_user, add_user) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config42handle_v3_add_or_delete_user_add_user_Test8TestBodyEv:
+function _ZN4wago11snmp_config42handle_v3_add_or_delete_user_add_user_Test8TestBodyEv called 1 returned 100% blocks executed 42%
+1:   42:TEST(handle_v3_add_or_delete_user, add_user) {
+1:   43:  SnmpConfig config{};
+call    0 returned 1
+-:   44:
+-:   45:  const parameter_map parameters = {{"v3-user-edit", "add"},        {"v3-auth-name", "auth-name"},
+-:   46:                                    {"v3-auth-type", "sha"},        {"v3-auth-key", "auth-key"},
+-:   47:                                    {"v3-privacy", "aes"},          {"v3-privacy-key", "privacy-key"},
+9:   48:                                    {"v3-user-access", "read-only"}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 1
+call   22 returned 1
+branch 23 taken 1 (fallthrough)
+branch 24 taken 0 (throw)
+call   25 returned 7
+call   26 never executed
+-:   49:
+-:   50:  User expected_user = {"auth-name",  Access::ReadOnly, SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   51:                        Privacy::AES, "privacy-key"};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+-:   52:
+1:   53:  edit_v3_user_or_trap(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   54:
+2*:   55:  EXPECT_THAT(config.user_, ElementsAre(expected_user));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+1:   56:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   57:
+4:   58:TEST(handle_v3_add_or_delete_user, add_user_with_default_access) {
+1:   59:  SnmpConfig config{};
+-:   60:
+-:   61:  const parameter_map parameters = {{"v3-edit", "add"},      {"v3-auth-name", "auth-name"},
+-:   62:                                    {"v3-auth-type", "sha"}, {"v3-auth-key", "auth-key"},
+8:   63:                                    {"v3-privacy", "aes"},   {"v3-privacy-key", "privacy-key"}};
+-:   64:
+-:   65:  User expected_user = {"auth-name",  Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   66:                        Privacy::AES, "privacy-key"};
+-:   67:
+1:   68:  edit_v3_user_or_trap(parameters, config);
+-:   69:
+2*:   70:  EXPECT_THAT(config.user_, ElementsAre(expected_user));
+1:   71:}
+------------------
+_ZN4wago11snmp_config62handle_v3_add_or_delete_user_add_user_with_default_access_TestC2Ev:
+function _ZN4wago11snmp_config62handle_v3_add_or_delete_user_add_user_with_default_access_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   58:TEST(handle_v3_add_or_delete_user, add_user_with_default_access) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config62handle_v3_add_or_delete_user_add_user_with_default_access_TestD0Ev:
+function _ZN4wago11snmp_config62handle_v3_add_or_delete_user_add_user_with_default_access_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   58:TEST(handle_v3_add_or_delete_user, add_user_with_default_access) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config62handle_v3_add_or_delete_user_add_user_with_default_access_TestD2Ev:
+function _ZN4wago11snmp_config62handle_v3_add_or_delete_user_add_user_with_default_access_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   58:TEST(handle_v3_add_or_delete_user, add_user_with_default_access) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config62handle_v3_add_or_delete_user_add_user_with_default_access_Test8TestBodyEv:
+function _ZN4wago11snmp_config62handle_v3_add_or_delete_user_add_user_with_default_access_Test8TestBodyEv called 1 returned 100% blocks executed 41%
+1:   58:TEST(handle_v3_add_or_delete_user, add_user_with_default_access) {
+1:   59:  SnmpConfig config{};
+call    0 returned 1
+-:   60:
+-:   61:  const parameter_map parameters = {{"v3-edit", "add"},      {"v3-auth-name", "auth-name"},
+-:   62:                                    {"v3-auth-type", "sha"}, {"v3-auth-key", "auth-key"},
+8:   63:                                    {"v3-privacy", "aes"},   {"v3-privacy-key", "privacy-key"}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 6
+call   23 never executed
+-:   64:
+-:   65:  User expected_user = {"auth-name",  Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   66:                        Privacy::AES, "privacy-key"};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+-:   67:
+1:   68:  edit_v3_user_or_trap(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   69:
+2*:   70:  EXPECT_THAT(config.user_, ElementsAre(expected_user));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+1:   71:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   72:
+4:   73:TEST(handle_v3_add_or_delete_user, add_user_when_notification_receiver_is_empty) {
+1:   74:  SnmpConfig config{};
+-:   75:
+-:   76:  const parameter_map parameters = {{"v3-edit", "add"},
+-:   77:                                    {"v3-auth-name", "auth-name"},
+-:   78:                                    {"v3-auth-type", "sha"},
+-:   79:                                    {"v3-auth-key", "auth-key"},
+-:   80:                                    {"v3-privacy", "aes"},
+-:   81:                                    {"v3-privacy-key", "privacy-key"},
+-:   82:                                    {"v3-user-access", "read-only"},
+10:   83:                                    {"v3-notification-receiver", ""}};
+-:   84:
+-:   85:  User expected_user = {"auth-name",  Access::ReadOnly, SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   86:                        Privacy::AES, "privacy-key"};
+-:   87:
+1:   88:  edit_v3_user_or_trap(parameters, config);
+-:   89:
+2*:   90:  EXPECT_THAT(config.user_, ElementsAre(expected_user));
+1*:   91:  EXPECT_THAT(config.trap_receivers_V3_, IsEmpty());
+1:   92:}
+------------------
+_ZN4wago11snmp_config78handle_v3_add_or_delete_user_add_user_when_notification_receiver_is_empty_TestC2Ev:
+function _ZN4wago11snmp_config78handle_v3_add_or_delete_user_add_user_when_notification_receiver_is_empty_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   73:TEST(handle_v3_add_or_delete_user, add_user_when_notification_receiver_is_empty) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config78handle_v3_add_or_delete_user_add_user_when_notification_receiver_is_empty_TestD0Ev:
+function _ZN4wago11snmp_config78handle_v3_add_or_delete_user_add_user_when_notification_receiver_is_empty_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   73:TEST(handle_v3_add_or_delete_user, add_user_when_notification_receiver_is_empty) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config78handle_v3_add_or_delete_user_add_user_when_notification_receiver_is_empty_TestD2Ev:
+function _ZN4wago11snmp_config78handle_v3_add_or_delete_user_add_user_when_notification_receiver_is_empty_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   73:TEST(handle_v3_add_or_delete_user, add_user_when_notification_receiver_is_empty) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config78handle_v3_add_or_delete_user_add_user_when_notification_receiver_is_empty_Test8TestBodyEv:
+function _ZN4wago11snmp_config78handle_v3_add_or_delete_user_add_user_when_notification_receiver_is_empty_Test8TestBodyEv called 1 returned 100% blocks executed 39%
+1:   73:TEST(handle_v3_add_or_delete_user, add_user_when_notification_receiver_is_empty) {
+1:   74:  SnmpConfig config{};
+call    0 returned 1
+-:   75:
+-:   76:  const parameter_map parameters = {{"v3-edit", "add"},
+-:   77:                                    {"v3-auth-name", "auth-name"},
+-:   78:                                    {"v3-auth-type", "sha"},
+-:   79:                                    {"v3-auth-key", "auth-key"},
+-:   80:                                    {"v3-privacy", "aes"},
+-:   81:                                    {"v3-privacy-key", "privacy-key"},
+-:   82:                                    {"v3-user-access", "read-only"},
+10:   83:                                    {"v3-notification-receiver", ""}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0 (throw)
+call   24 returned 1
+call   25 returned 1
+branch 26 taken 1 (fallthrough)
+branch 27 taken 0 (throw)
+call   28 returned 8
+call   29 never executed
+-:   84:
+-:   85:  User expected_user = {"auth-name",  Access::ReadOnly, SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   86:                        Privacy::AES, "privacy-key"};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+-:   87:
+1:   88:  edit_v3_user_or_trap(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   89:
+2*:   90:  EXPECT_THAT(config.user_, ElementsAre(expected_user));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+1*:   91:  EXPECT_THAT(config.trap_receivers_V3_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:   92:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   93:
+4:   94:TEST(handle_v3_add_or_delete_user, implicit_delete_user) {
+1:   95:  SnmpConfig config{};
+-:   96:
+#####:   97:  config.user_.emplace_back("auth-name", Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::SHA,
+1:   98:                            "auth-key", Privacy::AES, "privacy-key");
+-:   99:
+4:  100:  const parameter_map parameters = {{"v3-edit", "delete"}, {"v3-auth-name", "auth-name"}};
+-:  101:
+1:  102:  edit_v3_user_or_trap(parameters, config);
+-:  103:
+1*:  104:  EXPECT_THAT(config.user_, IsEmpty());
+1:  105:}
+------------------
+_ZN4wago11snmp_config54handle_v3_add_or_delete_user_implicit_delete_user_TestC2Ev:
+function _ZN4wago11snmp_config54handle_v3_add_or_delete_user_implicit_delete_user_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(handle_v3_add_or_delete_user, implicit_delete_user) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config54handle_v3_add_or_delete_user_implicit_delete_user_TestD0Ev:
+function _ZN4wago11snmp_config54handle_v3_add_or_delete_user_implicit_delete_user_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(handle_v3_add_or_delete_user, implicit_delete_user) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config54handle_v3_add_or_delete_user_implicit_delete_user_TestD2Ev:
+function _ZN4wago11snmp_config54handle_v3_add_or_delete_user_implicit_delete_user_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(handle_v3_add_or_delete_user, implicit_delete_user) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config54handle_v3_add_or_delete_user_implicit_delete_user_Test8TestBodyEv:
+function _ZN4wago11snmp_config54handle_v3_add_or_delete_user_implicit_delete_user_Test8TestBodyEv called 1 returned 100% blocks executed 36%
+1:   94:TEST(handle_v3_add_or_delete_user, implicit_delete_user) {
+1:   95:  SnmpConfig config{};
+call    0 returned 1
+-:   96:
+#####:   97:  config.user_.emplace_back("auth-name", Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::SHA,
+1:   98:                            "auth-key", Privacy::AES, "privacy-key");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   99:
+4:  100:  const parameter_map parameters = {{"v3-edit", "delete"}, {"v3-auth-name", "auth-name"}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 2
+call   11 never executed
+-:  101:
+1:  102:  edit_v3_user_or_trap(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  103:
+1*:  104:  EXPECT_THAT(config.user_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:  105:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  106:
+4:  107:TEST(handle_v3_add_or_delete_user, delete_user) {
+1:  108:  SnmpConfig config{};
+-:  109:
+#####:  110:  config.user_.emplace_back("auth-name", Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::SHA,
+1:  111:                            "auth-key", Privacy::AES, "privacy-key");
+-:  112:
+4:  113:  const parameter_map parameters = {{"v3-user-edit", "delete"}, {"v3-auth-name", "auth-name"}};
+-:  114:
+1:  115:  edit_v3_user_or_trap(parameters, config);
+-:  116:
+1*:  117:  EXPECT_THAT(config.user_, IsEmpty());
+1:  118:}
+------------------
+_ZN4wago11snmp_config45handle_v3_add_or_delete_user_delete_user_TestC2Ev:
+function _ZN4wago11snmp_config45handle_v3_add_or_delete_user_delete_user_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  107:TEST(handle_v3_add_or_delete_user, delete_user) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config45handle_v3_add_or_delete_user_delete_user_TestD0Ev:
+function _ZN4wago11snmp_config45handle_v3_add_or_delete_user_delete_user_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  107:TEST(handle_v3_add_or_delete_user, delete_user) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config45handle_v3_add_or_delete_user_delete_user_TestD2Ev:
+function _ZN4wago11snmp_config45handle_v3_add_or_delete_user_delete_user_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  107:TEST(handle_v3_add_or_delete_user, delete_user) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config45handle_v3_add_or_delete_user_delete_user_Test8TestBodyEv:
+function _ZN4wago11snmp_config45handle_v3_add_or_delete_user_delete_user_Test8TestBodyEv called 1 returned 100% blocks executed 36%
+1:  107:TEST(handle_v3_add_or_delete_user, delete_user) {
+1:  108:  SnmpConfig config{};
+call    0 returned 1
+-:  109:
+#####:  110:  config.user_.emplace_back("auth-name", Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::SHA,
+1:  111:                            "auth-key", Privacy::AES, "privacy-key");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  112:
+4:  113:  const parameter_map parameters = {{"v3-user-edit", "delete"}, {"v3-auth-name", "auth-name"}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 2
+call   11 never executed
+-:  114:
+1:  115:  edit_v3_user_or_trap(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  116:
+1*:  117:  EXPECT_THAT(config.user_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:  118:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  119:
+4:  120:TEST(handle_v3_add_or_delete_user, delete_user_throws_when_name_is_missing) {
+1:  121:  SnmpConfig config{};
+#####:  122:  auto user = config.user_.emplace_back("auth-name", Access::ReadWrite, SecurityLevel::AuthPriv,
+1:  123:                                        AuthenticationType::SHA, "auth-key", Privacy::AES, "privacy-key");
+-:  124:
+3:  125:  const parameter_map parameters = {{"v3-user-edit", "delete"}};
+-:  126:
+2*:  127:  EXPECT_THROW(
+-:  128:      {
+-:  129:        try {
+-:  130:          edit_v3_user_or_trap(parameters, config);
+-:  131:        } catch (snmp_config_exception const& e) {
+-:  132:          EXPECT_STREQ("missing parameter: v3-auth-name", e.what());
+-:  133:          EXPECT_EQ(snmp_config_error::missing_parameter, e.error());
+-:  134:          throw;
+-:  135:        }
+-:  136:      },
+1:  137:      snmp_config_exception);
+-:  138:
+2*:  139:  EXPECT_THAT(config.user_, ElementsAre(user));
+1:  140:}
+------------------
+_ZN4wago11snmp_config73handle_v3_add_or_delete_user_delete_user_throws_when_name_is_missing_TestC2Ev:
+function _ZN4wago11snmp_config73handle_v3_add_or_delete_user_delete_user_throws_when_name_is_missing_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  120:TEST(handle_v3_add_or_delete_user, delete_user_throws_when_name_is_missing) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config73handle_v3_add_or_delete_user_delete_user_throws_when_name_is_missing_TestD0Ev:
+function _ZN4wago11snmp_config73handle_v3_add_or_delete_user_delete_user_throws_when_name_is_missing_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  120:TEST(handle_v3_add_or_delete_user, delete_user_throws_when_name_is_missing) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config73handle_v3_add_or_delete_user_delete_user_throws_when_name_is_missing_TestD2Ev:
+function _ZN4wago11snmp_config73handle_v3_add_or_delete_user_delete_user_throws_when_name_is_missing_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  120:TEST(handle_v3_add_or_delete_user, delete_user_throws_when_name_is_missing) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config73handle_v3_add_or_delete_user_delete_user_throws_when_name_is_missing_Test8TestBodyEv:
+function _ZN4wago11snmp_config73handle_v3_add_or_delete_user_delete_user_throws_when_name_is_missing_Test8TestBodyEv called 1 returned 100% blocks executed 29%
+1:  120:TEST(handle_v3_add_or_delete_user, delete_user_throws_when_name_is_missing) {
+1:  121:  SnmpConfig config{};
+call    0 returned 1
+#####:  122:  auto user = config.user_.emplace_back("auth-name", Access::ReadWrite, SecurityLevel::AuthPriv,
+1:  123:                                        AuthenticationType::SHA, "auth-key", Privacy::AES, "privacy-key");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+-:  124:
+3:  125:  const parameter_map parameters = {{"v3-user-edit", "delete"}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+-:  126:
+2*:  127:  EXPECT_THROW(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1 (throw)
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+branch 29 taken 0 (fallthrough)
+branch 30 taken 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+branch 34 taken 1 (fallthrough)
+branch 35 taken 0 (throw)
+call   36 returned 1
+branch 37 taken 0 (fallthrough)
+branch 38 taken 1
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+call   43 never executed
+branch 44 never executed
+branch 45 never executed
+call   46 never executed
+branch 47 never executed
+branch 48 never executed
+call   49 never executed
+call   50 never executed
+call   51 returned 1
+call   52 returned 1
+call   53 returned 1
+branch 54 taken 1 (fallthrough)
+branch 55 taken 0 (throw)
+call   56 returned 1
+branch 57 taken 0 (fallthrough)
+branch 58 taken 1
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+branch 67 never executed
+branch 68 never executed
+call   69 never executed
+call   70 never executed
+call   71 returned 1
+call   72 returned 1
+call   73 never executed
+call   74 never executed
+call   75 never executed
+call   76 never executed
+call   77 never executed
+call   78 never executed
+call   79 returned 1
+branch 80 taken 1
+branch 81 taken 0
+branch 82 taken 0
+call   83 returned 1
+call   84 returned 1
+branch 85 taken 1 (fallthrough)
+branch 86 taken 0 (throw)
+call   87 never executed
+call   88 never executed
+branch 89 never executed
+branch 90 never executed
+call   91 never executed
+branch 92 never executed
+branch 93 never executed
+call   94 never executed
+branch 95 never executed
+branch 96 never executed
+call   97 never executed
+call   98 never executed
+branch 99 never executed
+branch 100 never executed
+call   101 never executed
+call   102 never executed
+branch 103 never executed
+branch 104 never executed
+call   105 never executed
+branch 106 never executed
+branch 107 never executed
+call   108 never executed
+call   109 never executed
+call   110 never executed
+branch 111 never executed
+branch 112 never executed
+call   113 never executed
+branch 114 never executed
+branch 115 never executed
+call   116 never executed
+call   117 never executed
+call   118 never executed
+call   119 never executed
+call   120 never executed
+-:  128:      {
+-:  129:        try {
+-:  130:          edit_v3_user_or_trap(parameters, config);
+-:  131:        } catch (snmp_config_exception const& e) {
+-:  132:          EXPECT_STREQ("missing parameter: v3-auth-name", e.what());
+-:  133:          EXPECT_EQ(snmp_config_error::missing_parameter, e.error());
+-:  134:          throw;
+-:  135:        }
+-:  136:      },
+1:  137:      snmp_config_exception);
+call    0 returned 1
+call    1 never executed
+-:  138:
+2*:  139:  EXPECT_THAT(config.user_, ElementsAre(user));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+1:  140:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:  141:
+4:  142:TEST(handle_v3_add_or_delete_user, add_user_throws_when_name_is_missing) {
+1:  143:  SnmpConfig config{};
+-:  144:  const parameter_map parameters = {{"v3-user-edit", "add"},
+-:  145:                                    {"v3-auth-type", "sha"},
+-:  146:                                    {"v3-auth-key", "auth-key"},
+-:  147:                                    {"v3-privacy", "aes"},
+7:  148:                                    {"v3-privacy-key", "privacy-key"}};
+-:  149:
+2*:  150:  EXPECT_THROW(
+-:  151:      {
+-:  152:        try {
+-:  153:          edit_v3_user_or_trap(parameters, config);
+-:  154:        } catch (snmp_config_exception const& e) {
+-:  155:          EXPECT_STREQ("missing parameter: v3-auth-name", e.what());
+-:  156:          EXPECT_EQ(snmp_config_error::missing_parameter, e.error());
+-:  157:          throw;
+-:  158:        }
+-:  159:      },
+1:  160:      snmp_config_exception);
+-:  161:
+1*:  162:  EXPECT_THAT(config.user_, IsEmpty());
+1:  163:}
+------------------
+_ZN4wago11snmp_config70handle_v3_add_or_delete_user_add_user_throws_when_name_is_missing_TestC2Ev:
+function _ZN4wago11snmp_config70handle_v3_add_or_delete_user_add_user_throws_when_name_is_missing_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  142:TEST(handle_v3_add_or_delete_user, add_user_throws_when_name_is_missing) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config70handle_v3_add_or_delete_user_add_user_throws_when_name_is_missing_TestD0Ev:
+function _ZN4wago11snmp_config70handle_v3_add_or_delete_user_add_user_throws_when_name_is_missing_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  142:TEST(handle_v3_add_or_delete_user, add_user_throws_when_name_is_missing) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config70handle_v3_add_or_delete_user_add_user_throws_when_name_is_missing_TestD2Ev:
+function _ZN4wago11snmp_config70handle_v3_add_or_delete_user_add_user_throws_when_name_is_missing_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  142:TEST(handle_v3_add_or_delete_user, add_user_throws_when_name_is_missing) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config70handle_v3_add_or_delete_user_add_user_throws_when_name_is_missing_Test8TestBodyEv:
+function _ZN4wago11snmp_config70handle_v3_add_or_delete_user_add_user_throws_when_name_is_missing_Test8TestBodyEv called 1 returned 100% blocks executed 31%
+1:  142:TEST(handle_v3_add_or_delete_user, add_user_throws_when_name_is_missing) {
+1:  143:  SnmpConfig config{};
+call    0 returned 1
+-:  144:  const parameter_map parameters = {{"v3-user-edit", "add"},
+-:  145:                                    {"v3-auth-type", "sha"},
+-:  146:                                    {"v3-auth-key", "auth-key"},
+-:  147:                                    {"v3-privacy", "aes"},
+7:  148:                                    {"v3-privacy-key", "privacy-key"}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 5
+call   20 never executed
+-:  149:
+2*:  150:  EXPECT_THROW(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1 (throw)
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+branch 29 taken 0 (fallthrough)
+branch 30 taken 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+branch 34 taken 1 (fallthrough)
+branch 35 taken 0 (throw)
+call   36 returned 1
+branch 37 taken 0 (fallthrough)
+branch 38 taken 1
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+call   43 never executed
+branch 44 never executed
+branch 45 never executed
+call   46 never executed
+branch 47 never executed
+branch 48 never executed
+call   49 never executed
+call   50 never executed
+call   51 returned 1
+call   52 returned 1
+call   53 returned 1
+branch 54 taken 1 (fallthrough)
+branch 55 taken 0 (throw)
+call   56 returned 1
+branch 57 taken 0 (fallthrough)
+branch 58 taken 1
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+branch 67 never executed
+branch 68 never executed
+call   69 never executed
+call   70 never executed
+call   71 returned 1
+call   72 returned 1
+call   73 never executed
+call   74 never executed
+call   75 never executed
+call   76 never executed
+call   77 never executed
+call   78 never executed
+call   79 returned 1
+branch 80 taken 1
+branch 81 taken 0
+branch 82 taken 0
+call   83 returned 1
+call   84 returned 1
+branch 85 taken 1 (fallthrough)
+branch 86 taken 0 (throw)
+call   87 never executed
+call   88 never executed
+branch 89 never executed
+branch 90 never executed
+call   91 never executed
+branch 92 never executed
+branch 93 never executed
+call   94 never executed
+branch 95 never executed
+branch 96 never executed
+call   97 never executed
+call   98 never executed
+branch 99 never executed
+branch 100 never executed
+call   101 never executed
+call   102 never executed
+branch 103 never executed
+branch 104 never executed
+call   105 never executed
+branch 106 never executed
+branch 107 never executed
+call   108 never executed
+call   109 never executed
+call   110 never executed
+branch 111 never executed
+branch 112 never executed
+call   113 never executed
+branch 114 never executed
+branch 115 never executed
+call   116 never executed
+call   117 never executed
+call   118 never executed
+call   119 never executed
+call   120 never executed
+-:  151:      {
+-:  152:        try {
+-:  153:          edit_v3_user_or_trap(parameters, config);
+-:  154:        } catch (snmp_config_exception const& e) {
+-:  155:          EXPECT_STREQ("missing parameter: v3-auth-name", e.what());
+-:  156:          EXPECT_EQ(snmp_config_error::missing_parameter, e.error());
+-:  157:          throw;
+-:  158:        }
+-:  159:      },
+1:  160:      snmp_config_exception);
+call    0 returned 1
+call    1 never executed
+-:  161:
+1*:  162:  EXPECT_THAT(config.user_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:  163:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  164:
+4:  165:TEST(handle_v3_add_or_delete_user, add_user_throws_when_auth_type_is_invalud) {
+1:  166:  SnmpConfig config{};
+-:  167:  const parameter_map parameters = {{"v3-edit", "add"},
+-:  168:                                    {"v3-auth-name", "auth-name"},
+-:  169:                                    {"v3-auth-type", "invalid-auth-type"},
+-:  170:                                    {"v3-auth-key", "auth-key"},
+-:  171:                                    {"v3-privacy", "aes"},
+-:  172:                                    {"v3-privacy-key", "privacy-key"},
+9:  173:                                    {"v3-user-access", "read-only"}};
+-:  174:
+2*:  175:  EXPECT_THROW(
+-:  176:      {
+-:  177:        try {
+-:  178:          edit_v3_user_or_trap(parameters, config);
+-:  179:        } catch (snmp_config_exception const& e) {
+-:  180:          EXPECT_STREQ("invalid conversion: invalid-auth-type", e.what());
+-:  181:          EXPECT_EQ(snmp_config_error::invalid_parameter, e.error());
+-:  182:          throw;
+-:  183:        }
+-:  184:      },
+1:  185:      snmp_config_exception);
+-:  186:
+1*:  187:  EXPECT_THAT(config.user_, IsEmpty());
+1:  188:}
+------------------
+_ZN4wago11snmp_config75handle_v3_add_or_delete_user_add_user_throws_when_auth_type_is_invalud_TestC2Ev:
+function _ZN4wago11snmp_config75handle_v3_add_or_delete_user_add_user_throws_when_auth_type_is_invalud_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  165:TEST(handle_v3_add_or_delete_user, add_user_throws_when_auth_type_is_invalud) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config75handle_v3_add_or_delete_user_add_user_throws_when_auth_type_is_invalud_TestD0Ev:
+function _ZN4wago11snmp_config75handle_v3_add_or_delete_user_add_user_throws_when_auth_type_is_invalud_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  165:TEST(handle_v3_add_or_delete_user, add_user_throws_when_auth_type_is_invalud) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config75handle_v3_add_or_delete_user_add_user_throws_when_auth_type_is_invalud_TestD2Ev:
+function _ZN4wago11snmp_config75handle_v3_add_or_delete_user_add_user_throws_when_auth_type_is_invalud_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  165:TEST(handle_v3_add_or_delete_user, add_user_throws_when_auth_type_is_invalud) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config75handle_v3_add_or_delete_user_add_user_throws_when_auth_type_is_invalud_Test8TestBodyEv:
+function _ZN4wago11snmp_config75handle_v3_add_or_delete_user_add_user_throws_when_auth_type_is_invalud_Test8TestBodyEv called 1 returned 100% blocks executed 32%
+1:  165:TEST(handle_v3_add_or_delete_user, add_user_throws_when_auth_type_is_invalud) {
+1:  166:  SnmpConfig config{};
+call    0 returned 1
+-:  167:  const parameter_map parameters = {{"v3-edit", "add"},
+-:  168:                                    {"v3-auth-name", "auth-name"},
+-:  169:                                    {"v3-auth-type", "invalid-auth-type"},
+-:  170:                                    {"v3-auth-key", "auth-key"},
+-:  171:                                    {"v3-privacy", "aes"},
+-:  172:                                    {"v3-privacy-key", "privacy-key"},
+9:  173:                                    {"v3-user-access", "read-only"}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 1
+call   22 returned 1
+branch 23 taken 1 (fallthrough)
+branch 24 taken 0 (throw)
+call   25 returned 7
+call   26 never executed
+-:  174:
+2*:  175:  EXPECT_THROW(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1 (throw)
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+branch 29 taken 0 (fallthrough)
+branch 30 taken 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+branch 34 taken 1 (fallthrough)
+branch 35 taken 0 (throw)
+call   36 returned 1
+branch 37 taken 0 (fallthrough)
+branch 38 taken 1
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+call   43 never executed
+branch 44 never executed
+branch 45 never executed
+call   46 never executed
+branch 47 never executed
+branch 48 never executed
+call   49 never executed
+call   50 never executed
+call   51 returned 1
+call   52 returned 1
+call   53 returned 1
+branch 54 taken 1 (fallthrough)
+branch 55 taken 0 (throw)
+call   56 returned 1
+branch 57 taken 0 (fallthrough)
+branch 58 taken 1
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+branch 67 never executed
+branch 68 never executed
+call   69 never executed
+call   70 never executed
+call   71 returned 1
+call   72 returned 1
+call   73 never executed
+call   74 never executed
+call   75 never executed
+call   76 never executed
+call   77 never executed
+call   78 never executed
+call   79 returned 1
+branch 80 taken 1
+branch 81 taken 0
+branch 82 taken 0
+call   83 returned 1
+call   84 returned 1
+branch 85 taken 1 (fallthrough)
+branch 86 taken 0 (throw)
+call   87 never executed
+call   88 never executed
+branch 89 never executed
+branch 90 never executed
+call   91 never executed
+branch 92 never executed
+branch 93 never executed
+call   94 never executed
+branch 95 never executed
+branch 96 never executed
+call   97 never executed
+call   98 never executed
+branch 99 never executed
+branch 100 never executed
+call   101 never executed
+call   102 never executed
+branch 103 never executed
+branch 104 never executed
+call   105 never executed
+branch 106 never executed
+branch 107 never executed
+call   108 never executed
+call   109 never executed
+call   110 never executed
+branch 111 never executed
+branch 112 never executed
+call   113 never executed
+branch 114 never executed
+branch 115 never executed
+call   116 never executed
+call   117 never executed
+call   118 never executed
+call   119 never executed
+call   120 never executed
+-:  176:      {
+-:  177:        try {
+-:  178:          edit_v3_user_or_trap(parameters, config);
+-:  179:        } catch (snmp_config_exception const& e) {
+-:  180:          EXPECT_STREQ("invalid conversion: invalid-auth-type", e.what());
+-:  181:          EXPECT_EQ(snmp_config_error::invalid_parameter, e.error());
+-:  182:          throw;
+-:  183:        }
+-:  184:      },
+1:  185:      snmp_config_exception);
+call    0 returned 1
+call    1 never executed
+-:  186:
+1*:  187:  EXPECT_THAT(config.user_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:  188:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  189:
+-:  190:}  // namespace wago::snmp_config

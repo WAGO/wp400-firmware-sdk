@@ -1,0 +1,81 @@
+-:    0:Source:src/util/KeyValueParser.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:
+-:   10:#include "KeyValueParser.hpp"
+-:   11:
+-:   12:#include <boost/algorithm/string.hpp>
+-:   13:#include <exception>
+-:   14:#include <regex>
+-:   15:#include <sstream>
+-:   16:
+-:   17:namespace wago::util {
+-:   18:
+function _ZN4wago4util18ParseKeyValuePairsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 10 returned 100% blocks executed 58%
+10:   19:::std::map<::std::string, ::std::string> ParseKeyValuePairs(const ::std::string& content) {
+10:   20:  std::regex reList{R"regex(([A-Z0-9_]+)=([a-zA-Z0-9.-]+))regex", std::regex::extended};
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+-:   21:
+10:   22:  ::std::map<::std::string, ::std::string> values;
+call    0 returned 10
+10:   23:   std::for_each(std::sregex_iterator(content.begin(), content.end(), reList), std::sregex_iterator(),
+call    0 returned 10
+call    1 returned 10
+call    2 returned 10
+branch  3 taken 10 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 10
+branch  6 taken 10 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 10
+branch  9 taken 10 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 10
+call   12 returned 10
+call   13 never executed
+call   14 never executed
+function _ZZN4wago4util18ParseKeyValuePairsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENKUlRKNS1_13match_resultsIN9__gnu_cxx17__normal_iteratorIPKcS6_EESaINS1_9sub_matchISE_EEEEEE_clESK_ called 12 returned 100% blocks executed 71%
+12:   24:                 [&](std::smatch const &match) {
+12:   25:                   ::std::string key   = match[1];
+call    0 returned 12
+branch  1 taken 12 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 12
+branch  4 taken 12 (fallthrough)
+branch  5 taken 0 (throw)
+12:   26:                   ::std::string value = match[2];
+call    0 returned 12
+branch  1 taken 12 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 12
+branch  4 taken 12 (fallthrough)
+branch  5 taken 0 (throw)
+-:   27:
+12:   28:                   values[key] = value;
+call    0 returned 12
+branch  1 taken 12 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 12
+branch  4 taken 12 (fallthrough)
+branch  5 taken 0 (throw)
+12:   29:                 });
+call    0 returned 12
+call    1 returned 12
+call    2 never executed
+call    3 never executed
+-:   30:
+20:   31:   return values;
+-:   32:
+10:   33:}
+call    0 returned 10
+call    1 never executed
+call    2 never executed
+-:   34:}

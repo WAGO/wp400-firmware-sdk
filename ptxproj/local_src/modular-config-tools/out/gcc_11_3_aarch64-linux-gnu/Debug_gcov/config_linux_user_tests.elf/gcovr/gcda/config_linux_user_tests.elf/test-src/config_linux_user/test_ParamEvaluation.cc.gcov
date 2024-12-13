@@ -1,0 +1,2161 @@
+-:    0:Source:test-src/config_linux_user/test_ParamEvaluation.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_ParamEvaluation.cc
+-:   12:///
+-:   13:///  \brief    Tests for parameter evaluation of config tool config_linux_user.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "ctparts/common_main_defaults.h"
+-:   22:#include "params.h"
+-:   23:#include "testutil/common_parameter_checks.h"
+-:   24:#include <gtest/gtest.h>
+-:   25:#include <string.h>
+-:   26:
+-:   27://------------------------------------------------------------------------------
+-:   28:// macros
+-:   29://------------------------------------------------------------------------------
+-:   30:
+-:   31://------------------------------------------------------------------------------
+-:   32:// defines; structure, enumeration and type definitions
+-:   33://------------------------------------------------------------------------------
+-:   34:class OptionEvaluationTest_config_linux_user : public ::testing::Test
+-:   35:{
+-:   36:  protected:
+-:   37:    ctutil_Options_t stOptions;
+-:   38:
+-:   39:  protected:
+function _ZN38OptionEvaluationTest_config_linux_userC2Ev called 16 returned 100% blocks executed 100%
+16:   40:    OptionEvaluationTest_config_linux_user() {};
+call    0 returned 16
+16*:   41:    virtual ~OptionEvaluationTest_config_linux_user() {};
+------------------
+_ZN38OptionEvaluationTest_config_linux_userD0Ev:
+function _ZN38OptionEvaluationTest_config_linux_userD0Ev called 0 returned 0% blocks executed 0%
+#####:   41:    virtual ~OptionEvaluationTest_config_linux_user() {};
+call    0 never executed
+call    1 never executed
+------------------
+_ZN38OptionEvaluationTest_config_linux_userD2Ev:
+function _ZN38OptionEvaluationTest_config_linux_userD2Ev called 16 returned 100% blocks executed 100%
+16:   41:    virtual ~OptionEvaluationTest_config_linux_user() {};
+call    0 returned 16
+------------------
+function _ZN38OptionEvaluationTest_config_linux_user5SetUpEv called 16 returned 100% blocks executed 37%
+16:   42:    virtual void SetUp()
+-:   43:    {
+16:   44:      memset(&stOptions, 0, sizeof(stOptions));
+16:   45:      statusCode_t status = CTUTIL_SUCCESS;
+16:   46:      status = ctparts_SetOptionDefaults(NULL, &(this->stOptions));
+call    0 returned 16
+branch  1 taken 16 (fallthrough)
+branch  2 taken 0 (throw)
+16*:   47:      ASSERT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 16
+branch  1 taken 16 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 16
+branch  4 taken 0 (fallthrough)
+branch  5 taken 16
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 16
+branch 19 taken 16 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:   48:    }
+function _ZN38OptionEvaluationTest_config_linux_user8TearDownEv called 16 returned 100% blocks executed 100%
+16:   49:    virtual void TearDown()
+-:   50:    {
+16:   51:      ctparts_ReleaseSpecificOptions(NULL, &(this->stOptions));
+call    0 returned 16
+16:   52:    }
+-:   53:};
+-:   54:
+-:   55://------------------------------------------------------------------------------
+-:   56:// variables' and constants' definitions
+-:   57://------------------------------------------------------------------------------
+-:   58:
+-:   59://------------------------------------------------------------------------------
+-:   60:// test implementation
+-:   61://------------------------------------------------------------------------------
+4:   62:TEST(OptionEvaluationBasicTest_config_linux_user, SetOptionDefaultsAndRelease)
+-:   63:{
+-:   64:  ctutil_Options_t stOptions;
+1:   65:  memset(&stOptions, 0, sizeof(stOptions));
+1:   66:  stOptions.stCommonOptions.infoPrint = false;
+1:   67:  stOptions.stCommonOptions.quiet = false;
+1:   68:  stOptions.stCommonOptions.extractFromUri = false;
+1:   69:  statusCode_t status = CTUTIL_SUCCESS;
+1:   70:  status = ctparts_SetOptionDefaults(NULL, &stOptions);
+1*:   71:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+1*:   72:  EXPECT_TRUE(stOptions.stCommonOptions.infoPrint); // Default for config tools (print if no other parameter given)
+1*:   73:  EXPECT_TRUE(stOptions.stCommonOptions.quiet); // Needed because quiet option not available in first public interface
+1*:   74:  EXPECT_TRUE(stOptions.stCommonOptions.extractFromUri); // Needed because extract option not available in first public interface
+1*:   75:  EXPECT_NE((void *)NULL, stOptions.pstSpecificOptions); // Needed because specific options possible
+1:   76:  ctparts_ReleaseSpecificOptions(NULL, &stOptions);
+1*:   77:  EXPECT_EQ((void *)NULL, stOptions.pstSpecificOptions); // Pointer have to be reseted to NULL
+-:   78:}
+------------------
+_ZN76OptionEvaluationBasicTest_config_linux_user_SetOptionDefaultsAndRelease_TestC2Ev:
+function _ZN76OptionEvaluationBasicTest_config_linux_user_SetOptionDefaultsAndRelease_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST(OptionEvaluationBasicTest_config_linux_user, SetOptionDefaultsAndRelease)
+call    0 returned 1
+------------------
+_ZN76OptionEvaluationBasicTest_config_linux_user_SetOptionDefaultsAndRelease_TestD0Ev:
+function _ZN76OptionEvaluationBasicTest_config_linux_user_SetOptionDefaultsAndRelease_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST(OptionEvaluationBasicTest_config_linux_user, SetOptionDefaultsAndRelease)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN76OptionEvaluationBasicTest_config_linux_user_SetOptionDefaultsAndRelease_TestD2Ev:
+function _ZN76OptionEvaluationBasicTest_config_linux_user_SetOptionDefaultsAndRelease_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST(OptionEvaluationBasicTest_config_linux_user, SetOptionDefaultsAndRelease)
+call    0 returned 1
+------------------
+_ZN76OptionEvaluationBasicTest_config_linux_user_SetOptionDefaultsAndRelease_Test8TestBodyEv:
+function _ZN76OptionEvaluationBasicTest_config_linux_user_SetOptionDefaultsAndRelease_Test8TestBodyEv called 1 returned 100% blocks executed 21%
+1:   62:TEST(OptionEvaluationBasicTest_config_linux_user, SetOptionDefaultsAndRelease)
+-:   63:{
+-:   64:  ctutil_Options_t stOptions;
+1:   65:  memset(&stOptions, 0, sizeof(stOptions));
+1:   66:  stOptions.stCommonOptions.infoPrint = false;
+1:   67:  stOptions.stCommonOptions.quiet = false;
+1:   68:  stOptions.stCommonOptions.extractFromUri = false;
+1:   69:  statusCode_t status = CTUTIL_SUCCESS;
+1:   70:  status = ctparts_SetOptionDefaults(NULL, &stOptions);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   71:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1*:   72:  EXPECT_TRUE(stOptions.stCommonOptions.infoPrint); // Default for config tools (print if no other parameter given)
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1*:   73:  EXPECT_TRUE(stOptions.stCommonOptions.quiet); // Needed because quiet option not available in first public interface
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1*:   74:  EXPECT_TRUE(stOptions.stCommonOptions.extractFromUri); // Needed because extract option not available in first public interface
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1*:   75:  EXPECT_NE((void *)NULL, stOptions.pstSpecificOptions); // Needed because specific options possible
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   76:  ctparts_ReleaseSpecificOptions(NULL, &stOptions);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   77:  EXPECT_EQ((void *)NULL, stOptions.pstSpecificOptions); // Pointer have to be reseted to NULL
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   78:}
+------------------
+-:   79:
+-:   80:
+4:   81:TEST_F(OptionEvaluationTest_config_linux_user, CheckSetup)
+-:   82:{
+-:   83:  // Nothing else to do here, everything is done in SetUp/TearDown
+1:   84:}
+------------------
+_ZN54OptionEvaluationTest_config_linux_user_CheckSetup_TestC2Ev:
+function _ZN54OptionEvaluationTest_config_linux_user_CheckSetup_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST_F(OptionEvaluationTest_config_linux_user, CheckSetup)
+call    0 returned 1
+------------------
+_ZN54OptionEvaluationTest_config_linux_user_CheckSetup_TestD0Ev:
+function _ZN54OptionEvaluationTest_config_linux_user_CheckSetup_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST_F(OptionEvaluationTest_config_linux_user, CheckSetup)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN54OptionEvaluationTest_config_linux_user_CheckSetup_TestD2Ev:
+function _ZN54OptionEvaluationTest_config_linux_user_CheckSetup_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST_F(OptionEvaluationTest_config_linux_user, CheckSetup)
+call    0 returned 1
+------------------
+_ZN54OptionEvaluationTest_config_linux_user_CheckSetup_Test8TestBodyEv:
+function _ZN54OptionEvaluationTest_config_linux_user_CheckSetup_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:   81:TEST_F(OptionEvaluationTest_config_linux_user, CheckSetup)
+-:   82:{
+-:   83:  // Nothing else to do here, everything is done in SetUp/TearDown
+1:   84:}
+------------------
+-:   85:
+-:   86:
+4:   87:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateEarlyOptions)
+-:   88:{
+1:   89:  char szArg00[] = "test";
+1:   90:  char szArg01[] = "otherOptionsShouldBeIgnored";
+1:   91:  char szArg02[] = "encoded%28Options%29MustBeDecoded";
+-:   92:  char * const arszArgs[]
+-:   93:  {
+-:   94:    szArg00,
+-:   95:    szArg01,
+-:   96:    szArg02,
+1:   97:  };
+1:   98:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:   99:
+-:  100:  // Other default behavior expected than in new config tools by TestCommonEarlyOptionsDefault
+1:  101:  statusCode_t status = CTUTIL_SUCCESS;
+1:  102:  testing::internal::CaptureStdout();
+1:  103:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  104:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  105:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1*:  106:  EXPECT_STREQ("encoded(Options)MustBeDecoded", szArg02);
+1:  107:}
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateEarlyOptions_TestC2Ev:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateEarlyOptions_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   87:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateEarlyOptions)
+call    0 returned 1
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateEarlyOptions_TestD0Ev:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateEarlyOptions_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   87:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateEarlyOptions)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateEarlyOptions_TestD2Ev:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateEarlyOptions_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   87:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateEarlyOptions)
+call    0 returned 1
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateEarlyOptions_Test8TestBodyEv:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateEarlyOptions_Test8TestBodyEv called 1 returned 100% blocks executed 26%
+1:   87:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateEarlyOptions)
+-:   88:{
+1:   89:  char szArg00[] = "test";
+1:   90:  char szArg01[] = "otherOptionsShouldBeIgnored";
+1:   91:  char szArg02[] = "encoded%28Options%29MustBeDecoded";
+-:   92:  char * const arszArgs[]
+-:   93:  {
+-:   94:    szArg00,
+-:   95:    szArg01,
+-:   96:    szArg02,
+1:   97:  };
+1:   98:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:   99:
+-:  100:  // Other default behavior expected than in new config tools by TestCommonEarlyOptionsDefault
+1:  101:  statusCode_t status = CTUTIL_SUCCESS;
+1:  102:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  103:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  104:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  105:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  106:  EXPECT_STREQ("encoded(Options)MustBeDecoded", szArg02);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  107:}
+------------------
+-:  108:
+-:  109:
+4:  110:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsEmpty)
+-:  111:{
+1:  112:  char szArg00[] = "test";
+-:  113:  char * const arszArgs[]
+-:  114:  {
+-:  115:    szArg00,
+1:  116:  };
+1:  117:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  118:
+-:  119:  // Other default behavior expected than in new config tools by TestCommonOptionsEmpty
+1:  120:  statusCode_t status = CTUTIL_SUCCESS;
+1:  121:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  122:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  123:  testing::internal::CaptureStdout();
+1:  124:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  125:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  126:  EXPECT_NE(CTUTIL_SUCCESS, status);
+1:  127:}
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsEmpty_TestC2Ev:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsEmpty_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  110:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsEmpty)
+call    0 returned 1
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsEmpty_TestD0Ev:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsEmpty_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  110:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsEmpty)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsEmpty_TestD2Ev:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsEmpty_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  110:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsEmpty)
+call    0 returned 1
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsEmpty_Test8TestBodyEv:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsEmpty_Test8TestBodyEv called 1 returned 100% blocks executed 27%
+1:  110:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsEmpty)
+-:  111:{
+1:  112:  char szArg00[] = "test";
+-:  113:  char * const arszArgs[]
+-:  114:  {
+-:  115:    szArg00,
+1:  116:  };
+1:  117:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  118:
+-:  119:  // Other default behavior expected than in new config tools by TestCommonOptionsEmpty
+1:  120:  statusCode_t status = CTUTIL_SUCCESS;
+1:  121:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  122:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  123:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  124:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  125:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  126:  EXPECT_NE(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  127:}
+------------------
+-:  128:
+-:  129:
+4:  130:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsQuiet)
+-:  131:{
+1:  132:  char szArg00[] = "test";
+1:  133:  char szArg01[] = "--quiet";
+1:  134:  char szArg02[] = "user=universe";
+1:  135:  char szArg03[] = "hash=1234";
+-:  136:  char * const arszArgs[]
+-:  137:  {
+-:  138:    szArg00,
+-:  139:    szArg01,
+-:  140:    szArg02,
+-:  141:    szArg03,
+1:  142:  };
+1:  143:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  144:
+1:  145:  testutil::TestCommonOptionsQuiet(argCount, arszArgs, &(this->stOptions));
+1:  146:}
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsQuiet_TestC2Ev:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsQuiet_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  130:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsQuiet)
+call    0 returned 1
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsQuiet_TestD0Ev:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsQuiet_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  130:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsQuiet)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsQuiet_TestD2Ev:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsQuiet_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  130:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsQuiet)
+call    0 returned 1
+------------------
+_ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsQuiet_Test8TestBodyEv:
+function _ZN64OptionEvaluationTest_config_linux_user_EvaluateOptionsQuiet_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  130:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsQuiet)
+-:  131:{
+1:  132:  char szArg00[] = "test";
+1:  133:  char szArg01[] = "--quiet";
+1:  134:  char szArg02[] = "user=universe";
+1:  135:  char szArg03[] = "hash=1234";
+-:  136:  char * const arszArgs[]
+-:  137:  {
+-:  138:    szArg00,
+-:  139:    szArg01,
+-:  140:    szArg02,
+-:  141:    szArg03,
+1:  142:  };
+1:  143:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  144:
+1:  145:  testutil::TestCommonOptionsQuiet(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  146:}
+------------------
+-:  147:
+-:  148:
+4:  149:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsQuietShort)
+-:  150:{
+1:  151:  char szArg00[] = "test";
+1:  152:  char szArg01[] = "-q";
+1:  153:  char szArg02[] = "user=universe";
+1:  154:  char szArg03[] = "hash=1234";
+-:  155:  char * const arszArgs[]
+-:  156:  {
+-:  157:    szArg00,
+-:  158:    szArg01,
+-:  159:    szArg02,
+-:  160:    szArg03,
+1:  161:  };
+1:  162:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  163:
+1:  164:  testutil::TestCommonOptionsQuiet(argCount, arszArgs, &(this->stOptions));
+1:  165:}
+------------------
+_ZN69OptionEvaluationTest_config_linux_user_EvaluateOptionsQuietShort_TestC2Ev:
+function _ZN69OptionEvaluationTest_config_linux_user_EvaluateOptionsQuietShort_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  149:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsQuietShort)
+call    0 returned 1
+------------------
+_ZN69OptionEvaluationTest_config_linux_user_EvaluateOptionsQuietShort_TestD0Ev:
+function _ZN69OptionEvaluationTest_config_linux_user_EvaluateOptionsQuietShort_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  149:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsQuietShort)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN69OptionEvaluationTest_config_linux_user_EvaluateOptionsQuietShort_TestD2Ev:
+function _ZN69OptionEvaluationTest_config_linux_user_EvaluateOptionsQuietShort_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  149:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsQuietShort)
+call    0 returned 1
+------------------
+_ZN69OptionEvaluationTest_config_linux_user_EvaluateOptionsQuietShort_Test8TestBodyEv:
+function _ZN69OptionEvaluationTest_config_linux_user_EvaluateOptionsQuietShort_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  149:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsQuietShort)
+-:  150:{
+1:  151:  char szArg00[] = "test";
+1:  152:  char szArg01[] = "-q";
+1:  153:  char szArg02[] = "user=universe";
+1:  154:  char szArg03[] = "hash=1234";
+-:  155:  char * const arszArgs[]
+-:  156:  {
+-:  157:    szArg00,
+-:  158:    szArg01,
+-:  159:    szArg02,
+-:  160:    szArg03,
+1:  161:  };
+1:  162:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  163:
+1:  164:  testutil::TestCommonOptionsQuiet(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  165:}
+------------------
+-:  166:
+-:  167:
+4:  168:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsHelp)
+-:  169:{
+1:  170:  char szArg00[] = "test";
+1:  171:  char szArg01[] = "--help";
+-:  172:  char * const arszArgs[]
+-:  173:  {
+-:  174:    szArg00,
+-:  175:    szArg01,
+1:  176:  };
+1:  177:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  178:
+1:  179:  testutil::TestCommonOptionsHelp(argCount, arszArgs, &(this->stOptions));
+1:  180:}
+------------------
+_ZN63OptionEvaluationTest_config_linux_user_EvaluateOptionsHelp_TestC2Ev:
+function _ZN63OptionEvaluationTest_config_linux_user_EvaluateOptionsHelp_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  168:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsHelp)
+call    0 returned 1
+------------------
+_ZN63OptionEvaluationTest_config_linux_user_EvaluateOptionsHelp_TestD0Ev:
+function _ZN63OptionEvaluationTest_config_linux_user_EvaluateOptionsHelp_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  168:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsHelp)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN63OptionEvaluationTest_config_linux_user_EvaluateOptionsHelp_TestD2Ev:
+function _ZN63OptionEvaluationTest_config_linux_user_EvaluateOptionsHelp_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  168:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsHelp)
+call    0 returned 1
+------------------
+_ZN63OptionEvaluationTest_config_linux_user_EvaluateOptionsHelp_Test8TestBodyEv:
+function _ZN63OptionEvaluationTest_config_linux_user_EvaluateOptionsHelp_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  168:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsHelp)
+-:  169:{
+1:  170:  char szArg00[] = "test";
+1:  171:  char szArg01[] = "--help";
+-:  172:  char * const arszArgs[]
+-:  173:  {
+-:  174:    szArg00,
+-:  175:    szArg01,
+1:  176:  };
+1:  177:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  178:
+1:  179:  testutil::TestCommonOptionsHelp(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  180:}
+------------------
+-:  181:
+-:  182:
+4:  183:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsHelpShort)
+-:  184:{
+1:  185:  char szArg00[] = "test";
+1:  186:  char szArg01[] = "-h";
+-:  187:  char * const arszArgs[]
+-:  188:  {
+-:  189:    szArg00,
+-:  190:    szArg01,
+1:  191:  };
+1:  192:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  193:
+1:  194:  testutil::TestCommonOptionsHelp(argCount, arszArgs, &(this->stOptions));
+1:  195:}
+------------------
+_ZN68OptionEvaluationTest_config_linux_user_EvaluateOptionsHelpShort_TestC2Ev:
+function _ZN68OptionEvaluationTest_config_linux_user_EvaluateOptionsHelpShort_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  183:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsHelpShort)
+call    0 returned 1
+------------------
+_ZN68OptionEvaluationTest_config_linux_user_EvaluateOptionsHelpShort_TestD0Ev:
+function _ZN68OptionEvaluationTest_config_linux_user_EvaluateOptionsHelpShort_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  183:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsHelpShort)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN68OptionEvaluationTest_config_linux_user_EvaluateOptionsHelpShort_TestD2Ev:
+function _ZN68OptionEvaluationTest_config_linux_user_EvaluateOptionsHelpShort_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  183:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsHelpShort)
+call    0 returned 1
+------------------
+_ZN68OptionEvaluationTest_config_linux_user_EvaluateOptionsHelpShort_Test8TestBodyEv:
+function _ZN68OptionEvaluationTest_config_linux_user_EvaluateOptionsHelpShort_Test8TestBodyEv called 1 returned 100% blocks executed 100%
+1:  183:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsHelpShort)
+-:  184:{
+1:  185:  char szArg00[] = "test";
+1:  186:  char szArg01[] = "-h";
+-:  187:  char * const arszArgs[]
+-:  188:  {
+-:  189:    szArg00,
+-:  190:    szArg01,
+1:  191:  };
+1:  192:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  193:
+1:  194:  testutil::TestCommonOptionsHelp(argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  195:}
+------------------
+-:  196:
+-:  197:
+4:  198:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsUserOnly)
+-:  199:{
+1:  200:  char szArg00[] = "test";
+1:  201:  char szArg01[] = "user=universe";
+-:  202:  char * const arszArgs[]
+-:  203:  {
+-:  204:    szArg00,
+-:  205:    szArg01,
+1:  206:  };
+1:  207:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  208:
+1:  209:  statusCode_t status = CTUTIL_SUCCESS;
+1:  210:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  211:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  212:  testing::internal::CaptureStdout();
+1:  213:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  214:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  215:  EXPECT_NE(CTUTIL_SUCCESS, status);
+1:  216:}
+------------------
+_ZN71OptionEvaluationTest_config_linux_user_FailEvaluateOptionsUserOnly_TestC2Ev:
+function _ZN71OptionEvaluationTest_config_linux_user_FailEvaluateOptionsUserOnly_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  198:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsUserOnly)
+call    0 returned 1
+------------------
+_ZN71OptionEvaluationTest_config_linux_user_FailEvaluateOptionsUserOnly_TestD0Ev:
+function _ZN71OptionEvaluationTest_config_linux_user_FailEvaluateOptionsUserOnly_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  198:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsUserOnly)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN71OptionEvaluationTest_config_linux_user_FailEvaluateOptionsUserOnly_TestD2Ev:
+function _ZN71OptionEvaluationTest_config_linux_user_FailEvaluateOptionsUserOnly_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  198:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsUserOnly)
+call    0 returned 1
+------------------
+_ZN71OptionEvaluationTest_config_linux_user_FailEvaluateOptionsUserOnly_Test8TestBodyEv:
+function _ZN71OptionEvaluationTest_config_linux_user_FailEvaluateOptionsUserOnly_Test8TestBodyEv called 1 returned 100% blocks executed 27%
+1:  198:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsUserOnly)
+-:  199:{
+1:  200:  char szArg00[] = "test";
+1:  201:  char szArg01[] = "user=universe";
+-:  202:  char * const arszArgs[]
+-:  203:  {
+-:  204:    szArg00,
+-:  205:    szArg01,
+1:  206:  };
+1:  207:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  208:
+1:  209:  statusCode_t status = CTUTIL_SUCCESS;
+1:  210:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  211:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  212:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  213:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  214:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  215:  EXPECT_NE(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  216:}
+------------------
+-:  217:
+-:  218:
+4:  219:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPassword)
+-:  220:{
+1:  221:  char szArg00[] = "test";
+1:  222:  char szArg01[] = "user=universe";
+1:  223:  char szArg02[] = "new-password=secret%2Bstrong";
+1:  224:  char szArg03[] = "-q";
+1:  225:  char szArg04[] = "confirm-password=secret%2Bstrong";
+-:  226:  char * const arszArgs[]
+-:  227:  {
+-:  228:    szArg00,
+-:  229:    szArg01,
+-:  230:    szArg02,
+-:  231:    szArg03,
+-:  232:    szArg04,
+1:  233:  };
+1:  234:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  235:
+1:  236:  statusCode_t status = CTUTIL_SUCCESS;
+1:  237:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  238:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  239:  testing::internal::CaptureStdout();
+1:  240:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  241:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  242:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  243:}
+------------------
+_ZN70OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPassword_TestC2Ev:
+function _ZN70OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPassword_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  219:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPassword)
+call    0 returned 1
+------------------
+_ZN70OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPassword_TestD0Ev:
+function _ZN70OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPassword_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  219:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPassword)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN70OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPassword_TestD2Ev:
+function _ZN70OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPassword_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  219:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPassword)
+call    0 returned 1
+------------------
+_ZN70OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPassword_Test8TestBodyEv:
+function _ZN70OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPassword_Test8TestBodyEv called 1 returned 100% blocks executed 27%
+1:  219:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPassword)
+-:  220:{
+1:  221:  char szArg00[] = "test";
+1:  222:  char szArg01[] = "user=universe";
+1:  223:  char szArg02[] = "new-password=secret%2Bstrong";
+1:  224:  char szArg03[] = "-q";
+1:  225:  char szArg04[] = "confirm-password=secret%2Bstrong";
+-:  226:  char * const arszArgs[]
+-:  227:  {
+-:  228:    szArg00,
+-:  229:    szArg01,
+-:  230:    szArg02,
+-:  231:    szArg03,
+-:  232:    szArg04,
+1:  233:  };
+1:  234:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  235:
+1:  236:  statusCode_t status = CTUTIL_SUCCESS;
+1:  237:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  238:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  239:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  240:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  241:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  242:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  243:}
+------------------
+-:  244:
+-:  245:
+4:  246:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordWithoutUser)
+-:  247:{
+1:  248:  char szArg00[] = "test";
+1:  249:  char szArg01[] = "new-password=secret%2Bstrong";
+1:  250:  char szArg02[] = "confirm-password=secret%2Bstrong";
+-:  251:  char * const arszArgs[]
+-:  252:  {
+-:  253:    szArg00,
+-:  254:    szArg01,
+-:  255:    szArg02,
+1:  256:  };
+1:  257:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  258:
+1:  259:  statusCode_t status = CTUTIL_SUCCESS;
+1:  260:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  261:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  262:  testing::internal::CaptureStdout();
+1:  263:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  264:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  265:  EXPECT_NE(CTUTIL_SUCCESS, status);
+1:  266:}
+------------------
+_ZN85OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWithoutUser_TestC2Ev:
+function _ZN85OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWithoutUser_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  246:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordWithoutUser)
+call    0 returned 1
+------------------
+_ZN85OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWithoutUser_TestD0Ev:
+function _ZN85OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWithoutUser_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  246:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordWithoutUser)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN85OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWithoutUser_TestD2Ev:
+function _ZN85OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWithoutUser_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  246:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordWithoutUser)
+call    0 returned 1
+------------------
+_ZN85OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWithoutUser_Test8TestBodyEv:
+function _ZN85OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWithoutUser_Test8TestBodyEv called 1 returned 100% blocks executed 27%
+1:  246:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordWithoutUser)
+-:  247:{
+1:  248:  char szArg00[] = "test";
+1:  249:  char szArg01[] = "new-password=secret%2Bstrong";
+1:  250:  char szArg02[] = "confirm-password=secret%2Bstrong";
+-:  251:  char * const arszArgs[]
+-:  252:  {
+-:  253:    szArg00,
+-:  254:    szArg01,
+-:  255:    szArg02,
+1:  256:  };
+1:  257:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  258:
+1:  259:  statusCode_t status = CTUTIL_SUCCESS;
+1:  260:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  261:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  262:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  263:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  264:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  265:  EXPECT_NE(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  266:}
+------------------
+-:  267:
+-:  268:
+4:  269:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordMissingConfirmation)
+-:  270:{
+1:  271:  char szArg00[] = "test";
+1:  272:  char szArg01[] = "user=universe";
+1:  273:  char szArg02[] = "new-password=secret%2Bstrong";
+-:  274:  char * const arszArgs[]
+-:  275:  {
+-:  276:    szArg00,
+-:  277:    szArg01,
+-:  278:    szArg02,
+1:  279:  };
+1:  280:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  281:
+1:  282:  statusCode_t status = CTUTIL_SUCCESS;
+1:  283:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  284:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  285:  testing::internal::CaptureStdout();
+1:  286:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  287:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  288:  EXPECT_NE(CTUTIL_SUCCESS, status);
+1:  289:}
+------------------
+_ZN93OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordMissingConfirmation_TestC2Ev:
+function _ZN93OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordMissingConfirmation_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  269:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordMissingConfirmation)
+call    0 returned 1
+------------------
+_ZN93OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordMissingConfirmation_TestD0Ev:
+function _ZN93OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordMissingConfirmation_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  269:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordMissingConfirmation)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN93OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordMissingConfirmation_TestD2Ev:
+function _ZN93OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordMissingConfirmation_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  269:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordMissingConfirmation)
+call    0 returned 1
+------------------
+_ZN93OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordMissingConfirmation_Test8TestBodyEv:
+function _ZN93OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordMissingConfirmation_Test8TestBodyEv called 1 returned 100% blocks executed 27%
+1:  269:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordMissingConfirmation)
+-:  270:{
+1:  271:  char szArg00[] = "test";
+1:  272:  char szArg01[] = "user=universe";
+1:  273:  char szArg02[] = "new-password=secret%2Bstrong";
+-:  274:  char * const arszArgs[]
+-:  275:  {
+-:  276:    szArg00,
+-:  277:    szArg01,
+-:  278:    szArg02,
+1:  279:  };
+1:  280:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  281:
+1:  282:  statusCode_t status = CTUTIL_SUCCESS;
+1:  283:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  284:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  285:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  286:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  287:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  288:  EXPECT_NE(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  289:}
+------------------
+-:  290:
+-:  291:
+4:  292:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordWrongConfirmation)
+-:  293:{
+1:  294:  char szArg00[] = "test";
+1:  295:  char szArg01[] = "user=universe";
+1:  296:  char szArg02[] = "new-password=secret%2Bstrong";
+1:  297:  char szArg03[] = "confirm-password=secret%2BstrongWrong";
+-:  298:  char * const arszArgs[]
+-:  299:  {
+-:  300:    szArg00,
+-:  301:    szArg01,
+-:  302:    szArg02,
+-:  303:    szArg03,
+1:  304:  };
+1:  305:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  306:
+1:  307:  statusCode_t status = CTUTIL_SUCCESS;
+1:  308:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  309:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  310:  testing::internal::CaptureStdout();
+1:  311:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  312:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  313:  EXPECT_NE(CTUTIL_SUCCESS, status);
+1:  314:}
+------------------
+_ZN91OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWrongConfirmation_TestC2Ev:
+function _ZN91OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWrongConfirmation_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  292:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordWrongConfirmation)
+call    0 returned 1
+------------------
+_ZN91OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWrongConfirmation_TestD0Ev:
+function _ZN91OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWrongConfirmation_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  292:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordWrongConfirmation)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN91OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWrongConfirmation_TestD2Ev:
+function _ZN91OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWrongConfirmation_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  292:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordWrongConfirmation)
+call    0 returned 1
+------------------
+_ZN91OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWrongConfirmation_Test8TestBodyEv:
+function _ZN91OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordWrongConfirmation_Test8TestBodyEv called 1 returned 100% blocks executed 27%
+1:  292:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordWrongConfirmation)
+-:  293:{
+1:  294:  char szArg00[] = "test";
+1:  295:  char szArg01[] = "user=universe";
+1:  296:  char szArg02[] = "new-password=secret%2Bstrong";
+1:  297:  char szArg03[] = "confirm-password=secret%2BstrongWrong";
+-:  298:  char * const arszArgs[]
+-:  299:  {
+-:  300:    szArg00,
+-:  301:    szArg01,
+-:  302:    szArg02,
+-:  303:    szArg03,
+1:  304:  };
+1:  305:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  306:
+1:  307:  statusCode_t status = CTUTIL_SUCCESS;
+1:  308:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  309:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  310:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  311:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  312:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  313:  EXPECT_NE(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  314:}
+------------------
+-:  315:
+-:  316:
+4:  317:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordAndHash)
+-:  318:{
+1:  319:  char szArg00[] = "test";
+1:  320:  char szArg01[] = "user=universe";
+1:  321:  char szArg02[] = "new-password=secret%2Bstrong";
+1:  322:  char szArg03[] = "hash=1234";
+-:  323:  char * const arszArgs[]
+-:  324:  {
+-:  325:    szArg00,
+-:  326:    szArg01,
+-:  327:    szArg02,
+-:  328:    szArg03,
+1:  329:  };
+1:  330:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  331:
+1:  332:  statusCode_t status = CTUTIL_SUCCESS;
+1:  333:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  334:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  335:  testing::internal::CaptureStdout();
+1:  336:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  337:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  338:  EXPECT_NE(CTUTIL_SUCCESS, status);
+1:  339:}
+------------------
+_ZN81OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordAndHash_TestC2Ev:
+function _ZN81OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordAndHash_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  317:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordAndHash)
+call    0 returned 1
+------------------
+_ZN81OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordAndHash_TestD0Ev:
+function _ZN81OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordAndHash_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  317:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordAndHash)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN81OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordAndHash_TestD2Ev:
+function _ZN81OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordAndHash_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  317:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordAndHash)
+call    0 returned 1
+------------------
+_ZN81OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordAndHash_Test8TestBodyEv:
+function _ZN81OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordAndHash_Test8TestBodyEv called 1 returned 100% blocks executed 27%
+1:  317:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordAndHash)
+-:  318:{
+1:  319:  char szArg00[] = "test";
+1:  320:  char szArg01[] = "user=universe";
+1:  321:  char szArg02[] = "new-password=secret%2Bstrong";
+1:  322:  char szArg03[] = "hash=1234";
+-:  323:  char * const arszArgs[]
+-:  324:  {
+-:  325:    szArg00,
+-:  326:    szArg01,
+-:  327:    szArg02,
+-:  328:    szArg03,
+1:  329:  };
+1:  330:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  331:
+1:  332:  statusCode_t status = CTUTIL_SUCCESS;
+1:  333:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  334:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  335:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  336:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  337:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  338:  EXPECT_NE(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  339:}
+------------------
+-:  340:
+-:  341:
+4:  342:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPasswordHash)
+-:  343:{
+1:  344:  char szArg00[] = "test";
+1:  345:  char szArg01[] = "user=universe";
+1:  346:  char szArg02[] = "hash=1234";
+-:  347:  char * const arszArgs[]
+-:  348:  {
+-:  349:    szArg00,
+-:  350:    szArg01,
+-:  351:    szArg02,
+1:  352:  };
+1:  353:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  354:
+1:  355:  statusCode_t status = CTUTIL_SUCCESS;
+1:  356:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  357:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  358:  testing::internal::CaptureStdout();
+1:  359:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  360:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  361:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  362:}
+------------------
+_ZN74OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHash_TestC2Ev:
+function _ZN74OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHash_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  342:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPasswordHash)
+call    0 returned 1
+------------------
+_ZN74OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHash_TestD0Ev:
+function _ZN74OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHash_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  342:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPasswordHash)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN74OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHash_TestD2Ev:
+function _ZN74OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHash_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  342:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPasswordHash)
+call    0 returned 1
+------------------
+_ZN74OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHash_Test8TestBodyEv:
+function _ZN74OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHash_Test8TestBodyEv called 1 returned 100% blocks executed 27%
+1:  342:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPasswordHash)
+-:  343:{
+1:  344:  char szArg00[] = "test";
+1:  345:  char szArg01[] = "user=universe";
+1:  346:  char szArg02[] = "hash=1234";
+-:  347:  char * const arszArgs[]
+-:  348:  {
+-:  349:    szArg00,
+-:  350:    szArg01,
+-:  351:    szArg02,
+1:  352:  };
+1:  353:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  354:
+1:  355:  statusCode_t status = CTUTIL_SUCCESS;
+1:  356:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  357:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  358:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  359:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  360:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  361:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  362:}
+------------------
+-:  363:
+-:  364:
+4:  365:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPasswordHashUri)
+-:  366:{
+1:  367:  char szArg00[] = "test";
+1:  368:  char szArg01[] = "user=universe";
+1:  369:  char szArg02[] = "hash=$6$1234567887654321$n5%2FK%5c6%2d";
+1:  370:  char decodedHash[] = "hash=$6$1234567887654321$n5/K\\6-";
+-:  371:  char * const arszArgs[]
+-:  372:  {
+-:  373:    szArg00,
+-:  374:    szArg01,
+-:  375:    szArg02,
+1:  376:  };
+1:  377:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  378:
+1:  379:  statusCode_t status = CTUTIL_SUCCESS;
+1:  380:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  381:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  382:  testing::internal::CaptureStdout();
+1:  383:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  384:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  385:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1*:  386:  EXPECT_STREQ(decodedHash, szArg02);
+1:  387:}
+------------------
+_ZN77OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHashUri_TestC2Ev:
+function _ZN77OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHashUri_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  365:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPasswordHashUri)
+call    0 returned 1
+------------------
+_ZN77OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHashUri_TestD0Ev:
+function _ZN77OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHashUri_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  365:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPasswordHashUri)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN77OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHashUri_TestD2Ev:
+function _ZN77OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHashUri_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  365:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPasswordHashUri)
+call    0 returned 1
+------------------
+_ZN77OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHashUri_Test8TestBodyEv:
+function _ZN77OptionEvaluationTest_config_linux_user_EvaluateOptionsNewPasswordHashUri_Test8TestBodyEv called 1 returned 100% blocks executed 25%
+1:  365:TEST_F(OptionEvaluationTest_config_linux_user, EvaluateOptionsNewPasswordHashUri)
+-:  366:{
+1:  367:  char szArg00[] = "test";
+1:  368:  char szArg01[] = "user=universe";
+1:  369:  char szArg02[] = "hash=$6$1234567887654321$n5%2FK%5c6%2d";
+1:  370:  char decodedHash[] = "hash=$6$1234567887654321$n5/K\\6-";
+-:  371:  char * const arszArgs[]
+-:  372:  {
+-:  373:    szArg00,
+-:  374:    szArg01,
+-:  375:    szArg02,
+1:  376:  };
+1:  377:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  378:
+1:  379:  statusCode_t status = CTUTIL_SUCCESS;
+1:  380:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  381:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  382:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  383:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  384:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  385:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  386:  EXPECT_STREQ(decodedHash, szArg02);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  387:}
+------------------
+-:  388:
+-:  389:
+4:  390:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordHashWithoutUser)
+-:  391:{
+1:  392:  char szArg00[] = "test";
+1:  393:  char szArg01[] = "hash=1234";
+-:  394:  char * const arszArgs[]
+-:  395:  {
+-:  396:    szArg00,
+-:  397:    szArg01,
+1:  398:  };
+1:  399:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  400:
+1:  401:  statusCode_t status = CTUTIL_SUCCESS;
+1:  402:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+1*:  403:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+1:  404:  testing::internal::CaptureStdout();
+1:  405:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+2*:  406:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+1*:  407:  EXPECT_NE(CTUTIL_SUCCESS, status);
+1:  408:}
+------------------
+_ZN89OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordHashWithoutUser_TestC2Ev:
+function _ZN89OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordHashWithoutUser_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  390:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordHashWithoutUser)
+call    0 returned 1
+------------------
+_ZN89OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordHashWithoutUser_TestD0Ev:
+function _ZN89OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordHashWithoutUser_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  390:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordHashWithoutUser)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN89OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordHashWithoutUser_TestD2Ev:
+function _ZN89OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordHashWithoutUser_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  390:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordHashWithoutUser)
+call    0 returned 1
+------------------
+_ZN89OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordHashWithoutUser_Test8TestBodyEv:
+function _ZN89OptionEvaluationTest_config_linux_user_FailEvaluateOptionsNewPasswordHashWithoutUser_Test8TestBodyEv called 1 returned 100% blocks executed 27%
+1:  390:TEST_F(OptionEvaluationTest_config_linux_user, FailEvaluateOptionsNewPasswordHashWithoutUser)
+-:  391:{
+1:  392:  char szArg00[] = "test";
+1:  393:  char szArg01[] = "hash=1234";
+-:  394:  char * const arszArgs[]
+-:  395:  {
+-:  396:    szArg00,
+-:  397:    szArg01,
+1:  398:  };
+1:  399:  int const argCount = sizeof(arszArgs) / sizeof(char *);
+-:  400:
+1:  401:  statusCode_t status = CTUTIL_SUCCESS;
+1:  402:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  403:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  404:  testing::internal::CaptureStdout();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  405:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, &(this->stOptions));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2*:  406:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  407:  EXPECT_NE(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  408:}
+------------------
+-:  409:
+-:  410:
+-:  411://---- End of source file ------------------------------------------------------
+-:  412:

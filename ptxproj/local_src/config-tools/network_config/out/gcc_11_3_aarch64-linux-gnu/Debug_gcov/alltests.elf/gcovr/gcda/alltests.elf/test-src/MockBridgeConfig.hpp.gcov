@@ -1,0 +1,84 @@
+-:    0:Source:test-src/MockBridgeConfig.hpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#pragma once
+-:    4:
+-:    5:#include <BridgeConfig.hpp>
+-:    6:#include <gmock/gmock.h>
+-:    7:
+-:    8:namespace netconf {
+-:    9:namespace api {
+-:   10:
+-:   11:struct IMockBridgeConfig {
+function _ZN7netconf3api17IMockBridgeConfigC2Ev called 4 returned 100% blocks executed 100%
+4:   12:  IMockBridgeConfig() = default;
+4*:   13:  virtual ~IMockBridgeConfig() = default;
+------------------
+_ZN7netconf3api17IMockBridgeConfigD0Ev:
+function _ZN7netconf3api17IMockBridgeConfigD0Ev called 0 returned 0% blocks executed 0%
+#####:   13:  virtual ~IMockBridgeConfig() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN7netconf3api17IMockBridgeConfigD2Ev:
+function _ZN7netconf3api17IMockBridgeConfigD2Ev called 4 returned 100% blocks executed 100%
+4:   13:  virtual ~IMockBridgeConfig() = default;
+------------------
+-:   14:
+-:   15:  virtual Status GetBridgeConfig(BridgeConfig& config) = 0;
+-:   16:  virtual Status SetBridgeConfig(const BridgeConfig &config) = 0;
+-:   17:};
+-:   18:
+-:   19:struct MockBridgeConfig : public IMockBridgeConfig {
+-:   20:  MockBridgeConfig();
+-:   21:  ~MockBridgeConfig() override;
+-:   22:
+8:   23:  MOCK_METHOD1(GetBridgeConfig,Status(BridgeConfig& config) )
+------------------
+_ZN7netconf3api16MockBridgeConfig21gmock_GetBridgeConfigERKN7testing7MatcherIRNS0_12BridgeConfigEEE:
+function _ZN7netconf3api16MockBridgeConfig21gmock_GetBridgeConfigERKN7testing7MatcherIRNS0_12BridgeConfigEEE called 4 returned 100% blocks executed 78%
+4:   23:  MOCK_METHOD1(GetBridgeConfig,Status(BridgeConfig& config) )
+call    0 returned 4
+call    1 returned 4
+call    2 returned 4
+branch  3 taken 4 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 4
+call    6 never executed
+------------------
+_ZN7netconf3api16MockBridgeConfig15GetBridgeConfigERNS0_12BridgeConfigE:
+function _ZN7netconf3api16MockBridgeConfig15GetBridgeConfigERNS0_12BridgeConfigE called 4 returned 100% blocks executed 100%
+4:   23:  MOCK_METHOD1(GetBridgeConfig,Status(BridgeConfig& config) )
+call    0 returned 4
+call    1 returned 4
+call    2 returned 4
+------------------
+6:   24:  ;MOCK_METHOD1(SetBridgeConfig, Status(const BridgeConfig &config) )
+------------------
+_ZN7netconf3api16MockBridgeConfig21gmock_SetBridgeConfigERKN7testing7MatcherIRKNS0_12BridgeConfigEEE:
+function _ZN7netconf3api16MockBridgeConfig21gmock_SetBridgeConfigERKN7testing7MatcherIRKNS0_12BridgeConfigEEE called 3 returned 100% blocks executed 78%
+3:   24:  ;MOCK_METHOD1(SetBridgeConfig, Status(const BridgeConfig &config) )
+call    0 returned 3
+call    1 returned 3
+call    2 returned 3
+branch  3 taken 3 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 3
+call    6 never executed
+------------------
+_ZN7netconf3api16MockBridgeConfig15SetBridgeConfigERKNS0_12BridgeConfigE:
+function _ZN7netconf3api16MockBridgeConfig15SetBridgeConfigERKNS0_12BridgeConfigE called 3 returned 100% blocks executed 100%
+3:   24:  ;MOCK_METHOD1(SetBridgeConfig, Status(const BridgeConfig &config) )
+call    0 returned 3
+call    1 returned 3
+call    2 returned 3
+------------------
+-:   25:  ;
+-:   26:
+-:   27:};
+-:   28:
+-:   29:}  // namespace api
+-:   30:}  // namespace netconf
+-:   31:
+-:   32://---- End of header file ------------------------------------------------------
+-:   33:

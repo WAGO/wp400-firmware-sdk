@@ -1,0 +1,868 @@
+-:    0:Source:test-src/DSAModeHandlerTest.cpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#include <gtest/gtest.h>
+-:    4:
+-:    5:#include "DSAModeHandler.hpp"
+-:    6:#include "MockBridgeConfig.hpp"
+-:    7:#include "Status.hpp"
+-:    8:#include <gmock/gmock.h>
+-:    9:
+-:   10:using testing::SetArgReferee;
+-:   11:using testing::Return;
+-:   12:using testing::_;
+-:   13:using testing::SaveArg;
+-:   14:using testing::DoAll;
+-:   15:
+-:   16:using netconf::api::MakeBridgeConfig;
+-:   17:using netconf::api::BridgeConfig;
+-:   18:using netconf::api::MockBridgeConfig;
+-:   19:
+-:   20:namespace po = boost::program_options;
+-:   21:using povm = boost::program_options::variables_map;
+-:   22:
+-:   23:namespace network_config {
+-:   24:
+function _ZN14network_configL17CreateCommandLineEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 4 returned 100% blocks executed 56%
+4:   25:static povm CreateCommandLine(::std::string&& cmd) {
+4:   26:  povm map_;
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+4:   27:  ::std::stringstream ss;
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+4:   28:  ss << cmd;
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+-:   29:
+8:   30:  po::options_description desc("");
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+4:   31:  desc.add_options()("set", "set the mode")("get", "get the mode");
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+branch  4 taken 4 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 4
+branch  7 taken 4 (fallthrough)
+branch  8 taken 0 (throw)
+4:   32:  po::store(po::parse_config_file(ss, desc), map_);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 4
+branch  4 taken 4 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 4
+call    7 never executed
+8:   33:  return map_;
+4:   34:}
+call    0 returned 4
+call    1 returned 4
+call    2 never executed
+call    3 never executed
+call    4 never executed
+-:   35:
+-:   36:
+4:   37:TEST(DSAModeHandlerTest, GetAConfig)
+-:   38:{
+2:   39:  auto opt_map = CreateCommandLine("get=1\n");
+-:   40:
+1:   41:  DSAModeHandler dut{opt_map};
+1:   42:  MockBridgeConfig mbc;
+1:   43:  BridgeConfig returned_config;
+1:   44:  MakeBridgeConfig(R"({"br0":["X1"],"br1":["X2"]})", returned_config);
+1:   45:  EXPECT_CALL(mbc, GetBridgeConfig(_)).WillOnce(DoAll(SetArgReferee<0>(returned_config), Return(netconf::Status{})));
+-:   46:
+1:   47:  dut.Execute();
+-:   48:
+1:   49:}
+------------------
+_ZN14network_config34DSAModeHandlerTest_GetAConfig_TestC2Ev:
+function _ZN14network_config34DSAModeHandlerTest_GetAConfig_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   37:TEST(DSAModeHandlerTest, GetAConfig)
+call    0 returned 1
+------------------
+_ZN14network_config34DSAModeHandlerTest_GetAConfig_TestD0Ev:
+function _ZN14network_config34DSAModeHandlerTest_GetAConfig_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   37:TEST(DSAModeHandlerTest, GetAConfig)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config34DSAModeHandlerTest_GetAConfig_TestD2Ev:
+function _ZN14network_config34DSAModeHandlerTest_GetAConfig_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   37:TEST(DSAModeHandlerTest, GetAConfig)
+call    0 returned 1
+------------------
+_ZN14network_config34DSAModeHandlerTest_GetAConfig_Test8TestBodyEv:
+function _ZN14network_config34DSAModeHandlerTest_GetAConfig_Test8TestBodyEv called 1 returned 100% blocks executed 48%
+1:   37:TEST(DSAModeHandlerTest, GetAConfig)
+-:   38:{
+2:   39:  auto opt_map = CreateCommandLine("get=1\n");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+-:   40:
+1:   41:  DSAModeHandler dut{opt_map};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   42:  MockBridgeConfig mbc;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   43:  BridgeConfig returned_config;
+call    0 returned 1
+1:   44:  MakeBridgeConfig(R"({"br0":["X1"],"br1":["X2"]})", returned_config);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 never executed
+call   11 never executed
+1:   45:  EXPECT_CALL(mbc, GetBridgeConfig(_)).WillOnce(DoAll(SetArgReferee<0>(returned_config), Return(netconf::Status{})));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0 (throw)
+call   26 returned 1
+branch 27 taken 1 (fallthrough)
+branch 28 taken 0 (throw)
+call   29 returned 1
+call   30 returned 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+call   34 returned 1
+call   35 returned 1
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+call   40 never executed
+call   41 never executed
+call   42 never executed
+-:   46:
+1:   47:  dut.Execute();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   48:
+1:   49:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+------------------
+-:   50:
+4:   51:TEST(DSAModeHandlerTest, SetDSAModeNoChange)
+-:   52:{
+2:   53:  auto opt_map = CreateCommandLine("set=1\n");
+-:   54:
+1:   55:  DSAModeHandler dut{opt_map};
+1:   56:  MockBridgeConfig mbc;
+1:   57:  BridgeConfig returned_config;
+1:   58:  BridgeConfig expected_config;
+1:   59:  MakeBridgeConfig(R"({"br0":["X1"],"br1":["X2"]})",returned_config);
+1:   60:  MakeBridgeConfig(R"({"br0":["X1"],"br1":["X2"]})",expected_config);
+1:   61:  EXPECT_CALL(mbc, GetBridgeConfig(_)).WillOnce(DoAll(SetArgReferee<0>(returned_config), Return(netconf::Status{})));
+1:   62:  BridgeConfig set_parameter;
+1:   63:  EXPECT_CALL(mbc, SetBridgeConfig(_)).WillOnce(DoAll(SaveArg<0>(&set_parameter), Return(netconf::Status{})));
+-:   64:
+1:   65:  dut.Execute();
+-:   66:
+2*:   67:  EXPECT_EQ(ToString(expected_config), ToString(set_parameter));
+1:   68:}
+------------------
+_ZN14network_config42DSAModeHandlerTest_SetDSAModeNoChange_TestC2Ev:
+function _ZN14network_config42DSAModeHandlerTest_SetDSAModeNoChange_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   51:TEST(DSAModeHandlerTest, SetDSAModeNoChange)
+call    0 returned 1
+------------------
+_ZN14network_config42DSAModeHandlerTest_SetDSAModeNoChange_TestD0Ev:
+function _ZN14network_config42DSAModeHandlerTest_SetDSAModeNoChange_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   51:TEST(DSAModeHandlerTest, SetDSAModeNoChange)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config42DSAModeHandlerTest_SetDSAModeNoChange_TestD2Ev:
+function _ZN14network_config42DSAModeHandlerTest_SetDSAModeNoChange_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   51:TEST(DSAModeHandlerTest, SetDSAModeNoChange)
+call    0 returned 1
+------------------
+_ZN14network_config42DSAModeHandlerTest_SetDSAModeNoChange_Test8TestBodyEv:
+function _ZN14network_config42DSAModeHandlerTest_SetDSAModeNoChange_Test8TestBodyEv called 1 returned 100% blocks executed 44%
+1:   51:TEST(DSAModeHandlerTest, SetDSAModeNoChange)
+-:   52:{
+2:   53:  auto opt_map = CreateCommandLine("set=1\n");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+-:   54:
+1:   55:  DSAModeHandler dut{opt_map};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   56:  MockBridgeConfig mbc;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   57:  BridgeConfig returned_config;
+call    0 returned 1
+1:   58:  BridgeConfig expected_config;
+call    0 returned 1
+1:   59:  MakeBridgeConfig(R"({"br0":["X1"],"br1":["X2"]})",returned_config);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 never executed
+call   11 never executed
+1:   60:  MakeBridgeConfig(R"({"br0":["X1"],"br1":["X2"]})",expected_config);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 never executed
+call   11 never executed
+1:   61:  EXPECT_CALL(mbc, GetBridgeConfig(_)).WillOnce(DoAll(SetArgReferee<0>(returned_config), Return(netconf::Status{})));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0 (throw)
+call   26 returned 1
+branch 27 taken 1 (fallthrough)
+branch 28 taken 0 (throw)
+call   29 returned 1
+call   30 returned 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+call   34 returned 1
+call   35 returned 1
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+call   40 never executed
+call   41 never executed
+call   42 never executed
+1:   62:  BridgeConfig set_parameter;
+call    0 returned 1
+1:   63:  EXPECT_CALL(mbc, SetBridgeConfig(_)).WillOnce(DoAll(SaveArg<0>(&set_parameter), Return(netconf::Status{})));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0 (throw)
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0 (throw)
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 returned 1
+call   32 returned 1
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+-:   64:
+1:   65:  dut.Execute();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   66:
+2*:   67:  EXPECT_EQ(ToString(expected_config), ToString(set_parameter));
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 1
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   68:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+------------------
+-:   69:
+4:   70:TEST(DSAModeHandlerTest, SetDSAModeWithChange)
+-:   71:{
+2:   72:  auto opt_map = CreateCommandLine("set=0\n");
+-:   73:
+1:   74:  DSAModeHandler dut{opt_map};
+1:   75:  MockBridgeConfig mbc;
+1:   76:  BridgeConfig returned_config;
+1:   77:  BridgeConfig expected_config;
+1:   78:  MakeBridgeConfig(R"({"br0":["X1"],"br1":["X2"]})", returned_config);
+1:   79:  MakeBridgeConfig(R"({"br0":["X1", "X2"]})", expected_config);
+1:   80:  EXPECT_CALL(mbc, GetBridgeConfig(_)).WillOnce(DoAll(SetArgReferee<0>(returned_config), Return(netconf::Status{})));
+1:   81:  BridgeConfig set_parameter;
+1:   82:  EXPECT_CALL(mbc, SetBridgeConfig(_)).WillOnce(DoAll(SaveArg<0>(&set_parameter), Return(netconf::Status{})));
+-:   83:
+1:   84:  dut.Execute();
+-:   85:
+2*:   86:  EXPECT_EQ(ToString(set_parameter),ToString(expected_config));
+1:   87:}
+------------------
+_ZN14network_config44DSAModeHandlerTest_SetDSAModeWithChange_TestC2Ev:
+function _ZN14network_config44DSAModeHandlerTest_SetDSAModeWithChange_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   70:TEST(DSAModeHandlerTest, SetDSAModeWithChange)
+call    0 returned 1
+------------------
+_ZN14network_config44DSAModeHandlerTest_SetDSAModeWithChange_TestD0Ev:
+function _ZN14network_config44DSAModeHandlerTest_SetDSAModeWithChange_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   70:TEST(DSAModeHandlerTest, SetDSAModeWithChange)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config44DSAModeHandlerTest_SetDSAModeWithChange_TestD2Ev:
+function _ZN14network_config44DSAModeHandlerTest_SetDSAModeWithChange_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   70:TEST(DSAModeHandlerTest, SetDSAModeWithChange)
+call    0 returned 1
+------------------
+_ZN14network_config44DSAModeHandlerTest_SetDSAModeWithChange_Test8TestBodyEv:
+function _ZN14network_config44DSAModeHandlerTest_SetDSAModeWithChange_Test8TestBodyEv called 1 returned 100% blocks executed 44%
+1:   70:TEST(DSAModeHandlerTest, SetDSAModeWithChange)
+-:   71:{
+2:   72:  auto opt_map = CreateCommandLine("set=0\n");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+-:   73:
+1:   74:  DSAModeHandler dut{opt_map};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   75:  MockBridgeConfig mbc;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   76:  BridgeConfig returned_config;
+call    0 returned 1
+1:   77:  BridgeConfig expected_config;
+call    0 returned 1
+1:   78:  MakeBridgeConfig(R"({"br0":["X1"],"br1":["X2"]})", returned_config);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 never executed
+call   11 never executed
+1:   79:  MakeBridgeConfig(R"({"br0":["X1", "X2"]})", expected_config);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 never executed
+call   11 never executed
+1:   80:  EXPECT_CALL(mbc, GetBridgeConfig(_)).WillOnce(DoAll(SetArgReferee<0>(returned_config), Return(netconf::Status{})));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0 (throw)
+call   26 returned 1
+branch 27 taken 1 (fallthrough)
+branch 28 taken 0 (throw)
+call   29 returned 1
+call   30 returned 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+call   34 returned 1
+call   35 returned 1
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+call   40 never executed
+call   41 never executed
+call   42 never executed
+1:   81:  BridgeConfig set_parameter;
+call    0 returned 1
+1:   82:  EXPECT_CALL(mbc, SetBridgeConfig(_)).WillOnce(DoAll(SaveArg<0>(&set_parameter), Return(netconf::Status{})));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0 (throw)
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0 (throw)
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 returned 1
+call   32 returned 1
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+-:   83:
+1:   84:  dut.Execute();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   85:
+2*:   86:  EXPECT_EQ(ToString(set_parameter),ToString(expected_config));
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 1
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   87:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+------------------
+-:   88:
+4:   89:TEST(DSAModeHandlerTest, SetDSAModeOtherInterfaceRemains)
+-:   90:{
+2:   91:  auto opt_map = CreateCommandLine("set=0\n");
+-:   92:
+1:   93:  DSAModeHandler dut{opt_map};
+1:   94:  MockBridgeConfig mbc;
+1:   95:  BridgeConfig returned_config;
+1:   96:  BridgeConfig expected_config;
+1:   97:  MakeBridgeConfig(R"({"br0":["X1"],"br1":["X2", "X11"]})",returned_config);
+1:   98:  MakeBridgeConfig(R"({"br0":["X1", "X2"],"br1":["X11"]})",expected_config);
+1:   99:  EXPECT_CALL(mbc, GetBridgeConfig(_)).WillOnce(DoAll(SetArgReferee<0>(returned_config), Return(netconf::Status{})));
+1:  100:  BridgeConfig set_parameter;
+1:  101:  EXPECT_CALL(mbc, SetBridgeConfig(_)).WillOnce(DoAll(SaveArg<0>(&set_parameter), Return(netconf::Status{})));
+-:  102:
+1:  103:  dut.Execute();
+-:  104:
+2*:  105:  EXPECT_EQ(ToString(set_parameter),ToString(expected_config));
+1:  106:}
+------------------
+_ZN14network_config55DSAModeHandlerTest_SetDSAModeOtherInterfaceRemains_TestC2Ev:
+function _ZN14network_config55DSAModeHandlerTest_SetDSAModeOtherInterfaceRemains_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   89:TEST(DSAModeHandlerTest, SetDSAModeOtherInterfaceRemains)
+call    0 returned 1
+------------------
+_ZN14network_config55DSAModeHandlerTest_SetDSAModeOtherInterfaceRemains_TestD0Ev:
+function _ZN14network_config55DSAModeHandlerTest_SetDSAModeOtherInterfaceRemains_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   89:TEST(DSAModeHandlerTest, SetDSAModeOtherInterfaceRemains)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config55DSAModeHandlerTest_SetDSAModeOtherInterfaceRemains_TestD2Ev:
+function _ZN14network_config55DSAModeHandlerTest_SetDSAModeOtherInterfaceRemains_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   89:TEST(DSAModeHandlerTest, SetDSAModeOtherInterfaceRemains)
+call    0 returned 1
+------------------
+_ZN14network_config55DSAModeHandlerTest_SetDSAModeOtherInterfaceRemains_Test8TestBodyEv:
+function _ZN14network_config55DSAModeHandlerTest_SetDSAModeOtherInterfaceRemains_Test8TestBodyEv called 1 returned 100% blocks executed 44%
+1:   89:TEST(DSAModeHandlerTest, SetDSAModeOtherInterfaceRemains)
+-:   90:{
+2:   91:  auto opt_map = CreateCommandLine("set=0\n");
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+-:   92:
+1:   93:  DSAModeHandler dut{opt_map};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   94:  MockBridgeConfig mbc;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   95:  BridgeConfig returned_config;
+call    0 returned 1
+1:   96:  BridgeConfig expected_config;
+call    0 returned 1
+1:   97:  MakeBridgeConfig(R"({"br0":["X1"],"br1":["X2", "X11"]})",returned_config);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 never executed
+call   11 never executed
+1:   98:  MakeBridgeConfig(R"({"br0":["X1", "X2"],"br1":["X11"]})",expected_config);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+call    9 returned 1
+call   10 never executed
+call   11 never executed
+1:   99:  EXPECT_CALL(mbc, GetBridgeConfig(_)).WillOnce(DoAll(SetArgReferee<0>(returned_config), Return(netconf::Status{})));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0 (throw)
+call   26 returned 1
+branch 27 taken 1 (fallthrough)
+branch 28 taken 0 (throw)
+call   29 returned 1
+call   30 returned 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+call   34 returned 1
+call   35 returned 1
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+call   40 never executed
+call   41 never executed
+call   42 never executed
+1:  100:  BridgeConfig set_parameter;
+call    0 returned 1
+1:  101:  EXPECT_CALL(mbc, SetBridgeConfig(_)).WillOnce(DoAll(SaveArg<0>(&set_parameter), Return(netconf::Status{})));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0 (throw)
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0 (throw)
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 returned 1
+call   32 returned 1
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+-:  102:
+1:  103:  dut.Execute();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  104:
+2*:  105:  EXPECT_EQ(ToString(set_parameter),ToString(expected_config));
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 1
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:  106:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+------------------
+-:  107:
+-:  108:
+-:  109:
+-:  110:}  // namespace netconf

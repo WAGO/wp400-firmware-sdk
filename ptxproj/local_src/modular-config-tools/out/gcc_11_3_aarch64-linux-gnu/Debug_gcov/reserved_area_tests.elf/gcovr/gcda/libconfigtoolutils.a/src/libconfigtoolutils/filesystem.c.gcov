@@ -1,0 +1,928 @@
+-:    0:Source:src/libconfigtoolutils/filesystem.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     filesystem.c
+-:   12:///
+-:   13:///  \brief    Filesystem tools.
+-:   14:///            TODO: Check if there is a library providing this file system stuff.
+-:   15:///
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "ctutil/filesystem.h"
+-:   23:#include "wc/structuring.h"
+-:   24:#include "wc/assertion.h"
+-:   25:#include "ctutil/log.h"
+-:   26:#include <stdlib.h>
+-:   27:#include <stdio.h>
+-:   28:#include <unistd.h>
+-:   29:#include <string.h>
+-:   30:#include <dirent.h>
+-:   31:#include <mntent.h>
+-:   32:#include <errno.h>
+-:   33:#include <sys/mount.h>
+-:   34:#include <sys/stat.h>
+-:   35:#include <sys/statvfs.h>
+-:   36:
+-:   37://------------------------------------------------------------------------------
+-:   38:// defines; structure, enumeration and type definitions
+-:   39://------------------------------------------------------------------------------
+-:   40:
+-:   41:/// Define for Kernel file interface to obtain mount information from.
+-:   42:#define MOUNT_INFORMATION   "/proc/mounts"
+-:   43:
+-:   44:/// Define for default buffer size to build path strings.
+-:   45:#define DEFAULT_PATH_BUFFER_SIZE   256
+-:   46:
+-:   47:
+-:   48://------------------------------------------------------------------------------
+-:   49:// function prototypes
+-:   50://------------------------------------------------------------------------------
+-:   51:
+-:   52://------------------------------------------------------------------------------
+-:   53:// macros
+-:   54://------------------------------------------------------------------------------
+-:   55:
+-:   56://------------------------------------------------------------------------------
+-:   57:// variables' and constants' definitions
+-:   58://------------------------------------------------------------------------------
+-:   59:
+-:   60://------------------------------------------------------------------------------
+-:   61:// function implementation
+-:   62://------------------------------------------------------------------------------
+-:   63:
+function CopyString called 0 returned 0% blocks executed 0%
+#####:   64:static statusCode_t CopyString(char const * const szSource,
+-:   65:                               size_t const copyLength,
+-:   66:                               char * * const pszTarget,
+-:   67:                               size_t const targetBufferSize,
+-:   68:                               bool allowAllocation)
+-:   69:{
+#####:   70:  statusCode_t status = CTUTIL_SUCCESS;
+-:   71:
+#####:   72:  if(copyLength >= targetBufferSize)
+branch  0 never executed
+branch  1 never executed
+-:   73:  {
+#####:   74:    if(!allowAllocation)
+branch  0 never executed
+branch  1 never executed
+-:   75:    {
+#####:   76:      status = CTUTIL_FAILED;
+-:   77:    }
+-:   78:    else
+-:   79:    {
+#####:   80:      *pszTarget = malloc(copyLength + 1);
+#####:   81:      if(*pszTarget == NULL)
+branch  0 never executed
+branch  1 never executed
+-:   82:      {
+#####:   83:        status = CTUTIL_FAILED;
+-:   84:      }
+-:   85:    }
+-:   86:  }
+#####:   87:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   88:  {
+#####:   89:    strncpy(*pszTarget, szSource, copyLength);
+#####:   90:    (*pszTarget)[copyLength] = '\0';
+-:   91:  }
+-:   92:
+#####:   93:  return status;
+-:   94:}
+-:   95:
+-:   96:
+function ctutil_GetParentFolderString called 0 returned 0% blocks executed 0%
+#####:   97:statusCode_t ctutil_GetParentFolderString(char const * const szPath,
+-:   98:                                          size_t const pathLength,
+-:   99:                                          char * * const pszTarget,
+-:  100:                                          size_t const targetBufferSize,
+-:  101:                                          bool allowAllocation)
+-:  102:{
+#####:  103:  statusCode_t status = CTUTIL_SUCCESS;
+-:  104:
+#####:  105:  WC_ASSERT(szPath[0] == '/');
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  106:  size_t copyPathLength = pathLength;
+-:  107:
+-:  108:  // Remove trailing slashes
+#####:  109:  while(szPath[copyPathLength] == '/')
+branch  0 never executed
+branch  1 never executed
+-:  110:  {
+#####:  111:    --copyPathLength;
+-:  112:  }
+-:  113:
+-:  114:  // Search next slash from end
+#####:  115:  while(szPath[copyPathLength] != '/')
+branch  0 never executed
+branch  1 never executed
+-:  116:  {
+#####:  117:    --copyPathLength;
+-:  118:  }
+-:  119:
+-:  120:  // Reached root directory
+#####:  121:  if (0 == copyPathLength)
+branch  0 never executed
+branch  1 never executed
+-:  122:  {
+#####:  123:    copyPathLength = 1;
+-:  124:  }
+-:  125:
+-:  126:  // Copy substring from original path
+#####:  127:  status = CopyString(szPath, copyPathLength, pszTarget, targetBufferSize, allowAllocation);
+call    0 never executed
+-:  128:
+#####:  129:  return status;
+-:  130:}
+-:  131:
+-:  132:
+function ctutil_IsFolderAccessible called 0 returned 0% blocks executed 0%
+#####:  133:bool ctutil_IsFolderAccessible(char const * const szPath)
+-:  134:{
+#####:  135:  bool accessible = false;
+-:  136:
+-:  137:  // Try to open folder
+#####:  138:  DIR * pFolder = opendir(szPath);
+call    0 never executed
+#####:  139:  if(pFolder != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  140:  {
+#####:  141:    accessible = true;
+#####:  142:    closedir(pFolder);
+call    0 never executed
+-:  143:  }
+-:  144:
+#####:  145:  return accessible;
+-:  146:}
+-:  147:
+-:  148://------------------------------------------------------------------------------
+-:  149:/// Create a given folder hierarchy.
+-:  150:/// This function works like "mkdir -p".
+-:  151:///
+-:  152:/// \param pstCommonOptions
+-:  153:///   Common option structure pointer.
+-:  154:/// \param szPath
+-:  155:///   Folder path to create with parent folders.
+-:  156:///
+-:  157:/// \return
+-:  158:///   \link CTUTIL_SUCCESS \endlink in case folder hierarchy was created, an error code otherwise.
+-:  159:///
+-:  160:/// \see CTUTIL_SUCCESS
+-:  161://------------------------------------------------------------------------------
+function CreateFolderHierarchy called 0 returned 0% blocks executed 0%
+#####:  162:static statusCode_t CreateFolderHierarchy(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  163:                                          char const * const szPath)
+-:  164:{
+#####:  165:  statusCode_t status = CTUTIL_SUCCESS;
+-:  166:
+-:  167:  // Remove trailing slashes
+#####:  168:  size_t const pathLength = strlen(szPath);
+#####:  169:  size_t copyPathLength = pathLength;
+#####:  170:  while(szPath[copyPathLength] == '/')
+branch  0 never executed
+branch  1 never executed
+-:  171:  {
+#####:  172:    --copyPathLength;
+-:  173:  }
+-:  174:
+-:  175:  char szModifiablePathStackBuffer[DEFAULT_PATH_BUFFER_SIZE];
+#####:  176:  char * szModifiablePath = szModifiablePathStackBuffer;
+-:  177:
+#####:  178:  status = CopyString(szPath, copyPathLength, &szModifiablePath, sizeof(szModifiablePathStackBuffer), true);
+call    0 never executed
+-:  179:
+#####:  180:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  181:  {
+#####:  182:    WC_ASSERT(szModifiablePath[0] == '/');
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  183:    WC_ASSERT(szModifiablePath[1] != '\0');
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  184:    char * szSubPath = &(szModifiablePath[1]);
+#####:  185:    while((szSubPath = strchr(szSubPath, '/')) != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  186:    {
+-:  187:      // Replace slash by terminator
+#####:  188:      szSubPath[0] = '\0';
+-:  189:
+-:  190:      // Try to create parent directory if not already present
+#####:  191:      if(!ctutil_IsFolderAccessible(szModifiablePath))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  192:      {
+#####:  193:        int const createResult = mkdir(szModifiablePath, 0777);
+call    0 never executed
+#####:  194:        if(createResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  195:        {
+#####:  196:          status = CTUTIL_FAILED;
+#####:  197:          CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Unable to create parent folder");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  198:          break;
+-:  199:        }
+-:  200:      }
+-:  201:      // Revert replaced slash
+#####:  202:      szSubPath[0] = '/';
+#####:  203:      szSubPath = &(szSubPath[1]);
+-:  204:    }
+#####:  205:    if(!ctutil_IsFolderAccessible(szPath))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  206:    {
+#####:  207:      int const createResult = mkdir(szPath, 0777);
+call    0 never executed
+#####:  208:      if(createResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  209:      {
+#####:  210:        status = CTUTIL_FAILED;
+#####:  211:        CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Unable to create target folder");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  212:      }
+-:  213:    }
+-:  214:
+#####:  215:    if(szModifiablePath != szModifiablePathStackBuffer)
+branch  0 never executed
+branch  1 never executed
+-:  216:    {
+#####:  217:      free(szModifiablePath);
+-:  218:    }
+-:  219:  }
+-:  220:
+#####:  221:  return status;
+-:  222:}
+-:  223:
+-:  224:
+function ctutil_CreateFolder called 0 returned 0% blocks executed 0%
+#####:  225:statusCode_t ctutil_CreateFolder(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  226:                                 char const * const szPath,
+-:  227:                                 bool createParentsAlso)
+-:  228:{
+#####:  229:  statusCode_t status = CTUTIL_SUCCESS;
+-:  230:
+-:  231:  // Be optimistic and try to create
+#####:  232:  int const initialCreateResult = mkdir(szPath, 0777);
+call    0 never executed
+#####:  233:  if(initialCreateResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  234:  {
+#####:  235:    if(errno == EEXIST && ctutil_IsFolderAccessible(szPath))
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  236:    {
+#####:  237:      CTUTIL_LOG_INFO(pstCommonOptions->quiet, "Folder already exists");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  238:    }
+-:  239:    // Give up or retry possible after creating parent directories?
+#####:  240:    else if((errno != ENOENT) || !createParentsAlso)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+-:  241:    {
+#####:  242:      status = CTUTIL_FAILED;
+#####:  243:      CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Unable to create folder");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  244:    }
+-:  245:    else
+-:  246:    {
+-:  247:      // Try to create also parent folders
+#####:  248:      WC_ASSERT(createParentsAlso);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  249:      status = CreateFolderHierarchy(pstCommonOptions, szPath);
+call    0 never executed
+#####:  250:      if(ctutil_IsStatusFailure(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  251:      {
+#####:  252:        CTUTIL_LOG_ERROR(pstCommonOptions->quiet, "Unable to create folder");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  253:      }
+-:  254:    }
+-:  255:  }
+-:  256:
+#####:  257:  return status;
+-:  258:}
+-:  259:
+-:  260:
+function ctutil_ClearFolder called 0 returned 0% blocks executed 0%
+#####:  261:statusCode_t ctutil_ClearFolder(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  262:                                char const * const szPath)
+-:  263:{
+#####:  264:  statusCode_t status = CTUTIL_SUCCESS;
+-:  265:
+-:  266:  // Open folder
+#####:  267:  size_t const folderPathLength = strlen(szPath);
+#####:  268:  DIR * pFolder = opendir(szPath);
+call    0 never executed
+#####:  269:  if(pFolder == NULL)
+branch  0 never executed
+branch  1 never executed
+-:  270:  {
+#####:  271:    status = CTUTIL_FAILED;
+#####:  272:    CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Unable to open folder");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  273:  }
+-:  274:
+#####:  275:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  276:  {
+-:  277:    // Remove elements
+-:  278:    char szFilePathStackBuffer[DEFAULT_PATH_BUFFER_SIZE];
+-:  279:    WC_STATIC_ASSERT(sizeof(szFilePathStackBuffer) >= (WC_SIZEOF_MEMBER(struct dirent, d_name) / 2));
+#####:  280:    char * szFilePath = szFilePathStackBuffer;
+#####:  281:    size_t bufferSize = sizeof(szFilePathStackBuffer);
+-:  282:    struct dirent * pNextEntry;
+#####:  283:    while((pNextEntry = readdir(pFolder)) != NULL)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  284:    {
+#####:  285:      status = CTUTIL_SUCCESS;
+-:  286:
+-:  287:      // Skip . & .. to avoid deletion
+#####:  288:      if(    (strcmp(".", pNextEntry->d_name) == 0)
+branch  0 never executed
+branch  1 never executed
+#####:  289:          || (strcmp("..", pNextEntry->d_name) == 0))
+branch  0 never executed
+branch  1 never executed
+-:  290:      {
+#####:  291:        continue;
+-:  292:      }
+-:  293:
+-:  294:      // Concat folder path and entry
+#####:  295:      size_t const elementNameLength = strlen(pNextEntry->d_name);
+#####:  296:      size_t const neededBufferSize = folderPathLength + 1 + elementNameLength + 1;
+#####:  297:      if(neededBufferSize > bufferSize)
+branch  0 never executed
+branch  1 never executed
+-:  298:      {
+-:  299:        // Use a dynamic buffer
+#####:  300:        if(szFilePath != szFilePathStackBuffer)
+branch  0 never executed
+branch  1 never executed
+-:  301:        {
+#####:  302:          free(szFilePath);
+-:  303:        }
+#####:  304:        szFilePath = malloc(neededBufferSize);
+#####:  305:        if(szFilePath == NULL)
+branch  0 never executed
+branch  1 never executed
+-:  306:        {
+#####:  307:          status = CTUTIL_FAILED;
+#####:  308:          CTUTIL_LOG_ERROR(pstCommonOptions->quiet, "Failed to allocate memory");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  309:          break;
+-:  310:        }
+-:  311:      }
+#####:  312:      strcpy(szFilePath, szPath);
+#####:  313:      szFilePath[folderPathLength] = '/';
+#####:  314:      strcpy(szFilePath + folderPathLength + 1, pNextEntry->d_name);
+#####:  315:      szFilePath[folderPathLength + 1 + elementNameLength] = '\0';
+-:  316:
+-:  317:      // Get entry element stats
+-:  318:      struct stat stFilePathStat;
+#####:  319:      int const statResult = lstat(szFilePath, &stFilePathStat);
+call    0 never executed
+#####:  320:      if(statResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  321:      {
+#####:  322:        status = CTUTIL_FAILED;
+#####:  323:        CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Unable to get folder entry stats");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  324:      }
+-:  325:
+-:  326:      // Remove entry element
+#####:  327:      if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  328:      {
+#####:  329:        if(S_ISDIR(stFilePathStat.st_mode))
+branch  0 never executed
+branch  1 never executed
+-:  330:        {
+#####:  331:          CTUTIL_LOG_DEBUG1(pstCommonOptions->quiet, "Remove folder %s", szFilePath);
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+#####:  332:          status = ctutil_RemoveFolder(pstCommonOptions, szFilePath);
+call    0 never executed
+-:  333:        }
+-:  334:        else
+-:  335:        {
+#####:  336:          CTUTIL_LOG_DEBUG1(pstCommonOptions->quiet, "Unlink file %s", szFilePath);
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+#####:  337:          int const unlinkResult = unlink(szFilePath);
+call    0 never executed
+#####:  338:          if(unlinkResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  339:          {
+#####:  340:            status = CTUTIL_FAILED;
+#####:  341:            CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Unable to remove file");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  342:          }
+-:  343:        }
+-:  344:      }
+-:  345:    }
+-:  346:
+-:  347:    // Free dynamically allocated buffer if necessary
+#####:  348:    if(szFilePath != szFilePathStackBuffer)
+branch  0 never executed
+branch  1 never executed
+-:  349:    {
+#####:  350:      free(szFilePath);
+-:  351:    }
+-:  352:
+-:  353:    // Close folder
+#####:  354:    closedir(pFolder);
+call    0 never executed
+-:  355:  }
+-:  356:
+#####:  357:  return status;
+-:  358:}
+-:  359:
+-:  360:
+function ctutil_RemoveFolder called 0 returned 0% blocks executed 0%
+#####:  361:statusCode_t ctutil_RemoveFolder(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  362:                                 char const * const szPath)
+-:  363:{
+#####:  364:  statusCode_t status = CTUTIL_SUCCESS;
+-:  365:
+#####:  366:  status = ctutil_ClearFolder(pstCommonOptions, szPath);
+call    0 never executed
+#####:  367:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  368:  {
+#####:  369:    int const removeResult = rmdir(szPath);
+call    0 never executed
+#####:  370:    if(removeResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  371:    {
+#####:  372:      status = CTUTIL_FAILED;
+#####:  373:      CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Unable to remove folder");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  374:    }
+-:  375:  }
+-:  376:
+#####:  377:  return status;
+-:  378:}
+-:  379:
+-:  380:
+function ctutil_GetMountPointForDevice called 0 returned 0% blocks executed 0%
+#####:  381:statusCode_t ctutil_GetMountPointForDevice(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  382:                                           char const * const szDeviceFilePath,
+-:  383:                                           char * * const pszMountPoint,
+-:  384:                                           size_t const mountPointBufferSize)
+-:  385:{
+#####:  386:  statusCode_t status = CTUTIL_SUCCESS;
+-:  387:
+-:  388:  FILE * pFile;
+#####:  389:  pFile = setmntent(MOUNT_INFORMATION, "r");
+call    0 never executed
+#####:  390:  if(pFile == NULL)
+branch  0 never executed
+branch  1 never executed
+-:  391:  {
+#####:  392:    status = CTUTIL_FAILED;
+#####:  393:    CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Failed to get mount information from " MOUNT_INFORMATION);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  394:  }
+-:  395:  else
+-:  396:  {
+-:  397:    struct mntent * pMountEntry;
+#####:  398:    while((pMountEntry = getmntent(pFile)) != NULL)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  399:    {
+#####:  400:      if(strcmp(szDeviceFilePath, pMountEntry->mnt_fsname) == 0)
+branch  0 never executed
+branch  1 never executed
+-:  401:      {
+#####:  402:        status = CopyString(pMountEntry->mnt_dir, strlen(pMountEntry->mnt_dir), pszMountPoint, mountPointBufferSize, true);
+call    0 never executed
+#####:  403:        break;
+-:  404:      }
+-:  405:    }
+#####:  406:    if((ctutil_IsStatusFailure(status)) || (pMountEntry == NULL))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  407:    {
+-:  408:      // Not mounted
+#####:  409:      *pszMountPoint = NULL;
+-:  410:    }
+-:  411:
+#####:  412:    endmntent(pFile);
+call    0 never executed
+-:  413:  }
+-:  414:
+#####:  415:  return status;
+-:  416:}
+-:  417:
+-:  418:
+function ctutil_CheckForMountPoint called 0 returned 0% blocks executed 0%
+#####:  419:statusCode_t ctutil_CheckForMountPoint(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  420:                                       char const * const szPath)
+-:  421:{
+#####:  422:  statusCode_t status = CTUTIL_SUCCESS;
+-:  423:
+-:  424:  // Check for root
+#####:  425:  if((szPath[0] == '/') && (szPath[1] == '\0'))
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+-:  426:  {
+#####:  427:    status = CTUTIL_FAILED;
+#####:  428:    CTUTIL_LOG_ERROR(pstCommonOptions->quiet, "Ask for \"/\" as mount point");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  429:  }
+-:  430:
+-:  431:  // Get file (folder) statistics
+-:  432:  struct stat stStats;
+#####:  433:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  434:  {
+#####:  435:    int const statResult = stat(szPath, &stStats);
+call    0 never executed
+#####:  436:    if(statResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  437:    {
+#####:  438:      status = CTUTIL_FAILED;
+#####:  439:      CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Failed to get folder statistics");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  440:    }
+-:  441:  }
+-:  442:
+-:  443:  // Build upper folder path string
+-:  444:  char szUpperPathStackBuffer[DEFAULT_PATH_BUFFER_SIZE];
+#####:  445:  char * szUpperPath = szUpperPathStackBuffer;
+#####:  446:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  447:  {
+#####:  448:    size_t const pathLength = strlen(szPath);
+#####:  449:    status = ctutil_GetParentFolderString(szPath, pathLength, &szUpperPath, sizeof(szUpperPathStackBuffer), true);
+call    0 never executed
+-:  450:  }
+-:  451:
+-:  452:  // Compare device ID with device ID from upper folder
+#####:  453:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  454:  {
+-:  455:    struct stat stUpperStats;
+#####:  456:    int const statResult = stat(szUpperPath, &stUpperStats);
+call    0 never executed
+#####:  457:    if(statResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  458:    {
+#####:  459:      status = CTUTIL_FAILED;
+#####:  460:      CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Failed to get upper folder statistics");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  461:    }
+-:  462:    else
+-:  463:    {
+#####:  464:      if(stUpperStats.st_dev != stStats.st_dev)
+branch  0 never executed
+branch  1 never executed
+-:  465:      {
+-:  466:        // Folder is mount point
+#####:  467:        status = CTUTIL_FAILED;
+-:  468:      }
+-:  469:    }
+#####:  470:    if(szUpperPath != szUpperPathStackBuffer)
+branch  0 never executed
+branch  1 never executed
+-:  471:    {
+#####:  472:      free(szUpperPath);
+-:  473:    }
+-:  474:  }
+-:  475:
+#####:  476:  return status;
+-:  477:}
+-:  478:
+-:  479:
+-:  480:// fileType: b = block, c = character, d = directory/folder, f = fifo, l = link, s = socket, - = regular file
+function ctutil_IsFileTypeMatch called 0 returned 0% blocks executed 0%
+#####:  481:bool ctutil_IsFileTypeMatch(struct stat * pstStats,
+-:  482:                            char const fileType)
+-:  483:{
+#####:  484:  bool result =  false;
+-:  485:
+#####:  486:  switch(fileType)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+-:  487:  {
+#####:  488:    case 'b':
+#####:  489:      result = S_ISBLK(pstStats->st_mode);
+#####:  490:      break;
+-:  491:
+#####:  492:    case 'c':
+#####:  493:      result = S_ISCHR(pstStats->st_mode);
+#####:  494:      break;
+-:  495:
+#####:  496:    case 'd':
+#####:  497:      result = S_ISDIR(pstStats->st_mode);
+#####:  498:      break;
+-:  499:
+#####:  500:    case 'f':
+#####:  501:      result = S_ISFIFO(pstStats->st_mode);
+#####:  502:      break;
+-:  503:
+#####:  504:    case 'l':
+#####:  505:      result = S_ISLNK(pstStats->st_mode);
+#####:  506:      break;
+-:  507:
+#####:  508:    case 's':
+#####:  509:      result = S_ISSOCK(pstStats->st_mode);
+#####:  510:      break;
+-:  511:
+#####:  512:    case '-':
+#####:  513:      result = S_ISREG(pstStats->st_mode);
+#####:  514:      break;
+-:  515:
+#####:  516:    default:
+-:  517:      // Unknown file type
+#####:  518:      result =  false;
+-:  519:  }
+-:  520:
+#####:  521:  return result;
+-:  522:}
+-:  523:
+-:  524:
+-:  525:// szFileTypes: b = block, c = character, d = directory/folder, f = fifo, l = link, s = socket, - = regular file
+-:  526:// szFileTypes may be NULL
+function ctutil_IsFileAvailable called 0 returned 0% blocks executed 0%
+#####:  527:bool ctutil_IsFileAvailable(ctutil_OptionsCommon_t const * const WC_UNUSED_PARAM(pstCommonOptions),
+-:  528:                            char const * const szFilePath,
+-:  529:                            char const * const szFileTypes)
+-:  530:{
+#####:  531:  bool result = false;
+-:  532:
+-:  533:  // Get file statistics
+-:  534:  struct stat stStats;
+#####:  535:  int const statResult = stat(szFilePath, &stStats);
+call    0 never executed
+#####:  536:  if(statResult == 0)
+branch  0 never executed
+branch  1 never executed
+-:  537:  {
+#####:  538:    if(szFileTypes == NULL)
+branch  0 never executed
+branch  1 never executed
+-:  539:    {
+#####:  540:      result = true;
+-:  541:    }
+-:  542:    else
+-:  543:    {
+-:  544:      // Check for requested file types
+#####:  545:      char const * pFileType = szFileTypes;
+#####:  546:      while((!result) && (*pFileType) != '\0')
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+-:  547:      {
+#####:  548:        result = ctutil_IsFileTypeMatch(&stStats, *pFileType);
+call    0 never executed
+#####:  549:        ++pFileType;
+-:  550:      }
+-:  551:    }
+-:  552:  }
+-:  553:
+#####:  554:  return result;
+-:  555:}
+-:  556:
+-:  557:
+function ctutil_Mount called 0 returned 0% blocks executed 0%
+#####:  558:statusCode_t ctutil_Mount(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  559:                          char const * const szSpecialFile,
+-:  560:                          char const * const szDir,
+-:  561:                          char const * const szFileSystemType,
+-:  562:                          unsigned long int const flags,
+-:  563:                          void const * const pData)
+-:  564:{
+#####:  565:  statusCode_t status = CTUTIL_SUCCESS;
+-:  566:
+#####:  567:  status = ctutil_CheckForMountPoint(pstCommonOptions, szDir);
+call    0 never executed
+#####:  568:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  569:  {
+#####:  570:    int const mountResult = mount(szSpecialFile, szDir, szFileSystemType, flags, pData);
+call    0 never executed
+#####:  571:    if(mountResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  572:    {
+#####:  573:      status = CTUTIL_FAILED;
+#####:  574:      CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Failed to mount");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  575:    }
+-:  576:  }
+-:  577:
+#####:  578:  return status;
+-:  579:}
+-:  580:
+-:  581:
+function ctutil_Umount called 0 returned 0% blocks executed 0%
+#####:  582:statusCode_t ctutil_Umount(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  583:                           char const * const szSpecialFile,
+-:  584:                           int const flags)
+-:  585:{
+#####:  586:  statusCode_t status = CTUTIL_SUCCESS;
+-:  587:
+#####:  588:  int const umountResult = umount2(szSpecialFile, flags);
+call    0 never executed
+#####:  589:  if(umountResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  590:  {
+#####:  591:    status = CTUTIL_FAILED;
+#####:  592:    CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Failed to unmount");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  593:  }
+-:  594:
+#####:  595:  return status;
+-:  596:}
+-:  597:
+-:  598:
+function ctutil_GetFileSystemStatistics called 0 returned 0% blocks executed 0%
+#####:  599:statusCode_t ctutil_GetFileSystemStatistics(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  600:                                            char const * const szPath,
+-:  601:                                            struct statvfs * const pstFileSystemStats)
+-:  602:{
+#####:  603:  statusCode_t status = CTUTIL_SUCCESS;
+-:  604:
+#####:  605:  int const statResult = statvfs(szPath, pstFileSystemStats);
+call    0 never executed
+#####:  606:  if(statResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  607:  {
+#####:  608:    status = CTUTIL_FAILED;
+#####:  609:    CTUTIL_LOG_ERRNO_ERROR(pstCommonOptions->quiet, errno, "Failed to get file system statistics");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  610:  }
+-:  611:
+#####:  612:  return status;
+-:  613:}
+-:  614:
+-:  615:
+function ctutil_GetFreeBytes called 0 returned 0% blocks executed 0%
+#####:  616:statusCode_t ctutil_GetFreeBytes(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  617:                                 char const * const szFolderPath,
+-:  618:                                 uint64_t * const freeBytes)
+-:  619:{
+#####:  620:  statusCode_t status = CTUTIL_SUCCESS;
+-:  621:
+-:  622:  // Get file system statistics
+-:  623:  struct statvfs stFileSystemStats;
+#####:  624:  status = ctutil_GetFileSystemStatistics(pstCommonOptions, szFolderPath, &stFileSystemStats);
+call    0 never executed
+#####:  625:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  626:  {
+#####:  627:    *freeBytes = (uint64_t)stFileSystemStats.f_bsize * stFileSystemStats.f_bfree;
+-:  628:  }
+-:  629:
+#####:  630:  return status;
+-:  631:}
+-:  632:
+-:  633:
+function ctutil_GetAvailableBytes called 0 returned 0% blocks executed 0%
+#####:  634:statusCode_t ctutil_GetAvailableBytes(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  635:                                      char const * const szFolderPath,
+-:  636:                                      uint64_t * const availableBytes)
+-:  637:{
+#####:  638:  statusCode_t status = CTUTIL_SUCCESS;
+-:  639:
+-:  640:  // Get file system statistics
+-:  641:  struct statvfs stFileSystemStats;
+#####:  642:  status = ctutil_GetFileSystemStatistics(pstCommonOptions, szFolderPath, &stFileSystemStats);
+call    0 never executed
+#####:  643:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  644:  {
+#####:  645:    *availableBytes = (uint64_t)stFileSystemStats.f_bsize * stFileSystemStats.f_bavail;
+-:  646:  }
+-:  647:
+#####:  648:  return status;
+-:  649:}
+-:  650:
+-:  651:
+-:  652://---- End of source file ------------------------------------------------------
+-:  653:

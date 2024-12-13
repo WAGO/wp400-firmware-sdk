@@ -1,0 +1,54 @@
+-:    0:Source:src/network_config/MessagePrinter.cpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#include "MessagePrinter.hpp"
+-:    4:
+-:    5:namespace network_config {
+-:    6:
+function _ZN14network_config14MessagePrinterC2Ev called 5 returned 100% blocks executed 86%
+5:    7:MessagePrinter::MessagePrinter() {
+call    0 returned 5
+5:    8:  output_ = ::std::make_unique<StderrOutput>();
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 5
+call    4 returned 5
+5:    9:}
+call    0 never executed
+-:   10:
+function _ZN14network_config14MessagePrinter14SetDestinationESt10unique_ptrINS_6OutputESt14default_deleteIS2_EE called 4 returned 100% blocks executed 100%
+4:   11:void MessagePrinter::SetDestination(::std::unique_ptr<Output> output) {
+4:   12:  output_ = std::move(output);
+call    0 returned 4
+call    1 returned 4
+4:   13:}
+-:   14:
+function _ZN14network_config14MessagePrinter5PrintERKN7netconf6StatusE called 2 returned 100% blocks executed 71%
+2:   15:void MessagePrinter::Print(const ::netconf::Status &status) {
+2:   16:  Print(status.ToString());
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 2
+call    5 never executed
+2:   17:}
+function _ZN14network_config14MessagePrinter5PrintERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 4 returned 100% blocks executed 100%
+4:   18:void MessagePrinter::Print(const ::std::string &text) {
+4:   19:  if (output_) {
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+4:   20:    output_->GetStream() << text;
+call    0 returned 4
+call    1 returned 4
+call    2 returned 4
+4:   21:    output_->GetStream().flush();
+call    0 returned 4
+call    1 returned 4
+call    2 returned 4
+-:   22:  }
+4:   23:}
+-:   24:
+-:   25:} /* namespace network_config */

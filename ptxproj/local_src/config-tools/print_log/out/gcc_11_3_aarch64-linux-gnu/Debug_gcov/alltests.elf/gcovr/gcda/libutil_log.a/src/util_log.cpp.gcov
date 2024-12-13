@@ -1,0 +1,609 @@
+-:    0:Source:src/util_log.cpp
+-:    0:Graph:./out/gcc_11_3_aarch64-linux-gnu/Debug_gcov/alltests.elf/gcovr/gcda/libutil_log.a/src/util_log.cpp.gcno
+-:    0:Data:./out/gcc_11_3_aarch64-linux-gnu/Debug_gcov/alltests.elf/gcovr/gcda/libutil_log.a/src/util_log.cpp.gcda
+-:    0:Runs:1
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9://------------------------------------------------------------------------------
+-:   10:///  \file     util_print_file.cpp
+-:   11:///
+-:   12:///  \brief    <short description of the file contents>
+-:   13:///
+-:   14:///  \author   <author> : WAGO GmbH & Co. KG
+-:   15://------------------------------------------------------------------------------
+-:   16:
+-:   17://------------------------------------------------------------------------------
+-:   18:// include files
+-:   19://------------------------------------------------------------------------------
+-:   20:#include "util_log.hpp"
+-:   21:
+-:   22:#include <iostream>
+-:   23:#include <boost/range.hpp>
+-:   24:#include <string>
+-:   25:#include "boost/filesystem.hpp"
+-:   26:
+-:   27://------------------------------------------------------------------------------
+-:   28:// defines; structure, enumeration and type definitions
+-:   29://------------------------------------------------------------------------------
+-:   30:#define JSON_ARRAY_BEGIN "["
+-:   31:#define JSON_ARRAY_END "]"
+-:   32:#define JSON_STR_BEGIN "\""
+-:   33:#define JSON_STR_END "\""
+-:   34:#define JSON_ARRAY_NEXT ","
+-:   35:
+-:   36:#define CMD_TAR_CREATE "tar cfzP "
+-:   37:#define CMD_OPKG_LIST "opkg list > "
+-:   38://------------------------------------------------------------------------------
+-:   39:// function prototypes
+-:   40://------------------------------------------------------------------------------
+-:   41:
+-:   42://------------------------------------------------------------------------------
+-:   43:// macros
+-:   44://------------------------------------------------------------------------------
+-:   45:
+-:   46://------------------------------------------------------------------------------
+-:   47:// variables' and constants' definitions
+-:   48://------------------------------------------------------------------------------
+-:   49:
+-:   50://------------------------------------------------------------------------------
+-:   51:// function implementation
+-:   52://------------------------------------------------------------------------------
+-:   53:
+function _Z20StringList2JsonArrayRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE called 2 returned 100% blocks executed 91%
+2:   54:std::string StringList2JsonArray(const std::vector<std::string> & list)
+-:   55:{
+2:   56:  std::string retStr;
+call    0 returned 2
+2:   57:  if(!list.empty())
+call    0 returned 2
+branch  1 taken 1 (fallthrough)
+branch  2 taken 1
+-:   58:  {
+1:   59:    retStr = JSON_ARRAY_BEGIN;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+5:   60:    for(auto it = list.cbegin(); it != list.cend();)
+call    0 returned 1
+call    1 returned 5
+call    2 returned 5
+branch  3 taken 4
+branch  4 taken 1 (fallthrough)
+-:   61:    {
+4:   62:      retStr.append(JSON_STR_BEGIN);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+4:   63:      retStr.append(*it);
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+4:   64:      retStr.append(JSON_STR_END);
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+4:   65:      it++;
+call    0 returned 4
+4:   66:      if(it != list.cend())
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 3 (fallthrough)
+branch  3 taken 1
+-:   67:      {
+3:   68:        retStr.append(JSON_ARRAY_NEXT);
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+-:   69:      }
+-:   70:    }
+1:   71:    retStr.append(JSON_ARRAY_END);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   72:  }
+2:   73:  return retStr;
+=====:   74:}
+call    0 never executed
+-:   75:
+function _Z12GetFilePathsRKN5boost10filesystem4pathE called 2 returned 100% blocks executed 21%
+2:   76:std::vector<boost::filesystem::path> GetFilePaths(const boost::filesystem::path & folderPath)
+-:   77:{
+2:   78:  std::vector<boost::filesystem::path> filePaths;
+call    0 returned 2
+-:   79:
+2:   80:  if(boost::filesystem::is_directory(folderPath)) {
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 2
+-:   81:
+-:   82:    // scan folder
+#####:   83:    auto files = boost::make_iterator_range(boost::filesystem::directory_iterator(folderPath));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+-:   84:
+-:   85:    // add regular and no empty file path to vector
+#####:   86:    for(const auto& file  : files) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+branch 11 never executed
+branch 12 never executed
+#####:   87:      if(boost::filesystem::is_regular(file)) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:   88:        if(!boost::filesystem::is_empty(file)) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:   89:          filePaths.push_back(file.path());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+-:   90:        }
+-:   91:      }
+#####:   92:    }
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+#####:   93:  }
+call    0 never executed
+call    1 never executed
+2:   94:  std::sort(filePaths.begin(), filePaths.end());
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+branch  3 taken 2 (fallthrough)
+branch  4 taken 0 (throw)
+-:   95:
+2:   96:  return filePaths;
+=====:   97:}
+call    0 never executed
+-:   98:
+function _Z12GetFilenamesB5cxx11RKN5boost10filesystem4pathE called 1 returned 100% blocks executed 46%
+1:   99:std::vector<std::string> GetFilenames(const boost::filesystem::path & folderPath)
+-:  100:{
+1:  101:  std::vector<boost::filesystem::path> filePaths = GetFilePaths(folderPath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  102:  std::vector<std::string> fileNames;
+call    0 returned 1
+-:  103:
+-:  104:
+-:  105:  // add filename to vector
+1:  106:  fileNames.reserve(filePaths.size());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:  107:  for(const auto& filePath : filePaths) {
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 returned 1
+branch  4 taken 0
+branch  5 taken 1 (fallthrough)
+#####:  108:    fileNames.emplace_back(filePath.filename().c_str());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+-:  109:  }
+-:  110:
+2:  111:  return fileNames;
+1:  112:}
+call    0 returned 1
+call    1 never executed
+call    2 never executed
+-:  113:
+function _Z16GetNumberOfLinesRKN5boost10filesystem4pathE called 2 returned 100% blocks executed 25%
+2:  114:unsigned int GetNumberOfLines(const boost::filesystem::path & filePath)
+-:  115:{
+2:  116:  unsigned int number = 0;
+2:  117:  if(boost::filesystem::is_regular_file(filePath)) {
+call    0 returned 2
+branch  1 taken 0 (fallthrough)
+branch  2 taken 2
+#####:  118:    std::ifstream is(filePath.c_str());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  119:    std::string line;
+call    0 never executed
+-:  120:
+-:  121:    // Count number of lines
+#####:  122:    while(std::getline(is, line)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+#####:  123:      number++;
+-:  124:    }
+#####:  125:  }
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:  126:
+2:  127:  return number;
+-:  128:}
+-:  129:
+function _Z18ReadFileLineByLineRKN5boost10filesystem4pathEjRSo called 1 returned 100% blocks executed 19%
+1:  130:unsigned int ReadFileLineByLine(const boost::filesystem::path & filePath,
+-:  131:                                unsigned int limit,
+-:  132:                                std::ostream & out)
+-:  133:{
+1:  134:  unsigned int outCounter = 0;
+1:  135:  unsigned int lines = GetNumberOfLines(filePath);
+call    0 returned 1
+-:  136:
+1:  137:  if(lines > 0) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+-:  138:
+-:  139:    // Calculate start line
+#####:  140:    unsigned int startLine = 0;
+#####:  141:    if((limit > 0) && (limit <= lines)) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  142:      startLine = lines - limit;
+-:  143:    }
+-:  144:
+-:  145:    // Read file line by line
+#####:  146:    unsigned int lineCounter = 0;
+#####:  147:    std::ifstream is(filePath.c_str());
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  148:    std::string line;
+call    0 never executed
+#####:  149:    while(std::getline(is, line)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+-:  150:
+-:  151:      // Print out if start line reached
+#####:  152:      if(lineCounter >= startLine) {
+branch  0 never executed
+branch  1 never executed
+#####:  153:        out << line << std::endl;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:  154:        outCounter++;
+-:  155:      }
+#####:  156:      lineCounter++;
+-:  157:    }
+#####:  158:  }
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:  159:
+1:  160:  return outCounter;
+-:  161:}
+-:  162:
+function _Z13PrintHelpTextRSo called 0 returned 0% blocks executed 0%
+#####:  163:eStatusCode PrintHelpText(std::ostream & out)
+-:  164:{
+#####:  165:  out << "\n";
+call    0 never executed
+#####:  166:  out << "Print logging files command line tool\n";
+call    0 never executed
+#####:  167:  out << "\n";
+call    0 never executed
+#####:  168:  out << "options:\n";
+call    0 never executed
+#####:  169:  out << "  -h [--help]                   - show help text\n";
+call    0 never executed
+#####:  170:  out << "  -s [--scan]                   - scan all available file\n";
+call    0 never executed
+#####:  171:  out << "  -a [--archive]  <path>        - create log archive to destination path\n";
+call    0 never executed
+#####:  172:  out << "  -j [--json]                   - json output format\n";
+call    0 never executed
+#####:  173:  out << "  -r [--read]     <filename>    - read content of file\n";
+call    0 never executed
+#####:  174:  out << "  -l [--limit]    <value>       - limit read output\n";
+call    0 never executed
+#####:  175:  out << "\n";
+call    0 never executed
+-:  176:
+#####:  177:  return SUCCESS;
+-:  178:}
+-:  179:
+function _Z18PrintExistingFilesRKN5boost10filesystem4pathEbRSo called 0 returned 0% blocks executed 0%
+#####:  180:eStatusCode PrintExistingFiles(const boost::filesystem::path & folderpath,
+-:  181:                               bool json,
+-:  182:                               std::ostream & out)
+-:  183:{
+#####:  184:  eStatusCode status = ERROR;
+-:  185:
+#####:  186:  if(boost::filesystem::is_directory(folderpath)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  187:    std::vector<std::string> files = GetFilenames(folderpath);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  188:    // json format output
+#####:  189:    if(json) {
+branch  0 never executed
+branch  1 never executed
+#####:  190:      out << StringList2JsonArray(files) << std::endl;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+-:  191:    }
+-:  192:    // text format output
+-:  193:    else {
+#####:  194:      for(auto const& it : files) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+#####:  195:        out << it << std::endl;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+-:  196:      }
+-:  197:    }
+#####:  198:    status = SUCCESS;
+#####:  199:  }
+call    0 never executed
+call    1 never executed
+-:  200:
+#####:  201:  return status;
+-:  202:}
+-:  203:
+function _Z16PrintFileContentRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKN5boost10filesystem4pathEjRSo called 0 returned 0% blocks executed 0%
+#####:  204:eStatusCode PrintFileContent(const std::string & filename,
+-:  205:                             const boost::filesystem::path & folderpath,
+-:  206:                             unsigned int limit,
+-:  207:                             std::ostream & out)
+-:  208:{
+#####:  209:  eStatusCode status = ERROR;
+#####:  210:  boost::filesystem::path filePath = folderpath / filename;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+-:  211:
+#####:  212:  if(boost::filesystem::is_regular_file(filePath))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  213:  {
+#####:  214:    ReadFileLineByLine(filePath, limit, out);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  215:    status = SUCCESS;
+-:  216:  }
+-:  217:
+#####:  218:  return status;
+#####:  219:}
+call    0 never executed
+call    1 never executed
+-:  220:
+function _Z10SystemCallRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 2 returned 100% blocks executed 88%
+2:  221:eStatusCode SystemCall(const std::string & cmd)
+-:  222:{
+2:  223:  eStatusCode status = ERROR;
+2:  224:  if(! cmd.empty())
+call    0 returned 2
+branch  1 taken 1 (fallthrough)
+branch  2 taken 1
+-:  225:  {
+1:  226:    if(std::system(cmd.c_str()) == 0)
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+-:  227:    {
+#####:  228:      status = SUCCESS;
+-:  229:    }
+-:  230:  }
+2:  231:  return status;
+-:  232:}
+-:  233:
+function _Z15SavePackageListRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 1 returned 100% blocks executed 64%
+1:  234:eStatusCode SavePackageList(const std::string & dst)
+-:  235:{
+1:  236:  eStatusCode status = ERROR;
+1:  237:  std::string cmd = CMD_OPKG_LIST;
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:  238:
+1:  239:  cmd.append(dst);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  240:  status = SystemCall(cmd);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  241:
+1:  242:  return status;
+1:  243:}
+call    0 returned 1
+call    1 never executed
+-:  244:
+function _Z16CreateNewArchiveRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EERKS5_ called 2 returned 100% blocks executed 23%
+2:  245:eStatusCode CreateNewArchive(const std::vector<std::string> & srcList,
+-:  246:                             const std::string & dst)
+-:  247:{
+2:  248:  eStatusCode status = ERROR;
+-:  249:
+2*:  250:  if(!srcList.empty() && !dst.empty())
+call    0 returned 2
+branch  1 taken 1 (fallthrough)
+branch  2 taken 1
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+branch  6 taken 0 (fallthrough)
+branch  7 taken 2
+-:  251:  {
+#####:  252:    std::string cmd = CMD_TAR_CREATE;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+-:  253:
+#####:  254:    cmd.append(dst);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  255:    for(auto &item : srcList)
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+-:  256:    {
+#####:  257:      if(! boost::filesystem::exists(item))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+-:  258:      {
+#####:  259:        continue;
+-:  260:      }
+#####:  261:      cmd.append(" ");
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  262:      cmd.append(item);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  263:    }
+#####:  264:    status = SystemCall(cmd);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  265:  }
+call    0 never executed
+call    1 never executed
+-:  266:
+2:  267:  return status;
+-:  268:}
+-:  269:
+function _Z17FolderToPathExistRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 1 returned 100% blocks executed 67%
+1:  270:bool FolderToPathExist(const std::string & dst)
+-:  271:{
+1:  272:  boost::filesystem::path p{dst};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  273:  if(! boost::filesystem::is_directory(p)) // not a directory?
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+-:  274:  {
+1:  275:    if(boost::filesystem::exists(p.parent_path())) // parent directory exists?
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+-:  276:    {
+#####:  277:      return true;
+-:  278:    }
+-:  279:  }
+1:  280:  return false;
+1:  281:}
+call    0 returned 1
+call    1 never executed
+-:  282:
+-:  283://---- End of source file ------------------------------------------------------
+-:  284:

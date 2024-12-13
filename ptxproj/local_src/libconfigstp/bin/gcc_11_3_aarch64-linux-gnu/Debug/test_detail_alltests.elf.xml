@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuites tests="5" failures="0" disabled="0" errors="0" time="0.27" timestamp="2024-12-02T18:44:12.708" name="AllTests">
+  <testsuite name="libconfigstp.config_parser_test" tests="3" failures="0" disabled="0" skipped="0" errors="0" time="0.121" timestamp="2024-12-02T18:44:12.742">
+    <testcase name="from_stream" file="test-src/config_parser_test.cpp" line="112" status="run" result="completed" time="0.11" timestamp="2024-12-02T18:44:12.742" classname="libconfigstp.config_parser_test"/>
+    <testcase name="to_stream" file="test-src/config_parser_test.cpp" line="127" status="run" result="completed" time="0.006" timestamp="2024-12-02T18:44:12.855" classname="libconfigstp.config_parser_test"/>
+    <testcase name="to_stream_only_mstp_config" file="test-src/config_parser_test.cpp" line="133" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:44:12.861" classname="libconfigstp.config_parser_test"/>
+  </testsuite>
+  <testsuite name="libconfigstp.info_parser_test" tests="2" failures="0" disabled="0" skipped="0" errors="0" time="0.114" timestamp="2024-12-02T18:44:12.864">
+    <testcase name="ParseBridgeInformations" file="test-src/info_parser_test.cpp" line="138" status="run" result="completed" time="0.094" timestamp="2024-12-02T18:44:12.864" classname="libconfigstp.info_parser_test"/>
+    <testcase name="ParsePortInformations" file="test-src/info_parser_test.cpp" line="155" status="run" result="completed" time="0.019" timestamp="2024-12-02T18:44:12.959" classname="libconfigstp.info_parser_test"/>
+  </testsuite>
+</testsuites>

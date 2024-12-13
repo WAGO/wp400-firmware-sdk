@@ -1,0 +1,122 @@
+-:    0:Source:src/libconfigtoolutils/error_codes.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     error_codes.c
+-:   12:///
+-:   13:///  \brief    Common exit/error codes and helper functions for modular config tools.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "ctutil/error_codes.h"
+-:   22:#include "wc/assertion.h"
+-:   23:
+-:   24://------------------------------------------------------------------------------
+-:   25:// defines; structure, enumeration and type definitions
+-:   26://------------------------------------------------------------------------------
+-:   27:
+-:   28://------------------------------------------------------------------------------
+-:   29:// function prototypes
+-:   30://------------------------------------------------------------------------------
+-:   31:
+-:   32://------------------------------------------------------------------------------
+-:   33:// macros
+-:   34://------------------------------------------------------------------------------
+-:   35:
+-:   36://------------------------------------------------------------------------------
+-:   37:// variables' and constants' definitions
+-:   38://------------------------------------------------------------------------------
+-:   39:
+-:   40://------------------------------------------------------------------------------
+-:   41:// function implementation
+-:   42://------------------------------------------------------------------------------
+function ctutil_IsStatusOk called 615 returned 100% blocks executed 100%
+615:   43:bool ctutil_IsStatusOk(statusCode_t const status)
+-:   44:{
+-:   45:  WC_STATIC_ASSERT(CTUTIL_SUCCESS > CTUTIL_FAILED);
+615:   46:  return (status >= CTUTIL_SUCCESS);
+-:   47:}
+-:   48:
+-:   49:
+function ctutil_IsStatusFailure called 235 returned 100% blocks executed 100%
+235:   50:bool ctutil_IsStatusFailure(statusCode_t const status)
+-:   51:{
+-:   52:  WC_STATIC_ASSERT(CTUTIL_SUCCESS > CTUTIL_FAILED);
+235:   53:  return (status <= CTUTIL_FAILED);
+-:   54:}
+-:   55:
+-:   56:
+function ctutil_GetExitCodeFromStatus called 255 returned 100% blocks executed 89%
+255:   57:exitCode_t ctutil_GetExitCodeFromStatus(statusCode_t const status)
+-:   58:{
+-:   59:  exitCode_t result;
+-:   60:
+-:   61:  // Try to find corresponding exit code
+255:   62:  switch(status)
+branch  0 taken 1
+branch  1 taken 1
+branch  2 taken 1
+branch  3 taken 1
+branch  4 taken 1
+branch  5 taken 1
+branch  6 taken 249
+-:   63:  {
+1:   64:    case CTUTIL_NOT_FOUND:
+1:   65:      result = CTUTIL_EXIT_NOT_FOUND;
+1:   66:      break;
+-:   67:
+1:   68:    case CTUTIL_FILE_OPEN_ERROR:
+1:   69:      result = CTUTIL_EXIT_FILE_OPEN_ERROR;
+1:   70:      break;
+-:   71:
+1:   72:    case CTUTIL_SYSTEM_CALL_ERROR:
+1:   73:      result = CTUTIL_EXIT_SYSTEM_CALL_ERROR;
+1:   74:      break;
+-:   75:
+1:   76:    case CTUTIL_FILE_WRITE_ERROR:
+1:   77:      result = CTUTIL_EXIT_FILE_WRITE_ERROR;
+1:   78:      break;
+-:   79:
+1:   80:    case CTUTIL_MISSING_PARAMETER:
+1:   81:      result = CTUTIL_EXIT_MISSING_PARAMETER;
+1:   82:      break;
+-:   83:
+1:   84:    case CTUTIL_INVALID_PARAMETER:
+1:   85:      result = CTUTIL_EXIT_INVALID_PARAMETER;
+1:   86:      break;
+-:   87:
+-:   88:    // TODO: Map all exit codes
+-:   89:
+249:   90:    case CTUTIL_FAILED:
+-:   91:    default:
+249:   92:      result = ctutil_IsStatusOk(status) ? CTUTIL_EXIT_SUCCESS : CTUTIL_EXIT_GENERAL_ERROR;
+call    0 returned 249
+branch  1 taken 126 (fallthrough)
+branch  2 taken 123
+-:   93:  }
+-:   94:
+255*:   95:  WC_ASSERT(result >= CTUTIL_EXIT_MIN);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 255
+call    2 never executed
+255*:   96:  WC_ASSERT(result <= CTUTIL_EXIT_MAX);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 255
+call    2 never executed
+255:   97:  return result;
+-:   98:}
+-:   99:
+-:  100:
+-:  101://---- End of source file ------------------------------------------------------
+-:  102:

@@ -1,0 +1,2 @@
+# create device link for usb-mouse
+KERNEL=="mouse?", ENV{ID_INPUT_MOUSE}=="?*", ATTRS{speed}=="1.5", SYMLINK+="input/usb_mouse"

@@ -1,0 +1,437 @@
+-:    0:Source:test-src/OutputFactoryTest.cpp
+-:    1:#include <gtest/gtest.h>
+-:    2:
+-:    3:#include "OutputFactory.hpp"
+-:    4:#include <string>
+-:    5:#include <typeinfo>
+-:    6:
+-:    7:namespace network_config {
+-:    8:
+-:    9:using namespace ::std::string_literals;
+-:   10:using ::boost::program_options::variables_map;
+-:   11:using ::boost::program_options::variable_value;
+-:   12:
+-:   13:class OutputFactoryTest : public ::testing::Test {
+-:   14: public:
+-:   15:  variables_map map;
+-:   16:
+-:   17:  template<typename T>
+function _ZN14network_config17OutputFactoryTest7PutToVMINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvS7_OT_ called 2 returned 100% blocks executed 62%
+2:   18:  void PutToVM(::std::string key, T &&arg) {
+2:   19:    map.emplace(key, variable_value { std::forward < T > (arg), false });
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+branch  3 taken 2 (fallthrough)
+branch  4 taken 0 (throw)
+call    5 returned 2
+branch  6 taken 2 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 2
+call    9 returned 2
+call   10 never executed
+call   11 never executed
+2:   20:  }
+-:   21:
+function _ZN14network_config17OutputFactoryTest7PutToVMENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 3 returned 100% blocks executed 71%
+3:   22:  void PutToVM(::std::string key) {
+3:   23:    map.emplace(key, variable_value { });
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+3:   24:  }
+-:   25:
+-:   26:};
+-:   27:
+4:   28:TEST_F(OutputFactoryTest, NullOutput) {
+-:   29:
+1:   30:  PutToVM("quiet"s);
+-:   31:
+1:   32:  auto output = OutputFactory::Create(map);
+1:   33:  auto output_ptr = output.get();
+1*:   34:  EXPECT_EQ(typeid(NullOutput), typeid(*output_ptr));
+1:   35:}
+------------------
+_ZN14network_config33OutputFactoryTest_NullOutput_TestC2Ev:
+function _ZN14network_config33OutputFactoryTest_NullOutput_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   28:TEST_F(OutputFactoryTest, NullOutput) {
+call    0 returned 1
+------------------
+_ZN14network_config33OutputFactoryTest_NullOutput_TestD0Ev:
+function _ZN14network_config33OutputFactoryTest_NullOutput_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   28:TEST_F(OutputFactoryTest, NullOutput) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config33OutputFactoryTest_NullOutput_TestD2Ev:
+function _ZN14network_config33OutputFactoryTest_NullOutput_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   28:TEST_F(OutputFactoryTest, NullOutput) {
+call    0 returned 1
+------------------
+_ZN14network_config33OutputFactoryTest_NullOutput_Test8TestBodyEv:
+function _ZN14network_config33OutputFactoryTest_NullOutput_Test8TestBodyEv called 1 returned 100% blocks executed 39%
+1:   28:TEST_F(OutputFactoryTest, NullOutput) {
+-:   29:
+1:   30:  PutToVM("quiet"s);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+call    7 never executed
+-:   31:
+1:   32:  auto output = OutputFactory::Create(map);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   33:  auto output_ptr = output.get();
+call    0 returned 1
+1*:   34:  EXPECT_EQ(typeid(NullOutput), typeid(*output_ptr));
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+call    2 never executed
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   35:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   36:
+4:   37:TEST_F(OutputFactoryTest, FilenameOutput) {
+-:   38:
+1:   39:  PutToVM("error-msg-dst"s, "<ignored>"s);
+-:   40:
+1:   41:  auto output = OutputFactory::Create(map);
+1:   42:  auto output_ptr = output.get();
+1*:   43:  EXPECT_EQ(typeid(FileOutput), typeid(*output_ptr));
+1:   44:}
+------------------
+_ZN14network_config37OutputFactoryTest_FilenameOutput_TestC2Ev:
+function _ZN14network_config37OutputFactoryTest_FilenameOutput_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   37:TEST_F(OutputFactoryTest, FilenameOutput) {
+call    0 returned 1
+------------------
+_ZN14network_config37OutputFactoryTest_FilenameOutput_TestD0Ev:
+function _ZN14network_config37OutputFactoryTest_FilenameOutput_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   37:TEST_F(OutputFactoryTest, FilenameOutput) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config37OutputFactoryTest_FilenameOutput_TestD2Ev:
+function _ZN14network_config37OutputFactoryTest_FilenameOutput_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   37:TEST_F(OutputFactoryTest, FilenameOutput) {
+call    0 returned 1
+------------------
+_ZN14network_config37OutputFactoryTest_FilenameOutput_Test8TestBodyEv:
+function _ZN14network_config37OutputFactoryTest_FilenameOutput_Test8TestBodyEv called 1 returned 100% blocks executed 39%
+1:   37:TEST_F(OutputFactoryTest, FilenameOutput) {
+-:   38:
+1:   39:  PutToVM("error-msg-dst"s, "<ignored>"s);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+-:   40:
+1:   41:  auto output = OutputFactory::Create(map);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   42:  auto output_ptr = output.get();
+call    0 returned 1
+1*:   43:  EXPECT_EQ(typeid(FileOutput), typeid(*output_ptr));
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+call    2 never executed
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   44:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   45:
+4:   46:TEST_F(OutputFactoryTest, OutputToLastError) {
+-:   47:
+1:   48:  PutToVM("write-last-error"s);
+-:   49:
+1:   50:  auto output = OutputFactory::Create(map);
+1:   51:  auto output_ptr = output.get();
+1*:   52:  EXPECT_EQ(typeid(FileOutput), typeid(*output_ptr));
+1:   53:}
+------------------
+_ZN14network_config40OutputFactoryTest_OutputToLastError_TestC2Ev:
+function _ZN14network_config40OutputFactoryTest_OutputToLastError_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   46:TEST_F(OutputFactoryTest, OutputToLastError) {
+call    0 returned 1
+------------------
+_ZN14network_config40OutputFactoryTest_OutputToLastError_TestD0Ev:
+function _ZN14network_config40OutputFactoryTest_OutputToLastError_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   46:TEST_F(OutputFactoryTest, OutputToLastError) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config40OutputFactoryTest_OutputToLastError_TestD2Ev:
+function _ZN14network_config40OutputFactoryTest_OutputToLastError_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   46:TEST_F(OutputFactoryTest, OutputToLastError) {
+call    0 returned 1
+------------------
+_ZN14network_config40OutputFactoryTest_OutputToLastError_Test8TestBodyEv:
+function _ZN14network_config40OutputFactoryTest_OutputToLastError_Test8TestBodyEv called 1 returned 100% blocks executed 39%
+1:   46:TEST_F(OutputFactoryTest, OutputToLastError) {
+-:   47:
+1:   48:  PutToVM("write-last-error"s);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+call    7 never executed
+-:   49:
+1:   50:  auto output = OutputFactory::Create(map);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   51:  auto output_ptr = output.get();
+call    0 returned 1
+1*:   52:  EXPECT_EQ(typeid(FileOutput), typeid(*output_ptr));
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+call    2 never executed
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   53:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   54:
+4:   55:TEST_F(OutputFactoryTest, StderrOutput) {
+-:   56:
+1:   57:  auto output = OutputFactory::Create(map);
+1:   58:  auto output_ptr = output.get();
+1*:   59:  EXPECT_EQ(typeid(StderrOutput), typeid(*output_ptr));
+1:   60:}
+------------------
+_ZN14network_config35OutputFactoryTest_StderrOutput_TestC2Ev:
+function _ZN14network_config35OutputFactoryTest_StderrOutput_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   55:TEST_F(OutputFactoryTest, StderrOutput) {
+call    0 returned 1
+------------------
+_ZN14network_config35OutputFactoryTest_StderrOutput_TestD0Ev:
+function _ZN14network_config35OutputFactoryTest_StderrOutput_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   55:TEST_F(OutputFactoryTest, StderrOutput) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config35OutputFactoryTest_StderrOutput_TestD2Ev:
+function _ZN14network_config35OutputFactoryTest_StderrOutput_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   55:TEST_F(OutputFactoryTest, StderrOutput) {
+call    0 returned 1
+------------------
+_ZN14network_config35OutputFactoryTest_StderrOutput_Test8TestBodyEv:
+function _ZN14network_config35OutputFactoryTest_StderrOutput_Test8TestBodyEv called 1 returned 100% blocks executed 37%
+1:   55:TEST_F(OutputFactoryTest, StderrOutput) {
+-:   56:
+1:   57:  auto output = OutputFactory::Create(map);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   58:  auto output_ptr = output.get();
+call    0 returned 1
+1*:   59:  EXPECT_EQ(typeid(StderrOutput), typeid(*output_ptr));
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+call    2 never executed
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   60:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   61:
+4:   62:TEST_F(OutputFactoryTest, QuietIsPrefered) {
+-:   63:
+1:   64:  PutToVM("error-msg-dst"s, "bla"s);
+1:   65:  PutToVM("quiet"s);
+-:   66:
+1:   67:  auto output = OutputFactory::Create(map);
+1:   68:  auto output_ptr = output.get();
+1*:   69:  EXPECT_EQ(typeid(NullOutput), typeid(*output_ptr));
+1:   70:}
+------------------
+_ZN14network_config38OutputFactoryTest_QuietIsPrefered_TestC2Ev:
+function _ZN14network_config38OutputFactoryTest_QuietIsPrefered_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST_F(OutputFactoryTest, QuietIsPrefered) {
+call    0 returned 1
+------------------
+_ZN14network_config38OutputFactoryTest_QuietIsPrefered_TestD0Ev:
+function _ZN14network_config38OutputFactoryTest_QuietIsPrefered_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST_F(OutputFactoryTest, QuietIsPrefered) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN14network_config38OutputFactoryTest_QuietIsPrefered_TestD2Ev:
+function _ZN14network_config38OutputFactoryTest_QuietIsPrefered_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST_F(OutputFactoryTest, QuietIsPrefered) {
+call    0 returned 1
+------------------
+_ZN14network_config38OutputFactoryTest_QuietIsPrefered_Test8TestBodyEv:
+function _ZN14network_config38OutputFactoryTest_QuietIsPrefered_Test8TestBodyEv called 1 returned 100% blocks executed 40%
+1:   62:TEST_F(OutputFactoryTest, QuietIsPrefered) {
+-:   63:
+1:   64:  PutToVM("error-msg-dst"s, "bla"s);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+1:   65:  PutToVM("quiet"s);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+call    7 never executed
+-:   66:
+1:   67:  auto output = OutputFactory::Create(map);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   68:  auto output_ptr = output.get();
+call    0 returned 1
+1*:   69:  EXPECT_EQ(typeid(NullOutput), typeid(*output_ptr));
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+call    2 never executed
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:   70:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   71:
+-:   72:}  // namespace network_config

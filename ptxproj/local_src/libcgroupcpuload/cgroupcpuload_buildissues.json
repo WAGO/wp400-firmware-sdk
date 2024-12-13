@@ -1,0 +1,1122 @@
+{
+  "_class": "io.jenkins.plugins.analysis.core.restapi.ReportApi",
+  "issues": [
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/fcntl.h",
+      "lineStart": "168",
+      "columnStart": "12",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'open' has 1 other declaration with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/fcntl.h",
+      "lineStart": "168",
+      "columnStart": "12",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'open' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/stdlib.h",
+      "lineStart": "565",
+      "columnStart": "13",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'free' has 1 other declaration with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/stdlib.h",
+      "lineStart": "565",
+      "columnStart": "13",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'free' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/time.h",
+      "lineStart": "213",
+      "columnStart": "12",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'clock_gettime' has 1 other declaration with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/time.h",
+      "lineStart": "213",
+      "columnStart": "12",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'clock_gettime' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/unistd.h",
+      "lineStart": "334",
+      "columnStart": "16",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'lseek' has 1 other declaration with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/unistd.h",
+      "lineStart": "334",
+      "columnStart": "16",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'lseek' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/unistd.h",
+      "lineStart": "353",
+      "columnStart": "12",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'close' has 1 other declaration with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/unistd.h",
+      "lineStart": "353",
+      "columnStart": "12",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'close' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/unistd.h",
+      "lineStart": "360",
+      "columnStart": "16",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'read' has 1 other declaration with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "/usr/aarch64-linux-gnu/include/unistd.h",
+      "lineStart": "360",
+      "columnStart": "16",
+      "category": "Warning:readability-inconsistent-declaration-parameter-name",
+      "severity": "NORMAL",
+      "message": "function 'read' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "140",
+      "columnStart": "56",
+      "category": "Warning:readability-braces-around-statements",
+      "severity": "NORMAL",
+      "message": "statement should be inside braces [readability-braces-around-statements]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "157",
+      "columnStart": "3",
+      "category": "Warning:readability-redundant-control-flow",
+      "severity": "NORMAL",
+      "message": "redundant return statement at the end of a function with a void return type [readability-redundant-control-flow]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "163",
+      "columnStart": "24",
+      "category": "Warning:readability-braces-around-statements",
+      "severity": "NORMAL",
+      "message": "statement should be inside braces [readability-braces-around-statements]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "177",
+      "columnStart": "3",
+      "category": "Warning:readability-redundant-control-flow",
+      "severity": "NORMAL",
+      "message": "redundant return statement at the end of a function with a void return type [readability-redundant-control-flow]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "20",
+      "columnStart": "27",
+      "category": "Warning:bugprone-macro-parentheses",
+      "severity": "NORMAL",
+      "message": "macro argument should be enclosed in parentheses [bugprone-macro-parentheses]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "225",
+      "columnStart": "13",
+      "category": "Warning:clang-diagnostic-unused-function",
+      "severity": "NORMAL",
+      "message": "unused function 'procload_destroy' [clang-diagnostic-unused-function]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "279",
+      "columnStart": "5",
+      "category": "Warning:cert-env33-c",
+      "severity": "NORMAL",
+      "message": "calling 'system' uses a command processor [cert-env33-c]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/cgroupcpuload/cgroupcpuload.h",
+      "lineStart": "22",
+      "columnStart": "10",
+      "category": "Warning:modernize-deprecated-headers",
+      "severity": "NORMAL",
+      "message": "inclusion of deprecated C++ header 'inttypes.h'; consider using 'cinttypes' instead [modernize-deprecated-headers]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "195",
+      "columnStart": "3",
+      "category": "Warning:readability-redundant-control-flow",
+      "severity": "NORMAL",
+      "message": "redundant return statement at the end of a function with a void return type [readability-redundant-control-flow]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "215",
+      "columnStart": "3",
+      "category": "Warning:readability-redundant-control-flow",
+      "severity": "NORMAL",
+      "message": "redundant return statement at the end of a function with a void return type [readability-redundant-control-flow]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "266",
+      "columnStart": "13",
+      "category": "Warning:clang-diagnostic-unused-function",
+      "severity": "NORMAL",
+      "message": "unused function 'procload_destroy' [clang-diagnostic-unused-function]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "302",
+      "columnStart": "26",
+      "category": "Warning:cert-err34-c",
+      "severity": "NORMAL",
+      "message": "'atoi' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "34",
+      "columnStart": "33",
+      "category": "Warning:bugprone-macro-parentheses",
+      "severity": "NORMAL",
+      "message": "macro argument should be enclosed in parentheses [bugprone-macro-parentheses]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "34",
+      "columnStart": "42",
+      "category": "Warning:bugprone-macro-parentheses",
+      "severity": "NORMAL",
+      "message": "macro argument should be enclosed in parentheses [bugprone-macro-parentheses]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "354",
+      "columnStart": "5",
+      "category": "Warning:cert-env33-c",
+      "severity": "NORMAL",
+      "message": "calling 'system' uses a command processor [cert-env33-c]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "101",
+      "columnStart": "24",
+      "category": "Warning:readability-braces-around-statements",
+      "severity": "NORMAL",
+      "message": "statement should be inside braces [readability-braces-around-statements]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "115",
+      "columnStart": "3",
+      "category": "Warning:readability-redundant-control-flow",
+      "severity": "NORMAL",
+      "message": "redundant return statement at the end of a function with a void return type [readability-redundant-control-flow]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "294",
+      "columnStart": "34",
+      "category": "Warning:clang-diagnostic-shorten-64-to-32",
+      "severity": "NORMAL",
+      "message": "implicit conversion loses integer precision: 'const long' to 'int' [clang-diagnostic-shorten-64-to-32]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "336",
+      "columnStart": "34",
+      "category": "Warning:clang-diagnostic-pointer-sign",
+      "severity": "NORMAL",
+      "message": "passing 'unsigned int *' to parameter of type 'int *' converts between pointers to integer types with different sign [clang-diagnostic-pointer-sign]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "78",
+      "columnStart": "56",
+      "category": "Warning:readability-braces-around-statements",
+      "severity": "NORMAL",
+      "message": "statement should be inside braces [readability-braces-around-statements]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "95",
+      "columnStart": "3",
+      "category": "Warning:readability-redundant-control-flow",
+      "severity": "NORMAL",
+      "message": "redundant return statement at the end of a function with a void return type [readability-redundant-control-flow]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/cpuloadmonitor/cpuloadmonitor.c",
+      "lineStart": "326",
+      "columnStart": "11",
+      "category": "Warning:readability-non-const-parameter",
+      "severity": "NORMAL",
+      "message": "pointer parameter 'run_flag' can be pointer to const [readability-non-const-parameter]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/cpuloadmonitor/cpuloadmonitor.c",
+      "lineStart": "338",
+      "columnStart": "15",
+      "category": "Warning:google-readability-casting",
+      "severity": "NORMAL",
+      "message": "redundant cast to the same type [google-readability-casting]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/cpuloadmonitor/error_codes.h",
+      "lineStart": "36",
+      "columnStart": "1",
+      "category": "Warning:google-readability-todo",
+      "severity": "NORMAL",
+      "message": "missing username/bug in TODO [google-readability-todo]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "153",
+      "columnStart": "56",
+      "category": "Warning:readability-braces-around-statements",
+      "severity": "NORMAL",
+      "message": "statement should be inside braces [readability-braces-around-statements]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "170",
+      "columnStart": "3",
+      "category": "Warning:readability-redundant-control-flow",
+      "severity": "NORMAL",
+      "message": "redundant return statement at the end of a function with a void return type [readability-redundant-control-flow]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "176",
+      "columnStart": "24",
+      "category": "Warning:readability-braces-around-statements",
+      "severity": "NORMAL",
+      "message": "statement should be inside braces [readability-braces-around-statements]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "19",
+      "columnStart": "27",
+      "category": "Warning:bugprone-macro-parentheses",
+      "severity": "NORMAL",
+      "message": "macro argument should be enclosed in parentheses [bugprone-macro-parentheses]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "19",
+      "columnStart": "9",
+      "category": "Warning:clang-diagnostic-unused-macros",
+      "severity": "NORMAL",
+      "message": "macro is not used [clang-diagnostic-unused-macros]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "190",
+      "columnStart": "3",
+      "category": "Warning:readability-redundant-control-flow",
+      "severity": "NORMAL",
+      "message": "redundant return statement at the end of a function with a void return type [readability-redundant-control-flow]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "287",
+      "columnStart": "3",
+      "category": "Warning:cert-env33-c",
+      "severity": "NORMAL",
+      "message": "calling 'system' uses a command processor [cert-env33-c]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_fcntl.h",
+      "lineStart": "23",
+      "columnStart": "66",
+      "category": "Warning:clang-diagnostic-c++98-compat-extra-semi",
+      "severity": "NORMAL",
+      "message": "extra ';' outside of a function is incompatible with C++98 [clang-diagnostic-c++98-compat-extra-semi]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_stdlib.h",
+      "lineStart": "20",
+      "columnStart": "10",
+      "category": "Warning:modernize-deprecated-headers",
+      "severity": "NORMAL",
+      "message": "inclusion of deprecated C++ header 'stdlib.h'; consider using 'cstdlib' instead [modernize-deprecated-headers]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_stdlib.h",
+      "lineStart": "23",
+      "columnStart": "37",
+      "category": "Warning:clang-diagnostic-c++98-compat-extra-semi",
+      "severity": "NORMAL",
+      "message": "extra ';' outside of a function is incompatible with C++98 [clang-diagnostic-c++98-compat-extra-semi]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_time.c",
+      "lineStart": "22",
+      "columnStart": "1",
+      "category": "Warning:readability-else-after-return",
+      "severity": "NORMAL",
+      "message": "do not use 'else' after 'return' [readability-else-after-return]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_time.h",
+      "lineStart": "20",
+      "columnStart": "10",
+      "category": "Warning:modernize-deprecated-headers",
+      "severity": "NORMAL",
+      "message": "inclusion of deprecated C++ header 'time.h'; consider using 'ctime' instead [modernize-deprecated-headers]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_time.h",
+      "lineStart": "23",
+      "columnStart": "74",
+      "category": "Warning:clang-diagnostic-c++98-compat-extra-semi",
+      "severity": "NORMAL",
+      "message": "extra ';' outside of a function is incompatible with C++98 [clang-diagnostic-c++98-compat-extra-semi]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_unistd.c",
+      "lineStart": "22",
+      "columnStart": "1",
+      "category": "Warning:readability-else-after-return",
+      "severity": "NORMAL",
+      "message": "do not use 'else' after 'return' [readability-else-after-return]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_unistd.c",
+      "lineStart": "23",
+      "columnStart": "1",
+      "category": "Warning:readability-else-after-return",
+      "severity": "NORMAL",
+      "message": "do not use 'else' after 'return' [readability-else-after-return]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_unistd.c",
+      "lineStart": "24",
+      "columnStart": "1",
+      "category": "Warning:readability-else-after-return",
+      "severity": "NORMAL",
+      "message": "do not use 'else' after 'return' [readability-else-after-return]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_unistd.h",
+      "lineStart": "23",
+      "columnStart": "42",
+      "category": "Warning:clang-diagnostic-c++98-compat-extra-semi",
+      "severity": "NORMAL",
+      "message": "extra ';' outside of a function is incompatible with C++98 [clang-diagnostic-c++98-compat-extra-semi]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_unistd.h",
+      "lineStart": "24",
+      "columnStart": "58",
+      "category": "Warning:clang-diagnostic-c++98-compat-extra-semi",
+      "severity": "NORMAL",
+      "message": "extra ';' outside of a function is incompatible with C++98 [clang-diagnostic-c++98-compat-extra-semi]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/fakes/fake_unistd.h",
+      "lineStart": "25",
+      "columnStart": "57",
+      "category": "Warning:clang-diagnostic-c++98-compat-extra-semi",
+      "severity": "NORMAL",
+      "message": "extra ';' outside of a function is incompatible with C++98 [clang-diagnostic-c++98-compat-extra-semi]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "146",
+      "columnStart": "36",
+      "category": "Warning:cppcoreguidelines-pro-type-cstyle-cast",
+      "severity": "NORMAL",
+      "message": "do not use C-style cast to convert between unrelated types [cppcoreguidelines-pro-type-cstyle-cast]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "147",
+      "columnStart": "36",
+      "category": "Warning:cppcoreguidelines-pro-type-cstyle-cast",
+      "severity": "NORMAL",
+      "message": "do not use C-style cast to convert between unrelated types [cppcoreguidelines-pro-type-cstyle-cast]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "148",
+      "columnStart": "36",
+      "category": "Warning:cppcoreguidelines-pro-type-cstyle-cast",
+      "severity": "NORMAL",
+      "message": "do not use C-style cast to convert between unrelated types [cppcoreguidelines-pro-type-cstyle-cast]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "45",
+      "columnStart": "1",
+      "category": "Warning:google-build-using-namespace",
+      "severity": "NORMAL",
+      "message": "do not use namespace using-directives; use using-declarations instead [google-build-using-namespace]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "47",
+      "columnStart": "19",
+      "category": "Warning:clang-diagnostic-c++98-compat-extra-semi",
+      "severity": "NORMAL",
+      "message": "extra ';' outside of a function is incompatible with C++98 [clang-diagnostic-c++98-compat-extra-semi]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "79",
+      "columnStart": "42",
+      "category": "Warning:misc-unused-parameters",
+      "severity": "NORMAL",
+      "message": "parameter 'path' is unused [misc-unused-parameters]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "79",
+      "columnStart": "52",
+      "category": "Warning:misc-unused-parameters",
+      "severity": "NORMAL",
+      "message": "parameter 'flags' is unused [misc-unused-parameters]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "79",
+      "columnStart": "67",
+      "category": "Warning:misc-unused-parameters",
+      "severity": "NORMAL",
+      "message": "parameter 'mode' is unused [misc-unused-parameters]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "86",
+      "columnStart": "37",
+      "category": "Warning:misc-unused-parameters",
+      "severity": "NORMAL",
+      "message": "parameter 'file' is unused [misc-unused-parameters]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "86",
+      "columnStart": "65",
+      "category": "Warning:misc-unused-parameters",
+      "severity": "NORMAL",
+      "message": "parameter 'maxsize' is unused [misc-unused-parameters]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "88",
+      "columnStart": "11",
+      "category": "Warning:cppcoreguidelines-pro-type-cstyle-cast",
+      "severity": "NORMAL",
+      "message": "do not use C-style cast to convert between unrelated types [cppcoreguidelines-pro-type-cstyle-cast]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "88",
+      "columnStart": "11",
+      "category": "Warning:google-readability-casting",
+      "severity": "NORMAL",
+      "message": "C-style casts are discouraged; use static_cast [google-readability-casting]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "88",
+      "columnStart": "42",
+      "category": "Warning:clang-diagnostic-format",
+      "severity": "NORMAL",
+      "message": "format specifies type 'long long' but the argument has type 'unsigned long' [clang-diagnostic-format]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "88",
+      "columnStart": "77",
+      "category": "Warning:clang-diagnostic-format",
+      "severity": "NORMAL",
+      "message": "format specifies type 'long long' but the argument has type 'unsigned long' [clang-diagnostic-format]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "90",
+      "columnStart": "23",
+      "category": "Warning:google-readability-casting",
+      "severity": "NORMAL",
+      "message": "C-style casts are discouraged; use static_cast [google-readability-casting]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "90",
+      "columnStart": "40",
+      "category": "Warning:cppcoreguidelines-pro-type-cstyle-cast",
+      "severity": "NORMAL",
+      "message": "do not use C-style cast to convert between unrelated types [cppcoreguidelines-pro-type-cstyle-cast]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "90",
+      "columnStart": "40",
+      "category": "Warning:google-readability-casting",
+      "severity": "NORMAL",
+      "message": "C-style casts are discouraged; use static_cast [google-readability-casting]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "96",
+      "columnStart": "48",
+      "category": "Warning:misc-unused-parameters",
+      "severity": "NORMAL",
+      "message": "parameter 'clockid' is unused [misc-unused-parameters]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "99",
+      "columnStart": "43",
+      "category": "Warning:clang-diagnostic-sign-conversion",
+      "severity": "NORMAL",
+      "message": "implicit conversion changes signedness: 'unsigned long' to '__syscall_slong_t' (aka 'long') [clang-diagnostic-sign-conversion]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "111",
+      "columnStart": "13",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 86 -> SN: 11 in main)] before (SN: 83 stmt: 0):  _3 = pAct_4->pBefore;EN: 845, EN: 861, EN: 880, EN: 919, EN: 935, EN: 954, EN: 993, EN: 1009 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "111",
+      "columnStart": "13",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 86 -> SN: 12 in main)] before (SN: 83 stmt: 0):  _3 = pAct_4->pBefore;EN: 1073, EN: 1089, EN: 1108, EN: 1147, EN: 1163, EN: 1182, EN: 1221, EN: 1237 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "111",
+      "columnStart": "13",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 86 -> SN: 13 in main)] before (SN: 83 stmt: 0):  _3 = pAct_4->pBefore;EN: 1301, EN: 1317, EN: 1336, EN: 1375, EN: 1391, EN: 1410, EN: 1449, EN: 1465 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "225",
+      "columnStart": "13",
+      "category": "Warning:unused-function",
+      "severity": "NORMAL",
+      "message": "‘procload_destroy’ defined but not used [-Wunused-function]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "246",
+      "columnStart": "21",
+      "category": "Warning:analyzer-possible-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of possibly-NULL ‘procload’ [CWE-690] [-Wanalyzer-possible-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "70",
+      "columnStart": "16",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 100 -> SN: 4 in main)] before (SN: 97 stmt: 0):  if (i_3 < size_11(D))EN: 133, EN: 147, EN: 159, EN: 174, EN: 187, EN: 202, EN: 215, EN: 230 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "70",
+      "columnStart": "16",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 100 -> SN: 5 in main)] before (SN: 97 stmt: 0):  if (i_3 < size_11(D))EN: 299, EN: 313, EN: 325, EN: 340, EN: 353, EN: 368, EN: 381, EN: 396 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "70",
+      "columnStart": "16",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 100 -> SN: 6 in main)] before (SN: 97 stmt: 0):  if (i_3 < size_11(D))EN: 477, EN: 491, EN: 503, EN: 518, EN: 531, EN: 546, EN: 559, EN: 574 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/bellysmile/bellysmile.c",
+      "lineStart": "73",
+      "columnStart": "16",
+      "category": "Warning:analyzer-possible-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of possibly-NULL ‘pNew’ [CWE-690] [-Wanalyzer-possible-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cgroupcpuload/cgroupcpuload.c",
+      "lineStart": "146",
+      "columnStart": "1",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [] before (SN: 51 stmt: 0):  return;EN: 420-427 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cgroupcpuload/cgroupcpuload.c",
+      "lineStart": "81",
+      "columnStart": "35",
+      "category": "Warning:analyzer-possible-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of possibly-NULL ‘cgroupcpuload’ [CWE-690] [-Wanalyzer-possible-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "103",
+      "columnStart": "13",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 104 -> SN: 10 in main)] before (SN: 101 stmt: 0):  if (i_5 < size_11(D))EN: 476, EN: 494, EN: 508, EN: 521, EN: 536, EN: 549, EN: 564, EN: 577 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "103",
+      "columnStart": "13",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 104 -> SN: 8 in main)] before (SN: 101 stmt: 0):  if (i_5 < size_11(D))EN: 110, EN: 125, EN: 138, EN: 153, EN: 166, EN: 181, EN: 194, EN: 209 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "103",
+      "columnStart": "13",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 104 -> SN: 9 in main)] before (SN: 101 stmt: 0):  if (i_5 < size_11(D))EN: 301, EN: 319, EN: 333, EN: 346, EN: 361, EN: 374, EN: 389, EN: 402 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "106",
+      "columnStart": "16",
+      "category": "Warning:analyzer-possible-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of possibly-NULL ‘pNew’ [CWE-690] [-Wanalyzer-possible-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "128",
+      "columnStart": "9",
+      "category": "Warning:analyzer-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of NULL ‘pRoot’ [CWE-476] [-Wanalyzer-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "146",
+      "columnStart": "13",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 90 -> SN: 17 in main)] before (SN: 87 stmt: 0):  _3 = pAct_4->pBefore;EN: 1058, EN: 1077, EN: 1096, EN: 1135, EN: 1154, EN: 1173, EN: 1212, EN: 1231 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "146",
+      "columnStart": "13",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 90 -> SN: 18 in main)] before (SN: 87 stmt: 0):  _3 = pAct_4->pBefore;EN: 1295, EN: 1314, EN: 1333, EN: 1372, EN: 1391, EN: 1410, EN: 1449, EN: 1468 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "157",
+      "columnStart": "16",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "analysis bailed out early (526 'after-snode' enodes; 1604 enodes) [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "241",
+      "columnStart": "31",
+      "category": "Warning:analyzer-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of NULL ‘procload’ [CWE-476] [-Wanalyzer-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "266",
+      "columnStart": "13",
+      "category": "Warning:unused-function",
+      "severity": "NORMAL",
+      "message": "‘procload_destroy’ defined but not used [-Wunused-function]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/checkcpu/checkcpu.c",
+      "lineStart": "289",
+      "columnStart": "21",
+      "category": "Warning:analyzer-possible-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of possibly-NULL ‘procload’ [CWE-690] [-Wanalyzer-possible-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "159",
+      "columnStart": "10",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 83 -> SN: 16 in main)] before (SN: 81 stmt: 0):  _41 = load_24;EN: 1141-1142, EN: 1178-1179, EN: 1213, EN: 1374-1375, EN: 1453 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "174",
+      "columnStart": "21",
+      "category": "Warning:analyzer-possible-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of possibly-NULL ‘procload’ [CWE-690] [-Wanalyzer-possible-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "206",
+      "columnStart": "34",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 48 -> SN: 3 in main), (SN: 52 -> SN: 23 in EvaluateOptions), (SN: 62 -> SN: 51 in PrintHelpText)] before (SN: 60 stmt: 0):  _6 = arstCommandlineOptions[i_7].name;EN: 82, EN: 94, EN: 115, EN: 204, EN: 354, EN: 530, EN: 542, EN: 563 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "206",
+      "columnStart": "34",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 52 -> SN: 5 in main), (SN: 62 -> SN: 51 in PrintHelpText)] before (SN: 60 stmt: 0):  _6 = arstCommandlineOptions[i_7].name;EN: 756, EN: 768, EN: 789, EN: 828, EN: 840, EN: 861, EN: 900, EN: 912 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "247",
+      "columnStart": "9",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [(SN: 48 -> SN: 3 in main)] before (SN: 44 stmt: 0):  if (status_19 == 0)EN: 54, EN: 175, EN: 290, EN: 317, EN: 325, EN: 442, EN: 502, EN: 623 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "294",
+      "columnStart": "34",
+      "category": "Warning:conversion",
+      "severity": "NORMAL",
+      "message": "conversion from ‘long int’ to ‘int’ may change value [-Wconversion]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "304",
+      "columnStart": "7",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "analysis bailed out early (516 'after-snode' enodes; 1654 enodes) [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "305",
+      "columnStart": "11",
+      "category": "Warning:implicit-fallthrough=",
+      "severity": "NORMAL",
+      "message": "this statement may fall through [-Wimplicit-fallthrough=]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuload/cpuload.c",
+      "lineStart": "336",
+      "columnStart": "34",
+      "category": "Warning:pointer-sign",
+      "severity": "NORMAL",
+      "message": "pointer targets in passing argument 2 of ‘EvaluateOptions’ differ in signedness [-Wpointer-sign]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuloadmonitor/cpuloadmonitor.c",
+      "lineStart": "255",
+      "columnStart": "11",
+      "category": "Warning:implicit-fallthrough=",
+      "severity": "NORMAL",
+      "message": "this statement may fall through [-Wimplicit-fallthrough=]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuloadmonitor/cpuloadmonitor.c",
+      "lineStart": "343",
+      "columnStart": "28",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "analysis bailed out early (966 'after-snode' enodes; 3039 enodes) [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/cpuloadmonitor/cpuloadmonitor.c",
+      "lineStart": "422",
+      "columnStart": "33",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [] before (SN: 23 stmt: 0):  _5 = Options.group_count;EN: 1691, EN: 1700, EN: 1709, EN: 1718, EN: 1727, EN: 1736, EN: 1745, EN: 1754 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "19",
+      "columnStart": "0",
+      "category": "Warning:unused-macros",
+      "severity": "NORMAL",
+      "message": "macro \"INTERVALCOUNT\" is not used [-Wunused-macros]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "214",
+      "columnStart": "31",
+      "category": "Warning:analyzer-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of NULL ‘procload’ [CWE-476] [-Wanalyzer-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "259",
+      "columnStart": "21",
+      "category": "Warning:analyzer-possible-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of possibly-NULL ‘procload’ [CWE-690] [-Wanalyzer-possible-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "83",
+      "columnStart": "13",
+      "category": "Warning:analyzer-too-complex",
+      "severity": "NORMAL",
+      "message": "terminating analysis for this program point: callstring: [] before (SN: 75 stmt: 0):  if (i_3 < size_11(D))EN: 650, EN: 665, EN: 678, EN: 693, EN: 706, EN: 721, EN: 734, EN: 749 [-Wanalyzer-too-complex]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/src/loadcompare/loadcompare.c",
+      "lineStart": "86",
+      "columnStart": "16",
+      "category": "Warning:analyzer-possible-null-dereference",
+      "severity": "NORMAL",
+      "message": "dereference of possibly-NULL ‘pNew’ [CWE-690] [-Wanalyzer-possible-null-dereference]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "146",
+      "columnStart": "36",
+      "category": "Warning:conditionally-supported",
+      "severity": "NORMAL",
+      "message": "casting between pointer-to-function and pointer-to-object is conditionally-supported [-Wconditionally-supported]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "147",
+      "columnStart": "36",
+      "category": "Warning:conditionally-supported",
+      "severity": "NORMAL",
+      "message": "casting between pointer-to-function and pointer-to-object is conditionally-supported [-Wconditionally-supported]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "148",
+      "columnStart": "36",
+      "category": "Warning:conditionally-supported",
+      "severity": "NORMAL",
+      "message": "casting between pointer-to-function and pointer-to-object is conditionally-supported [-Wconditionally-supported]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "88",
+      "columnStart": "31",
+      "category": "Warning:format=",
+      "severity": "NORMAL",
+      "message": "format ‘%lli’ expects argument of type ‘long long int’, but argument 3 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "88",
+      "columnStart": "36",
+      "category": "Warning:format=",
+      "severity": "NORMAL",
+      "message": "format ‘%lli’ expects argument of type ‘long long int’, but argument 4 has type ‘uint64_t’ {aka ‘long unsigned int’} [-Wformat=]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "pfc/ptxproj/local_src/libcgroupcpuload/test-src/unit-tests/test_cgroupcpuload.cpp",
+      "lineStart": "99",
+      "columnStart": "43",
+      "category": "Warning:sign-conversion",
+      "severity": "NORMAL",
+      "message": "conversion to ‘__syscall_slong_t’ {aka ‘long int’} from ‘uint64_t’ {aka ‘long unsigned int’} may change the sign of the result [-Wsign-conversion]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "ptxproj.2013.03.0/platform-wago-wp400/sysroot-host/usr/include/fff.h",
+      "lineStart": "111",
+      "columnStart": "32",
+      "category": "Warning:modernize-redundant-void-arg",
+      "severity": "NORMAL",
+      "message": "redundant void argument list in typedef [modernize-redundant-void-arg]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "ptxproj.2013.03.0/platform-wago-wp400/sysroot-host/usr/include/fff.h",
+      "lineStart": "130",
+      "columnStart": "67",
+      "category": "Warning:bugprone-macro-parentheses",
+      "severity": "NORMAL",
+      "message": "macro argument should be enclosed in parentheses [bugprone-macro-parentheses]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "ptxproj.2013.03.0/platform-wago-wp400/sysroot-host/usr/include/fff.h",
+      "lineStart": "29",
+      "columnStart": "10",
+      "category": "Warning:modernize-deprecated-headers",
+      "severity": "NORMAL",
+      "message": "inclusion of deprecated C++ header 'stdarg.h'; consider using 'cstdarg' instead [modernize-deprecated-headers]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "ptxproj.2013.03.0/platform-wago-wp400/sysroot-host/usr/include/fff.h",
+      "lineStart": "30",
+      "columnStart": "10",
+      "category": "Warning:modernize-deprecated-headers",
+      "severity": "NORMAL",
+      "message": "inclusion of deprecated C++ header 'string.h'; consider using 'cstring' instead [modernize-deprecated-headers]",
+      "moduleName": "cgroupcpuload-tests"
+    },
+    {
+      "fileName": "ptxproj.2013.03.0/platform-wago-wp400/sysroot-host/usr/include/fff.h",
+      "lineStart": "78",
+      "columnStart": "5",
+      "category": "Warning:bugprone-macro-parentheses",
+      "severity": "NORMAL",
+      "message": "macro argument should be enclosed in parentheses [bugprone-macro-parentheses]",
+      "moduleName": "cgroupcpuload-tests"
+    }
+  ],
+  "size": 124
+}

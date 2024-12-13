@@ -1,0 +1,25 @@
+## SECTION=bootloader
+
+config IMX_ATF
+	tristate
+	prompt "imx-atf"
+	help
+	  i.MX ARM Trusted firmware
+
+if IMX_ATF
+
+config IMX_ATF_VERSION
+	string
+	default "v2.8"
+	prompt "I.MX TF-A version"
+	help
+	  Enter the TF-A git commit-ish you want to build. Usually a tagged
+	  release like "v2.8"
+
+config IMX_ATF_MD5
+	string
+	prompt "imx-atf md5sum"
+	help
+	  input imx-atf md5sum
+
+endif

@@ -1,0 +1,202 @@
+-:    0:Source:test-src/common/testutil_file_operations.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     testutil_file_operations.cc
+-:   12:///
+-:   13:///  \brief    File operation util function implementations for google test.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "testutil/file_operations.hpp"
+-:   22:#include <unistd.h>
+-:   23:#include <fstream>
+-:   24:#include <string>
+-:   25:#include <cstring>
+-:   26:
+-:   27://------------------------------------------------------------------------------
+-:   28:// defines; structure, enumeration and type definitions
+-:   29://------------------------------------------------------------------------------
+-:   30:
+-:   31://------------------------------------------------------------------------------
+-:   32:// function prototypes
+-:   33://------------------------------------------------------------------------------
+-:   34:
+-:   35://------------------------------------------------------------------------------
+-:   36:// macros
+-:   37://------------------------------------------------------------------------------
+-:   38:
+-:   39://------------------------------------------------------------------------------
+-:   40:// variables' and constants' definitions
+-:   41://------------------------------------------------------------------------------
+-:   42:
+-:   43://------------------------------------------------------------------------------
+-:   44:// function implementation
+-:   45://------------------------------------------------------------------------------
+function _Z19testutil_CreateFilePKc called 30 returned 100% blocks executed 82%
+30:   46:void testutil_CreateFile(char const * const szFilePath)
+-:   47:{
+30:   48:  ::std::ofstream outfile;
+call    0 returned 30
+branch  1 taken 30 (fallthrough)
+branch  2 taken 0 (throw)
+30:   49:  outfile.open(szFilePath, std::ofstream::out);
+call    0 returned 30
+branch  1 taken 30 (fallthrough)
+branch  2 taken 0 (throw)
+30:   50:  outfile.flush();
+call    0 returned 30
+branch  1 taken 30 (fallthrough)
+branch  2 taken 0 (throw)
+30:   51:  outfile.close();
+call    0 returned 30
+branch  1 taken 30 (fallthrough)
+branch  2 taken 0 (throw)
+-:   52:
+60:   53:  return;
+30:   54:}
+call    0 returned 30
+call    1 never executed
+-:   55:
+function _Z22testutil_CreateTempDirB5cxx11PKc called 12 returned 100% blocks executed 55%
+12:   56:std::string testutil_CreateTempDir(char const * szPrefix)
+-:   57:{
+24:   58:  std::string dirTemplate = std::string("/tmp/") + szPrefix + "XXXXXX";
+call    0 returned 12
+call    1 returned 12
+branch  2 taken 12 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 12
+branch  5 taken 12 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 12
+branch  8 taken 12 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 12
+call   11 returned 12
+12:   59:  char * szTemplate = strdup(dirTemplate.c_str());
+call    0 returned 12
+12:   60:  std::string result = mkdtemp(szTemplate);
+call    0 returned 12
+call    1 returned 12
+call    2 returned 12
+branch  3 taken 12 (fallthrough)
+branch  4 taken 0 (throw)
+12:   61:  free(szTemplate);
+-:   62:
+24:   63:  return result;
+12:   64:}
+call    0 returned 12
+call    1 never executed
+-:   65:
+function _Z19testutil_RemoveFilePKc called 30 returned 100% blocks executed 100%
+30:   66:bool testutil_RemoveFile(char const * const szFilePath)
+-:   67:{
+30:   68:  int const unlinkResult = unlink(szFilePath);
+call    0 returned 30
+-:   69:
+30:   70:  return (unlinkResult == 0);
+-:   71:}
+-:   72:
+function _Z18testutil_RemoveDirPKc called 12 returned 100% blocks executed 100%
+12:   73:bool testutil_RemoveDir(char const * const szPath)
+-:   74:{
+12:   75:  int result = rmdir(szPath);
+call    0 returned 12
+12:   76:  return (0 == result);
+-:   77:}
+-:   78:
+-:   79:
+function _Z21testutil_AppendToFilePKcPKhm called 63 returned 100% blocks executed 88%
+63:   80:void testutil_AppendToFile(char const * const szFilePath,
+-:   81:                           uint8_t const * const arByteArray,
+-:   82:                           size_t const bytesToWrite)
+-:   83:{
+63:   84:  ::std::ofstream outfile;
+call    0 returned 63
+branch  1 taken 63 (fallthrough)
+branch  2 taken 0 (throw)
+63:   85:  outfile.open(szFilePath, std::ofstream::out | std::ofstream::app);
+call    0 returned 63
+call    1 returned 63
+branch  2 taken 63 (fallthrough)
+branch  3 taken 0 (throw)
+1260:   86:  for(size_t i = 0; i < bytesToWrite; ++i)
+branch  0 taken 1197
+branch  1 taken 63 (fallthrough)
+-:   87:  {
+1197:   88:    outfile << arByteArray[i];
+call    0 returned 1197
+branch  1 taken 1197 (fallthrough)
+branch  2 taken 0 (throw)
+-:   89:  }
+63:   90:  outfile.flush();
+call    0 returned 63
+branch  1 taken 63 (fallthrough)
+branch  2 taken 0 (throw)
+63:   91:  outfile.close();
+call    0 returned 63
+branch  1 taken 63 (fallthrough)
+branch  2 taken 0 (throw)
+-:   92:
+126:   93:  return;
+63:   94:}
+call    0 returned 63
+call    1 never executed
+-:   95:
+-:   96:
+function _Z37testutil_GetFirstMatchingLineFromFilePKcS0_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 20 returned 100% blocks executed 79%
+20:   97:char const * testutil_GetFirstMatchingLineFromFile(char const * const szFilePath,
+-:   98:                                                   char const * const szPattern,
+-:   99:                                                   ::std::string &lineBuffer)
+-:  100:{
+20:  101:  char const * szResult = NULL;
+-:  102:
+20:  103:  ::std::ifstream infile(szFilePath);
+call    0 returned 20
+branch  1 taken 20 (fallthrough)
+branch  2 taken 0 (throw)
+20:  104:  ::std::string line;
+call    0 returned 20
+40:  105:  while(::std::getline(infile, lineBuffer))
+call    0 returned 40
+branch  1 taken 40 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 40
+branch  4 taken 40 (fallthrough)
+branch  5 taken 0 (throw)
+branch  6 taken 40
+branch  7 taken 0 (fallthrough)
+-:  106:  {
+40:  107:    if(lineBuffer.find(szPattern) != ::std::string::npos)
+call    0 returned 40
+branch  1 taken 20 (fallthrough)
+branch  2 taken 20
+-:  108:    {
+20:  109:      szResult = lineBuffer.c_str();
+call    0 returned 20
+20:  110:      break;
+-:  111:    }
+-:  112:  }
+-:  113:
+20:  114:  return szResult;
+20:  115:}
+call    0 returned 20
+call    1 returned 20
+call    2 never executed
+call    3 never executed
+-:  116:
+-:  117:
+-:  118://---- End of source file ------------------------------------------------------
+-:  119:

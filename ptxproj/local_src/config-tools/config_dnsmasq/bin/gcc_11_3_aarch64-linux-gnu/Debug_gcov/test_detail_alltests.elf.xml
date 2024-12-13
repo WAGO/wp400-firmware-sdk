@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuites tests="7" failures="0" disabled="0" errors="0" time="0.288" timestamp="2024-12-02T18:44:10.488" name="AllTests">
+  <testsuite name="config_dnsmasq.test_network_config" tests="6" failures="0" disabled="0" skipped="0" errors="0" time="0.263" timestamp="2024-12-02T18:44:10.505">
+    <testcase name="generate_legal_ports" file="test-src/network_config_test.cpp" line="115" status="run" result="completed" time="0.033" timestamp="2024-12-02T18:44:10.507" classname="config_dnsmasq.test_network_config"/>
+    <testcase name="generate_legal_ports_relying_on_ethX_ports_only" file="test-src/network_config_test.cpp" line="130" status="run" result="completed" time="0.003" timestamp="2024-12-02T18:44:10.542" classname="config_dnsmasq.test_network_config"/>
+    <testcase name="parse_config_parameter" file="test-src/network_config_test.cpp" line="147" status="run" result="completed" time="0.191" timestamp="2024-12-02T18:44:10.546" classname="config_dnsmasq.test_network_config"/>
+    <testcase name="provide_complete_network_config_via_program_arguments" file="test-src/network_config_test.cpp" line="170" status="run" result="completed" time="0.007" timestamp="2024-12-02T18:44:10.738" classname="config_dnsmasq.test_network_config"/>
+    <testcase name="do_not_provide_network_config_via_program_arguments" file="test-src/network_config_test.cpp" line="181" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:44:10.746" classname="config_dnsmasq.test_network_config"/>
+    <testcase name="provide_only_part_of_the_network_config_via_program_arguments" file="test-src/network_config_test.cpp" line="187" status="run" result="completed" time="0.016" timestamp="2024-12-02T18:44:10.752" classname="config_dnsmasq.test_network_config"/>
+  </testsuite>
+  <testsuite name="config_dnsmasq.test_utilities" tests="1" failures="0" disabled="0" skipped="0" errors="0" time="0.004" timestamp="2024-12-02T18:44:10.771">
+    <testcase name="check_mac_validity" file="test-src/utilities_test.cpp" line="15" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:44:10.771" classname="config_dnsmasq.test_utilities"/>
+  </testsuite>
+</testsuites>

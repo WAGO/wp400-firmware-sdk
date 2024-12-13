@@ -1,0 +1,847 @@
+-:    0:Source:src/reserved_area/ctmain.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     ctmain.c
+-:   12:///
+-:   13:///  \brief    Config tool specific main functionality for
+-:   14:///            reserved_area.
+-:   15:///
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "wc/std_includes.h"
+-:   23:#include "wc/structuring.h"
+-:   24:#include "wc/assertion.h"
+-:   25:#include "ctutil/common_main.h"
+-:   26:#include "ctutil/log.h"
+-:   27:#include "ctutil/filesystem.h"
+-:   28:#include "ctutil/json.h"
+-:   29:#include "ctutil/common_functions.h"
+-:   30:#include "ctparts/common_main_defaults.h"
+-:   31:#include "ctparts/pmain.h"
+-:   32:#include "ctparts/ctmain.h"
+-:   33:#include "params.h"
+-:   34:#include "resources.h"
+-:   35:
+-:   36:#include <inttypes.h>
+-:   37:
+-:   38://------------------------------------------------------------------------------
+-:   39:// defines; structure, enumeration and type definitions
+-:   40://------------------------------------------------------------------------------
+-:   41:
+-:   42:#define MOUNT_POINT_VALUE_NAME          "MountPoint"
+-:   43:#define FREE_CAPACITY_VALUE_NAME        "FreeCapacity"
+-:   44:#define AVAILABLE_CAPACITY_VALUE_NAME   "AvailableCapacity"
+-:   45:
+-:   46:
+-:   47:struct printOptions
+-:   48:{
+-:   49:  bool printMountPoint;
+-:   50:  char const * szMountPoint;
+-:   51:  bool printFreeCapacity;
+-:   52:  uint64_t free;
+-:   53:  bool printAvailableCapacity;
+-:   54:  uint64_t available;
+-:   55:};
+-:   56:
+-:   57://------------------------------------------------------------------------------
+-:   58:// function prototypes
+-:   59://------------------------------------------------------------------------------
+-:   60:
+-:   61://------------------------------------------------------------------------------
+-:   62:// macros
+-:   63://------------------------------------------------------------------------------
+-:   64:
+-:   65://------------------------------------------------------------------------------
+-:   66:// variables' and constants' definitions
+-:   67://------------------------------------------------------------------------------
+-:   68:
+-:   69://------------------------------------------------------------------------------
+-:   70:// function implementation
+-:   71://------------------------------------------------------------------------------
+-:   72:
+-:   73:/// Early function for to prepare config tool main of config_linux_user.
+function ctparts_PrepareMain called 0 returned 0% blocks executed 0%
+#####:   74:exitCode_t ctparts_PrepareMain(int const argc,
+-:   75:                               char * const argv[])
+-:   76:{
+-:   77:  // Prepare functions
+-:   78:  ctparts_commonMainFunctions_t stFunctions;
+#####:   79:  ctparts_SetDefaultCommonMainFunctions(&stFunctions);
+call    0 never executed
+-:   80:
+-:   81:  // Call common main function to prepare config tool main
+#####:   82:  return ctutil_CommonMain(argc, argv, &stFunctions, NULL);
+call    0 never executed
+-:   83:}
+-:   84:
+-:   85:
+function IsMounted called 2 returned 100% blocks executed 100%
+2:   86:static bool IsMounted(char const * const szMountedPath)
+-:   87:{
+2:   88:  return (szMountedPath != NULL);
+-:   89:}
+-:   90:
+-:   91:
+function IsReservedAreaAvailable called 1 returned 100% blocks executed 100%
+1:   92:static bool IsReservedAreaAvailable(ctutil_Options_t const * const pstOptions,
+-:   93:                                    ctutil_Resources_t const * const pstResources)
+-:   94:{
+2:   95:  return pstResources->pstSpecificResources->pfIsFileAvailable(&(pstOptions->stCommonOptions),
+1:   96:                                                               pstResources->pstSpecificResources->szDeviceFilePath, "bc");
+call    0 returned 1
+-:   97:}
+-:   98:
+-:   99:
+function IsEmulationNeeded called 1 returned 100% blocks executed 86%
+1:  100:static bool IsEmulationNeeded(ctutil_Options_t const * const pstOptions,
+-:  101:                              ctutil_Resources_t const * const pstResources)
+-:  102:{
+1*:  103:  return (!IsReservedAreaAvailable(pstOptions, pstResources)) && pstOptions->pstSpecificOptions->compatibilityMode;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+-:  104:}
+-:  105:
+-:  106:
+function CreateMountPointPath called 0 returned 0% blocks executed 0%
+#####:  107:static char const * CreateMountPointPath(ctutil_Options_t const * const pstOptions,
+-:  108:                                         ctutil_Resources_t const * const pstResources)
+-:  109:{
+#####:  110:  char * szMountedPath = NULL;
+#####:  111:  statusCode_t const status = pstResources->pstSpecificResources->pfGetMountPointForDevice(&(pstOptions->stCommonOptions),
+#####:  112:                                                                                           pstResources->pstSpecificResources->szDeviceFilePath,
+call    0 never executed
+-:  113:                                                                                           &szMountedPath, 0);
+#####:  114:  if(ctutil_IsStatusFailure(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  115:  {
+#####:  116:    CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet, "Failed to determine mount point");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  117:  }
+-:  118:
+#####:  119:  return szMountedPath;
+-:  120:}
+-:  121:
+-:  122:
+function IsMountPointPresent called 0 returned 0% blocks executed 0%
+#####:  123:static bool IsMountPointPresent(ctutil_Options_t const * const WC_UNUSED_PARAM(pstOptions),
+-:  124:                                ctutil_Resources_t const * const pstResources)
+-:  125:{
+#####:  126:  bool result = false;
+-:  127:
+#####:  128:  result = pstResources->pstSpecificResources->pfIsFolderAccessible(pstResources->pstSpecificResources->szTargetDirectory);
+call    0 never executed
+-:  129:
+#####:  130:  return result;
+-:  131:}
+-:  132:
+-:  133:
+function CreateMountPoint called 0 returned 0% blocks executed 0%
+#####:  134:static statusCode_t CreateMountPoint(ctutil_Options_t const * const pstOptions,
+-:  135:                                     ctutil_Resources_t const * const pstResources)
+-:  136:{
+#####:  137:  return pstResources->pstSpecificResources->pfCreateFolder(&(pstOptions->stCommonOptions),
+#####:  138:                                                            pstResources->pstSpecificResources->szTargetDirectory,
+call    0 never executed
+-:  139:                                                            true);
+-:  140:}
+-:  141:
+-:  142:
+function MountReservedArea called 0 returned 0% blocks executed 0%
+#####:  143:static statusCode_t MountReservedArea(ctutil_Options_t const * const pstOptions,
+-:  144:                                      ctutil_Resources_t const * const pstResources)
+-:  145:{
+#####:  146:  unsigned long mountOptions = 0U;
+#####:  147:  if(pstOptions->pstSpecificOptions->readonly)
+branch  0 never executed
+branch  1 never executed
+-:  148:  {
+#####:  149:    mountOptions = MS_MGC_VAL | MS_RDONLY;
+-:  150:  }
+#####:  151:  return pstResources->pstSpecificResources->pfMount(&(pstOptions->stCommonOptions),
+#####:  152:                                                     pstResources->pstSpecificResources->szDeviceFilePath,
+#####:  153:                                                     pstResources->pstSpecificResources->szTargetDirectory,
+#####:  154:                                                     pstResources->pstSpecificResources->szFileSystemType,
+call    0 never executed
+-:  155:                                                     mountOptions, NULL);
+-:  156:}
+-:  157:
+-:  158:
+function UnmountReservedArea called 0 returned 0% blocks executed 0%
+#####:  159:static statusCode_t UnmountReservedArea(ctutil_Options_t const * const pstOptions,
+-:  160:                                        ctutil_Resources_t const * const pstResources)
+-:  161:{
+#####:  162:  int const unmountFlags = MNT_FORCE;
+#####:  163:  char const * szMountedPath = CreateMountPointPath(pstOptions, pstResources);
+call    0 never executed
+#####:  164:  statusCode_t const result = pstResources->pstSpecificResources->pfUmount(&(pstOptions->stCommonOptions),
+call    0 never executed
+-:  165:                                                                           szMountedPath,
+-:  166:                                                                           unmountFlags);
+#####:  167:  ctutil_FreeConst(szMountedPath);
+call    0 never executed
+-:  168:
+#####:  169:  return result;
+-:  170:}
+-:  171:
+-:  172:
+function ClearReservedArea called 0 returned 0% blocks executed 0%
+#####:  173:static statusCode_t ClearReservedArea(ctutil_Options_t const * const pstOptions,
+-:  174:                                      ctutil_Resources_t const * const pstResources,
+-:  175:                                      char const * const szMountedPath)
+-:  176:{
+#####:  177:  statusCode_t status = CTUTIL_SUCCESS;
+-:  178:
+#####:  179:  status = pstResources->pstSpecificResources->pfClearFolder(&(pstOptions->stCommonOptions), szMountedPath);
+call    0 never executed
+#####:  180:  if(ctutil_IsStatusFailure(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  181:  {
+#####:  182:    CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet, "Failed to clear reserved area");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  183:  }
+-:  184:
+#####:  185:  return status;
+-:  186:}
+-:  187:
+-:  188:
+function PrintJsonOutput called 0 returned 0% blocks executed 0%
+#####:  189:static statusCode_t PrintJsonOutput(ctutil_Options_t const * const WC_UNUSED_PARAM(pstOptions),
+-:  190:                                    ctutil_Resources_t const * const WC_UNUSED_PARAM(pstResources),
+-:  191:                                    struct printOptions * pstPrintOptions)
+-:  192:{
+#####:  193:  statusCode_t status = CTUTIL_SUCCESS;
+-:  194:
+#####:  195:  bool separatorNeeded = false;
+-:  196:  char szObjectBuffer[512];
+#####:  197:  char * szJsonObject = szObjectBuffer;
+#####:  198:  size_t freeBufferSize = sizeof(szObjectBuffer);
+#####:  199:  size_t addedChars = 0U;
+#####:  200:  status = ctutil_JsonObjectStringOpen(szJsonObject, freeBufferSize, &addedChars);
+call    0 never executed
+#####:  201:  if(pstPrintOptions->printMountPoint)
+branch  0 never executed
+branch  1 never executed
+-:  202:  {
+#####:  203:    if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  204:    {
+#####:  205:      WC_ASSERT(addedChars < freeBufferSize);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  206:      szJsonObject += addedChars;
+#####:  207:      freeBufferSize -= addedChars;
+#####:  208:      separatorNeeded = true;
+#####:  209:      status = ctutil_JsonObjectStringWriteStringValue(szJsonObject, MOUNT_POINT_VALUE_NAME, pstPrintOptions->szMountPoint,
+call    0 never executed
+-:  210:                                                       freeBufferSize, &addedChars);
+-:  211:    }
+-:  212:  }
+#####:  213:  if(pstPrintOptions->printFreeCapacity)
+branch  0 never executed
+branch  1 never executed
+-:  214:  {
+#####:  215:    if(ctutil_IsStatusOk(status) && separatorNeeded)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  216:    {
+#####:  217:      WC_ASSERT(addedChars < freeBufferSize);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  218:      szJsonObject += addedChars;
+#####:  219:      freeBufferSize -= addedChars;
+#####:  220:      separatorNeeded = false;
+#####:  221:      status = ctutil_JsonObjectStringWriteMemberSeparator(szJsonObject, freeBufferSize, &addedChars);
+call    0 never executed
+-:  222:    }
+#####:  223:    if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  224:    {
+#####:  225:      WC_ASSERT(addedChars < freeBufferSize);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  226:      szJsonObject += addedChars;
+#####:  227:      freeBufferSize -= addedChars;
+#####:  228:      separatorNeeded = true;
+#####:  229:      status = ctutil_JsonObjectStringWriteUInt64Value(szJsonObject, FREE_CAPACITY_VALUE_NAME, pstPrintOptions->free,
+call    0 never executed
+-:  230:                                                       freeBufferSize, &addedChars);
+-:  231:    }
+-:  232:  }
+#####:  233:  if(pstPrintOptions->printAvailableCapacity)
+branch  0 never executed
+branch  1 never executed
+-:  234:  {
+#####:  235:    if(ctutil_IsStatusOk(status) && separatorNeeded)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  236:    {
+#####:  237:      WC_ASSERT(addedChars < freeBufferSize);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  238:      szJsonObject += addedChars;
+#####:  239:      freeBufferSize -= addedChars;
+#####:  240:      separatorNeeded = false;
+#####:  241:      status = ctutil_JsonObjectStringWriteMemberSeparator(szJsonObject, freeBufferSize, &addedChars);
+call    0 never executed
+-:  242:    }
+#####:  243:    if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  244:    {
+#####:  245:      WC_ASSERT(addedChars < freeBufferSize);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  246:      szJsonObject += addedChars;
+#####:  247:      freeBufferSize -= addedChars;
+#####:  248:      separatorNeeded = true;
+#####:  249:      status = ctutil_JsonObjectStringWriteUInt64Value(szJsonObject, AVAILABLE_CAPACITY_VALUE_NAME, pstPrintOptions->available,
+call    0 never executed
+-:  250:                                                       freeBufferSize, &addedChars);
+-:  251:    }
+-:  252:  }
+#####:  253:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  254:  {
+#####:  255:    WC_ASSERT(addedChars < freeBufferSize);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  256:    szJsonObject += addedChars;
+#####:  257:    freeBufferSize -= addedChars;
+#####:  258:    status = ctutil_JsonObjectStringClose(szJsonObject, freeBufferSize, &addedChars);
+call    0 never executed
+-:  259:  }
+#####:  260:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  261:  {
+#####:  262:    int const printResult = printf("%s", szObjectBuffer);
+call    0 never executed
+#####:  263:    if(printResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  264:    {
+#####:  265:      status = CTUTIL_FAILED;
+-:  266:    }
+-:  267:  }
+-:  268:
+#####:  269:  return status;
+-:  270:}
+-:  271:
+-:  272:
+function PrintTextOutput called 0 returned 0% blocks executed 0%
+#####:  273:static statusCode_t PrintTextOutput(ctutil_Options_t const * const WC_UNUSED_PARAM(pstOptions),
+-:  274:                                    ctutil_Resources_t const * const WC_UNUSED_PARAM(pstResources),
+-:  275:                                    struct printOptions * pstPrintOptions)
+-:  276:{
+#####:  277:  statusCode_t status = CTUTIL_SUCCESS;
+-:  278:
+#####:  279:  if(pstPrintOptions->printMountPoint)
+branch  0 never executed
+branch  1 never executed
+-:  280:  {
+#####:  281:    int const printResult = printf("%s=%s\n", MOUNT_POINT_VALUE_NAME, pstPrintOptions->szMountPoint);
+call    0 never executed
+#####:  282:    if(printResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  283:    {
+#####:  284:      status = CTUTIL_FAILED;
+-:  285:    }
+-:  286:  }
+#####:  287:  if(ctutil_IsStatusOk(status) && pstPrintOptions->printFreeCapacity)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  288:  {
+#####:  289:    int const printResult = printf("%s=%" PRIu64 "\n", FREE_CAPACITY_VALUE_NAME, pstPrintOptions->free);
+call    0 never executed
+#####:  290:    if(printResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  291:    {
+#####:  292:      status = CTUTIL_FAILED;
+-:  293:    }
+-:  294:  }
+#####:  295:  if(ctutil_IsStatusOk(status) && pstPrintOptions->printAvailableCapacity)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  296:  {
+#####:  297:    int const printResult = printf("%s=%" PRIu64 "\n", AVAILABLE_CAPACITY_VALUE_NAME, pstPrintOptions->available);
+call    0 never executed
+#####:  298:    if(printResult < 0)
+branch  0 never executed
+branch  1 never executed
+-:  299:    {
+#####:  300:      status = CTUTIL_FAILED;
+-:  301:    }
+-:  302:  }
+-:  303:
+#####:  304:  return status;
+-:  305:}
+-:  306:
+-:  307:
+function GiveInformation called 0 returned 0% blocks executed 0%
+#####:  308:static statusCode_t GiveInformation(ctutil_Options_t const * const pstOptions,
+-:  309:                                    ctutil_Resources_t const * const pstResources,
+-:  310:                                    char const * const szMountedPath,
+-:  311:                                    bool fIsTempTargetDirectory)
+-:  312:{
+#####:  313:  statusCode_t status = CTUTIL_SUCCESS;
+-:  314:
+-:  315:  // Prepare output options
+#####:  316:  struct printOptions stPrintOptions =
+-:  317:  {
+#####:  318:    .printMountPoint = pstOptions->pstSpecificOptions->printMountPoint,
+-:  319:    .szMountPoint = NULL,
+#####:  320:    .printFreeCapacity = pstOptions->pstSpecificOptions->printFreeCapacity && IsMounted(szMountedPath),
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  321:    .free = 0U,
+#####:  322:    .printAvailableCapacity = pstOptions->pstSpecificOptions->printAvailableCapacity && IsMounted(szMountedPath),
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  323:    .available = 0U
+-:  324:  };
+-:  325:
+-:  326:  // Collect information
+#####:  327:  if(stPrintOptions.printMountPoint)
+branch  0 never executed
+branch  1 never executed
+-:  328:  {
+#####:  329:    bool const emulateReservedArea = IsEmulationNeeded(pstOptions, pstResources);
+call    0 never executed
+#####:  330:    stPrintOptions.szMountPoint = (emulateReservedArea || fIsTempTargetDirectory || (szMountedPath == NULL)) ?
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  331:                                  MARKER_NOT_MOUNTED : szMountedPath;
+branch  0 never executed
+branch  1 never executed
+-:  332:  }
+#####:  333:  if(stPrintOptions.printFreeCapacity)
+branch  0 never executed
+branch  1 never executed
+-:  334:  {
+#####:  335:    statusCode_t const getStatus = pstResources->pstSpecificResources->pfGetFreeBytes(&(pstOptions->stCommonOptions),
+call    0 never executed
+-:  336:                                                                                      szMountedPath,
+-:  337:                                                                                      &(stPrintOptions.free));
+#####:  338:    if(ctutil_IsStatusFailure(getStatus))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  339:    {
+#####:  340:      status = getStatus;
+#####:  341:      stPrintOptions.printFreeCapacity = false;
+-:  342:    }
+-:  343:  }
+#####:  344:  if(stPrintOptions.printAvailableCapacity)
+branch  0 never executed
+branch  1 never executed
+-:  345:  {
+#####:  346:    statusCode_t const getStatus = pstResources->pstSpecificResources->pfGetAvailableBytes(&(pstOptions->stCommonOptions),
+call    0 never executed
+-:  347:                                                                                           szMountedPath,
+-:  348:                                                                                           &(stPrintOptions.available));
+#####:  349:    if(ctutil_IsStatusFailure(getStatus))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  350:    {
+#####:  351:      status = getStatus;
+#####:  352:      stPrintOptions.printAvailableCapacity = false;
+-:  353:    }
+-:  354:  }
+-:  355:
+-:  356:  // Print information
+#####:  357:  bool const print =    stPrintOptions.printMountPoint
+#####:  358:                     || stPrintOptions.printFreeCapacity
+branch  0 never executed
+branch  1 never executed
+#####:  359:                     || stPrintOptions.printAvailableCapacity;
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  360:  if(ctutil_IsStatusOk(status) && print && pstOptions->stCommonOptions.jsonOutput)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+-:  361:  {
+#####:  362:    status = PrintJsonOutput(pstOptions, pstResources, &stPrintOptions);
+call    0 never executed
+-:  363:  }
+#####:  364:  if(ctutil_IsStatusOk(status) && print && pstOptions->stCommonOptions.textOutput)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+-:  365:  {
+#####:  366:    status = PrintTextOutput(pstOptions, pstResources, &stPrintOptions);
+call    0 never executed
+-:  367:  }
+-:  368:
+#####:  369:  return status;
+-:  370:}
+-:  371:
+-:  372:
+function SetTargetDirectory called 0 returned 0% blocks executed 0%
+#####:  373:static statusCode_t SetTargetDirectory(ctutil_Options_t const * const pstOptions,
+-:  374:                                       ctutil_Resources_t const * const pstResources,
+-:  375:                                       char * const szTargetDirectoryTemplate,
+-:  376:                                       bool * const fIsTmpTargtDirectory)
+-:  377:{
+#####:  378:  statusCode_t status = CTUTIL_SUCCESS;
+#####:  379:  *fIsTmpTargtDirectory = false;
+-:  380:
+#####:  381:  if(pstOptions->pstSpecificOptions->szTargetDirectory != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  382:  {
+#####:  383:    pstResources->pstSpecificResources->szTargetDirectory = pstOptions->pstSpecificOptions->szTargetDirectory;
+-:  384:  }
+-:  385:  else
+-:  386:  {
+-:  387:    // Generate temporary directory.
+#####:  388:    pstResources->pstSpecificResources->szTargetDirectory = mkdtemp(szTargetDirectoryTemplate);
+call    0 never executed
+#####:  389:    if(pstResources->pstSpecificResources->szTargetDirectory != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  390:    {
+#####:  391:      *fIsTmpTargtDirectory = true;
+-:  392:    }
+-:  393:    else
+-:  394:    {
+#####:  395:      CTUTIL_LOG_ERRNO_ERROR(pstOptions->stCommonOptions.quiet, errno, "Failed to create temporary directory");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  396:      status = CTUTIL_FAILED;
+-:  397:    }
+-:  398:  }
+-:  399:
+#####:  400:  return status;
+-:  401:}
+-:  402:
+-:  403:
+-:  404:/// Main function for config tool core functionality (for example implementation see HelloWorld example config tool).
+function ctparts_ctMain called 1 returned 100% blocks executed 22%
+1:  405:exitCode_t ctparts_ctMain(int const WC_UNUSED_PARAM(argc),
+-:  406:                          char * const WC_UNUSED_PARAM(argv[]),
+-:  407:                          ctutil_Options_t const * const pstOptions,
+-:  408:                          ctutil_Resources_t const * const pstResources)
+-:  409:{
+1:  410:  exitCode_t result = CTUTIL_EXIT_SUCCESS;
+1:  411:  statusCode_t status = CTUTIL_SUCCESS;
+1:  412:  bool fIsTmpTargetDir = false;
+1:  413:  bool const emulateReservedArea = IsEmulationNeeded(pstOptions, pstResources);
+call    0 returned 1
+-:  414:  // TODO: Move to upper function
+1:  415:  char szTmpDirTemplate[]="/tmp/reserved_area.XXXXXX";
+-:  416:
+-:  417:  // Check state
+1:  418:  char const * szMountedPath = NULL;
+1:  419:  if(emulateReservedArea)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+-:  420:  {
+1:  421:    if(    (pstOptions->pstSpecificOptions->szTargetDirectory != NULL)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+#####:  422:        && ctutil_IsFolderAccessible(pstOptions->pstSpecificOptions->szTargetDirectory))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  423:    {
+-:  424:      // Folder was already created.
+#####:  425:      szMountedPath = pstOptions->pstSpecificOptions->szTargetDirectory;
+#####:  426:      pstResources->pstSpecificResources->szTargetDirectory = pstOptions->pstSpecificOptions->szTargetDirectory;
+-:  427:    }
+-:  428:  }
+-:  429:  else
+-:  430:  {
+#####:  431:    szMountedPath = CreateMountPointPath(pstOptions, pstResources);
+call    0 never executed
+-:  432:  }
+-:  433:
+-:  434:  // Mount if required
+1:  435:  bool unmountBeforeExit = pstOptions->pstSpecificOptions->umount;
+1:  436:  if(!IsMounted(szMountedPath))
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+-:  437:  {
+1:  438:    if(   (pstOptions->pstSpecificOptions->mount)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+1:  439:       || (pstOptions->pstSpecificOptions->clear)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+1:  440:       || (pstOptions->pstSpecificOptions->printFreeCapacity)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+1:  441:       || (pstOptions->pstSpecificOptions->printAvailableCapacity))
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+-:  442:    {
+#####:  443:      unmountBeforeExit = unmountBeforeExit || (!(pstOptions->pstSpecificOptions->mount));
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+-:  444:
+-:  445:      // Set resource target directory.
+#####:  446:      status = SetTargetDirectory(pstOptions, pstResources, szTmpDirTemplate, &fIsTmpTargetDir);
+call    0 never executed
+#####:  447:      if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  448:      {
+-:  449:        // Check if mount point exists (file exists and is a folder)
+#####:  450:        bool mountPointPresent = IsMountPointPresent(pstOptions, pstResources);
+call    0 never executed
+-:  451:
+#####:  452:        if(!mountPointPresent && pstOptions->pstSpecificOptions->createMountPoint)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+-:  453:        {
+-:  454:          // Try to create mount point
+#####:  455:          status = CreateMountPoint(pstOptions, pstResources);
+call    0 never executed
+#####:  456:          if(!ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  457:          {
+#####:  458:            CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet, "Creating mount point failed");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  459:            result=CTUTIL_EXIT_GENERAL_ERROR;
+-:  460:          }
+-:  461:        }
+-:  462:      }
+-:  463:      else
+-:  464:      {
+#####:  465:        CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet, "Setup target directory failed");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  466:        result=CTUTIL_EXIT_GENERAL_ERROR;
+-:  467:      }
+-:  468:
+#####:  469:      if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  470:      {
+#####:  471:        if(emulateReservedArea)
+branch  0 never executed
+branch  1 never executed
+-:  472:        {
+-:  473:          // Empty folder (mount point) is enough to emulate a mounted reserved area
+#####:  474:          status = CTUTIL_SUCCESS;
+-:  475:        }
+-:  476:        else
+-:  477:        {
+#####:  478:          status = MountReservedArea(pstOptions, pstResources);
+call    0 never executed
+#####:  479:          if(!ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  480:          {
+#####:  481:            CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet, "Mounting reserved area failed");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  482:            result=CTUTIL_EXIT_MOUNT_ERROR;
+-:  483:          }
+-:  484:        }
+-:  485:      }
+#####:  486:      if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  487:      {
+#####:  488:        szMountedPath = pstResources->pstSpecificResources->szTargetDirectory;
+-:  489:      }
+-:  490:    }
+-:  491:  }
+-:  492:
+-:  493:  // Clear area if requested
+1*:  494:  if(IsMounted(szMountedPath) && pstOptions->pstSpecificOptions->clear)
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+branch  3 never executed
+branch  4 never executed
+-:  495:  {
+-:  496:    // Try to clear reserved area
+#####:  497:    statusCode_t const clearStatus = ClearReservedArea(pstOptions, pstResources, szMountedPath);
+call    0 never executed
+-:  498:    // Don't poison overall status on failure, maybe we can go on without having cleaned everything
+-:  499:    (void)clearStatus;
+-:  500:  }
+-:  501:
+-:  502:  // Collect and print information
+1:  503:  if(ctutil_IsStatusOk(status))
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+-:  504:  {
+1:  505:    if(    (pstOptions->pstSpecificOptions->printMountPoint)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+1*:  506:        || ((pstOptions->pstSpecificOptions->printFreeCapacity) && IsMounted(szMountedPath))
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+1*:  507:        || ((pstOptions->pstSpecificOptions->printAvailableCapacity) && IsMounted(szMountedPath)))
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+-:  508:    {
+#####:  509:      status = GiveInformation(pstOptions, pstResources, szMountedPath, fIsTmpTargetDir);
+call    0 never executed
+#####:  510:      if(!ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  511:      {
+#####:  512:        CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet, "Returning information failed");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  513:      }
+-:  514:    }
+-:  515:  }
+-:  516:
+-:  517:  // Unmount if requested or mount was only temporarily necessary
+1*:  518:  if((!emulateReservedArea) && IsMounted(szMountedPath) && unmountBeforeExit)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+-:  519:  {
+#####:  520:    status = UnmountReservedArea(pstOptions, pstResources);
+call    0 never executed
+#####:  521:    if(!ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  522:    {
+#####:  523:      CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet, "Unmounting reserved area failed");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  524:      result=CTUTIL_EXIT_MOUNT_ERROR;
+-:  525:    }
+-:  526:  }
+-:  527:
+-:  528:  // Remove directory if mount was only requested temporarily
+1:  529:  if(fIsTmpTargetDir)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+-:  530:  {
+#####:  531:    status = ctutil_RemoveFolder(&pstOptions->stCommonOptions, pstResources->pstSpecificResources->szTargetDirectory);
+call    0 never executed
+#####:  532:    if(!ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  533:    {
+#####:  534:      CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet, "Removing folder failed");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  535:    }
+-:  536:  }
+-:  537:
+1:  538:  if(szMountedPath != pstResources->pstSpecificResources->szTargetDirectory)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+-:  539:  {
+#####:  540:    ctutil_FreeConst(szMountedPath);
+call    0 never executed
+-:  541:  }
+-:  542:
+1:  543:  return result;
+-:  544:}
+-:  545:
+-:  546:
+-:  547://---- End of source file ------------------------------------------------------
+-:  548:

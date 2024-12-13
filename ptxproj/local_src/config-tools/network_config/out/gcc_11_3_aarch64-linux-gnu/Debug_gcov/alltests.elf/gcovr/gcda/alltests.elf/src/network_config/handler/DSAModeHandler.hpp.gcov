@@ -1,0 +1,46 @@
+-:    0:Source:src/network_config/handler/DSAModeHandler.hpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#pragma once
+-:    4:
+-:    5:#include "IHandler.hpp"
+-:    6:
+-:    7:#include <functional>
+-:    8:#include <string>
+-:    9:#include <boost/program_options.hpp>
+-:   10:
+-:   11:namespace network_config {
+-:   12:
+-:   13:class DSAModeHandler : public IHandler {
+-:   14: public:
+-:   15:  explicit DSAModeHandler(const ::boost::program_options::variables_map &vm);
+4*:   16:  ~DSAModeHandler() override = default;
+------------------
+_ZN14network_config14DSAModeHandlerD0Ev:
+function _ZN14network_config14DSAModeHandlerD0Ev called 0 returned 0% blocks executed 0%
+#####:   16:  ~DSAModeHandler() override = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN14network_config14DSAModeHandlerD2Ev:
+function _ZN14network_config14DSAModeHandlerD2Ev called 4 returned 100% blocks executed 100%
+4:   16:  ~DSAModeHandler() override = default;
+call    0 returned 4
+call    1 returned 4
+------------------
+-:   17:
+-:   18:  DSAModeHandler(const DSAModeHandler&) = delete;
+-:   19:  DSAModeHandler& operator=(const DSAModeHandler&) = delete;
+-:   20:  DSAModeHandler(const DSAModeHandler&&) = delete;
+-:   21:  DSAModeHandler& operator=(const DSAModeHandler&&) = delete;
+-:   22:
+-:   23:  void Execute() override;
+-:   24: private:
+-:   25:  void GetConfig();
+-:   26:  void SetConfig();
+-:   27:
+-:   28:  ::std::function<void()> execute_;
+-:   29:  const ::boost::program_options::variables_map &vm_;
+-:   30:};
+-:   31:
+-:   32:} /* namespace network_config */

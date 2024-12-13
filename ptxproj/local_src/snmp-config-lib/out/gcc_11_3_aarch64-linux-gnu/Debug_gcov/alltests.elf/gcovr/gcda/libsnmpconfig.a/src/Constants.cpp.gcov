@@ -1,0 +1,95 @@
+-:    0:Source:src/Constants.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:
+-:   10:#include "Constants.hpp"
+-:   11:
+-:   12:namespace wago::snmp_config_lib {
+-:   13:
+function _ZN4wago15snmp_config_lib9Constants16GetSnmpFilePathsEv called 0 returned 0% blocks executed 0%
+#####:   14:LinuxDaemonFilePaths Constants::GetSnmpFilePaths() {
+#####:   15:  return LinuxDaemonFilePaths { "/usr/sbin/snmpd", "/etc/init.d/net-snmpd", "/etc/rc.d/S21_netsnmpd" };
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+-:   16:}
+-:   17:
+function _ZN4wago15snmp_config_lib9Constants20GetSnmpTrapFilePathsEv called 0 returned 0% blocks executed 0%
+#####:   18:LinuxDaemonFilePaths Constants::GetSnmpTrapFilePaths() {
+#####:   19:  return LinuxDaemonFilePaths { "/usr/sbin/snmptrapd", "/etc/init.d/net-snmptrapd", "/etc/rc.d/S22_netsnmptrapd" };
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+-:   20:}
+-:   21:
+function _ZN4wago15snmp_config_lib9Constants15GetSnmpConfPathB5cxx11Ev called 0 returned 0% blocks executed 0%
+#####:   22:::std::string Constants::GetSnmpConfPath() {
+#####:   23:  return "/etc/snmp/snmpd.conf";
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:   24:}
+-:   25:
+function _ZN4wago15snmp_config_lib9Constants17GetSnmpV3ConfPathB5cxx11Ev called 0 returned 0% blocks executed 0%
+#####:   26:::std::string Constants::GetSnmpV3ConfPath() {
+#####:   27:  return "/var/lib/net-snmp/snmpd.conf";
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:   28:}
+-:   29:
+function _ZN4wago15snmp_config_lib9Constants19GetSnmpUserConfPathB5cxx11Ev called 0 returned 0% blocks executed 0%
+#####:   30:::std::string Constants::GetSnmpUserConfPath() {
+#####:   31:  return "/etc/specific/snmp_user.conf";
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:   32:}
+-:   33:
+-:   34:
+-:   35:}

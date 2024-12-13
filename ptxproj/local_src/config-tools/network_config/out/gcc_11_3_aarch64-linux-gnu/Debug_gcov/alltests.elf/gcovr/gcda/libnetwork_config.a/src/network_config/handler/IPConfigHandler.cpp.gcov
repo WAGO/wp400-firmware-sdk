@@ -1,0 +1,682 @@
+-:    0:Source:src/network_config/handler/IPConfigHandler.cpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#include "IPConfigHandler.hpp"
+-:    4:
+-:    5:#include <string>
+-:    6:#include <iostream>
+-:    7:#include <exception>
+-:    8:#include <utility>
+-:    9:
+-:   10:#include "Utils.hpp"
+-:   11:#include "OptionStrings.hpp"
+-:   12:#include "NetconfStatus.hpp"
+-:   13:#include "InterfaceInformationApi.hpp"
+-:   14:
+-:   15:namespace network_config {
+-:   16:
+-:   17:namespace napi = ::netconf::api;
+-:   18:
+function _ZN14network_config15IPConfigHandlerC2ERKNS_12OptionParserE called 3 returned 100% blocks executed 42%
+3:   19:IPConfigHandler::IPConfigHandler(const OptionParser &parser)
+3:   20:    : vm_ { parser.GetVariableMap() },
+call    0 returned 3
+3:   21:      parser_ { parser } {
+call    0 returned 3
+call    1 returned 3
+3:   22:  const auto &options = GetOptions();
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+-:   23:
+3:   24:  TypeFilter type_filter_opt;
+call    0 returned 3
+3:   25:  if (Contains(vm_, options.filter)) {
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 3
+#####:   26:    type_filter_opt = netconf::DeviceTypeFromString(Get(vm_, options.filter));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+-:   27:  }
+-:   28:
+3:   29:  if (vm_.count("get") > 0) {
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+branch  5 taken 3 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 3
+call    8 returned 3
+branch  9 taken 1 (fallthrough)
+branch 10 taken 2
+call   11 never executed
+call   12 never executed
+function _ZZN14network_config15IPConfigHandlerC4ERKNS_12OptionParserEENKUlvE_clEv called 1 returned 100% blocks executed 71%
+1:   30:    execute_ = [this, filter=type_filter_opt]() {
+1:   31:      this->GetConfig(filter);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 never executed
+2:   32:    };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+call    7 never executed
+2:   33:  } else if (vm_.count("get-current") > 0) {
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 2
+branch  5 taken 2 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 2
+call    8 returned 2
+branch  9 taken 0 (fallthrough)
+branch 10 taken 2
+call   11 never executed
+call   12 never executed
+function _ZZN14network_config15IPConfigHandlerC4ERKNS_12OptionParserEENKUlvE0_clEv called 0 returned 0% blocks executed 0%
+#####:   34:    execute_ = [this, filter=type_filter_opt]() {
+#####:   35:      this->GetCurrentConfig(filter);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+#####:   36:    };
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+2:   37:  } else if (vm_.count("set") > 0) {
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 2
+branch  5 taken 2 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 2
+call    8 returned 2
+branch  9 taken 2 (fallthrough)
+branch 10 taken 0
+call   11 never executed
+call   12 never executed
+function _ZZN14network_config15IPConfigHandlerC4ERKNS_12OptionParserEENKUlvE1_clEv called 2 returned 50% blocks executed 100%
+2:   38:    execute_ = [this]() {
+2:   39:      this->SetConfig();
+call    0 returned 1
+2:   40:    };
+call    0 returned 2
+-:   41:  }
+3:   42:}
+call    0 returned 3
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:   43:
+function _ZN14network_config15IPConfigHandler7ExecuteEv called 3 returned 67% blocks executed 100%
+3:   44:void IPConfigHandler::Execute() {
+3:   45:  execute_();
+call    0 returned 2
+2:   46:}
+-:   47:
+function _ZN14network_configL16IPSourceToStringEN7netconf8IPSourceE called 1 returned 100% blocks executed 50%
+1:   48:static ::std::string IPSourceToString(::netconf::IPSource source) {
+1:   49:  ::std::string value = "unknown";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 never executed
+1:   50:  if (source == ::netconf::IPSource::NONE) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+#####:   51:    value = "none";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+1:   52:  } else if (source == ::netconf::IPSource::STATIC) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+#####:   53:    value = "static";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+1:   54:  } else if (source == ::netconf::IPSource::DHCP) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+1:   55:    value = "dhcp";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+#####:   56:  } else if (source == ::netconf::IPSource::BOOTP) {
+branch  0 never executed
+branch  1 never executed
+#####:   57:    value = "bootp";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   58:  } else if (source == ::netconf::IPSource::EXTERNAL) {
+branch  0 never executed
+branch  1 never executed
+#####:   59:    value = "external";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   60:  }
+1:   61:  return value;
+=====:   62:}
+call    0 never executed
+-:   63:
+function _ZN14network_config15IPConfigHandler11ParseConfigERN7netconf3api9IPConfigsE called 1 returned 100% blocks executed 43%
+1:   64:void IPConfigHandler::ParseConfig(netconf::api::IPConfigs &ip_configs) {
+1:   65:  auto format = GetFormat(vm_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   66:  const auto &fields = GetFields();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   67:
+1:   68:  if (Contains(vm_, fields.device)) {
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+1:   69:    ::std::string interface = GetDevice(vm_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   70:    auto ip_config = ip_configs.GetIPConfig(interface);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   71:
+1:   72:    if (ip_config) {
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+1:   73:      ::std::cout << ConstructString(*ip_config, format);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+-:   74:    } else {
+#####:   75:      throw NetconfStatus { netconf::Status { netconf::StatusCode::INTERFACE_NOT_EXISTING, interface } };
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+-:   76:    }
+1:   77:  } else {
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+#####:   78:    ::std::cout << ConstructString(ip_configs, format);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+-:   79:  }
+-:   80:
+1:   81:  ::std::cout.flush();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   82:}
+call    0 returned 1
+call    1 never executed
+-:   83:
+function _ZN14network_config15IPConfigHandler16GetCurrentConfigEN5boost8optionalISt6vectorIN7netconf10DeviceTypeESaIS5_EEEE called 0 returned 0% blocks executed 0%
+#####:   84:void IPConfigHandler::GetCurrentConfig(TypeFilter filter) {
+-:   85:
+#####:   86:  napi::IPConfigs ip_configs;
+call    0 never executed
+#####:   87:  if (filter) {
+branch  0 never executed
+branch  1 never executed
+#####:   88:    auto error = napi::GetCurrentIPConfigs(*filter, ip_configs);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:   89:    if (error.IsNotOk()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   90:      throw NetconfStatus { error };
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:   91:    }
+#####:   92:    ParseConfig(ip_configs);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   93:  } else {
+call    0 never executed
+call    1 never executed
+#####:   94:    auto error = ::netconf::api::GetCurrentIPConfigs(ip_configs);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   95:    if (error.IsNotOk()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   96:      throw NetconfStatus { error };
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:   97:    }
+#####:   98:    ParseConfig(ip_configs);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   99:  }
+call    0 never executed
+call    1 never executed
+#####:  100:}
+call    0 never executed
+call    1 never executed
+-:  101:
+function _ZN14network_config15IPConfigHandler9GetConfigEN5boost8optionalISt6vectorIN7netconf10DeviceTypeESaIS5_EEEE called 1 returned 100% blocks executed 36%
+1:  102:void IPConfigHandler::GetConfig(TypeFilter filter) {
+-:  103:
+1:  104:  napi::IPConfigs ip_configs;
+call    0 returned 1
+1:  105:  if (filter) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+#####:  106:    auto error = napi::GetIPConfigs(*filter, ip_configs);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:  107:    if (error.IsNotOk()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  108:      throw NetconfStatus { error };
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:  109:    }
+#####:  110:    ParseConfig(ip_configs);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  111:  } else {
+call    0 never executed
+call    1 never executed
+1:  112:    auto error = napi::GetIPConfigs(ip_configs);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  113:    if (error.IsNotOk()) {
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+#####:  114:      throw NetconfStatus { error };
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:  115:    }
+1:  116:    ParseConfig(ip_configs);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  117:  }
+call    0 returned 1
+call    1 never executed
+-:  118:
+1:  119:}
+call    0 returned 1
+call    1 never executed
+-:  120:
+function _ZN14network_config15IPConfigHandler9SetConfigEv called 2 returned 50% blocks executed 34%
+2:  121:void IPConfigHandler::SetConfig() {
+2:  122:  auto ip_configs = CreateIPConfigs();
+call    0 returned 2
+branch  1 taken 1 (fallthrough)
+branch  2 taken 1 (throw)
+1:  123:  const auto &options = GetOptions();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  124:  netconf::Status result;
+call    0 returned 1
+1:  125:  if (Contains(vm_, options.dryrun)) {
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+branch  3 taken 0 (fallthrough)
+branch  4 taken 1
+#####:  126:    napi::IPConfigs current_configs;
+call    0 never executed
+#####:  127:    result = GetCurrentIPConfigs(current_configs);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+#####:  128:    if (result.IsOk()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  129:      result = napi::ValidateIpConfigs(ip_configs, current_configs, napi::GetInterfaceInformation());
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+-:  130:    }
+#####:  131:  } else {
+call    0 never executed
+call    1 never executed
+1:  132:    result = SetIPConfigs(ip_configs);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+-:  133:  }
+-:  134:
+1:  135:  if (result.IsNotOk()) {
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+#####:  136:    throw NetconfStatus { result };
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:  137:  }
+1:  138:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+-:  139:
+function _ZN14network_config15IPConfigHandler15CreateIPConfigsEv called 2 returned 50% blocks executed 87%
+2:  140:::netconf::api::IPConfigs IPConfigHandler::CreateIPConfigs() {
+-:  141:
+2:  142:  auto value = GetValueOfSet(vm_);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:  143:  napi::IPConfigs ip_configs;
+call    0 returned 2
+2:  144:  if (!value.empty()) {
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0
+2:  145:    auto error = napi::MakeIPConfigs(value, ip_configs);
+call    0 returned 2
+2:  146:    return error.IsOk() ? ip_configs : throw NetconfStatus { error };
+call    0 returned 2
+branch  1 taken 1 (fallthrough)
+branch  2 taken 1
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 never executed
+2:  147:  }
+call    0 returned 1
+call    1 returned 1
+#####:  148:  return ip_configs;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  149:
+3:  150:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+-:  151:
+function _ZN14network_config15IPConfigHandlerC2EOS0_ called 0 returned 0% blocks executed 0%
+#####:  152:IPConfigHandler::IPConfigHandler(IPConfigHandler &&other) noexcept
+#####:  153:    : execute_ { std::move(other.execute_) },
+call    0 never executed
+#####:  154:      vm_ { other.vm_ },
+#####:  155:      parser_ { other.parser_ } {
+call    0 never executed
+call    1 never executed
+-:  156:
+#####:  157:}
+-:  158:
+function _ZNK14network_config15IPConfigHandler15ConstructStringERKN7netconf8IPConfigERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 1 returned 100% blocks executed 51%
+1:  159:::std::string IPConfigHandler::ConstructString(const netconf::IPConfig &ip_config, const ::std::string& format) const {
+1:  160:  ::std::stringstream output;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  161:  if (format == "text") {
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+1:  162:    output << "device=" << netconf::Interface::LabelFromName(ip_config.interface_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 never executed
+1:  163:    output << " source=" << IPSourceToString(ip_config.source_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 never executed
+1:  164:    output << " ipaddr=" << ip_config.address_;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+1:  165:    output << " netmask=" << ip_config.netmask_;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+1:  166:    output << " bcast=" << netconf::api::CalculateBroadcast(ip_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+1:  167:    if(!ip_config.dhcp_client_id_.empty()){
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+1:  168:      output << " dhcp-client-id=" << ip_config.dhcp_client_id_;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+-:  169:    }
+1:  170:    output << " ";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+#####:  171:  } else if (format == "json") {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  172:    output << napi::ToJson(ip_config);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+#####:  173:  } else if (format == "pretty-json") {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  174:    output << napi::ToPrettyJson(ip_config);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:  175:  }
+2:  176:  return output.str();
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  177:}
+call    0 returned 1
+call    1 never executed
+-:  178:
+function _ZNK14network_config15IPConfigHandler15ConstructStringERKN7netconf3api9IPConfigsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:  179:::std::string IPConfigHandler::ConstructString(const netconf::api::IPConfigs &ip_configs,
+-:  180:                                               const ::std::string& format) const {
+#####:  181:  ::std::string value{};
+call    0 never executed
+#####:  182:  if (format == "text") {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  183:    for (auto &ip_config : ip_configs.GetConfig()) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+#####:  184:      value += ConstructString(ip_config, format);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+#####:  185:    }
+call    0 never executed
+call    1 never executed
+#####:  186:  } else if (format == "json") {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  187:    value = napi::ToJson(ip_configs);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+#####:  188:  } else if (format == "pretty-json") {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  189:    value = napi::ToPrettyJson(ip_configs);
+call    0 never executed
+call    1 never executed
+call    2 never executed
+-:  190:  }
+#####:  191:  return value;
+=====:  192:}
+call    0 never executed
+-:  193:
+-:  194:} /* namespace network_config */

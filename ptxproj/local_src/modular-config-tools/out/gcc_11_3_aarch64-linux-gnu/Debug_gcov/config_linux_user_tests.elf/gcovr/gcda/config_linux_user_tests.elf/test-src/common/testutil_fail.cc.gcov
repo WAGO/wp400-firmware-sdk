@@ -1,0 +1,88 @@
+-:    0:Source:test-src/common/testutil_fail.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     testutil_fail.cc
+-:   12:///
+-:   13:///  \brief    Fail function implementation for google test.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include <gtest/gtest.h>
+-:   22:#include "wc/assertion.h"
+-:   23:
+-:   24://------------------------------------------------------------------------------
+-:   25:// defines; structure, enumeration and type definitions
+-:   26://------------------------------------------------------------------------------
+-:   27:
+-:   28://------------------------------------------------------------------------------
+-:   29:// function prototypes
+-:   30://------------------------------------------------------------------------------
+-:   31:
+-:   32://------------------------------------------------------------------------------
+-:   33:// macros
+-:   34://------------------------------------------------------------------------------
+-:   35:
+-:   36://------------------------------------------------------------------------------
+-:   37:// variables' and constants' definitions
+-:   38://------------------------------------------------------------------------------
+-:   39:
+-:   40://------------------------------------------------------------------------------
+-:   41:// function implementation
+-:   42://------------------------------------------------------------------------------
+function wc_Fail called 0 returned 0% blocks executed 0%
+#####:   43:void wc_Fail(char const * const szReason,
+-:   44:             char const * const szFile,
+-:   45:             char const * const szFunction,
+-:   46:             int const line)
+-:   47:{
+-:   48:  // Trigger google mock fail: Search in printed output for assertion reason
+#####:   49:  FAIL() << szFile << ", " << szFunction << " (line " << line << "): " << szReason;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+branch 23 never executed
+branch 24 never executed
+call   25 never executed
+branch 26 never executed
+branch 27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:   50:}
+-:   51:
+-:   52:
+-:   53://---- End of source file ------------------------------------------------------
+-:   54:

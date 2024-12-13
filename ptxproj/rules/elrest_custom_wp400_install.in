@@ -1,0 +1,62 @@
+## SECTION=elrest_custom_wp400_install
+
+menuconfig ELREST_CUSTOM_WP400_INSTALL
+	bool "Elrest Custom WP400 Install          "
+	default n
+	help
+	  Install Elrest custom files to WP400 target file system
+
+if ELREST_CUSTOM_WP400_INSTALL
+
+config ELREST_CUSTOM_WP400_INIT_FILES_INSTALL
+	bool
+	default n
+	prompt "installs elrest specific init files"
+	help
+	  This installs init files to /etc/init.d and links them to /etc/rc.d.
+
+config ELREST_CUSTOM_WP400_PROFILE_FILES_INSTALL
+	bool
+	default n
+	prompt "install /etc/profile.environment to root file system"
+	help
+	  This installs the files /etc/profile and /etc/profile.environment
+	  to root file system.
+
+config ELREST_CUSTOM_WP400_XORG_CONFIG_INSTALL
+	bool
+	default n
+	prompt "install custom Xorg config"
+	help
+	  This installs elrest custom Xorg config to /etc, /usr/bin.
+
+config ELREST_CUSTOM_WP400_PLCLIST
+	bool
+	default n
+	prompt "install plclist feature "
+
+config ELREST_CUSTOM_WP400_USER_FILES_INSTALL
+	bool
+	default n
+	prompt "install user specific files"
+	help
+	  This installs user specific files to /home/user.
+
+config ELREST_CUSTOM_WP400_CONFIG_FILES_INSTALL
+	bool
+	default n
+	prompt "install elrest specific files to /etc"
+	help
+	  This installs elrest specific files to /etc.
+
+config ELREST_CUSTOM_WP400_TTF_INSTALL
+	bool
+	default n
+	prompt "install ttf fonts f.e. liberation"
+
+config ELREST_CUSTOM_WP400_ROOT_DIRECTORIES_INSTALL
+	bool
+	default n
+	prompt "add directories /log and /settings to root file system"
+
+endif

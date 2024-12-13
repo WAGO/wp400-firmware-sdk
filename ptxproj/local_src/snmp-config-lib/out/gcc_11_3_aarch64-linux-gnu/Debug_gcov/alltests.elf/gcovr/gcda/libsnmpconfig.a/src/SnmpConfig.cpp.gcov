@@ -1,0 +1,494 @@
+-:    0:Source:src/SnmpConfig.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:
+-:   10:#include "SnmpConfig.hpp"
+-:   11:
+-:   12:#include "ConfigConversion.hpp"
+-:   13:#include "Constants.hpp"
+-:   14:#include "ControlSnmp.hpp"
+-:   15:#include "ConfigLine.hpp"
+-:   16:#include "Program.hpp"
+-:   17:#include "File.hpp"
+-:   18:#include "EventFolder.hpp"
+-:   19:#include "Status.hpp"
+-:   20:#include "SnmpParameterValidation.hpp"
+-:   21:#include "SnmpUserConf.hpp"
+-:   22:
+-:   23:namespace wago::snmp_config_lib {
+-:   24:
+-:   25:namespace {
+-:   26:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_115FromConfigLinesERKSt6vectorINS0_10ConfigLineESaIS3_EERNS0_10SnmpConfigE called 0 returned 0% blocks executed 0%
+#####:   27:void FromConfigLines(const std::vector<ConfigLine> &lines, SnmpConfig &sc) {
+#####:   28:  ExtractBasicParamters(lines, sc);
+call    0 never executed
+#####:   29:  ExtractCommunityParameters(lines, sc);
+call    0 never executed
+#####:   30:  ExtractTrapV1V2cParameters(lines, sc);
+call    0 never executed
+#####:   31:  ExtractUserParameters(lines, sc);
+call    0 never executed
+#####:   32:  ExtractTrapV3Parameters(lines, sc);
+call    0 never executed
+#####:   33:}
+-:   34:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_114ReadConfigFileEOKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_10SnmpConfigE called 0 returned 0% blocks executed 0%
+#####:   35:void ReadConfigFile(const ::std::string &&path, SnmpConfig &snmp_config) {
+#####:   36:  auto data = wago::util::ReadFile(path);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   37:  std::vector<ConfigLine> config_lines = ExtractConfigLines(data);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   38:  FromConfigLines(config_lines, snmp_config);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   39:}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:   40:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_115ReadConfigFilesERNS0_10SnmpConfigE called 0 returned 0% blocks executed 0%
+#####:   41:void ReadConfigFiles(SnmpConfig &snmp_config) {
+#####:   42:  ReadConfigFile(Constants::GetSnmpConfPath(), snmp_config);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+#####:   43:  ReadConfigFile(Constants::GetSnmpV3ConfPath(), snmp_config);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+#####:   44:}
+-:   45:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_116WriteConfigFilesERKNS0_10SnmpConfigE called 0 returned 0% blocks executed 0%
+#####:   46:void WriteConfigFiles(const SnmpConfig &config) {
+#####:   47:  SnmpConfig actual_config;
+call    0 never executed
+#####:   48:  ReadConfigFile(Constants::GetSnmpConfPath(), actual_config);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+#####:   49:  UpdateSnmpUserConfFile(Constants::GetSnmpUserConfPath(), config, actual_config);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+-:   50:
+#####:   51:  wago::util::WriteFile(Constants::GetSnmpConfPath(), SnmpBasicAndV1V2cParameterToString(config));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+#####:   52:  wago::util::WriteFile(Constants::GetSnmpV3ConfPath(), SnmpV3ParameterToString(config));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+-:   53:
+#####:   54:}
+call    0 never executed
+call    1 never executed
+-:   55:
+-:   56:}  //namespace
+-:   57:
+function _ZN4wago15snmp_config_lib9CommunityC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_6AccessE called 16 returned 100% blocks executed 100%
+16:   58:Community::Community(::std::string name, Access access)
+16:   59:    : name_ { ::std::move(name) },
+call    0 returned 16
+call    1 returned 16
+16:   60:      access_ { access } {
+16:   61:}
+-:   62:
+function _ZNK4wago15snmp_config_lib9CommunityeqERKS1_ called 11 returned 100% blocks executed 100%
+11:   63:bool Community::operator ==(const Community &rhs) const {
+11:   64:  return (name_ == rhs.name_ && access_ == rhs.access_);
+call    0 returned 11
+branch  1 taken 6 (fallthrough)
+branch  2 taken 5
+branch  3 taken 5 (fallthrough)
+branch  4 taken 1
+-:   65:}
+-:   66:
+function _ZNK4wago15snmp_config_lib9CommunityltERKS1_ called 14 returned 100% blocks executed 60%
+14:   67:bool Community::operator <(const Community &rhs) const {
+14:   68:  const auto lhs_key = name_ + std::to_string(static_cast<int>(access_));
+call    0 returned 14
+branch  1 taken 14 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 14
+branch  4 taken 14 (fallthrough)
+branch  5 taken 0 (throw)
+14:   69:  const auto rhs_key = rhs.name_  + std::to_string(static_cast<int>(rhs.access_));
+call    0 returned 14
+branch  1 taken 14 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 14
+branch  4 taken 14 (fallthrough)
+branch  5 taken 0 (throw)
+28:   70:  return lhs_key < rhs_key;
+call    0 returned 14
+14:   71:}
+call    0 returned 14
+call    1 returned 14
+call    2 never executed
+-:   72:
+function _ZN4wago15snmp_config_lib17TrapReceiverV1V2cC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_NS0_12VersionV1V2cE called 16 returned 100% blocks executed 100%
+16:   73:TrapReceiverV1V2c::TrapReceiverV1V2c(::std::string host, ::std::string community, VersionV1V2c version)
+16:   74:    : host_ { ::std::move(host) },
+call    0 returned 16
+call    1 returned 16
+16:   75:      community_ { ::std::move(community) },
+call    0 returned 16
+call    1 returned 16
+16:   76:      version_ { version } {
+-:   77:
+16:   78:}
+-:   79:
+function _ZNK4wago15snmp_config_lib17TrapReceiverV1V2ceqERKS1_ called 11 returned 100% blocks executed 100%
+11:   80:bool TrapReceiverV1V2c::operator ==(const TrapReceiverV1V2c &rhs) const {
+11:   81:  return (host_ == rhs.host_ && community_ == rhs.community_ && version_ == rhs.version_);
+call    0 returned 11
+branch  1 taken 7 (fallthrough)
+branch  2 taken 4
+call    3 returned 7
+branch  4 taken 6 (fallthrough)
+branch  5 taken 1
+branch  6 taken 4 (fallthrough)
+branch  7 taken 2
+-:   82:}
+-:   83:
+function _ZNK4wago15snmp_config_lib17TrapReceiverV1V2cltERKS1_ called 19 returned 100% blocks executed 53%
+19:   84:bool TrapReceiverV1V2c::operator <(const TrapReceiverV1V2c &rhs) const {
+38:   85:  const auto lhs_key = community_ + host_ + std::to_string(static_cast<int>(rhs.version_));
+call    0 returned 19
+branch  1 taken 19 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 19
+branch  4 taken 19 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 19
+branch  7 taken 19 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 19
+38:   86:  const auto rhs_key = rhs.community_ + rhs.host_ + std::to_string(static_cast<int>(rhs.version_));
+call    0 returned 19
+branch  1 taken 19 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 19
+branch  4 taken 19 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 19
+branch  7 taken 19 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 19
+38:   87:  return lhs_key < rhs_key;
+call    0 returned 19
+19:   88:}
+call    0 returned 19
+call    1 returned 19
+call    2 never executed
+-:   89:
+function _ZN4wago15snmp_config_lib14TrapReceiverV3C2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_13SecurityLevelENS0_18AuthenticationTypeES7_NS0_7PrivacyES7_S7_ called 18 returned 100% blocks executed 71%
+18:   90:TrapReceiverV3::TrapReceiverV3(::std::string name, SecurityLevel security_level,
+-:   91:                               AuthenticationType authentication_type, ::std::string authentication_key,
+18:   92:                               Privacy privacy, ::std::string privacy_key, ::std::string host)
+18:   93:    : name_ { ::std::move(name) },
+call    0 returned 18
+call    1 returned 18
+18:   94:      security_level_ { security_level },
+18:   95:      authentication_type_ { authentication_type },
+18:   96:      authentication_key_ { ::std::move(authentication_key) },
+call    0 returned 18
+call    1 returned 18
+18:   97:      privacy_ { privacy },
+18:   98:      privacy_key_ { ::std::move(privacy_key) },
+call    0 returned 18
+call    1 returned 18
+18:   99:      host_ { ::std::move(host) } {
+call    0 returned 18
+call    1 returned 18
+-:  100:
+-:  101:  //The standard dictates that the private key is the same as the authentication key if the privacy key is not explicitly specified
+18:  102:  if (privacy != Privacy::None && privacy_key_.empty()) {
+branch  0 taken 8 (fallthrough)
+branch  1 taken 10
+call    2 returned 8
+branch  3 taken 2 (fallthrough)
+branch  4 taken 6
+branch  5 taken 2 (fallthrough)
+branch  6 taken 16
+2:  103:    privacy_key_ = authentication_key_;
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+-:  104:  }
+-:  105:
+18:  106:}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:  107:
+function _ZNK4wago15snmp_config_lib14TrapReceiverV3eqERKS1_ called 4 returned 100% blocks executed 93%
+4:  108:bool TrapReceiverV3::operator ==(const TrapReceiverV3 &rhs) const {
+8:  109:  return (name_ == rhs.name_ && host_ == rhs.host_ && security_level_ == rhs.security_level_
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0
+branch  4 taken 4 (fallthrough)
+branch  5 taken 0
+4:  110:      && authentication_key_ == rhs.authentication_key_ && authentication_type_ == rhs.authentication_type_
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+branch  3 taken 4 (fallthrough)
+branch  4 taken 0
+8*:  111:      && privacy_ == rhs.privacy_ && privacy_key_ == rhs.privacy_key_);
+branch  0 taken 4 (fallthrough)
+branch  1 taken 0
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0
+-:  112:}
+-:  113:
+function _ZNK4wago15snmp_config_lib14TrapReceiverV3ltERKS1_ called 4 returned 100% blocks executed 80%
+4:  114:bool TrapReceiverV3::operator <(const TrapReceiverV3 &rhs) const {
+4:  115:  const auto lhs_key = name_ + host_;
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+4:  116:  const auto rhs_key = rhs.name_ + rhs.host_;
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+8:  117:  return lhs_key < rhs_key;
+call    0 returned 4
+4:  118:}
+call    0 returned 4
+call    1 returned 4
+call    2 never executed
+-:  119:
+function _ZN4wago15snmp_config_lib4UserC2ERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 4 returned 100% blocks executed 100%
+4:  120:User::User(::std::string &name)
+4:  121:    : name_ { name } {
+call    0 returned 4
+call    1 returned 4
+call    2 returned 4
+4:  122:}
+-:  123:
+function _ZN4wago15snmp_config_lib4UserC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_6AccessENS0_13SecurityLevelENS0_18AuthenticationTypeES7_NS0_7PrivacyES7_ called 14 returned 100% blocks executed 100%
+14:  124:User::User(::std::string name, Access access, SecurityLevel security_level, AuthenticationType authentication_type,
+14:  125:           ::std::string authentication_key, Privacy privacy, ::std::string privacy_key)
+14:  126:    : name_ { ::std::move(name) },
+call    0 returned 14
+call    1 returned 14
+14:  127:      access_ { access },
+14:  128:      security_level_ { security_level },
+14:  129:      authentication_type_ { authentication_type },
+14:  130:      authentication_key_ { ::std::move(authentication_key) },
+call    0 returned 14
+call    1 returned 14
+14:  131:      privacy_ { privacy },
+14:  132:      privacy_key_ { ::std::move(privacy_key) } {
+call    0 returned 14
+call    1 returned 14
+14:  133:}
+-:  134:
+function _ZNK4wago15snmp_config_lib4UsereqERKS1_ called 4 returned 100% blocks executed 93%
+4:  135:bool User::operator ==(const User &rhs) const {
+8:  136:  return (name_ == rhs.name_ && access_ == rhs.access_ && security_level_ == rhs.security_level_
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+branch  3 taken 4 (fallthrough)
+branch  4 taken 0
+4:  137:      && authentication_key_ == rhs.authentication_key_ && authentication_type_ == rhs.authentication_type_
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+branch  3 taken 4 (fallthrough)
+branch  4 taken 0
+8*:  138:      && privacy_ == rhs.privacy_ && privacy_key_ == rhs.privacy_key_);
+branch  0 taken 4 (fallthrough)
+branch  1 taken 0
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0
+-:  139:}
+-:  140:
+function _ZNK4wago15snmp_config_lib4UserltERKS1_ called 7 returned 100% blocks executed 100%
+7:  141:bool User::operator <(const User &rhs) const {
+7:  142:  return name_ < rhs.name_;
+call    0 returned 7
+-:  143:}
+-:  144:
+function _ZNK4wago15snmp_config_lib10SnmpConfigeqERKS1_ called 4 returned 100% blocks executed 100%
+4:  145:bool SnmpConfig::operator ==(const SnmpConfig &rhs) const {
+2:  146:  return (snmp_enable_ == rhs.snmp_enable_ && sys_name_ == rhs.sys_name_ && sys_contact_ == rhs.sys_contact_
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0
+2:  147:      && sys_descr_ == rhs.sys_descr_ && sys_location_ == rhs.sys_location_ && sys_objectID_ == rhs.sys_objectID_
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0
+2:  148:      && sys_service_ == rhs.sys_service_ && trap_receivers_V1V2c_ == rhs.trap_receivers_V1V2c_
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0
+6:  149:      && trap_receivers_V3_ == rhs.trap_receivers_V3_ && communities_ == rhs.communities_ && user_ == rhs.user_);
+branch  0 taken 2 (fallthrough)
+branch  1 taken 2
+call    2 returned 2
+branch  3 taken 2 (fallthrough)
+branch  4 taken 0
+call    5 returned 2
+branch  6 taken 2 (fallthrough)
+branch  7 taken 0
+call    8 returned 2
+branch  9 taken 2 (fallthrough)
+branch 10 taken 0
+-:  150:}
+-:  151:
+function _ZNK4wago15snmp_config_lib10SnmpConfigneERKS1_ called 2 returned 100% blocks executed 100%
+2:  152:bool SnmpConfig::operator !=(const SnmpConfig &rhs) const {
+2:  153:  return not(*this == rhs);
+call    0 returned 2
+-:  154:}
+-:  155:
+function _ZN4wago15snmp_config_lib14ReadSnmpConfigEv called 0 returned 0% blocks executed 0%
+#####:  156:SnmpConfig ReadSnmpConfig() {
+#####:  157:  SnmpConfig snmp_config;
+call    0 never executed
+-:  158:
+#####:  159:  ReadConfigFiles(snmp_config);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  160:
+#####:  161:  snmp_config.snmp_enable_ = IsSnmpRunning();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  162:
+#####:  163:  return snmp_config;
+=====:  164:}
+call    0 never executed
+-:  165:
+function _ZN4wago15snmp_config_lib15WriteSnmpConfigERKNS0_10SnmpConfigE called 0 returned 0% blocks executed 0%
+#####:  166:Statuses WriteSnmpConfig(const SnmpConfig &config) {
+#####:  167:  Statuses s = Validate(config);
+call    0 never executed
+-:  168:
+#####:  169:  if (!s.IsOk()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+#####:  170:    return s;
+-:  171:  }
+-:  172:
+#####:  173:  WriteConfigFiles(config);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  174:
+#####:  175:  StopDaemons();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  176:  wago::util::RemoveSnmpUser("/var/net-snmp/snmpd.conf");
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+-:  177:
+#####:  178:  if (config.snmp_enable_) {
+branch  0 never executed
+branch  1 never executed
+#####:  179:    StartDaemons();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  180:  }
+-:  181:
+#####:  182:  TriggerEventFolder();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  183:
+#####:  184:  return s;
+=====:  185:}
+call    0 never executed
+-:  186:
+-:  187:}

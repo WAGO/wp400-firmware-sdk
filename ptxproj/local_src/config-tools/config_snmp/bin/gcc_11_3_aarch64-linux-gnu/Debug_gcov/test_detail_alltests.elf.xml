@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuites tests="42" failures="0" disabled="0" errors="0" time="0.953" timestamp="2024-12-02T18:43:32.251" name="AllTests">
+  <testsuite name="config_snmp.edit_basic_parameter" tests="16" failures="0" disabled="0" skipped="0" errors="0" time="0.46" timestamp="2024-12-02T18:43:32.271">
+    <testcase name="snmp_enable" file="test-src/edit_basic_parameter_test.cpp" line="15" status="run" result="completed" time="0.048" timestamp="2024-12-02T18:43:32.272" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="snmp_disable" file="test-src/edit_basic_parameter_test.cpp" line="27" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:43:32.322" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="set_sys_name_" file="test-src/edit_basic_parameter_test.cpp" line="41" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:43:32.324" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="clear_sys_name_" file="test-src/edit_basic_parameter_test.cpp" line="53" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:43:32.327" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="set_sys_descr_" file="test-src/edit_basic_parameter_test.cpp" line="67" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:43:32.329" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="clear_sys_descr_" file="test-src/edit_basic_parameter_test.cpp" line="79" status="run" result="completed" time="0.293" timestamp="2024-12-02T18:43:32.331" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="set_sys_location_" file="test-src/edit_basic_parameter_test.cpp" line="93" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:32.625" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="clear_sys_location_" file="test-src/edit_basic_parameter_test.cpp" line="105" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:43:32.630" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="set_sys_contact_" file="test-src/edit_basic_parameter_test.cpp" line="119" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:32.633" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="clear_sys_contact_" file="test-src/edit_basic_parameter_test.cpp" line="131" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:43:32.638" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="set_sys_object_id_" file="test-src/edit_basic_parameter_test.cpp" line="145" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:32.641" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="clear_sys_object_id_" file="test-src/edit_basic_parameter_test.cpp" line="157" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:43:32.646" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="set_multiple_basic_parameter" file="test-src/edit_basic_parameter_test.cpp" line="170" status="run" result="completed" time="0.007" timestamp="2024-12-02T18:43:32.649" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="override_existing_community" file="test-src/edit_basic_parameter_test.cpp" line="192" status="run" result="completed" time="0.056" timestamp="2024-12-02T18:43:32.657" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="add_new_community" file="test-src/edit_basic_parameter_test.cpp" line="205" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:43:32.714" classname="config_snmp.edit_basic_parameter"/>
+    <testcase name="delete_existing_community" file="test-src/edit_basic_parameter_test.cpp" line="217" status="run" result="completed" time="0.01" timestamp="2024-12-02T18:43:32.720" classname="config_snmp.edit_basic_parameter"/>
+  </testsuite>
+  <testsuite name="config_snmp.edit_community" tests="6" failures="0" disabled="0" skipped="0" errors="0" time="0.1" timestamp="2024-12-02T18:43:32.733">
+    <testcase name="add_community" file="test-src/edit_v1v2c_community_test.cpp" line="20" status="run" result="completed" time="0.048" timestamp="2024-12-02T18:43:32.733" classname="config_snmp.edit_community"/>
+    <testcase name="delete_community" file="test-src/edit_v1v2c_community_test.cpp" line="35" status="run" result="completed" time="0.016" timestamp="2024-12-02T18:43:32.783" classname="config_snmp.edit_community"/>
+    <testcase name="delete_last_community" file="test-src/edit_v1v2c_community_test.cpp" line="50" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:43:32.800" classname="config_snmp.edit_community"/>
+    <testcase name="edit_basic_parameter_should_not_interfere_with_add_community" file="test-src/edit_v1v2c_community_test.cpp" line="65" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:43:32.803" classname="config_snmp.edit_community"/>
+    <testcase name="add_community_throws_when_name_is_missing" file="test-src/edit_v1v2c_community_test.cpp" line="81" status="run" result="completed" time="0.019" timestamp="2024-12-02T18:43:32.810" classname="config_snmp.edit_community"/>
+    <testcase name="add_community_throws_when_access_is_invalid" file="test-src/edit_v1v2c_community_test.cpp" line="103" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:32.829" classname="config_snmp.edit_community"/>
+  </testsuite>
+  <testsuite name="config_snmp.edit_v1v2c_trap_receiver" tests="5" failures="0" disabled="0" skipped="0" errors="0" time="0.099" timestamp="2024-12-02T18:43:32.834">
+    <testcase name="add_trap" file="test-src/edit_v1v2c_trap_receiver_test.cpp" line="21" status="run" result="completed" time="0.074" timestamp="2024-12-02T18:43:32.835" classname="config_snmp.edit_v1v2c_trap_receiver"/>
+    <testcase name="delete_trapreceiver_throws_if_parameter_is_missing" file="test-src/edit_v1v2c_trap_receiver_test.cpp" line="36" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:32.909" classname="config_snmp.edit_v1v2c_trap_receiver"/>
+    <testcase name="delete_trapreceiver" file="test-src/edit_v1v2c_trap_receiver_test.cpp" line="62" status="run" result="completed" time="0.01" timestamp="2024-12-02T18:43:32.914" classname="config_snmp.edit_v1v2c_trap_receiver"/>
+    <testcase name="add_throws_when_name_is_missing" file="test-src/edit_v1v2c_trap_receiver_test.cpp" line="77" status="run" result="completed" time="0.003" timestamp="2024-12-02T18:43:32.925" classname="config_snmp.edit_v1v2c_trap_receiver"/>
+    <testcase name="add_trap_throws_when_version_is_invalid" file="test-src/edit_v1v2c_trap_receiver_test.cpp" line="100" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:32.929" classname="config_snmp.edit_v1v2c_trap_receiver"/>
+  </testsuite>
+  <testsuite name="config_snmp.edit_v3_user_or_trap" tests="6" failures="0" disabled="0" skipped="0" errors="0" time="0.132" timestamp="2024-12-02T18:43:32.934">
+    <testcase name="implicit_add_trap" file="test-src/edit_v3_trap_test.cpp" line="24" status="run" result="completed" time="0.099" timestamp="2024-12-02T18:43:32.934" classname="config_snmp.edit_v3_user_or_trap"/>
+    <testcase name="implicit_delete_trap" file="test-src/edit_v3_trap_test.cpp" line="45" status="run" result="completed" time="0.011" timestamp="2024-12-02T18:43:33.034" classname="config_snmp.edit_v3_user_or_trap"/>
+    <testcase name="add_trap_receiver" file="test-src/edit_v3_trap_test.cpp" line="62" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:43:33.046" classname="config_snmp.edit_v3_user_or_trap"/>
+    <testcase name="delete_trap_receiver" file="test-src/edit_v3_trap_test.cpp" line="83" status="run" result="completed" time="0.003" timestamp="2024-12-02T18:43:33.052" classname="config_snmp.edit_v3_user_or_trap"/>
+    <testcase name="add_throws_when_name_is_missing" file="test-src/edit_v3_trap_test.cpp" line="100" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:33.056" classname="config_snmp.edit_v3_user_or_trap"/>
+    <testcase name="add_trap_throws_when_privacy_is_invalid" file="test-src/edit_v3_trap_test.cpp" line="123" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:43:33.060" classname="config_snmp.edit_v3_user_or_trap"/>
+  </testsuite>
+  <testsuite name="config_snmp.handle_v3_add_or_delete_user" tests="9" failures="0" disabled="0" skipped="0" errors="0" time="0.139" timestamp="2024-12-02T18:43:33.067">
+    <testcase name="implicit_add_user" file="test-src/edit_v3_user_test.cpp" line="23" status="run" result="completed" time="0.07" timestamp="2024-12-02T18:43:33.067" classname="config_snmp.handle_v3_add_or_delete_user"/>
+    <testcase name="add_user" file="test-src/edit_v3_user_test.cpp" line="42" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:33.138" classname="config_snmp.handle_v3_add_or_delete_user"/>
+    <testcase name="add_user_with_default_access" file="test-src/edit_v3_user_test.cpp" line="58" status="run" result="completed" time="0.03" timestamp="2024-12-02T18:43:33.143" classname="config_snmp.handle_v3_add_or_delete_user"/>
+    <testcase name="add_user_when_notification_receiver_is_empty" file="test-src/edit_v3_user_test.cpp" line="73" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:43:33.173" classname="config_snmp.handle_v3_add_or_delete_user"/>
+    <testcase name="implicit_delete_user" file="test-src/edit_v3_user_test.cpp" line="94" status="run" result="completed" time="0.01" timestamp="2024-12-02T18:43:33.179" classname="config_snmp.handle_v3_add_or_delete_user"/>
+    <testcase name="delete_user" file="test-src/edit_v3_user_test.cpp" line="107" status="run" result="completed" time="0.003" timestamp="2024-12-02T18:43:33.190" classname="config_snmp.handle_v3_add_or_delete_user"/>
+    <testcase name="delete_user_throws_when_name_is_missing" file="test-src/edit_v3_user_test.cpp" line="120" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:33.193" classname="config_snmp.handle_v3_add_or_delete_user"/>
+    <testcase name="add_user_throws_when_name_is_missing" file="test-src/edit_v3_user_test.cpp" line="142" status="run" result="completed" time="0.003" timestamp="2024-12-02T18:43:33.197" classname="config_snmp.handle_v3_add_or_delete_user"/>
+    <testcase name="add_user_throws_when_auth_type_is_invalud" file="test-src/edit_v3_user_test.cpp" line="165" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:33.201" classname="config_snmp.handle_v3_add_or_delete_user"/>
+  </testsuite>
+</testsuites>

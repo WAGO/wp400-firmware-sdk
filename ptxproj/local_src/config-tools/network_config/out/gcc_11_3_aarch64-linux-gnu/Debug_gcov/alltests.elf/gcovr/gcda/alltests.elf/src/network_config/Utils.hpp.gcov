@@ -1,0 +1,86 @@
+-:    0:Source:src/network_config/Utils.hpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#pragma once
+-:    4:
+-:    5:#include "UriEscape.hpp"
+-:    6:
+-:    7:#include <string>
+-:    8:#include <boost/algorithm/string/trim.hpp>
+-:    9:#include <boost/algorithm/string/join.hpp>
+-:   10:#include <boost/optional/optional.hpp>
+-:   11:#include <initializer_list>
+-:   12:#include <array>
+-:   13:#include "OptionParser.hpp"
+-:   14:#include "OptionStrings.hpp"
+-:   15:#include "BaseTypes.hpp"
+-:   16:
+-:   17:namespace network_config {
+-:   18:
+-:   19:bool Contains(const boost::program_options::variables_map &map, const ::std::string &key);
+-:   20:bool Contains(const boost::program_options::variables_map &map, const Option &option);
+-:   21:::std::string GetValueOf(const boost::program_options::variables_map &map, const ::std::string &key);
+-:   22:::std::string GetValueOf(const boost::program_options::variables_map &map, const Option &option);
+-:   23:boost::optional<::std::vector<::std::string>> GetValuesOf(
+-:   24:    const boost::program_options::variables_map &map, const ::std::string &key);
+-:   25:::std::string GetValueOfGet(const boost::program_options::variables_map &map);
+-:   26:::std::string GetValueOfSet(const boost::program_options::variables_map &map);
+-:   27:::std::string GetValueOfAdd(const boost::program_options::variables_map &map);
+-:   28:::std::string GetValueOfDel(const boost::program_options::variables_map &map);
+-:   29:::std::string GetFormat(const boost::program_options::variables_map &map);
+-:   30:::std::string GetDevice(const boost::program_options::variables_map &map);
+-:   31:::std::string Get(const boost::program_options::variables_map &map, const Option &option);
+-:   32:
+-:   33:template<typename ... Options>
+function _ZN14network_config15JoinOptionNamesIJRKNS_6OptionES3_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_DpOT_ called 2 returned 100% blocks executed 48%
+2:   34:::std::string JoinOptionNames(std::string separator, Options &&... options) {
+2:   35:  ::std::array<::std::string, sizeof...(options)> options_a { { (options.name)... } };
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 2 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 2
+call    5 returned 2
+call    6 returned 2
+branch  7 taken 2 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 2
+call   10 never executed
+call   11 never executed
+call   12 never executed
+4:   36:  return boost::algorithm::join(options_a, separator);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:   37:}
+call    0 returned 2
+call    1 never executed
+-:   38:
+-:   39:template<typename ... Args>
+-:   40:void OptionalAndMutuallyExclusive(const boost::program_options::variables_map &map, Args &&... args) {
+-:   41:  auto option_count = (map.count(args.name) + ...);
+-:   42:
+-:   43:  if (option_count > 1) {
+-:   44:    throw boost::program_options::error(
+-:   45:        ::std::string("Optional arguments are mutually exclusive: " + JoinOptionNames(",", args...)));
+-:   46:  }
+-:   47:}
+-:   48:
+-:   49:template<typename ... Args>
+-:   50:void MutuallyExclusiveAndOnlyOnce(const boost::program_options::variables_map &map, Args &&... args) {
+-:   51:  auto option_count = (map.count(args.name) + ... );
+-:   52:
+-:   53:  if (option_count != 1) {
+-:   54:    throw boost::program_options::error(
+-:   55:        ::std::string("Either options are set that are mutually exclusive, or an option is set multiple times."));
+-:   56:  }
+-:   57:}
+-:   58:
+-:   59:template<typename ... Args>
+-:   60:void ExpectOptionPair(const boost::program_options::variables_map &map, Option option, Args &&... suboptions) {
+-:   61:  if (Contains(map, option)) {
+-:   62:    MutuallyExclusiveAndOnlyOnce(map, suboptions...);
+-:   63:  }
+-:   64:}
+-:   65:
+-:   66:}

@@ -1,0 +1,51 @@
+-:    0:Source:src/snmp-config/snmp_config_handler.hpp
+-:    1:// Copyright (c) 2022 WAGO GmbH & Co. KG
+-:    2:// SPDX-License-Identifier: MPL-2.0
+-:    3:#pragma once
+-:    4:
+-:    5:#include <SnmpConfig.hpp>
+-:    6:#include <exception>
+-:    7:#include <map>
+-:    8:#include <stdexcept>
+-:    9:#include <string>
+-:   10:#include <system_error>
+-:   11:
+-:   12:namespace wago::snmp_config {
+-:   13:
+-:   14:using parameter_map = std::map<::std::string, ::std::string>;
+-:   15:
+-:   16:void check_that_parameters_are_known(parameter_map const& parameters);
+-:   17:
+-:   18:void edit_basic_parameter(parameter_map const& parameters, wago::snmp_config_lib::SnmpConfig& config);
+-:   19:
+-:   20:void edit_v1v2c_trap_receiver(parameter_map const& parameters, wago::snmp_config_lib::SnmpConfig& config);
+-:   21:
+-:   22:void edit_v1v2c_community(parameter_map const& parameters, wago::snmp_config_lib::SnmpConfig& config);
+-:   23:
+-:   24:void edit_v3_user_or_trap(parameter_map const& parameters, wago::snmp_config_lib::SnmpConfig& config);
+-:   25:
+-:   26:enum class snmp_config_error {
+-:   27:  invalid_parameter = 1,
+-:   28:  missing_parameter = 2,
+-:   29:};
+-:   30:class snmp_config_exception final : public ::std::runtime_error {
+-:   31: public:
+-:   32:  snmp_config_exception(snmp_config_error snmp_config_error, ::std::string const& what)
+-:   33:      : ::std::runtime_error(what), error_(snmp_config_error) {
+-:   34:  }
+-:   35:  snmp_config_exception(const snmp_config_exception&)            = default;
+-:   36:  snmp_config_exception& operator=(const snmp_config_exception&) = default;
+-:   37:  snmp_config_exception(snmp_config_exception&&)                 = default;
+-:   38:  snmp_config_exception& operator=(snmp_config_exception&&)      = default;
+-:   39:
+-:   40:  ~snmp_config_exception() final = default;
+-:   41:
+10*:   42:  snmp_config_error error() const {
+10*:   43:    return error_;
+-:   44:  }
+-:   45:
+-:   46: private:
+-:   47:  snmp_config_error error_;
+-:   48:};
+-:   49:
+-:   50:}  // namespace wago::snmp_config

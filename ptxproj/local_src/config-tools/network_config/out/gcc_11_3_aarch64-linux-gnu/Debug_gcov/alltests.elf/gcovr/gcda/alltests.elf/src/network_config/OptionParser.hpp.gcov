@@ -1,0 +1,124 @@
+-:    0:Source:src/network_config/OptionParser.hpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#pragma once
+-:    4:
+-:    5:#include <boost/program_options.hpp>
+-:    6:#include "OptionStrings.hpp"
+-:    7:#include "Status.hpp"
+-:    8:
+-:    9:namespace network_config {
+-:   10:
+-:   11:struct FormatOption {
+-:   12:  explicit FormatOption(std::string val)
+-:   13:      : value(::std::move(val)) {
+-:   14:  }
+-:   15:  std::string value;
+-:   16:  friend std::ostream& operator <<(std::ostream &s, const FormatOption &option) {
+-:   17:    s << option.value;
+-:   18:    return s;
+-:   19:  }
+-:   20:};
+-:   21:
+-:   22:struct AutonegOption {
+-:   23:  explicit AutonegOption(std::string val)
+-:   24:      : value(::std::move(val)) {
+-:   25:  }
+-:   26:  std::string value;
+-:   27:  friend std::ostream& operator <<(std::ostream &s, const AutonegOption &option) {
+-:   28:    s << option.value;
+-:   29:    return s;
+-:   30:  }
+-:   31:};
+-:   32:
+-:   33:struct SpeedOption {
+-:   34:  explicit SpeedOption(std::string val)
+-:   35:      : value(::std::move(val)) {
+-:   36:  }
+-:   37:  std::string value;
+-:   38:  friend std::ostream& operator <<(std::ostream &s, const SpeedOption &option) {
+-:   39:    s << option.value;
+-:   40:    return s;
+-:   41:  }
+-:   42:};
+-:   43:
+-:   44:struct DuplexOption {
+-:   45:  explicit DuplexOption(std::string val)
+-:   46:      : value(::std::move(val)) {
+-:   47:  }
+-:   48:  std::string value;
+-:   49:  friend std::ostream& operator <<(std::ostream &s, const DuplexOption &option) {
+-:   50:    s << option.value;
+-:   51:    return s;
+-:   52:  }
+-:   53:};
+-:   54:
+-:   55:struct StateOption {
+-:   56:  explicit StateOption(std::string val)
+-:   57:      : value(::std::move(val)) {
+-:   58:  }
+-:   59:  std::string value;
+-:   60:
+-:   61:  friend std::ostream& operator <<(std::ostream &s, const StateOption &option) {
+-:   62:    s << option.value;
+-:   63:    return s;
+-:   64:  }
+-:   65:};
+-:   66:
+-:   67:class OptionParser {
+-:   68: public:
+-:   69:  OptionParser();
+23*:   70:  virtual ~OptionParser() = default;
+------------------
+_ZN14network_config12OptionParserD0Ev:
+function _ZN14network_config12OptionParserD0Ev called 0 returned 0% blocks executed 0%
+#####:   70:  virtual ~OptionParser() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN14network_config12OptionParserD2Ev:
+function _ZN14network_config12OptionParserD2Ev called 23 returned 100% blocks executed 100%
+23:   70:  virtual ~OptionParser() = default;
+call    0 returned 23
+call    1 returned 23
+call    2 returned 23
+------------------
+_ZN14network_config12OptionParserD0Ev:
+function _ZN14network_config12OptionParserD0Ev called 0 returned 0% blocks executed 0%
+#####:   70:  virtual ~OptionParser() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN14network_config12OptionParserD2Ev:
+function _ZN14network_config12OptionParserD2Ev called 0 returned 0% blocks executed 0%
+#####:   70:  virtual ~OptionParser() = default;
+call    0 never executed
+call    1 never executed
+call    2 never executed
+------------------
+-:   71:
+-:   72:  OptionParser(const OptionParser&) = delete;
+-:   73:  OptionParser& operator=(const OptionParser&) = delete;
+-:   74:  OptionParser(const OptionParser&&) = delete;
+-:   75:  OptionParser& operator=(const OptionParser&&) = delete;
+-:   76:
+-:   77:  void Parse(int argc, const char **argv);
+-:   78:  ::boost::program_options::options_description CreateDescriptions() const;
+-:   79:  void OnConfigOption(bool enabled) const;
+-:   80:
+function _ZNK14network_config12OptionParser14GetVariableMapEv called 23 returned 100% blocks executed 100%
+23:   81:  const ::boost::program_options::variables_map& GetVariableMap() const {
+23:   82:    return map_;
+-:   83:  }
+-:   84:  bool IsSet(const ::std::string &option) const;
+-:   85:  void PrintHelp() const;
+-:   86:
+-:   87: private:
+-:   88:  const Options options_;
+-:   89:  const Fields fields_;
+-:   90:  const ::boost::program_options::options_description descriptions_;
+-:   91:  ::boost::program_options::basic_parsed_options<char> parsed_options_;
+-:   92:  ::boost::program_options::variables_map map_;
+-:   93:};
+-:   94:
+-:   95:} /* namespace network_config */

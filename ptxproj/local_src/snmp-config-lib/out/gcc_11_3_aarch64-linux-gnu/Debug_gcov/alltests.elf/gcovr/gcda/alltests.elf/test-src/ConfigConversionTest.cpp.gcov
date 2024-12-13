@@ -1,0 +1,2382 @@
+-:    0:Source:test-src/ConfigConversionTest.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:
+-:   10:#include <gtest/gtest.h>
+-:   11:#include <gmock/gmock.h>
+-:   12:
+-:   13:#include "ConfigConversion.hpp"
+-:   14:
+-:   15:namespace wago::snmp_config_lib {
+-:   16:
+-:   17:using ::testing::Contains;
+-:   18:
+4:   19:TEST(ConfigConversionTest, ConvertSnmpConfigToString ) {
+1:   20:  SnmpConfig snmp_config;
+1:   21:  snmp_config.sys_name_ = "textName";
+1:   22:  snmp_config.sys_contact_ = "textContact";
+1:   23:  snmp_config.sys_descr_ = "textDescr";
+1:   24:  snmp_config.sys_location_ = "textLocation";
+1:   25:  snmp_config.sys_objectID_ = "textObjectID";
+1:   26:  snmp_config.sys_service_ = "textService";
+1:   27:  snmp_config.communities_.emplace_back(Community { "testCommunityRW", Access::ReadWrite });
+1:   28:  snmp_config.communities_.emplace_back(Community { "testCommunityRO", Access::ReadOnly });
+1:   29:  snmp_config.trap_receivers_V1V2c_.emplace_back(
+2:   30:      TrapReceiverV1V2c { "testHostV1", "testCommunityV1", VersionV1V2c::V1 });
+1:   31:  snmp_config.trap_receivers_V1V2c_.emplace_back(TrapReceiverV1V2c { "testHostV2c", "testCommunityV2c",
+-:   32:      VersionV1V2c::V2c });
+-:   33:
+1:   34:  ::std::string str_config = SnmpBasicAndV1V2cParameterToString(snmp_config);
+-:   35:
+-:   36:  ::std::string expected_snmp_config =
+1:   37:      R"(sysServices textService
+-:   38:sysName textName
+-:   39:sysDescr textDescr
+-:   40:sysLocation textLocation
+-:   41:sysContact textContact
+-:   42:sysObjectID textObjectID
+-:   43:rwcommunity testCommunityRW
+-:   44:rocommunity testCommunityRO
+-:   45:trapsink testHostV1 testCommunityV1
+-:   46:trap2sink testHostV2c testCommunityV2c
+-:   47:)";
+-:   48:
+1*:   49:  EXPECT_EQ(expected_snmp_config, str_config);
+1:   50:}
+------------------
+_ZN4wago15snmp_config_lib51ConfigConversionTest_ConvertSnmpConfigToString_TestC2Ev:
+function _ZN4wago15snmp_config_lib51ConfigConversionTest_ConvertSnmpConfigToString_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   19:TEST(ConfigConversionTest, ConvertSnmpConfigToString ) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib51ConfigConversionTest_ConvertSnmpConfigToString_TestD0Ev:
+function _ZN4wago15snmp_config_lib51ConfigConversionTest_ConvertSnmpConfigToString_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   19:TEST(ConfigConversionTest, ConvertSnmpConfigToString ) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib51ConfigConversionTest_ConvertSnmpConfigToString_TestD2Ev:
+function _ZN4wago15snmp_config_lib51ConfigConversionTest_ConvertSnmpConfigToString_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   19:TEST(ConfigConversionTest, ConvertSnmpConfigToString ) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib51ConfigConversionTest_ConvertSnmpConfigToString_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib51ConfigConversionTest_ConvertSnmpConfigToString_Test8TestBodyEv called 1 returned 100% blocks executed 43%
+1:   19:TEST(ConfigConversionTest, ConvertSnmpConfigToString ) {
+1:   20:  SnmpConfig snmp_config;
+call    0 returned 1
+1:   21:  snmp_config.sys_name_ = "textName";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   22:  snmp_config.sys_contact_ = "textContact";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   23:  snmp_config.sys_descr_ = "textDescr";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   24:  snmp_config.sys_location_ = "textLocation";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   25:  snmp_config.sys_objectID_ = "textObjectID";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   26:  snmp_config.sys_service_ = "textService";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   27:  snmp_config.communities_.emplace_back(Community { "testCommunityRW", Access::ReadWrite });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+call   11 returned 1
+call   12 returned 1
+call   13 never executed
+call   14 never executed
+call   15 never executed
+1:   28:  snmp_config.communities_.emplace_back(Community { "testCommunityRO", Access::ReadOnly });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+call   11 returned 1
+call   12 returned 1
+call   13 never executed
+call   14 never executed
+call   15 never executed
+1:   29:  snmp_config.trap_receivers_V1V2c_.emplace_back(
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+2:   30:      TrapReceiverV1V2c { "testHostV1", "testCommunityV1", VersionV1V2c::V1 });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+1:   31:  snmp_config.trap_receivers_V1V2c_.emplace_back(TrapReceiverV1V2c { "testHostV2c", "testCommunityV2c",
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:   32:      VersionV1V2c::V2c });
+-:   33:
+1:   34:  ::std::string str_config = SnmpBasicAndV1V2cParameterToString(snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   35:
+-:   36:  ::std::string expected_snmp_config =
+1:   37:      R"(sysServices textService
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:   38:sysName textName
+-:   39:sysDescr textDescr
+-:   40:sysLocation textLocation
+-:   41:sysContact textContact
+-:   42:sysObjectID textObjectID
+-:   43:rwcommunity testCommunityRW
+-:   44:rocommunity testCommunityRO
+-:   45:trapsink testHostV1 testCommunityV1
+-:   46:trap2sink testHostV2c testCommunityV2c
+-:   47:)";
+-:   48:
+1*:   49:  EXPECT_EQ(expected_snmp_config, str_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   50:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   51:
+4:   52:TEST(ConfigConversionTest, ConvertEmptySnmpConfigToString ) {
+1:   53:  SnmpConfig snmp_config;
+-:   54:
+1:   55:  ::std::string str_config = SnmpBasicAndV1V2cParameterToString(snmp_config);
+-:   56:
+1:   57:  ::std::string expected_snmp_config = R"(sysServices
+-:   58:sysName
+-:   59:sysDescr
+-:   60:sysLocation
+-:   61:sysContact
+-:   62:sysObjectID
+-:   63:)";
+-:   64:
+1*:   65:  EXPECT_EQ(expected_snmp_config, str_config);
+1:   66:}
+------------------
+_ZN4wago15snmp_config_lib56ConfigConversionTest_ConvertEmptySnmpConfigToString_TestC2Ev:
+function _ZN4wago15snmp_config_lib56ConfigConversionTest_ConvertEmptySnmpConfigToString_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   52:TEST(ConfigConversionTest, ConvertEmptySnmpConfigToString ) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib56ConfigConversionTest_ConvertEmptySnmpConfigToString_TestD0Ev:
+function _ZN4wago15snmp_config_lib56ConfigConversionTest_ConvertEmptySnmpConfigToString_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   52:TEST(ConfigConversionTest, ConvertEmptySnmpConfigToString ) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib56ConfigConversionTest_ConvertEmptySnmpConfigToString_TestD2Ev:
+function _ZN4wago15snmp_config_lib56ConfigConversionTest_ConvertEmptySnmpConfigToString_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   52:TEST(ConfigConversionTest, ConvertEmptySnmpConfigToString ) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib56ConfigConversionTest_ConvertEmptySnmpConfigToString_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib56ConfigConversionTest_ConvertEmptySnmpConfigToString_Test8TestBodyEv called 1 returned 100% blocks executed 36%
+1:   52:TEST(ConfigConversionTest, ConvertEmptySnmpConfigToString ) {
+1:   53:  SnmpConfig snmp_config;
+call    0 returned 1
+-:   54:
+1:   55:  ::std::string str_config = SnmpBasicAndV1V2cParameterToString(snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   56:
+1:   57:  ::std::string expected_snmp_config = R"(sysServices
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:   58:sysName
+-:   59:sysDescr
+-:   60:sysLocation
+-:   61:sysContact
+-:   62:sysObjectID
+-:   63:)";
+-:   64:
+1*:   65:  EXPECT_EQ(expected_snmp_config, str_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   66:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   67:
+4:   68:TEST(ConfigConversionTest, ConvertDifferentTrapV3ConfigurationsToString ) {
+1:   69:  SnmpConfig snmp_config;
+1:   70:  snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name1", SecurityLevel::AuthPriv,
+-:   71:      AuthenticationType::MD5, "aaaaaaaa", Privacy::DES, "bbbbbbbb", "192.168.10.1" });
+1:   72:  snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name2", SecurityLevel::AuthPriv,
+-:   73:        AuthenticationType::SHA, "aaaaaaaa", Privacy::AES, "", "192.168.10.2" });
+1:   74:  snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name3", SecurityLevel::AuthNoPriv,
+-:   75:        AuthenticationType::MD5, "aaaaaaaa", Privacy::None, "", "192.168.10.3" });
+1:   76:  snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name4", SecurityLevel::NoAuthNoPriv,
+-:   77:        AuthenticationType::None, "", Privacy::None, "", "192.168.10.4" });
+-:   78:
+1:   79:  ::std::string str_config = SnmpV3ParameterToString(snmp_config);
+-:   80:
+-:   81:
+-:   82:  ::std::string expected_snmp_config =
+1:   83:      R"(trapsess -v 3 -u name1 -a MD5 -A aaaaaaaa -x DES -X bbbbbbbb -l authPriv 192.168.10.1
+-:   84:trapsess -v 3 -u name2 -a SHA -A aaaaaaaa -x AES -X aaaaaaaa -l authPriv 192.168.10.2
+-:   85:trapsess -v 3 -u name3 -a MD5 -A aaaaaaaa -l authNoPriv 192.168.10.3
+-:   86:trapsess -v 3 -u name4 -l noAuthNoPriv 192.168.10.4
+-:   87:)";
+-:   88:
+1*:   89:  EXPECT_EQ(expected_snmp_config, str_config);
+1:   90:}
+------------------
+_ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentTrapV3ConfigurationsToString_TestC2Ev:
+function _ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentTrapV3ConfigurationsToString_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   68:TEST(ConfigConversionTest, ConvertDifferentTrapV3ConfigurationsToString ) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentTrapV3ConfigurationsToString_TestD0Ev:
+function _ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentTrapV3ConfigurationsToString_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   68:TEST(ConfigConversionTest, ConvertDifferentTrapV3ConfigurationsToString ) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentTrapV3ConfigurationsToString_TestD2Ev:
+function _ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentTrapV3ConfigurationsToString_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   68:TEST(ConfigConversionTest, ConvertDifferentTrapV3ConfigurationsToString ) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentTrapV3ConfigurationsToString_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentTrapV3ConfigurationsToString_Test8TestBodyEv called 1 returned 100% blocks executed 40%
+1:   68:TEST(ConfigConversionTest, ConvertDifferentTrapV3ConfigurationsToString ) {
+1:   69:  SnmpConfig snmp_config;
+call    0 returned 1
+1:   70:  snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name1", SecurityLevel::AuthPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+-:   71:      AuthenticationType::MD5, "aaaaaaaa", Privacy::DES, "bbbbbbbb", "192.168.10.1" });
+1:   72:  snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name2", SecurityLevel::AuthPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+-:   73:        AuthenticationType::SHA, "aaaaaaaa", Privacy::AES, "", "192.168.10.2" });
+1:   74:  snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name3", SecurityLevel::AuthNoPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+-:   75:        AuthenticationType::MD5, "aaaaaaaa", Privacy::None, "", "192.168.10.3" });
+1:   76:  snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name4", SecurityLevel::NoAuthNoPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+-:   77:        AuthenticationType::None, "", Privacy::None, "", "192.168.10.4" });
+-:   78:
+1:   79:  ::std::string str_config = SnmpV3ParameterToString(snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   80:
+-:   81:
+-:   82:  ::std::string expected_snmp_config =
+1:   83:      R"(trapsess -v 3 -u name1 -a MD5 -A aaaaaaaa -x DES -X bbbbbbbb -l authPriv 192.168.10.1
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:   84:trapsess -v 3 -u name2 -a SHA -A aaaaaaaa -x AES -X aaaaaaaa -l authPriv 192.168.10.2
+-:   85:trapsess -v 3 -u name3 -a MD5 -A aaaaaaaa -l authNoPriv 192.168.10.3
+-:   86:trapsess -v 3 -u name4 -l noAuthNoPriv 192.168.10.4
+-:   87:)";
+-:   88:
+1*:   89:  EXPECT_EQ(expected_snmp_config, str_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   90:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   91:
+4:   92:TEST(ConfigConversionTest, ConvertDifferentV3UserConfigurationsToString ) {
+1:   93:  SnmpConfig snmp_config;
+1:   94:  snmp_config.user_.emplace_back(User { "name1", Access::ReadWrite, SecurityLevel::AuthPriv,
+-:   95:      AuthenticationType::MD5, "aaaaaaaa", Privacy::DES, "bbbbbbbb"});
+1:   96:  snmp_config.user_.emplace_back(User { "name2", Access::ReadOnly, SecurityLevel::AuthPriv,
+-:   97:      AuthenticationType::SHA256, "aaaaaaaa", Privacy::AES256C, "aaaaaaaa"});
+1:   98:  snmp_config.user_.emplace_back(User { "name3", Access::ReadWrite, SecurityLevel::AuthNoPriv,
+-:   99:      AuthenticationType::MD5, "aaaaaaaa", Privacy::None, ""});
+1:  100:  snmp_config.user_.emplace_back(User { "name4", Access::ReadWrite, SecurityLevel::NoAuthNoPriv,
+-:  101:      AuthenticationType::None, "", Privacy::None, ""});
+-:  102:
+1:  103:  ::std::string str_config = SnmpV3ParameterToString(snmp_config);
+-:  104:
+-:  105:  ::std::string expected_snmp_config =
+1:  106:      R"(createUser name1 MD5 aaaaaaaa DES bbbbbbbb
+-:  107:rwuser name1 priv
+-:  108:createUser name2 SHA256 aaaaaaaa AES256C aaaaaaaa
+-:  109:rouser name2 priv
+-:  110:createUser name3 MD5 aaaaaaaa
+-:  111:rwuser name3 auth
+-:  112:createUser name4
+-:  113:rwuser name4 noauth
+-:  114:)";
+-:  115:
+1*:  116:  EXPECT_EQ(expected_snmp_config, str_config);
+1:  117:}
+------------------
+_ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentV3UserConfigurationsToString_TestC2Ev:
+function _ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentV3UserConfigurationsToString_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   92:TEST(ConfigConversionTest, ConvertDifferentV3UserConfigurationsToString ) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentV3UserConfigurationsToString_TestD0Ev:
+function _ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentV3UserConfigurationsToString_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   92:TEST(ConfigConversionTest, ConvertDifferentV3UserConfigurationsToString ) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentV3UserConfigurationsToString_TestD2Ev:
+function _ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentV3UserConfigurationsToString_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   92:TEST(ConfigConversionTest, ConvertDifferentV3UserConfigurationsToString ) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentV3UserConfigurationsToString_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib70ConfigConversionTest_ConvertDifferentV3UserConfigurationsToString_Test8TestBodyEv called 1 returned 100% blocks executed 40%
+1:   92:TEST(ConfigConversionTest, ConvertDifferentV3UserConfigurationsToString ) {
+1:   93:  SnmpConfig snmp_config;
+call    0 returned 1
+1:   94:  snmp_config.user_.emplace_back(User { "name1", Access::ReadWrite, SecurityLevel::AuthPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:   95:      AuthenticationType::MD5, "aaaaaaaa", Privacy::DES, "bbbbbbbb"});
+1:   96:  snmp_config.user_.emplace_back(User { "name2", Access::ReadOnly, SecurityLevel::AuthPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:   97:      AuthenticationType::SHA256, "aaaaaaaa", Privacy::AES256C, "aaaaaaaa"});
+1:   98:  snmp_config.user_.emplace_back(User { "name3", Access::ReadWrite, SecurityLevel::AuthNoPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:   99:      AuthenticationType::MD5, "aaaaaaaa", Privacy::None, ""});
+1:  100:  snmp_config.user_.emplace_back(User { "name4", Access::ReadWrite, SecurityLevel::NoAuthNoPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:  101:      AuthenticationType::None, "", Privacy::None, ""});
+-:  102:
+1:  103:  ::std::string str_config = SnmpV3ParameterToString(snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  104:
+-:  105:  ::std::string expected_snmp_config =
+1:  106:      R"(createUser name1 MD5 aaaaaaaa DES bbbbbbbb
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:  107:rwuser name1 priv
+-:  108:createUser name2 SHA256 aaaaaaaa AES256C aaaaaaaa
+-:  109:rouser name2 priv
+-:  110:createUser name3 MD5 aaaaaaaa
+-:  111:rwuser name3 auth
+-:  112:createUser name4
+-:  113:rwuser name4 noauth
+-:  114:)";
+-:  115:
+1*:  116:  EXPECT_EQ(expected_snmp_config, str_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  117:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:  118:
+4:  119:TEST(ConfigConversionTest, ExtractBasicParameterFromConfilLines) {
+-:  120:
+-:  121:  ::std::string snmpd_dot_conf =
+1:  122:      R"(
+-:  123:authtrapenable 1
+-:  124:sysServices 79
+-:  125:trapsink 192.168.10.222 TrapCommunity
+-:  126:trapsink 192.168.4.4 trapv2
+-:  127:rwcommunity public
+-:  128:sysName A-Za-z0-9 !?:;.,{}[]()*~'_-@
+-:  129:sysDescr desc
+-:  130:sysObjectID 0.1.222.3.4.5
+-:  131:trap2sink 192.168.10.223 travV2Community
+-:  132:sysLocation An der Werkbank
+-:  133:sysContact test@abc.de)";
+-:  134:
+1:  135:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+-:  136:
+1:  137:  SnmpConfig snmp_config;
+1:  138:  ExtractBasicParamters(config_lines, snmp_config);
+-:  139:
+1:  140:  SnmpConfig expected_snmp_config;
+1:  141:  expected_snmp_config.sys_name_ = "A-Za-z0-9 !?:;.,{}[]()*~'_-@";
+1:  142:  expected_snmp_config.sys_contact_ = "test@abc.de";
+1:  143:  expected_snmp_config.sys_descr_ = "desc";
+1:  144:  expected_snmp_config.sys_location_ = "An der Werkbank";
+1:  145:  expected_snmp_config.sys_objectID_ = "0.1.222.3.4.5";
+1:  146:  expected_snmp_config.sys_service_ = "79";
+-:  147:
+1*:  148:  EXPECT_EQ(expected_snmp_config.sys_name_, snmp_config.sys_name_);
+1*:  149:  EXPECT_EQ(expected_snmp_config.sys_contact_, snmp_config.sys_contact_);
+1*:  150:  EXPECT_EQ(expected_snmp_config.sys_descr_, snmp_config.sys_descr_);
+1*:  151:  EXPECT_EQ(expected_snmp_config.sys_location_, snmp_config.sys_location_);
+1*:  152:  EXPECT_EQ(expected_snmp_config.sys_objectID_, snmp_config.sys_objectID_);
+1*:  153:  EXPECT_EQ(expected_snmp_config.sys_service_, snmp_config.sys_service_);
+1:  154:}
+------------------
+_ZN4wago15snmp_config_lib62ConfigConversionTest_ExtractBasicParameterFromConfilLines_TestC2Ev:
+function _ZN4wago15snmp_config_lib62ConfigConversionTest_ExtractBasicParameterFromConfilLines_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  119:TEST(ConfigConversionTest, ExtractBasicParameterFromConfilLines) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib62ConfigConversionTest_ExtractBasicParameterFromConfilLines_TestD0Ev:
+function _ZN4wago15snmp_config_lib62ConfigConversionTest_ExtractBasicParameterFromConfilLines_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  119:TEST(ConfigConversionTest, ExtractBasicParameterFromConfilLines) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib62ConfigConversionTest_ExtractBasicParameterFromConfilLines_TestD2Ev:
+function _ZN4wago15snmp_config_lib62ConfigConversionTest_ExtractBasicParameterFromConfilLines_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  119:TEST(ConfigConversionTest, ExtractBasicParameterFromConfilLines) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib62ConfigConversionTest_ExtractBasicParameterFromConfilLines_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib62ConfigConversionTest_ExtractBasicParameterFromConfilLines_Test8TestBodyEv called 1 returned 100% blocks executed 29%
+1:  119:TEST(ConfigConversionTest, ExtractBasicParameterFromConfilLines) {
+-:  120:
+-:  121:  ::std::string snmpd_dot_conf =
+1:  122:      R"(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:  123:authtrapenable 1
+-:  124:sysServices 79
+-:  125:trapsink 192.168.10.222 TrapCommunity
+-:  126:trapsink 192.168.4.4 trapv2
+-:  127:rwcommunity public
+-:  128:sysName A-Za-z0-9 !?:;.,{}[]()*~'_-@
+-:  129:sysDescr desc
+-:  130:sysObjectID 0.1.222.3.4.5
+-:  131:trap2sink 192.168.10.223 travV2Community
+-:  132:sysLocation An der Werkbank
+-:  133:sysContact test@abc.de)";
+-:  134:
+1:  135:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  136:
+1:  137:  SnmpConfig snmp_config;
+call    0 returned 1
+1:  138:  ExtractBasicParamters(config_lines, snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  139:
+1:  140:  SnmpConfig expected_snmp_config;
+call    0 returned 1
+1:  141:  expected_snmp_config.sys_name_ = "A-Za-z0-9 !?:;.,{}[]()*~'_-@";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  142:  expected_snmp_config.sys_contact_ = "test@abc.de";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  143:  expected_snmp_config.sys_descr_ = "desc";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  144:  expected_snmp_config.sys_location_ = "An der Werkbank";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  145:  expected_snmp_config.sys_objectID_ = "0.1.222.3.4.5";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  146:  expected_snmp_config.sys_service_ = "79";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  147:
+1*:  148:  EXPECT_EQ(expected_snmp_config.sys_name_, snmp_config.sys_name_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  149:  EXPECT_EQ(expected_snmp_config.sys_contact_, snmp_config.sys_contact_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  150:  EXPECT_EQ(expected_snmp_config.sys_descr_, snmp_config.sys_descr_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  151:  EXPECT_EQ(expected_snmp_config.sys_location_, snmp_config.sys_location_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  152:  EXPECT_EQ(expected_snmp_config.sys_objectID_, snmp_config.sys_objectID_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  153:  EXPECT_EQ(expected_snmp_config.sys_service_, snmp_config.sys_service_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  154:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+------------------
+-:  155:
+4:  156:TEST(ConfigConversionTest, ExtractCommunityParameterFromConfigLines) {
+1:  157:  ::std::string snmpd_dot_conf = R"(
+-:  158:  rwcommunity public
+-:  159:  sysDescr ...
+-:  160:  rocommunity private
+-:  161:  sysObjectID ...)";
+-:  162:
+1:  163:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+-:  164:
+1:  165:  SnmpConfig snmp_config;
+1:  166:  ExtractCommunityParameters(config_lines, snmp_config);
+-:  167:
+1*:  168:  EXPECT_EQ(2, snmp_config.communities_.size());
+2*:  169:  EXPECT_THAT(snmp_config.communities_, Contains(Community { "public", Access::ReadWrite }));
+2*:  170:  EXPECT_THAT(snmp_config.communities_, Contains(Community { "private", Access::ReadOnly }));
+-:  171:
+1:  172:}
+------------------
+_ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractCommunityParameterFromConfigLines_TestC2Ev:
+function _ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractCommunityParameterFromConfigLines_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  156:TEST(ConfigConversionTest, ExtractCommunityParameterFromConfigLines) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractCommunityParameterFromConfigLines_TestD0Ev:
+function _ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractCommunityParameterFromConfigLines_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  156:TEST(ConfigConversionTest, ExtractCommunityParameterFromConfigLines) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractCommunityParameterFromConfigLines_TestD2Ev:
+function _ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractCommunityParameterFromConfigLines_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  156:TEST(ConfigConversionTest, ExtractCommunityParameterFromConfigLines) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractCommunityParameterFromConfigLines_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractCommunityParameterFromConfigLines_Test8TestBodyEv called 1 returned 100% blocks executed 33%
+1:  156:TEST(ConfigConversionTest, ExtractCommunityParameterFromConfigLines) {
+1:  157:  ::std::string snmpd_dot_conf = R"(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:  158:  rwcommunity public
+-:  159:  sysDescr ...
+-:  160:  rocommunity private
+-:  161:  sysObjectID ...)";
+-:  162:
+1:  163:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  164:
+1:  165:  SnmpConfig snmp_config;
+call    0 returned 1
+1:  166:  ExtractCommunityParameters(config_lines, snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  167:
+1*:  168:  EXPECT_EQ(2, snmp_config.communities_.size());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+2*:  169:  EXPECT_THAT(snmp_config.communities_, Contains(Community { "public", Access::ReadWrite }));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+branch 21 taken 0 (fallthrough)
+branch 22 taken 1
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+call   35 returned 1
+call   36 never executed
+call   37 never executed
+call   38 never executed
+2*:  170:  EXPECT_THAT(snmp_config.communities_, Contains(Community { "private", Access::ReadOnly }));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+branch 21 taken 0 (fallthrough)
+branch 22 taken 1
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+call   35 returned 1
+call   36 never executed
+call   37 never executed
+call   38 never executed
+-:  171:
+1:  172:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:  173:
+4:  174:TEST(ConfigConversionTest, ExtractTrapV1V2cParameterFromConfigLines) {
+-:  175:  ::std::string snmpd_dot_conf =
+1:  176:      R"(
+-:  177:sysDescr ...
+-:  178:trapsink HostV1 CommunityV1
+-:  179:sysObjectID ...
+-:  180:trap2sink HostV2 CommunityV2)";
+-:  181:
+1:  182:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+-:  183:
+1:  184:  SnmpConfig snmp_config;
+1:  185:  ExtractTrapV1V2cParameters(config_lines, snmp_config);
+-:  186:
+1*:  187:  EXPECT_EQ(2, snmp_config.trap_receivers_V1V2c_.size());
+2*:  188:  EXPECT_THAT(snmp_config.trap_receivers_V1V2c_,
+1:  189:              Contains(TrapReceiverV1V2c { "HostV1", "CommunityV1", VersionV1V2c::V1 }));
+2*:  190:  EXPECT_THAT(snmp_config.trap_receivers_V1V2c_,
+1:  191:              Contains(TrapReceiverV1V2c { "HostV2", "CommunityV2", VersionV1V2c::V2c }));
+1:  192:}
+------------------
+_ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractTrapV1V2cParameterFromConfigLines_TestC2Ev:
+function _ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractTrapV1V2cParameterFromConfigLines_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  174:TEST(ConfigConversionTest, ExtractTrapV1V2cParameterFromConfigLines) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractTrapV1V2cParameterFromConfigLines_TestD0Ev:
+function _ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractTrapV1V2cParameterFromConfigLines_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  174:TEST(ConfigConversionTest, ExtractTrapV1V2cParameterFromConfigLines) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractTrapV1V2cParameterFromConfigLines_TestD2Ev:
+function _ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractTrapV1V2cParameterFromConfigLines_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  174:TEST(ConfigConversionTest, ExtractTrapV1V2cParameterFromConfigLines) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractTrapV1V2cParameterFromConfigLines_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib66ConfigConversionTest_ExtractTrapV1V2cParameterFromConfigLines_Test8TestBodyEv called 1 returned 100% blocks executed 34%
+1:  174:TEST(ConfigConversionTest, ExtractTrapV1V2cParameterFromConfigLines) {
+-:  175:  ::std::string snmpd_dot_conf =
+1:  176:      R"(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:  177:sysDescr ...
+-:  178:trapsink HostV1 CommunityV1
+-:  179:sysObjectID ...
+-:  180:trap2sink HostV2 CommunityV2)";
+-:  181:
+1:  182:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  183:
+1:  184:  SnmpConfig snmp_config;
+call    0 returned 1
+1:  185:  ExtractTrapV1V2cParameters(config_lines, snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  186:
+1*:  187:  EXPECT_EQ(2, snmp_config.trap_receivers_V1V2c_.size());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+2*:  188:  EXPECT_THAT(snmp_config.trap_receivers_V1V2c_,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 1
+branch 15 taken 1 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+branch 27 taken 0 (fallthrough)
+branch 28 taken 1
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+call   40 never executed
+call   41 never executed
+call   42 never executed
+1:  189:              Contains(TrapReceiverV1V2c { "HostV1", "CommunityV1", VersionV1V2c::V1 }));
+call    0 returned 1
+call    1 never executed
+2*:  190:  EXPECT_THAT(snmp_config.trap_receivers_V1V2c_,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 1
+branch 15 taken 1 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+branch 27 taken 0 (fallthrough)
+branch 28 taken 1
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+call   40 never executed
+call   41 never executed
+call   42 never executed
+1:  191:              Contains(TrapReceiverV1V2c { "HostV2", "CommunityV2", VersionV1V2c::V2c }));
+call    0 returned 1
+call    1 never executed
+1:  192:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:  193:
+4:  194:TEST(ConfigConversionTest, ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues) {
+-:  195:  ::std::string snmpd_dot_conf =
+1:  196:      R"(
+-:  197:sysDescr ...
+-:  198:trapsink CommunityV1
+-:  199:sysObjectID ...
+-:  200:trap2sink HostV2 CommunityV2
+-:  201:trap2sink HostV2)";
+-:  202:
+1:  203:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+-:  204:
+1:  205:  SnmpConfig snmp_config;
+1:  206:  ExtractTrapV1V2cParameters(config_lines, snmp_config);
+-:  207:
+1*:  208:  EXPECT_EQ(1, snmp_config.trap_receivers_V1V2c_.size());
+2*:  209:  EXPECT_THAT(snmp_config.trap_receivers_V1V2c_,
+1:  210:              Contains(TrapReceiverV1V2c { "HostV2", "CommunityV2", VersionV1V2c::V2c }));
+-:  211:
+1:  212:}
+------------------
+_ZN4wago15snmp_config_lib78ConfigConversionTest_ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues_TestC2Ev:
+function _ZN4wago15snmp_config_lib78ConfigConversionTest_ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  194:TEST(ConfigConversionTest, ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib78ConfigConversionTest_ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues_TestD0Ev:
+function _ZN4wago15snmp_config_lib78ConfigConversionTest_ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  194:TEST(ConfigConversionTest, ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib78ConfigConversionTest_ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues_TestD2Ev:
+function _ZN4wago15snmp_config_lib78ConfigConversionTest_ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  194:TEST(ConfigConversionTest, ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib78ConfigConversionTest_ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib78ConfigConversionTest_ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues_Test8TestBodyEv called 1 returned 100% blocks executed 34%
+1:  194:TEST(ConfigConversionTest, ExtractTrapV1V2cParameterIgnoreTrapWithMissingValues) {
+-:  195:  ::std::string snmpd_dot_conf =
+1:  196:      R"(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:  197:sysDescr ...
+-:  198:trapsink CommunityV1
+-:  199:sysObjectID ...
+-:  200:trap2sink HostV2 CommunityV2
+-:  201:trap2sink HostV2)";
+-:  202:
+1:  203:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  204:
+1:  205:  SnmpConfig snmp_config;
+call    0 returned 1
+1:  206:  ExtractTrapV1V2cParameters(config_lines, snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  207:
+1*:  208:  EXPECT_EQ(1, snmp_config.trap_receivers_V1V2c_.size());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 returned 1
+call   20 never executed
+call   21 never executed
+call   22 never executed
+2*:  209:  EXPECT_THAT(snmp_config.trap_receivers_V1V2c_,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+branch 12 taken 1 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 1
+branch 15 taken 1 (fallthrough)
+branch 16 taken 0 (throw)
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+branch 27 taken 0 (fallthrough)
+branch 28 taken 1
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+branch 37 never executed
+branch 38 never executed
+call   39 never executed
+call   40 never executed
+call   41 never executed
+call   42 never executed
+1:  210:              Contains(TrapReceiverV1V2c { "HostV2", "CommunityV2", VersionV1V2c::V2c }));
+call    0 returned 1
+call    1 never executed
+-:  211:
+1:  212:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:  213:
+4:  214:TEST(ConfigConversionTest, ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues) {
+-:  215:
+-:  216:  ::std::string snmpd_dot_conf =
+1:  217:      R"(
+-:  218:authtrapenable 1
+-:  219:sysServices 79
+-:  220:trapsink 192.168.10.222 TrapCommunity
+-:  221:trapsink 192.168.4.4 trapv2
+-:  222:rwcommunity public
+-:  223:sysName
+-:  224:sysDescr
+-:  225:sysObjectID   0.1.222.3.4.5
+-:  226:trap2sink 192.168.10.223 travV2Community
+-:  227:sysLocation An der Werkbank
+-:  228:sysContact test@abc.de)";
+-:  229:
+1:  230:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+-:  231:
+1:  232:  SnmpConfig snmp_config;
+1:  233:  ExtractBasicParamters(config_lines, snmp_config);
+-:  234:
+1:  235:  SnmpConfig expected_snmp_config;
+1:  236:  expected_snmp_config.sys_name_ = "";
+1:  237:  expected_snmp_config.sys_contact_ = "test@abc.de";
+1:  238:  expected_snmp_config.sys_descr_ = "";
+1:  239:  expected_snmp_config.sys_location_ = "An der Werkbank";
+1:  240:  expected_snmp_config.sys_objectID_ = "0.1.222.3.4.5";
+1:  241:  expected_snmp_config.sys_service_ = "79";
+-:  242:
+1*:  243:  EXPECT_EQ(expected_snmp_config.sys_name_, snmp_config.sys_name_);
+1*:  244:  EXPECT_EQ(expected_snmp_config.sys_contact_, snmp_config.sys_contact_);
+1*:  245:  EXPECT_EQ(expected_snmp_config.sys_descr_, snmp_config.sys_descr_);
+1*:  246:  EXPECT_EQ(expected_snmp_config.sys_location_, snmp_config.sys_location_);
+1*:  247:  EXPECT_EQ(expected_snmp_config.sys_objectID_, snmp_config.sys_objectID_);
+1*:  248:  EXPECT_EQ(expected_snmp_config.sys_service_, snmp_config.sys_service_);
+1:  249:}
+------------------
+_ZN4wago15snmp_config_lib82ConfigConversionTest_ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues_TestC2Ev:
+function _ZN4wago15snmp_config_lib82ConfigConversionTest_ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  214:TEST(ConfigConversionTest, ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib82ConfigConversionTest_ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues_TestD0Ev:
+function _ZN4wago15snmp_config_lib82ConfigConversionTest_ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  214:TEST(ConfigConversionTest, ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib82ConfigConversionTest_ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues_TestD2Ev:
+function _ZN4wago15snmp_config_lib82ConfigConversionTest_ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  214:TEST(ConfigConversionTest, ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib82ConfigConversionTest_ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib82ConfigConversionTest_ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues_Test8TestBodyEv called 1 returned 100% blocks executed 29%
+1:  214:TEST(ConfigConversionTest, ExtractBasicParameterFromConfilLinesAndIgnoreEmptyValues) {
+-:  215:
+-:  216:  ::std::string snmpd_dot_conf =
+1:  217:      R"(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:  218:authtrapenable 1
+-:  219:sysServices 79
+-:  220:trapsink 192.168.10.222 TrapCommunity
+-:  221:trapsink 192.168.4.4 trapv2
+-:  222:rwcommunity public
+-:  223:sysName
+-:  224:sysDescr
+-:  225:sysObjectID   0.1.222.3.4.5
+-:  226:trap2sink 192.168.10.223 travV2Community
+-:  227:sysLocation An der Werkbank
+-:  228:sysContact test@abc.de)";
+-:  229:
+1:  230:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  231:
+1:  232:  SnmpConfig snmp_config;
+call    0 returned 1
+1:  233:  ExtractBasicParamters(config_lines, snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  234:
+1:  235:  SnmpConfig expected_snmp_config;
+call    0 returned 1
+1:  236:  expected_snmp_config.sys_name_ = "";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  237:  expected_snmp_config.sys_contact_ = "test@abc.de";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  238:  expected_snmp_config.sys_descr_ = "";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  239:  expected_snmp_config.sys_location_ = "An der Werkbank";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  240:  expected_snmp_config.sys_objectID_ = "0.1.222.3.4.5";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  241:  expected_snmp_config.sys_service_ = "79";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  242:
+1*:  243:  EXPECT_EQ(expected_snmp_config.sys_name_, snmp_config.sys_name_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  244:  EXPECT_EQ(expected_snmp_config.sys_contact_, snmp_config.sys_contact_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  245:  EXPECT_EQ(expected_snmp_config.sys_descr_, snmp_config.sys_descr_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  246:  EXPECT_EQ(expected_snmp_config.sys_location_, snmp_config.sys_location_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  247:  EXPECT_EQ(expected_snmp_config.sys_objectID_, snmp_config.sys_objectID_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1*:  248:  EXPECT_EQ(expected_snmp_config.sys_service_, snmp_config.sys_service_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  249:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+------------------
+-:  250:
+4:  251:TEST(ConfigConversionTest, ExtractTrapV3ParameterFromConfigLines) {
+-:  252:
+-:  253:  ::std::string snmpd_dot_conf =
+1:  254:      R"(trapsess -v 3 -u name1 -a MD5 -A aaaaaaaa -x DES -X bbbbbbbb -l authPriv 192.168.10.1
+-:  255:trapsess -v 3 -u name2 -a SHA512 -A aaaaaaaa -x AES192C -X aaaaaaaa -l authPriv 192.168.10.2
+-:  256:trapsess -v 3 -u name3 -a MD5 -A aaaaaaaa -l authNoPriv 192.168.10.3
+-:  257:trapsess -v 3 -u name4 -l noAuthNoPriv 192.168.10.4
+-:  258:)";
+-:  259:
+1:  260:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+-:  261:
+1:  262:  SnmpConfig snmp_config;
+1:  263:  ExtractTrapV3Parameters(config_lines, snmp_config);
+-:  264:
+1:  265:  SnmpConfig expected_snmp_config;
+1:  266:  expected_snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name1", SecurityLevel::AuthPriv,
+-:  267:      AuthenticationType::MD5, "aaaaaaaa", Privacy::DES, "bbbbbbbb", "192.168.10.1" });
+1:  268:  expected_snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name2", SecurityLevel::AuthPriv,
+-:  269:        AuthenticationType::SHA512, "aaaaaaaa", Privacy::AES192C, "", "192.168.10.2" });
+1:  270:  expected_snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name3", SecurityLevel::AuthNoPriv,
+-:  271:        AuthenticationType::MD5, "aaaaaaaa", Privacy::None, "", "192.168.10.3" });
+1:  272:  expected_snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name4", SecurityLevel::NoAuthNoPriv,
+-:  273:        AuthenticationType::None, "", Privacy::None, "", "192.168.10.4" });
+-:  274:
+1*:  275:  EXPECT_EQ(expected_snmp_config.trap_receivers_V3_, snmp_config.trap_receivers_V3_);
+1:  276:}
+------------------
+_ZN4wago15snmp_config_lib63ConfigConversionTest_ExtractTrapV3ParameterFromConfigLines_TestC2Ev:
+function _ZN4wago15snmp_config_lib63ConfigConversionTest_ExtractTrapV3ParameterFromConfigLines_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  251:TEST(ConfigConversionTest, ExtractTrapV3ParameterFromConfigLines) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib63ConfigConversionTest_ExtractTrapV3ParameterFromConfigLines_TestD0Ev:
+function _ZN4wago15snmp_config_lib63ConfigConversionTest_ExtractTrapV3ParameterFromConfigLines_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  251:TEST(ConfigConversionTest, ExtractTrapV3ParameterFromConfigLines) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib63ConfigConversionTest_ExtractTrapV3ParameterFromConfigLines_TestD2Ev:
+function _ZN4wago15snmp_config_lib63ConfigConversionTest_ExtractTrapV3ParameterFromConfigLines_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  251:TEST(ConfigConversionTest, ExtractTrapV3ParameterFromConfigLines) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib63ConfigConversionTest_ExtractTrapV3ParameterFromConfigLines_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib63ConfigConversionTest_ExtractTrapV3ParameterFromConfigLines_Test8TestBodyEv called 1 returned 100% blocks executed 41%
+1:  251:TEST(ConfigConversionTest, ExtractTrapV3ParameterFromConfigLines) {
+-:  252:
+-:  253:  ::std::string snmpd_dot_conf =
+1:  254:      R"(trapsess -v 3 -u name1 -a MD5 -A aaaaaaaa -x DES -X bbbbbbbb -l authPriv 192.168.10.1
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:  255:trapsess -v 3 -u name2 -a SHA512 -A aaaaaaaa -x AES192C -X aaaaaaaa -l authPriv 192.168.10.2
+-:  256:trapsess -v 3 -u name3 -a MD5 -A aaaaaaaa -l authNoPriv 192.168.10.3
+-:  257:trapsess -v 3 -u name4 -l noAuthNoPriv 192.168.10.4
+-:  258:)";
+-:  259:
+1:  260:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  261:
+1:  262:  SnmpConfig snmp_config;
+call    0 returned 1
+1:  263:  ExtractTrapV3Parameters(config_lines, snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  264:
+1:  265:  SnmpConfig expected_snmp_config;
+call    0 returned 1
+1:  266:  expected_snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name1", SecurityLevel::AuthPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+-:  267:      AuthenticationType::MD5, "aaaaaaaa", Privacy::DES, "bbbbbbbb", "192.168.10.1" });
+1:  268:  expected_snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name2", SecurityLevel::AuthPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+-:  269:        AuthenticationType::SHA512, "aaaaaaaa", Privacy::AES192C, "", "192.168.10.2" });
+1:  270:  expected_snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name3", SecurityLevel::AuthNoPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+-:  271:        AuthenticationType::MD5, "aaaaaaaa", Privacy::None, "", "192.168.10.3" });
+1:  272:  expected_snmp_config.trap_receivers_V3_.emplace_back(TrapReceiverV3 { "name4", SecurityLevel::NoAuthNoPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+call   26 returned 1
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 never executed
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+call   38 never executed
+call   39 never executed
+-:  273:        AuthenticationType::None, "", Privacy::None, "", "192.168.10.4" });
+-:  274:
+1*:  275:  EXPECT_EQ(expected_snmp_config.trap_receivers_V3_, snmp_config.trap_receivers_V3_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  276:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+------------------
+-:  277:
+4:  278:TEST(ConfigConversionTest, ExtractUserParameterFromConfigLines) {
+-:  279:  ::std::string snmpd_dot_conf =
+1:  280:      R"(createUser name1 MD5 aaaaaaaa DES bbbbbbbb
+-:  281:     rwuser name1 priv
+-:  282:     createUser name2 SHA aaaaaaaa AES aaaaaaaa
+-:  283:     rouser name2 priv
+-:  284:     createUser name3 MD5 aaaaaaaa
+-:  285:     rwuser name3 auth
+-:  286:     createUser name4
+-:  287:     rwuser name4 noauth
+-:  288:     )";
+-:  289:
+1:  290:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+-:  291:
+1:  292:  SnmpConfig snmp_config;
+1:  293:  ExtractUserParameters(config_lines, snmp_config);
+-:  294:
+1:  295:  SnmpConfig expected_snmp_config;
+1:  296:  expected_snmp_config.user_.emplace_back(User { "name1", Access::ReadWrite, SecurityLevel::AuthPriv,
+-:  297:      AuthenticationType::MD5, "aaaaaaaa", Privacy::DES, "bbbbbbbb"});
+1:  298:  expected_snmp_config.user_.emplace_back(User { "name2", Access::ReadOnly, SecurityLevel::AuthPriv,
+-:  299:      AuthenticationType::SHA, "aaaaaaaa", Privacy::AES, "aaaaaaaa"});
+1:  300:  expected_snmp_config.user_.emplace_back(User { "name3", Access::ReadWrite, SecurityLevel::AuthNoPriv,
+-:  301:      AuthenticationType::MD5, "aaaaaaaa", Privacy::None, ""});
+1:  302:  expected_snmp_config.user_.emplace_back(User { "name4", Access::ReadWrite, SecurityLevel::NoAuthNoPriv,
+-:  303:      AuthenticationType::None, "", Privacy::None, ""});
+-:  304:
+1*:  305:  EXPECT_EQ(expected_snmp_config.user_, snmp_config.user_);
+1:  306:}
+------------------
+_ZN4wago15snmp_config_lib61ConfigConversionTest_ExtractUserParameterFromConfigLines_TestC2Ev:
+function _ZN4wago15snmp_config_lib61ConfigConversionTest_ExtractUserParameterFromConfigLines_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  278:TEST(ConfigConversionTest, ExtractUserParameterFromConfigLines) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib61ConfigConversionTest_ExtractUserParameterFromConfigLines_TestD0Ev:
+function _ZN4wago15snmp_config_lib61ConfigConversionTest_ExtractUserParameterFromConfigLines_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  278:TEST(ConfigConversionTest, ExtractUserParameterFromConfigLines) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago15snmp_config_lib61ConfigConversionTest_ExtractUserParameterFromConfigLines_TestD2Ev:
+function _ZN4wago15snmp_config_lib61ConfigConversionTest_ExtractUserParameterFromConfigLines_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  278:TEST(ConfigConversionTest, ExtractUserParameterFromConfigLines) {
+call    0 returned 1
+------------------
+_ZN4wago15snmp_config_lib61ConfigConversionTest_ExtractUserParameterFromConfigLines_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib61ConfigConversionTest_ExtractUserParameterFromConfigLines_Test8TestBodyEv called 1 returned 100% blocks executed 41%
+1:  278:TEST(ConfigConversionTest, ExtractUserParameterFromConfigLines) {
+-:  279:  ::std::string snmpd_dot_conf =
+1:  280:      R"(createUser name1 MD5 aaaaaaaa DES bbbbbbbb
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+-:  281:     rwuser name1 priv
+-:  282:     createUser name2 SHA aaaaaaaa AES aaaaaaaa
+-:  283:     rouser name2 priv
+-:  284:     createUser name3 MD5 aaaaaaaa
+-:  285:     rwuser name3 auth
+-:  286:     createUser name4
+-:  287:     rwuser name4 noauth
+-:  288:     )";
+-:  289:
+1:  290:  auto config_lines = ExtractConfigLines(snmpd_dot_conf);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  291:
+1:  292:  SnmpConfig snmp_config;
+call    0 returned 1
+1:  293:  ExtractUserParameters(config_lines, snmp_config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  294:
+1:  295:  SnmpConfig expected_snmp_config;
+call    0 returned 1
+1:  296:  expected_snmp_config.user_.emplace_back(User { "name1", Access::ReadWrite, SecurityLevel::AuthPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:  297:      AuthenticationType::MD5, "aaaaaaaa", Privacy::DES, "bbbbbbbb"});
+1:  298:  expected_snmp_config.user_.emplace_back(User { "name2", Access::ReadOnly, SecurityLevel::AuthPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:  299:      AuthenticationType::SHA, "aaaaaaaa", Privacy::AES, "aaaaaaaa"});
+1:  300:  expected_snmp_config.user_.emplace_back(User { "name3", Access::ReadWrite, SecurityLevel::AuthNoPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:  301:      AuthenticationType::MD5, "aaaaaaaa", Privacy::None, ""});
+1:  302:  expected_snmp_config.user_.emplace_back(User { "name4", Access::ReadWrite, SecurityLevel::NoAuthNoPriv,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 never executed
+call   26 never executed
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+-:  303:      AuthenticationType::None, "", Privacy::None, ""});
+-:  304:
+1*:  305:  EXPECT_EQ(expected_snmp_config.user_, snmp_config.user_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  306:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+------------------
+-:  307:
+-:  308:}  // wago::util

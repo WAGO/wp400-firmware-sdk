@@ -1,0 +1,181 @@
+-:    0:Source:src/libconfigtoolutils/common_functions.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2020-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     common_main.c
+-:   12:///
+-:   13:///  \brief    Commonly used functions and default implementations.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "wc/assertion.h"
+-:   22:#include "wc/std_includes.h"
+-:   23:#include "ctutil/common_functions.h"
+-:   24:#include <string.h>
+-:   25:
+-:   26://------------------------------------------------------------------------------
+-:   27:// defines; structure, enumeration and type definitions
+-:   28://------------------------------------------------------------------------------
+-:   29:
+-:   30://------------------------------------------------------------------------------
+-:   31:// function prototypes
+-:   32://------------------------------------------------------------------------------
+-:   33:
+-:   34://------------------------------------------------------------------------------
+-:   35:// macros
+-:   36://------------------------------------------------------------------------------
+-:   37:
+-:   38://------------------------------------------------------------------------------
+-:   39:// variables' and constants' definitions
+-:   40://------------------------------------------------------------------------------
+-:   41:
+-:   42://------------------------------------------------------------------------------
+-:   43:// function implementation
+-:   44://------------------------------------------------------------------------------
+function ctutil_PrintInfoTextDefault called 0 returned 0% blocks executed 0%
+#####:   45:void ctutil_PrintInfoTextDefault(char const * const szCallString,
+-:   46:                                 char const * const szInfoText)
+-:   47:{
+#####:   48:  WC_ASSERT(szCallString[0] != '\0');
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:   49:  WC_ASSERT(szInfoText[0] != '\0');
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:   50:  printf("Programm call: %s\n", szCallString);
+call    0 never executed
+#####:   51:  printf("\n");
+call    0 never executed
+#####:   52:  printf(szInfoText);
+call    0 never executed
+#####:   53:  printf("\n");
+call    0 never executed
+-:   54:
+#####:   55:  return;
+-:   56:}
+-:   57:
+-:   58:
+function PrintCommandOptions called 2 returned 100% blocks executed 91%
+2:   59:static void PrintCommandOptions(struct option const * const arstCommandlineOptions,
+-:   60:                                char const * const * const arszCommandlineOptionTexts)
+-:   61:{
+2:   62:  printf("Application options:\n");
+call    0 returned 2
+2:   63:  size_t i = 0U;
+28:   64:  while(arstCommandlineOptions[i].name != NULL)
+branch  0 taken 26
+branch  1 taken 2 (fallthrough)
+-:   65:  {
+26:   66:    char const * szParam = "";
+26:   67:    if(arstCommandlineOptions[i].has_arg == required_argument)
+branch  0 taken 2 (fallthrough)
+branch  1 taken 24
+-:   68:    {
+2:   69:      szParam = "<param>";
+-:   70:    }
+26:   71:    if(arstCommandlineOptions[i].has_arg == optional_argument)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 26
+-:   72:    {
+#####:   73:      szParam = "[param]";
+-:   74:    }
+26:   75:    printf("  --%-25s %-7s   -%c   %s\n", arstCommandlineOptions[i].name,
+-:   76:                                          szParam,
+26:   77:                                          arstCommandlineOptions[i].val,
+26:   78:                                          arszCommandlineOptionTexts[i]);
+call    0 returned 26
+26:   79:    i++;
+-:   80:  }
+-:   81:
+2:   82:  return;
+-:   83:}
+-:   84:
+-:   85:
+function ctutil_PrintHelpDefault called 2 returned 100% blocks executed 100%
+2:   86:void ctutil_PrintHelpDefault(char const * const szCallString,
+-:   87:                             char const * const szHelpText,
+-:   88:                             char const * const szAdditionalText,
+-:   89:                             char const * const szExampleText,
+-:   90:                             struct option const * const arstCommandlineOptions,
+-:   91:                             char const * const * const arszCommandlineOptionTexts)
+-:   92:{
+2:   93:    printf("Program call: %s\n", szCallString);
+call    0 returned 2
+2:   94:    printf("\n");
+call    0 returned 2
+2:   95:    printf(szHelpText);
+call    0 returned 2
+2:   96:    printf("\n");
+call    0 returned 2
+2:   97:    PrintCommandOptions(arstCommandlineOptions, arszCommandlineOptionTexts);
+call    0 returned 2
+2:   98:    printf("\n");
+call    0 returned 2
+2:   99:    printf(szAdditionalText);
+call    0 returned 2
+2:  100:    printf("\n");
+call    0 returned 2
+2:  101:    printf(szExampleText);
+call    0 returned 2
+2:  102:    return;
+-:  103:}
+-:  104:
+-:  105:
+function ctutil_FreeConst called 0 returned 0% blocks executed 0%
+#####:  106:void ctutil_FreeConst(void const * const pMemoryToFree)
+-:  107:{
+-:  108:  // The following pointer arithmetics removes the 'const' attribute from pointer avoiding any warnings
+#####:  109:  char const * const pConstMemory = pMemoryToFree;
+#####:  110:  char * pMemory = 0x0;
+#####:  111:  pMemory = pMemory + (pConstMemory - pMemory);
+#####:  112:  free(pMemory);
+#####:  113:}
+-:  114:
+-:  115:
+function ctutil_CopyStringParam called 0 returned 0% blocks executed 0%
+#####:  116:statusCode_t ctutil_CopyStringParam(char const * * const pszStringParam,
+-:  117:                                    char const * const szOptionArg)
+-:  118:{
+#####:  119:  statusCode_t status = CTUTIL_SUCCESS;
+-:  120:
+#####:  121:  if((*pszStringParam) != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  122:  {
+#####:  123:    ctutil_FreeConst(*pszStringParam);
+call    0 never executed
+-:  124:  }
+#####:  125:  size_t const argLen = strlen(szOptionArg);
+#####:  126:  char * szOptionArgCopy = malloc(argLen + 1);
+#####:  127:  if(szOptionArgCopy == NULL)
+branch  0 never executed
+branch  1 never executed
+-:  128:  {
+#####:  129:    status = CTUTIL_FAILED;
+-:  130:  }
+-:  131:  else
+-:  132:  {
+#####:  133:    strncpy(szOptionArgCopy, szOptionArg, argLen);
+#####:  134:    szOptionArgCopy[argLen] = '\0';
+#####:  135:    (*pszStringParam) = szOptionArgCopy;
+-:  136:  }
+-:  137:
+#####:  138:  return status;
+-:  139:}
+-:  140:
+-:  141:
+-:  142://---- End of source file ------------------------------------------------------
+-:  143:

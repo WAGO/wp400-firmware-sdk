@@ -1,0 +1,550 @@
+-:    0:Source:src/reserved_area/params.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     params.c
+-:   12:///
+-:   13:///  \brief    Config tool specific parameter definition and handling for
+-:   14:///            reserved_area.
+-:   15:///
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "wc/assertion.h"
+-:   23:#include "wc/std_includes.h"
+-:   24:#include "ctutil/log.h"
+-:   25:#include "ctutil/common_functions.h"
+-:   26:#include "ctparts/common_main_defaults.h"
+-:   27:#include "params.h"
+-:   28:#include <getopt.h>
+-:   29:#include <stdlib.h>
+-:   30:#include <string.h>
+-:   31:#include <stdio.h>
+-:   32:
+-:   33://------------------------------------------------------------------------------
+-:   34:// defines; structure, enumeration and type definitions
+-:   35://------------------------------------------------------------------------------
+-:   36:#ifndef WAGO_CT_NAME
+-:   37:/// Config tool name (used in program help and info texts).
+-:   38:#define WAGO_CT_NAME          "reserved_area"
+-:   39:#endif
+-:   40:/// Config tool title line (used in program help and info texts).
+-:   41:#define WAGO_CT_TITLE         "* Command line interface tool for handling of reserved flash area *"
+-:   42:
+-:   43:/// Type definition for argument options returned by getopt() and getopt_long().
+-:   44:typedef int argOption_type;
+-:   45:
+-:   46:/// Type definition for argument option index used by getopt() and getopt_long().
+-:   47:typedef int argOptionIndex_type;
+-:   48:
+-:   49://------------------------------------------------------------------------------
+-:   50:// function prototypes
+-:   51://------------------------------------------------------------------------------
+-:   52:
+-:   53://------------------------------------------------------------------------------
+-:   54:// macros
+-:   55://------------------------------------------------------------------------------
+-:   56:
+-:   57://------------------------------------------------------------------------------
+-:   58:// variables' and constants' definitions
+-:   59://------------------------------------------------------------------------------
+-:   60:static const char infoText[] =
+-:   61:  WAGO_CT_TITLE "\n"
+-:   62:  "\n"
+-:   63:  "For detailed usage information use:\n"
+-:   64:  "  " WAGO_CT_NAME " --help\n";
+-:   65:
+-:   66:static const char helpText[] =
+-:   67:  WAGO_CT_TITLE "\n"
+-:   68:  "\n"
+-:   69:  "Usage:\n"
+-:   70:  "  " WAGO_CT_NAME " <command option> [<param>]\n";
+-:   71:
+-:   72:static const char additionalText[] =
+-:   73:  "Additional information:\n"
+-:   74:  "  This tool should be used exclusively to manage the reserved partition.\n";
+-:   75:
+-:   76:static const char exampleText[] =
+-:   77:  "Examples:\n"
+-:   78:  "  " WAGO_CT_NAME " -m /tmp/reserved\n"
+-:   79:  "    Mounts reserved partition to /tmp/reserved\n"
+-:   80:  "\n"
+-:   81:  "  " WAGO_CT_NAME " -fm /tmp/reserved --json\n"
+-:   82:  "    Mounts reserved partition to /tmp/reserved and prints free capacity in bytes as JSON object:\n"
+-:   83:  "    {\"freeCapacity\": \"126577\"}\n"
+-:   84:  "\n"
+-:   85:  "  " WAGO_CT_NAME " -m /tmp/reserved -c\n"
+-:   86:  "    Mounts reserved partition to /tmp/reserved and removes any content\n";
+-:   87:
+-:   88:static char const szCommandlineOptions[] = "hxqtjm:urCfapc";
+-:   89:
+-:   90:static struct option arstCommandlineOptions[] =
+-:   91:{
+-:   92:  { "help",                        no_argument,       NULL, 'h' },
+-:   93:  { "extract-from-uri-encoding",   no_argument,       NULL, 'x' },
+-:   94:  { "quiet",                       no_argument,       NULL, 'q' },
+-:   95:  { "text",                        no_argument,       NULL, 't' },
+-:   96:  { "json",                        no_argument,       NULL, 'j' },
+-:   97:  //{ "backward-compatibility",      no_argument,       NULL, 'b' },
+-:   98:  { "mount",                       required_argument, NULL, 'm' },
+-:   99:  { "umount",                      no_argument,       NULL, 'u' },
+-:  100:  { "readonly",                    no_argument,       NULL, 'r' },
+-:  101:  { "create",                      no_argument,       NULL, 'C' },
+-:  102:  { "print-free-capacity",         no_argument,       NULL, 'f' },
+-:  103:  { "print-available-capacity",    no_argument,       NULL, 'a' },
+-:  104:  { "print-mount-point",           no_argument,       NULL, 'p' },
+-:  105:  { "clear",                       no_argument,       NULL, 'c' },
+-:  106:  { NULL,                          no_argument,       NULL,  0  } // End marker, don't remove
+-:  107:};
+-:  108:
+-:  109:// Count of CommandlineOptions and short options (subtract ':') should to be equal
+-:  110:WC_STATIC_ASSERT((sizeof(arstCommandlineOptions) / sizeof(struct option)) == (sizeof(szCommandlineOptions) - 1));
+-:  111:
+-:  112:static char const * const arszCommandlineOptionTexts[] =
+-:  113:{
+-:  114:  "Prints this help text",
+-:  115:  "Extracts arguments from an URI encoding",
+-:  116:  "Don't print information or error texts to stdout/stderr",
+-:  117:  "Prints output as name=value pairs, one per line",
+-:  118:  "Prints output as JSON format string",
+-:  119:  //"Use compatibility mode if no reserved area present",
+-:  120:  "Mount reserved partition to given target directory",
+-:  121:  "Unmount reserved partition",
+-:  122:  "Mount reserved partition readonly (requires -m)",
+-:  123:  "Create given mount point if necessary (requires -m)",
+-:  124:  "Print out free capacity of reserved partition",
+-:  125:  "Print out (user) available capacity of reserved partition",
+-:  126:  "Print out mount point of reserved partition (\"" MARKER_NOT_MOUNTED "\" if not mounted)",
+-:  127:  "Clear reserved partition, all content will be removed",
+-:  128:  NULL // End marker, don't remove
+-:  129:};
+-:  130:
+-:  131:// Count of CommandlineOptions and CommandlineOptionTexts have to be equal
+-:  132:WC_STATIC_ASSERT((sizeof(arstCommandlineOptions) / sizeof(struct option)) == (sizeof(arszCommandlineOptionTexts) / sizeof(char const *)));
+-:  133:
+-:  134://------------------------------------------------------------------------------
+-:  135:// function implementation
+-:  136://------------------------------------------------------------------------------
+-:  137:
+-:  138:/// Function to print program information text (for example implementation see HelloWorld example config tool).
+function ctparts_PrintInfoText called 0 returned 0% blocks executed 0%
+#####:  139:void ctparts_PrintInfoText(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:  140:                           char const * const szCallString)
+-:  141:{
+#####:  142:  ctutil_PrintInfoTextDefault(szCallString, infoText);
+call    0 never executed
+#####:  143:}
+-:  144:
+-:  145:
+-:  146:/// Function to allocate specific options struct and set the option defaults (for example implementation see HelloWorld example config tool).
+function ctparts_SetOptionDefaults called 10 returned 100% blocks executed 62%
+10:  147:statusCode_t ctparts_SetOptionDefaults(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:  148:                                       ctutil_Options_t * const pstOptions)
+-:  149:{
+10:  150:  statusCode_t status = CTUTIL_SUCCESS;
+-:  151:
+10*:  152:  WC_ASSERT(pstOptions->pstSpecificOptions == NULL);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 10
+call    2 never executed
+10:  153:  pstOptions->stCommonOptions.infoPrint = true;
+10:  154:  pstOptions->pstSpecificOptions = calloc(1, sizeof(ctutil_OptionsSpecific_t));
+10:  155:  if(pstOptions->pstSpecificOptions == NULL)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 10
+-:  156:  {
+#####:  157:    status = CTUTIL_FAILED;
+-:  158:  }
+-:  159:  else
+-:  160:  {
+10:  161:    pstOptions->pstSpecificOptions->compatibilityMode = true;
+10:  162:    pstOptions->pstSpecificOptions->szTargetDirectory = NULL;
+-:  163:  }
+-:  164:
+10:  165:  if(ctutil_IsStatusOk(status))
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0
+-:  166:  {
+10*:  167:    WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 10
+call    2 never executed
+-:  168:  }
+-:  169:  else
+-:  170:  {
+#####:  171:    WC_ASSERT(pstOptions->pstSpecificOptions == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  172:  }
+-:  173:
+10:  174:  return status;
+-:  175:}
+-:  176:
+-:  177:
+-:  178:/// Function to release and free the specific option struct (for example implementation see HelloWorld example config tool).
+function ctparts_ReleaseSpecificOptions called 10 returned 100% blocks executed 100%
+10:  179:void ctparts_ReleaseSpecificOptions(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:  180:                                    ctutil_Options_t * const pstOptions)
+-:  181:{
+10:  182:  if(pstOptions->pstSpecificOptions != NULL)
+branch  0 taken 10 (fallthrough)
+branch  1 taken 0
+-:  183:  {
+10:  184:    free(pstOptions->pstSpecificOptions);
+10:  185:    pstOptions->pstSpecificOptions = NULL;
+-:  186:  }
+10:  187:}
+-:  188:
+-:  189:
+function PrintHelp called 2 returned 100% blocks executed 100%
+2:  190:static void PrintHelp(char const * const szCallString)
+-:  191:{
+2:  192:  ctutil_PrintHelpDefault(szCallString, helpText, additionalText, exampleText,
+call    0 returned 2
+-:  193:                          arstCommandlineOptions, arszCommandlineOptionTexts);
+2:  194:}
+-:  195:
+-:  196:
+-:  197:/// Function to evaluate early options (for example implementation see HelloWorld example config tool).
+function ctparts_EvaluateEarlyOptions called 6 returned 100% blocks executed 100%
+6:  198:statusCode_t ctparts_EvaluateEarlyOptions(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:  199:                                          int const argc,
+-:  200:                                          char * const argv[],
+-:  201:                                          ctutil_Options_t * const pstOptions)
+-:  202:{
+6:  203:  return ctutil_EvaluateEarlyOptions(argc, argv, pstOptions);
+call    0 returned 6
+-:  204:}
+-:  205:
+-:  206:
+function ValidateOptions called 3 returned 100% blocks executed 19%
+3:  207:static void ValidateOptions(ctutil_Options_t * const pstOptions)
+-:  208:{
+3:  209:  if(    (pstOptions->pstSpecificOptions->createMountPoint)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+#####:  210:      && (!pstOptions->pstSpecificOptions->mount))
+branch  0 never executed
+branch  1 never executed
+-:  211:  {
+-:  212:    // TODO: Build structures to bind ID, short option, long option, flag, required options and description together
+#####:  213:    CTUTIL_LOG_WARN(pstOptions->stCommonOptions.quiet,
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  214:                    "Found parameter option 'C' but not required option 'm', ignore option");
+-:  215:  }
+3:  216:  if(    (pstOptions->pstSpecificOptions->readonly)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+#####:  217:      && (!pstOptions->pstSpecificOptions->mount))
+branch  0 never executed
+branch  1 never executed
+-:  218:  {
+#####:  219:    CTUTIL_LOG_WARN(pstOptions->stCommonOptions.quiet,
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  220:                    "Found parameter option 'r' but not required option 'm', ignore option");
+-:  221:  }
+3:  222:  if(    (pstOptions->stCommonOptions.textOutput)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+#####:  223:      && (!pstOptions->pstSpecificOptions->printFreeCapacity)
+branch  0 never executed
+branch  1 never executed
+#####:  224:      && (!pstOptions->pstSpecificOptions->printAvailableCapacity)
+branch  0 never executed
+branch  1 never executed
+#####:  225:      && (!pstOptions->pstSpecificOptions->printMountPoint))
+branch  0 never executed
+branch  1 never executed
+-:  226:  {
+#####:  227:    CTUTIL_LOG_WARN(pstOptions->stCommonOptions.quiet,
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  228:                    "Found parameter option 't' for text output but no specific output requested, ignore option");
+-:  229:  }
+3:  230:  if(    (pstOptions->stCommonOptions.jsonOutput)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+#####:  231:      && (!pstOptions->pstSpecificOptions->printFreeCapacity)
+branch  0 never executed
+branch  1 never executed
+#####:  232:      && (!pstOptions->pstSpecificOptions->printAvailableCapacity)
+branch  0 never executed
+branch  1 never executed
+#####:  233:      && (!pstOptions->pstSpecificOptions->printMountPoint))
+branch  0 never executed
+branch  1 never executed
+-:  234:  {
+#####:  235:    CTUTIL_LOG_WARN(pstOptions->stCommonOptions.quiet,
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  236:                    "Found parameter option 'j' for JSON output but no specific output requested, ignore option");
+-:  237:  }
+3:  238:  if(    (pstOptions->pstSpecificOptions->mount)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+#####:  239:      && (pstOptions->pstSpecificOptions->umount))
+branch  0 never executed
+branch  1 never executed
+-:  240:  {
+#####:  241:    CTUTIL_LOG_WARN(pstOptions->stCommonOptions.quiet,
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  242:                    "Found parameter option 'm' for mount and 'u' for unmount, do nothing of both");
+#####:  243:    pstOptions->pstSpecificOptions->mount = false;
+#####:  244:    pstOptions->pstSpecificOptions->umount = false;
+-:  245:  }
+-:  246:
+3:  247:  return;
+-:  248:}
+-:  249:
+-:  250:
+-:  251:/// Function to evaluate argument options (for example implementation see HelloWorld example config tool).
+function ctparts_EvaluateOptions called 5 returned 100% blocks executed 24%
+5:  252:statusCode_t ctparts_EvaluateOptions(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:  253:                                     int const argc,
+-:  254:                                     char * const argv[],
+-:  255:                                     ctutil_Options_t * const pstOptions)
+-:  256:{
+5:  257:  statusCode_t status = CTUTIL_SUCCESS;
+-:  258:
+-:  259:  // Get argument options
+-:  260:  argOption_type option;
+-:  261:  argOptionIndex_type optionIndex;
+5:  262:  if(pstOptions->stCommonOptions.quiet)
+branch  0 taken 2 (fallthrough)
+branch  1 taken 3
+-:  263:  {
+2:  264:    opterr = 0;
+-:  265:  }
+5:  266:  optind = 0;
+5:  267:  bool helpRequested = false;
+9:  268:  while(    (ctutil_IsStatusOk(status))
+call    0 returned 9
+9:  269:         && (!helpRequested)
+branch  0 taken 7 (fallthrough)
+branch  1 taken 2
+16:  270:         && ((option = getopt_long(argc, argv, szCommandlineOptions, arstCommandlineOptions, &optionIndex)) != -1)) //lint !e960 !e1960 suggested usage of getopt
+branch  0 taken 9 (fallthrough)
+branch  1 taken 0
+call    2 returned 7
+branch  3 taken 4
+branch  4 taken 3 (fallthrough)
+-:  271:  {
+4:  272:    switch(option)
+branch  0 taken 2
+branch  1 taken 2
+branch  2 taken 0
+branch  3 taken 0
+branch  4 taken 0
+branch  5 taken 0
+branch  6 taken 0
+branch  7 taken 0
+branch  8 taken 0
+branch  9 taken 0
+branch 10 taken 0
+branch 11 taken 0
+branch 12 taken 0
+branch 13 taken 0
+branch 14 taken 0
+-:  273:    {
+2:  274:      case 'h':
+2:  275:        helpRequested = true;
+2:  276:        if(!pstOptions->stCommonOptions.quiet)
+branch  0 taken 2 (fallthrough)
+branch  1 taken 0
+-:  277:        {
+2:  278:          PrintHelp(argv[0]);
+call    0 returned 2
+-:  279:        }
+2:  280:        pstOptions->stCommonOptions.infoPrint = false;
+2:  281:        pstOptions->stCommonOptions.earlyExit = true;
+2:  282:        break;
+-:  283:
+2:  284:      case 'x':
+-:  285:      case 'q':
+-:  286:        // Already done as first step, nothing else to do here
+2:  287:        break;
+-:  288:
+#####:  289:      case 't':
+#####:  290:        pstOptions->stCommonOptions.infoPrint = false;
+#####:  291:        pstOptions->stCommonOptions.textOutput = true;
+#####:  292:        break;
+-:  293:
+#####:  294:      case 'j':
+#####:  295:        pstOptions->stCommonOptions.infoPrint = false;
+#####:  296:        pstOptions->stCommonOptions.jsonOutput = true;
+#####:  297:        break;
+-:  298:
+#####:  299:      case 'b':
+-:  300:        // Don't disable info print if this is the only option
+#####:  301:        WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  302:        pstOptions->pstSpecificOptions->compatibilityMode = true;
+#####:  303:        break;
+-:  304:
+#####:  305:      case 'm':
+#####:  306:        pstOptions->stCommonOptions.infoPrint = false;
+#####:  307:        if(    (optarg == NULL)
+branch  0 never executed
+branch  1 never executed
+#####:  308:            || (optarg[0] == '\0'))
+branch  0 never executed
+branch  1 never executed
+-:  309:        {
+#####:  310:          status = CTUTIL_MISSING_PARAMETER;
+#####:  311:          CTUTIL_LOG_STATUS_ERROR(pstOptions->stCommonOptions.quiet, status, "Parameter option m");
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+-:  312:        }
+-:  313:        else
+-:  314:        {
+#####:  315:          WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  316:          pstOptions->pstSpecificOptions->mount = true;
+#####:  317:          pstOptions->pstSpecificOptions->szTargetDirectory = optarg;
+-:  318:        }
+#####:  319:        break;
+-:  320:
+#####:  321:      case 'u':
+#####:  322:        pstOptions->stCommonOptions.infoPrint = false;
+#####:  323:        WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  324:        pstOptions->pstSpecificOptions->umount = true;
+#####:  325:        break;
+-:  326:
+#####:  327:      case 'r':
+#####:  328:        pstOptions->stCommonOptions.infoPrint = false;
+#####:  329:        WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  330:        pstOptions->pstSpecificOptions->readonly = true;
+#####:  331:        break;
+-:  332:
+#####:  333:      case 'C':
+#####:  334:        pstOptions->stCommonOptions.infoPrint = false;
+#####:  335:        WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  336:        pstOptions->pstSpecificOptions->createMountPoint = true;
+#####:  337:        break;
+-:  338:
+#####:  339:      case 'f':
+#####:  340:        pstOptions->stCommonOptions.infoPrint = false;
+#####:  341:        WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  342:        pstOptions->pstSpecificOptions->printFreeCapacity = true;
+#####:  343:        break;
+-:  344:
+#####:  345:      case 'a':
+#####:  346:        pstOptions->stCommonOptions.infoPrint = false;
+#####:  347:        WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  348:        pstOptions->pstSpecificOptions->printAvailableCapacity = true;
+#####:  349:        break;
+-:  350:
+#####:  351:      case 'p':
+#####:  352:        pstOptions->stCommonOptions.infoPrint = false;
+#####:  353:        WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  354:        pstOptions->pstSpecificOptions->printMountPoint = true;
+#####:  355:        break;
+-:  356:
+#####:  357:      case 'c':
+#####:  358:        pstOptions->stCommonOptions.infoPrint = false;
+#####:  359:        WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  360:        pstOptions->pstSpecificOptions->clear = true;
+#####:  361:        break;
+-:  362:
+#####:  363:      case '0':
+#####:  364:        if(arstCommandlineOptions[optionIndex].flag != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  365:        {
+-:  366:          // Option sets a flag, nothing else to do
+#####:  367:          break;
+-:  368:        }
+-:  369:        //lint -fallthrough, no break
+-:  370:      default:
+-:  371:        //lint -fallthrough, no break
+-:  372:      case '?':
+-:  373:        // Wrong option character or option with missing argument stored in global variable "optopt"
+-:  374:        // getopt_long already printed an error message in case of '?' (if opterr != 0)
+#####:  375:        status = CTUTIL_INVALID_PARAMETER;
+#####:  376:        CTUTIL_LOG_STATUS_ERROR(pstOptions->stCommonOptions.quiet, status,
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+-:  377:                                "Wrong option character or option with missing argument");
+#####:  378:        pstOptions->stCommonOptions.earlyExit = true;
+#####:  379:        break;
+-:  380:    }
+-:  381:  }
+-:  382:
+-:  383:  // Validate argument options if no exit planned
+5:  384:  if(!pstOptions->stCommonOptions.earlyExit)
+branch  0 taken 3 (fallthrough)
+branch  1 taken 2
+-:  385:  {
+3:  386:    ValidateOptions(pstOptions);
+call    0 returned 3
+-:  387:  }
+-:  388:
+5:  389:  return status;
+-:  390:}
+-:  391:
+-:  392:
+-:  393://---- End of source file ------------------------------------------------------
+-:  394:

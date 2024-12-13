@@ -1,0 +1,202 @@
+-:    0:Source:src/detect_feature/resources.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2019-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     resources.c
+-:   12:///
+-:   13:///  \brief    Config tool specific resource definition and handling for
+-:   14:///            detect_feature.
+-:   15:///
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "wc/structuring.h"
+-:   23:#include "wc/assertion.h"
+-:   24:#include "ctparts/common_main_defaults.h"
+-:   25:#include "ctutil/filesystem.h"
+-:   26:#include "resources.h"
+-:   27:#include "params.h"
+-:   28:#include <string.h>
+-:   29:#include <stdio.h>
+-:   30:#include <stdlib.h>
+-:   31:
+-:   32://------------------------------------------------------------------------------
+-:   33:// defines; structure, enumeration and type definitions
+-:   34://------------------------------------------------------------------------------
+-:   35:
+-:   36:/// Define for feature file path on device.
+-:   37:#define FEATURE_PATH_DEVICE   "/etc/specific/features"
+-:   38:
+-:   39://------------------------------------------------------------------------------
+-:   40:// function prototypes
+-:   41://------------------------------------------------------------------------------
+-:   42:
+-:   43://------------------------------------------------------------------------------
+-:   44:// macros
+-:   45://------------------------------------------------------------------------------
+-:   46:
+-:   47://------------------------------------------------------------------------------
+-:   48:// variables' and constants' definitions
+-:   49://------------------------------------------------------------------------------
+-:   50:
+-:   51://------------------------------------------------------------------------------
+-:   52:// function implementation
+-:   53://------------------------------------------------------------------------------
+-:   54:
+function IsDependencyComplete called 0 returned 0% blocks executed 0%
+#####:   55:static bool IsDependencyComplete(char const * const szFilePath)
+-:   56:{
+#####:   57:  bool result = true;
+-:   58:
+-:   59:  // Open file stream
+#####:   60:  FILE * const pFileStream = fopen(szFilePath, "r");
+call    0 never executed
+#####:   61:  if(pFileStream == NULL)
+branch  0 never executed
+branch  1 never executed
+-:   62:  {
+#####:   63:    result = false;
+-:   64:  }
+-:   65:
+-:   66:  // Check dependencies line by line
+#####:   67:  if(pFileStream != NULL)
+branch  0 never executed
+branch  1 never executed
+-:   68:  {
+#####:   69:    char * szLineBuffer = NULL;
+#####:   70:    size_t bufferLength = 0;
+-:   71:    ssize_t readChars;
+#####:   72:    while((readChars = getline(&szLineBuffer, &bufferLength, pFileStream)) != -1)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   73:    {
+#####:   74:      if(bufferLength > 0)
+branch  0 never executed
+branch  1 never executed
+-:   75:      {
+#####:   76:        char const * const szValueStart = strchr(szLineBuffer, '=');
+#####:   77:        if(szValueStart != NULL)
+branch  0 never executed
+branch  1 never executed
+-:   78:        {
+#####:   79:          if(    (strcmp(szValueStart, "=true") == 0)
+branch  0 never executed
+branch  1 never executed
+#####:   80:              || (strcmp(szValueStart, "=true\n") == 0)
+branch  0 never executed
+branch  1 never executed
+#####:   81:              || (strcmp(szValueStart, "=true\r\n") == 0)
+branch  0 never executed
+branch  1 never executed
+#####:   82:              || (strcmp(szValueStart, "=true\n\r") == 0))
+branch  0 never executed
+branch  1 never executed
+-:   83:          {
+#####:   84:              result = true;
+-:   85:          }
+-:   86:          else
+-:   87:          {
+#####:   88:              result = false;
+-:   89:          }
+-:   90:        }
+-:   91:      }
+-:   92:    }
+#####:   93:    fclose(pFileStream);
+call    0 never executed
+-:   94:
+-:   95:    // Free line buffer
+#####:   96:    if(szLineBuffer != NULL)
+branch  0 never executed
+branch  1 never executed
+-:   97:    {
+#####:   98:      free(szLineBuffer);
+-:   99:    }
+-:  100:  }
+-:  101:
+#####:  102:  return result;
+-:  103:}
+-:  104:
+-:  105:
+-:  106:/// Function to initialize config tool specific resources of detect_feature.
+function ctparts_InitSpecificResources called 0 returned 0% blocks executed 0%
+#####:  107:statusCode_t ctparts_InitSpecificResources(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:  108:                                           ctutil_ResourcesSpecific_t * * const ppstResources)
+-:  109:{
+#####:  110:  statusCode_t status = CTUTIL_SUCCESS;
+-:  111:
+#####:  112:  WC_ASSERT(*ppstResources == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  113:  *ppstResources = calloc(1, sizeof(ctutil_ResourcesSpecific_t));
+#####:  114:  ctutil_ResourcesSpecific_t * const pstResources = *ppstResources;
+#####:  115:  if(pstResources == NULL)
+branch  0 never executed
+branch  1 never executed
+-:  116:  {
+#####:  117:    status = CTUTIL_FAILED;
+-:  118:  }
+-:  119:  else
+-:  120:  {
+#####:  121:    pstResources->szDeviceFeaturePath = FEATURE_PATH_DEVICE;
+#####:  122:    pstResources->pfResolveRealPath = &realpath;
+#####:  123:    pstResources->pfIsFileAvailable = &ctutil_IsFileAvailable;
+#####:  124:    pstResources->pfIsDependencyComplete = &IsDependencyComplete;
+#####:  125:    pstResources->pfOpenDir = &opendir;
+#####:  126:    pstResources->pfReadDir = &readdir;
+#####:  127:    pstResources->pfCloseDir = &closedir;
+-:  128:  }
+-:  129:
+#####:  130:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  131:  {
+#####:  132:    WC_ASSERT(*ppstResources != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  133:  }
+-:  134:  else
+-:  135:  {
+#####:  136:    WC_ASSERT(*ppstResources == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  137:  }
+-:  138:
+#####:  139:  return status;
+-:  140:}
+-:  141:
+-:  142:
+-:  143:/// Function to release config tool specific resources of detect_feature.
+function ctparts_ReleaseSpecificResources called 0 returned 0% blocks executed 0%
+#####:  144:void ctparts_ReleaseSpecificResources(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:  145:                                      ctutil_ResourcesSpecific_t * * const ppstResources)
+-:  146:{
+#####:  147:  ctutil_ResourcesSpecific_t * const pstResources = *ppstResources;
+#####:  148:  if(pstResources != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  149:  {
+#####:  150:    free(pstResources);
+#####:  151:    *ppstResources = NULL;
+-:  152:  }
+-:  153:
+#####:  154:  return;
+-:  155:}
+-:  156:
+-:  157:
+-:  158://---- End of source file ------------------------------------------------------
+-:  159:

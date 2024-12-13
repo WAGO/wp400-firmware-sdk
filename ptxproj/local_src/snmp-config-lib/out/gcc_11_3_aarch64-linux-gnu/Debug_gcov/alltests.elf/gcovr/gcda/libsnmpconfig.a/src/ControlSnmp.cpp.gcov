@@ -1,0 +1,315 @@
+-:    0:Source:src/ControlSnmp.cpp
+-:    1:#include "ControlSnmp.hpp"
+-:    2:
+-:    3:#include <glib.h>
+-:    4:#include <filesystem>
+-:    5:#include <string>
+-:    6:
+-:    7:#include "Constants.hpp"
+-:    8:#include "Program.hpp"
+-:    9:
+-:   10:namespace wago::snmp_config_lib {
+-:   11:
+-:   12:namespace fs = std::filesystem;
+-:   13:
+-:   14:namespace {
+-:   15:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_18GetPidOfERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   16:int GetPidOf(const ::std::string &daemon_path) {
+#####:   17:  ::std::string command_line = "/usr/bin/pidof " + daemon_path;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   18:  auto program = wago::util::Program::Execute(command_line);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   19:
+#####:   20:  if (program.GetResult() == 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+-:   21:    char *end;
+#####:   22:    return ::std::strtol(program.GetStdout().c_str(), &end, 0);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+-:   23:  }
+-:   24:
+#####:   25:  return 0;
+#####:   26:}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:   27:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_19IsRunningERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   28:bool IsRunning(const ::std::string &daemon_path) {
+#####:   29:  int pid = GetPidOf(daemon_path);
+call    0 never executed
+#####:   30:  return pid > 0;
+-:   31:}
+-:   32:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_17AddLinkENS0_20LinuxDaemonFilePathsE called 0 returned 0% blocks executed 0%
+#####:   33:void AddLink(const LinuxDaemonFilePaths paths) {
+#####:   34:  if (not fs::exists(paths.rc_d)) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+#####:   35:    fs::create_symlink(paths.init_d, paths.rc_d);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+-:   36:  }
+#####:   37:}
+-:   38:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_110RemoveLinkENS0_20LinuxDaemonFilePathsE called 0 returned 0% blocks executed 0%
+#####:   39:void RemoveLink(const LinuxDaemonFilePaths paths) {
+#####:   40:  if (fs::exists(paths.rc_d)) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+#####:   41:    fs::remove_all(paths.rc_d);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+-:   42:  }
+#####:   43:}
+-:   44:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_15StartENS0_20LinuxDaemonFilePathsE called 0 returned 0% blocks executed 0%
+#####:   45:DaemonState Start(const LinuxDaemonFilePaths paths) {
+#####:   46:  if (not IsRunning(paths.daemon)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   47:    ::std::string command_line = paths.init_d + " start";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   48:    wago::util::Program::Execute(command_line);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+#####:   49:    return NewlyStarted;
+#####:   50:  }
+call    0 never executed
+call    1 never executed
+#####:   51:  return AlreadyRunning;
+-:   52:}
+-:   53:
+function _ZN4wago15snmp_config_lib12_GLOBAL__N_14StopENS0_20LinuxDaemonFilePathsE called 0 returned 0% blocks executed 0%
+#####:   54:void Stop(const LinuxDaemonFilePaths paths) {
+#####:   55:  if (IsRunning(paths.daemon)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   56:    ::std::string command_line = paths.init_d + " stop";
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   57:    wago::util::Program::Execute(command_line);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+#####:   58:  }
+call    0 never executed
+call    1 never executed
+#####:   59:}
+-:   60:
+-:   61:}
+-:   62:
+function _ZN4wago15snmp_config_lib12StartDaemonsEv called 0 returned 0% blocks executed 0%
+#####:   63:DaemonState StartDaemons() {
+#####:   64:  auto snmp_paths = Constants::GetSnmpFilePaths();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   65:  auto snmp_trap_paths = Constants::GetSnmpTrapFilePaths();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   66:
+#####:   67:  AddLink(snmp_paths);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+#####:   68:  AddLink(snmp_trap_paths);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+#####:   69:  auto state = Start(snmp_paths); // we only need to know if this daemon was restarted
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+#####:   70:  Start(snmp_trap_paths);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+-:   71:
+#####:   72:  return state;
+#####:   73:}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:   74:
+function _ZN4wago15snmp_config_lib11StopDaemonsEv called 0 returned 0% blocks executed 0%
+#####:   75:void StopDaemons() {
+#####:   76:  auto snmp_paths = Constants::GetSnmpFilePaths();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   77:  auto snmp_trap_paths = Constants::GetSnmpTrapFilePaths();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   78:
+#####:   79:  RemoveLink(snmp_paths);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+#####:   80:  RemoveLink(snmp_trap_paths);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+#####:   81:  Stop(snmp_paths);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+#####:   82:  Stop(snmp_trap_paths);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+#####:   83:}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:   84:
+function _ZN4wago15snmp_config_lib13IsSnmpRunningEv called 0 returned 0% blocks executed 0%
+#####:   85:bool IsSnmpRunning() {
+#####:   86:  auto snmp_paths = Constants::GetSnmpFilePaths();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   87:  auto snmp_trap_paths = Constants::GetSnmpTrapFilePaths();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   88:  return (IsRunning(snmp_paths.daemon) && IsRunning(snmp_trap_paths.daemon));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+#####:   89:}
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+-:   90:
+function _ZN4wago15snmp_config_lib30InformDaemonAboutChangedConfigEv called 0 returned 0% blocks executed 0%
+#####:   91:void InformDaemonAboutChangedConfig() {
+#####:   92:  auto paths = Constants::GetSnmpFilePaths();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   93:  auto pid = GetPidOf(paths.daemon);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   94:  wago::util::Program::Execute("/usr/bin/kill -HUP " + ::std::to_string(pid));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+call   13 never executed
+#####:   95:}
+call    0 never executed
+call    1 never executed
+-:   96:
+-:   97:}  // namespace wago::snmp_config_lib

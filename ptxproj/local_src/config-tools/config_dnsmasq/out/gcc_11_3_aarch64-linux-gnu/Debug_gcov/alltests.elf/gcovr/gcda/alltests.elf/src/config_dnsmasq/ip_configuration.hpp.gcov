@@ -1,0 +1,60 @@
+-:    0:Source:src/config_dnsmasq/ip_configuration.hpp
+-:    1://------------------------------------------------------------------------------
+-:    2:/// Copyright (c) 2020-2024 WAGO GmbH & Co. KG
+-:    3:///
+-:    4:/// PROPRIETARY RIGHTS of WAGO GmbH & Co. KG are involved in
+-:    5:/// the subject matter of this material. All manufacturing, reproduction,
+-:    6:/// use, and sales rights pertaining to this subject matter are governed
+-:    7:/// by the license agreement. The recipient of this software implicitly
+-:    8:/// accepts the terms of the license.
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///
+-:   12:///  \brief    Class representation of a port configuration
+-:   13:///
+-:   14:///  \author   MSc : WAGO GmbH & Co. KG
+-:   15://------------------------------------------------------------------------------
+-:   16:
+-:   17:#ifndef SRC_CONFIG_DNSMASQ_IPCONFIGURATION_HPP_
+-:   18:#define SRC_CONFIG_DNSMASQ_IPCONFIGURATION_HPP_
+-:   19:
+-:   20:#include <list>
+-:   21:
+-:   22:#include "port_data.hpp"
+-:   23:
+-:   24:namespace configdnsmasq {
+-:   25:
+-:   26:class ip_configuration {
+-:   27: public:
+-:   28:  std::string host_name;
+-:   29:  std::list<std::string> port_name_list;
+-:   30:  std::list<port_data> port_data_list;
+-:   31:
+-:   32:  ip_configuration();
+-:   33:  ip_configuration(const ip_configuration& other) = default;
+-:   34:  ip_configuration& operator=(const ip_configuration& other) = default;
+-:   35:  ip_configuration(ip_configuration&& other) = delete;
+-:   36:  ip_configuration& operator=(ip_configuration&& other) = delete;
+1*:   37:  virtual ~ip_configuration() = default;
+------------------
+_ZN13configdnsmasq16ip_configurationD0Ev:
+function _ZN13configdnsmasq16ip_configurationD0Ev called 0 returned 0% blocks executed 0%
+#####:   37:  virtual ~ip_configuration() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN13configdnsmasq16ip_configurationD2Ev:
+function _ZN13configdnsmasq16ip_configurationD2Ev called 1 returned 100% blocks executed 100%
+1:   37:  virtual ~ip_configuration() = default;
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+------------------
+-:   38:
+-:   39:  bool portIsAvailable(const std::string &port);
+-:   40:  port_data getPortData(const std::string& port);
+-:   41:};
+-:   42:
+-:   43:} // namespace configdnsmasq
+-:   44:
+-:   45:#endif /* SRC_CONFIG_DNSMASQ_IPCONFIGURATION_HPP_ */

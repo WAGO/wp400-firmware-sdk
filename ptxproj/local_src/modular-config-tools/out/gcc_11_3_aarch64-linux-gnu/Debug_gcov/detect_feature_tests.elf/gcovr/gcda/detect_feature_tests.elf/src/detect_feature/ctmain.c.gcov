@@ -1,0 +1,516 @@
+-:    0:Source:src/detect_feature/ctmain.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2019-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     ctmain.c
+-:   12:///
+-:   13:///  \brief    Config tool specific main functionality for
+-:   14:///            detect_feature.
+-:   15:///
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "wc/std_includes.h"
+-:   23:#include "wc/structuring.h"
+-:   24:#include "wc/assertion.h"
+-:   25:#include "ctutil/common_main.h"
+-:   26:#include "ctutil/log.h"
+-:   27:#include "ctutil/json.h"
+-:   28:#include "ctutil/common_functions.h"
+-:   29:#include "ctparts/common_main_defaults.h"
+-:   30:#include "ctparts/pmain.h"
+-:   31:#include "ctparts/ctmain.h"
+-:   32:#include "params.h"
+-:   33:#include "resources.h"
+-:   34:
+-:   35:#include <inttypes.h>
+-:   36:#include <errno.h>
+-:   37:#include <stdio.h>
+-:   38:
+-:   39://------------------------------------------------------------------------------
+-:   40:// defines; structure, enumeration and type definitions
+-:   41://------------------------------------------------------------------------------
+-:   42:#define MAX_FEATURES                                                        1024
+-:   43:
+-:   44://------------------------------------------------------------------------------
+-:   45:// function prototypes
+-:   46://------------------------------------------------------------------------------
+-:   47:
+-:   48://------------------------------------------------------------------------------
+-:   49:// macros
+-:   50://------------------------------------------------------------------------------
+-:   51:
+-:   52://------------------------------------------------------------------------------
+-:   53:// variables' and constants' definitions
+-:   54://------------------------------------------------------------------------------
+-:   55:
+-:   56://------------------------------------------------------------------------------
+-:   57:// function implementation
+-:   58://------------------------------------------------------------------------------
+-:   59:
+-:   60:/// Early function to prepare config tool main of detect_feature.
+function ctparts_PrepareMain called 0 returned 0% blocks executed 0%
+#####:   61:exitCode_t ctparts_PrepareMain(int const argc,
+-:   62:                               char * const argv[])
+-:   63:{
+-:   64:  // Prepare functions
+-:   65:  ctparts_commonMainFunctions_t stFunctions;
+#####:   66:  ctparts_SetDefaultCommonMainFunctions(&stFunctions);
+call    0 never executed
+-:   67:
+-:   68:  // Call common main function to prepare config tool main
+#####:   69:  return ctutil_CommonMain(argc, argv, &stFunctions, NULL);
+call    0 never executed
+-:   70:}
+-:   71:
+-:   72:
+function PrintTextAvailability called 6 returned 100% blocks executed 90%
+6:   73:static statusCode_t PrintTextAvailability(ctutil_OptionsSpecific_t const * const pstSpecificOptions,
+-:   74:                                          bool const available)
+-:   75:{
+6:   76:  statusCode_t status = CTUTIL_SUCCESS;
+-:   77:
+6:   78:  char const * const value = available ? "true" : "false";
+branch  0 taken 2 (fallthrough)
+branch  1 taken 4
+6:   79:  int printResult = 0;
+6:   80:  if(pstSpecificOptions->onlyValue)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 5
+-:   81:  {
+1:   82:    printResult = printf("%s", value);
+call    0 returned 1
+-:   83:  }
+-:   84:  else
+-:   85:  {
+5:   86:    printResult = printf("%s=%s", pstSpecificOptions->szFeature, value);
+call    0 returned 5
+-:   87:  }
+6:   88:  if(printResult < 0)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 6
+-:   89:  {
+#####:   90:    status = CTUTIL_FAILED;
+-:   91:  }
+-:   92:
+6:   93:  return status;
+-:   94:}
+-:   95:
+-:   96:
+function PrintJsonAvailability called 1 returned 100% blocks executed 77%
+1:   97:static statusCode_t PrintJsonAvailability(ctutil_OptionsSpecific_t const * const pstSpecificOptions,
+-:   98:                                          bool const available)
+-:   99:{
+1:  100:  statusCode_t status = CTUTIL_SUCCESS;
+-:  101:
+1:  102:  int printResult = 0;
+1:  103:  if(pstSpecificOptions->onlyValue)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+-:  104:  {
+#####:  105:    printResult = printf("%s", available ? "true" : "false");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  106:  }
+-:  107:  else
+-:  108:  {
+-:  109:    char szJsonObject[PATH_MAX + 1 + 5];
+1:  110:    size_t freeBufferSize = PATH_MAX + 1 + 5;
+1:  111:    char * szObjectStringPos = szJsonObject;
+1:  112:    size_t addedChars = 0;
+1:  113:    status = ctutil_JsonObjectStringOpen(szObjectStringPos, freeBufferSize, &addedChars);
+call    0 returned 1
+1:  114:    freeBufferSize    -= addedChars;
+1:  115:    szObjectStringPos += addedChars;
+-:  116:
+1:  117:    if(ctutil_IsStatusOk(status))
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+-:  118:    {
+1:  119:      status = ctutil_JsonObjectStringWriteBoolValue(szObjectStringPos, pstSpecificOptions->szFeature,
+call    0 returned 1
+-:  120:                                                     available, freeBufferSize, &addedChars);
+1:  121:      freeBufferSize    -= addedChars;
+1:  122:      szObjectStringPos += addedChars;
+-:  123:    }
+-:  124:
+1:  125:    if(ctutil_IsStatusOk(status))
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+-:  126:    {
+1:  127:      status = ctutil_JsonObjectStringClose(szObjectStringPos, freeBufferSize, &addedChars);
+call    0 returned 1
+1:  128:      freeBufferSize    -= addedChars;
+1:  129:      szObjectStringPos += addedChars;
+-:  130:    }
+-:  131:
+1:  132:    if(ctutil_IsStatusOk(status))
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+-:  133:    {
+1:  134:      printResult = printf("%s", szJsonObject);
+call    0 returned 1
+-:  135:    }
+-:  136:  }
+1:  137:  if(printResult < 0)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+-:  138:  {
+#####:  139:    status = CTUTIL_FAILED;
+-:  140:  }
+-:  141:
+1:  142:  return status;
+-:  143:}
+-:  144:
+-:  145:
+function PrintTextFeatureList called 2 returned 100% blocks executed 88%
+2:  146:static statusCode_t PrintTextFeatureList(char const * const * const arszFeatures,
+-:  147:                                         size_t const featureCount)
+-:  148:{
+2:  149:  statusCode_t status = CTUTIL_SUCCESS;
+-:  150:
+4:  151:  for(size_t i = 0; i < featureCount; ++i)
+branch  0 taken 2
+branch  1 taken 2 (fallthrough)
+-:  152:  {
+2:  153:    int const printResult = printf("%s=%s\n", arszFeatures[i], "true");
+call    0 returned 2
+2:  154:    if(printResult < 0)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 2
+-:  155:    {
+#####:  156:      status = CTUTIL_FAILED;
+#####:  157:      break;
+-:  158:    }
+-:  159:  }
+-:  160:
+2:  161:  return status;
+-:  162:}
+-:  163:
+-:  164:
+function PrintJsonFeatureList called 1 returned 100% blocks executed 96%
+1:  165:static statusCode_t PrintJsonFeatureList(char const * const * const arszFeatures,
+-:  166:                                         size_t const featureCount)
+-:  167:{
+1:  168:  statusCode_t status = CTUTIL_SUCCESS;
+-:  169:
+-:  170:  char szJsonObject[(10 * PATH_MAX) + 1 + 5];
+1:  171:  size_t freeBufferSize = (10 * PATH_MAX) + 1 + 5;
+1:  172:  char * szObjectStringPos = szJsonObject;
+1:  173:  size_t addedChars = 0;
+1:  174:  status = ctutil_JsonObjectStringOpen(szObjectStringPos, freeBufferSize, &addedChars);
+call    0 returned 1
+1:  175:  freeBufferSize    -= addedChars;
+1:  176:  szObjectStringPos += addedChars;
+-:  177:
+1:  178:  if(ctutil_IsStatusOk(status))
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+-:  179:  {
+1:  180:    status = ctutil_JsonObjectStringWriteArrayStart(szObjectStringPos, "features", freeBufferSize, &addedChars);
+call    0 returned 1
+1:  181:    freeBufferSize    -= addedChars;
+1:  182:    szObjectStringPos += addedChars;
+-:  183:  }
+-:  184:
+3:  185:  for(size_t i = 0; i < featureCount; ++i)
+branch  0 taken 2
+branch  1 taken 1 (fallthrough)
+-:  186:  {
+2:  187:    if(ctutil_IsStatusOk(status))
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0
+-:  188:    {
+2:  189:      status = ctutil_JsonObjectStringWriteArrayStringValue(szObjectStringPos, arszFeatures[i], freeBufferSize, &addedChars);
+call    0 returned 2
+2:  190:      freeBufferSize    -= addedChars;
+2:  191:      szObjectStringPos += addedChars;
+-:  192:    }
+-:  193:  }
+-:  194:
+1:  195:  if(ctutil_IsStatusOk(status))
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+-:  196:  {
+1:  197:    status = ctutil_JsonObjectStringWriteArrayEnd(szObjectStringPos, freeBufferSize, &addedChars);
+call    0 returned 1
+1:  198:    freeBufferSize    -= addedChars;
+1:  199:    szObjectStringPos += addedChars;
+-:  200:  }
+-:  201:
+1:  202:  if(ctutil_IsStatusOk(status))
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+-:  203:  {
+1:  204:    status = ctutil_JsonObjectStringClose(szObjectStringPos, freeBufferSize, &addedChars);
+call    0 returned 1
+1:  205:    freeBufferSize    -= addedChars;
+1:  206:    szObjectStringPos += addedChars;
+-:  207:  }
+-:  208:
+1:  209:  if(ctutil_IsStatusOk(status))
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+-:  210:  {
+1:  211:    int const printResult = printf("%s", szJsonObject);
+call    0 returned 1
+1:  212:    if(printResult < 0)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+-:  213:    {
+#####:  214:      status = CTUTIL_FAILED;
+-:  215:    }
+-:  216:  }
+-:  217:
+1:  218:  return status;
+-:  219:}
+-:  220:
+-:  221:
+function IsFeatureAvailable called 11 returned 100% blocks executed 100%
+11:  222:static bool IsFeatureAvailable(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  223:                               ctutil_Resources_t const * const pstResources,
+-:  224:                               char const * const szFeature)
+-:  225:{
+11:  226:    bool result = false;
+-:  227:
+11:  228:    char const * const szDeviceFeaturePath = pstResources->pstSpecificResources->szDeviceFeaturePath;
+-:  229:    char szPathBuffer[PATH_MAX];
+11:  230:    strncpy(szPathBuffer, szDeviceFeaturePath, PATH_MAX - 1U);
+11:  231:    szPathBuffer[PATH_MAX - 1U] = '\0';
+11:  232:    strncat(szPathBuffer, "/", PATH_MAX - 1U);
+11:  233:    strncat(szPathBuffer, szFeature, PATH_MAX - 1U);
+-:  234:    char szResolvedPathBuffer[PATH_MAX];
+11:  235:    char const * const szResolvedPath = pstResources->pstSpecificResources->pfResolveRealPath(szPathBuffer, szResolvedPathBuffer);
+call    0 returned 11
+11:  236:    if(    (szResolvedPath != NULL)
+branch  0 taken 10 (fallthrough)
+branch  1 taken 1
+10:  237:        && (strncmp(szDeviceFeaturePath, szResolvedPath, strlen(szDeviceFeaturePath)) == 0)
+branch  0 taken 9 (fallthrough)
+branch  1 taken 1
+9:  238:        && (pstResources->pstSpecificResources->pfIsFileAvailable(pstCommonOptions, szResolvedPath, NULL))
+call    0 returned 9
+branch  1 taken 8 (fallthrough)
+branch  2 taken 1
+8:  239:        && (pstResources->pstSpecificResources->pfIsDependencyComplete(szResolvedPath)))
+call    0 returned 8
+branch  1 taken 7 (fallthrough)
+branch  2 taken 1
+-:  240:    {
+7:  241:      result = true;
+-:  242:    }
+-:  243:
+11:  244:    return result;
+-:  245:}
+-:  246:
+-:  247:
+function CreateFeatureList called 3 returned 100% blocks executed 41%
+3:  248:static statusCode_t CreateFeatureList(ctutil_OptionsCommon_t const * const pstCommonOptions,
+-:  249:                                      ctutil_Resources_t const * const pstResources,
+-:  250:                                      char const * * const arszFeatureMap,
+-:  251:                                      size_t const featureMapSize,
+-:  252:                                      size_t * const pFeatureCount)
+-:  253:{
+3:  254:    statusCode_t status = CTUTIL_SUCCESS;
+-:  255:
+3:  256:  DIR * pDirectory = pstResources->pstSpecificResources->pfOpenDir(pstResources->pstSpecificResources->szDeviceFeaturePath);
+call    0 returned 3
+3:  257:  if(pDirectory == NULL)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+-:  258:  {
+#####:  259:    status = CTUTIL_SYSTEM_CALL_ERROR;
+#####:  260:    char const * const szErrorString = strerror(errno);
+call    0 never executed
+#####:  261:    CTUTIL_LOG_DEBUG(pstCommonOptions->quiet, szErrorString);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  262:    CTUTIL_LOG_STATUS_ERROR(pstCommonOptions->quiet, status,
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+-:  263:                            "Failed to get feature files from feature directory");
+-:  264:  }
+-:  265:  else
+-:  266:  {
+-:  267:    struct dirent * pDirectoryEntry;
+13:  268:    while((pDirectoryEntry = pstResources->pstSpecificResources->pfReadDir(pDirectory)) != NULL)
+call    0 returned 13
+branch  1 taken 10
+branch  2 taken 3 (fallthrough)
+-:  269:    {
+10:  270:      if(pDirectoryEntry->d_name[0] != '.')
+branch  0 taken 4 (fallthrough)
+branch  1 taken 6
+-:  271:      {
+4:  272:        if(IsFeatureAvailable(pstCommonOptions, pstResources, pDirectoryEntry->d_name))
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+-:  273:        {
+4:  274:          if(*pFeatureCount >= featureMapSize)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
+-:  275:          {
+#####:  276:            CTUTIL_LOG_WARN(pstCommonOptions->quiet, "Found to many features, not all features will be listed");
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  277:            break;
+-:  278:          }
+4:  279:          arszFeatureMap[*pFeatureCount] = strdup(pDirectoryEntry->d_name);
+4:  280:          ++(*pFeatureCount);
+-:  281:        }
+-:  282:      }
+-:  283:    }
+3:  284:    pstResources->pstSpecificResources->pfCloseDir(pDirectory);
+call    0 returned 3
+-:  285:  }
+-:  286:
+3:  287:  return status;
+-:  288:}
+-:  289:
+-:  290:
+-:  291:/// Main function for config tool core functionality (for example implementation see HelloWorld example config tool).
+function ctparts_ctMain called 11 returned 100% blocks executed 84%
+11:  292:exitCode_t ctparts_ctMain(int const WC_UNUSED_PARAM(argc),
+-:  293:                          char * const WC_UNUSED_PARAM(argv[]),
+-:  294:                          ctutil_Options_t const * const pstOptions,
+-:  295:                          ctutil_Resources_t const * const pstResources)
+-:  296:{
+11:  297:  exitCode_t result = CTUTIL_EXIT_SUCCESS;
+11:  298:  statusCode_t status = CTUTIL_SUCCESS;
+-:  299:
+11:  300:  if(pstOptions->pstSpecificOptions->listMode)
+branch  0 taken 3 (fallthrough)
+branch  1 taken 8
+-:  301:  {
+3:  302:    char const * arszFeatures[MAX_FEATURES] = { NULL };
+3:  303:    size_t featureCount = 0;
+3:  304:    status = CreateFeatureList(&(pstOptions->stCommonOptions), pstResources, arszFeatures, MAX_FEATURES, &featureCount);
+call    0 returned 3
+-:  305:
+3:  306:    if(ctutil_IsStatusOk(status) && pstOptions->stCommonOptions.textOutput)
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0
+branch  3 taken 2 (fallthrough)
+branch  4 taken 1
+-:  307:    {
+2:  308:      status = PrintTextFeatureList(arszFeatures, featureCount);
+call    0 returned 2
+-:  309:    }
+3:  310:    if(ctutil_IsStatusOk(status) && pstOptions->stCommonOptions.jsonOutput)
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0
+branch  3 taken 1 (fallthrough)
+branch  4 taken 2
+-:  311:    {
+1:  312:      status = PrintJsonFeatureList(arszFeatures, featureCount);
+call    0 returned 1
+-:  313:    }
+-:  314:
+7:  315:    for(size_t i = 0; (i < MAX_FEATURES) && (arszFeatures[i] != NULL); ++i)
+branch  0 taken 7 (fallthrough)
+branch  1 taken 0
+branch  2 taken 4
+branch  3 taken 3 (fallthrough)
+-:  316:    {
+4:  317:      ctutil_FreeConst(arszFeatures[i]);
+call    0 returned 4
+-:  318:    }
+-:  319:  }
+8:  320:  else if(pstOptions->pstSpecificOptions->szFeature != NULL)
+branch  0 taken 7 (fallthrough)
+branch  1 taken 1
+-:  321:  {
+7:  322:    bool const available = IsFeatureAvailable(&(pstOptions->stCommonOptions), pstResources, pstOptions->pstSpecificOptions->szFeature);
+call    0 returned 7
+7:  323:    if(ctutil_IsStatusOk(status) && pstOptions->stCommonOptions.textOutput)
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0
+branch  3 taken 6 (fallthrough)
+branch  4 taken 1
+-:  324:    {
+6:  325:      status = PrintTextAvailability(pstOptions->pstSpecificOptions, available);
+call    0 returned 6
+-:  326:    }
+7:  327:    if(ctutil_IsStatusOk(status) && pstOptions->stCommonOptions.jsonOutput)
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0
+branch  3 taken 1 (fallthrough)
+branch  4 taken 6
+-:  328:    {
+1:  329:      status = PrintJsonAvailability(pstOptions->pstSpecificOptions, available);
+call    0 returned 1
+-:  330:    }
+7*:  331:    bool const outputOptionSet = pstOptions->stCommonOptions.textOutput || pstOptions->stCommonOptions.jsonOutput;
+branch  0 taken 1 (fallthrough)
+branch  1 taken 6
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+7*:  332:    if(ctutil_IsStatusOk(status) && (!pstOptions->stCommonOptions.quiet) && outputOptionSet)
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0
+branch  3 taken 0 (fallthrough)
+branch  4 taken 7
+branch  5 never executed
+branch  6 never executed
+-:  333:    {
+-:  334:      // Enhance readability for human users when not called with quiet parameter for machine/software usage
+#####:  335:      printf("\n");
+call    0 never executed
+-:  336:    }
+-:  337:  }
+-:  338:  else
+-:  339:  {
+1*:  340:    CTUTIL_LOG_WARN(pstOptions->stCommonOptions.quiet, "No option given, nothing to do");
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+call    2 never executed
+-:  341:  }
+11:  342:  if(!ctutil_IsStatusOk(status))
+call    0 returned 11
+branch  1 taken 0 (fallthrough)
+branch  2 taken 11
+-:  343:  {
+#####:  344:    result = CTUTIL_EXIT_GENERAL_ERROR;
+-:  345:  }
+-:  346:
+11:  347:  return result;
+-:  348:}
+-:  349:
+-:  350:
+-:  351://---- End of source file ------------------------------------------------------

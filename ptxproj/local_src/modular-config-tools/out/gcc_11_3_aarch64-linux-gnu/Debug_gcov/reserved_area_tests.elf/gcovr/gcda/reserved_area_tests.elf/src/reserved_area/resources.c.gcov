@@ -1,0 +1,132 @@
+-:    0:Source:src/reserved_area/resources.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     resources.c
+-:   12:///
+-:   13:///  \brief    Config tool specific resource definition and handling for
+-:   14:///            config_linux_user.
+-:   15:///
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "wc/structuring.h"
+-:   23:#include "wc/assertion.h"
+-:   24:#include "ctutil/log.h"
+-:   25:#include "ctutil/filesystem.h"
+-:   26:#include "ctparts/common_main_defaults.h"
+-:   27:#include "resources.h"
+-:   28:#include "params.h"
+-:   29:#include <stdlib.h>
+-:   30:
+-:   31://------------------------------------------------------------------------------
+-:   32:// defines; structure, enumeration and type definitions
+-:   33://------------------------------------------------------------------------------
+-:   34:
+-:   35:/// Define for device file path for reserved area device.
+-:   36:#define RESERVED_AREA_DEVICE   "/dev/home_inactive"
+-:   37:#define RESERVED_AREA_FSTYPE   "ext4"
+-:   38:
+-:   39://------------------------------------------------------------------------------
+-:   40:// function prototypes
+-:   41://------------------------------------------------------------------------------
+-:   42:
+-:   43://------------------------------------------------------------------------------
+-:   44:// macros
+-:   45://------------------------------------------------------------------------------
+-:   46:
+-:   47://------------------------------------------------------------------------------
+-:   48:// variables' and constants' definitions
+-:   49://------------------------------------------------------------------------------
+-:   50:
+-:   51://------------------------------------------------------------------------------
+-:   52:// function implementation
+-:   53://------------------------------------------------------------------------------
+-:   54:
+-:   55:/// Function to initialize config tool specific resources of config_linux_user.
+function ctparts_InitSpecificResources called 0 returned 0% blocks executed 0%
+#####:   56:statusCode_t ctparts_InitSpecificResources(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:   57:                                           ctutil_ResourcesSpecific_t * * const ppstResources)
+-:   58:{
+#####:   59:  statusCode_t status = CTUTIL_SUCCESS;
+-:   60:
+#####:   61:  WC_ASSERT(*ppstResources == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:   62:  *ppstResources = calloc(1, sizeof(ctutil_ResourcesSpecific_t));
+#####:   63:  ctutil_ResourcesSpecific_t * const pstResources = *ppstResources;
+#####:   64:  if(pstResources == NULL)
+branch  0 never executed
+branch  1 never executed
+-:   65:  {
+#####:   66:    status = CTUTIL_FAILED;
+-:   67:  }
+-:   68:  else
+-:   69:  {
+#####:   70:    pstResources->szDeviceFilePath = RESERVED_AREA_DEVICE;
+#####:   71:    pstResources->szFileSystemType = RESERVED_AREA_FSTYPE;
+#####:   72:    pstResources->szTargetDirectory = NULL;
+#####:   73:    pstResources->pfMount = &ctutil_Mount;
+#####:   74:    pstResources->pfUmount = &ctutil_Umount;
+#####:   75:    pstResources->pfClearFolder = &ctutil_ClearFolder;
+#####:   76:    pstResources->pfGetFreeBytes = &ctutil_GetFreeBytes;
+#####:   77:    pstResources->pfGetAvailableBytes = &ctutil_GetAvailableBytes;
+#####:   78:    pstResources->pfGetMountPointForDevice = &ctutil_GetMountPointForDevice;
+#####:   79:    pstResources->pfIsFileAvailable = &ctutil_IsFileAvailable;
+#####:   80:    pstResources->pfIsFolderAccessible = &ctutil_IsFolderAccessible;
+#####:   81:    pstResources->pfCreateFolder = &ctutil_CreateFolder;
+-:   82:  }
+-:   83:
+#####:   84:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   85:  {
+#####:   86:    WC_ASSERT(*ppstResources != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:   87:  }
+-:   88:  else
+-:   89:  {
+#####:   90:    WC_ASSERT(*ppstResources == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:   91:  }
+-:   92:
+#####:   93:  return status;
+-:   94:}
+-:   95:
+-:   96:
+-:   97:/// Function to release config tool specific resources of config_linux_user.
+function ctparts_ReleaseSpecificResources called 0 returned 0% blocks executed 0%
+#####:   98:void ctparts_ReleaseSpecificResources(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:   99:                                      ctutil_ResourcesSpecific_t * * const ppstResources)
+-:  100:{
+#####:  101:  ctutil_ResourcesSpecific_t * const pstResources = *ppstResources;
+#####:  102:  if(pstResources != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  103:  {
+#####:  104:    free(pstResources);
+#####:  105:    *ppstResources = NULL;
+-:  106:  }
+-:  107:
+#####:  108:  return;
+-:  109:}
+-:  110:
+-:  111:
+-:  112://---- End of source file ------------------------------------------------------
+-:  113:

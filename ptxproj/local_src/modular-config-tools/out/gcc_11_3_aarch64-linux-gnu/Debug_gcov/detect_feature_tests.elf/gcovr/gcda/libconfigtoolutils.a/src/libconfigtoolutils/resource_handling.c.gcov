@@ -1,0 +1,261 @@
+-:    0:Source:src/libconfigtoolutils/resource_handling.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     resource_handling.c
+-:   12:///
+-:   13:///  \brief    Helper functions for config tool resource handling.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "wc/structuring.h"
+-:   22:#include "wc/assertion.h"
+-:   23:#include "wc/std_includes.h"
+-:   24:#include "ctutil/resource_handling.h"
+-:   25:#include <string.h>
+-:   26:#include <unistd.h>
+-:   27:#include <sys/stat.h>
+-:   28:
+-:   29://------------------------------------------------------------------------------
+-:   30:// defines; structure, enumeration and type definitions
+-:   31://------------------------------------------------------------------------------
+-:   32:
+-:   33:struct ctutil_ChangeableFile
+-:   34:{
+-:   35:  char * szOriginalPath;
+-:   36:  char * szWriteFilePath;
+-:   37:};
+-:   38:
+-:   39://------------------------------------------------------------------------------
+-:   40:// function prototypes
+-:   41://------------------------------------------------------------------------------
+-:   42:
+-:   43://------------------------------------------------------------------------------
+-:   44:// macros
+-:   45://------------------------------------------------------------------------------
+-:   46:
+-:   47://------------------------------------------------------------------------------
+-:   48:// variables' and constants' definitions
+-:   49://------------------------------------------------------------------------------
+-:   50:
+-:   51://------------------------------------------------------------------------------
+-:   52:// function implementation
+-:   53://------------------------------------------------------------------------------
+function ctutil_InitResources called 0 returned 0% blocks executed 0%
+#####:   54:void ctutil_InitResources(ctutil_Resources_t * const pstResources)
+-:   55:{
+#####:   56:  memset(pstResources, 0, sizeof(*pstResources));
+#####:   57:}
+-:   58:
+-:   59:
+function ctutil_OpenCommonResources called 0 returned 0% blocks executed 0%
+#####:   60:statusCode_t ctutil_OpenCommonResources(ctutil_ResourcesCommon_t * const pstResources)
+-:   61:{
+#####:   62:  pstResources->szLastErrorFile = "/tmp/last_error.txt";
+-:   63:
+#####:   64:  return CTUTIL_SUCCESS;
+-:   65:}
+-:   66:
+-:   67:
+function ctutil_ReleaseCommonResources called 0 returned 0% blocks executed 0%
+#####:   68:void ctutil_ReleaseCommonResources(ctutil_ResourcesCommon_t * const WC_UNUSED_PARAM(pstResources))
+-:   69:{
+-:   70:  // Nothing to do
+#####:   71:  return;
+-:   72:}
+-:   73:
+-:   74:
+function ctutil_PrepareChangeableFile called 0 returned 0% blocks executed 0%
+#####:   75:statusCode_t ctutil_PrepareChangeableFile(char const * const szFilePath,
+-:   76:                                          ctutil_ChangeableFile_t * * const ppFileHandle)
+-:   77:{
+#####:   78:  statusCode_t status = CTUTIL_SUCCESS;
+#####:   79:  size_t const originalPathLength = strlen(szFilePath);
+-:   80:
+-:   81:  // Prepare file handle
+#####:   82:  WC_ASSERT(*ppFileHandle == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:   83:  *ppFileHandle = malloc(sizeof(ctutil_ChangeableFile_t));
+#####:   84:  ctutil_ChangeableFile_t * const pFile = *ppFileHandle;
+#####:   85:  if(pFile == NULL)
+branch  0 never executed
+branch  1 never executed
+-:   86:  {
+#####:   87:    status = CTUTIL_FAILED;
+-:   88:  }
+-:   89:
+-:   90:  // Prepare original file path
+#####:   91:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   92:  {
+#####:   93:    pFile->szOriginalPath = malloc(originalPathLength + 1);
+#####:   94:    if(pFile->szOriginalPath == NULL)
+branch  0 never executed
+branch  1 never executed
+-:   95:    {
+#####:   96:      status = CTUTIL_FAILED;
+#####:   97:      free(pFile);
+#####:   98:      *ppFileHandle = NULL;
+-:   99:    }
+-:  100:    else
+-:  101:    {
+#####:  102:      strncpy(pFile->szOriginalPath, szFilePath, originalPathLength);
+#####:  103:      pFile->szOriginalPath[originalPathLength] = '\0';
+-:  104:    }
+-:  105:  }
+-:  106:
+-:  107:  // Prepare write file path
+#####:  108:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  109:  {
+#####:  110:    pFile->szWriteFilePath = malloc(originalPathLength + 2);
+#####:  111:    if(pFile->szWriteFilePath == NULL)
+branch  0 never executed
+branch  1 never executed
+-:  112:    {
+#####:  113:      status = CTUTIL_FAILED;
+#####:  114:      free(pFile->szOriginalPath);
+#####:  115:      free(pFile);
+#####:  116:      *ppFileHandle = NULL;
+-:  117:    }
+-:  118:    else
+-:  119:    {
+#####:  120:      strncpy(pFile->szWriteFilePath, szFilePath, originalPathLength);
+#####:  121:      pFile->szWriteFilePath[originalPathLength] = '-';
+#####:  122:      pFile->szWriteFilePath[originalPathLength + 1] = '\0';
+-:  123:    }
+-:  124:  }
+-:  125:
+#####:  126:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  127:  {
+#####:  128:    WC_ASSERT(*ppFileHandle != NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  129:  }
+-:  130:  else
+-:  131:  {
+#####:  132:    WC_ASSERT(*ppFileHandle == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  133:  }
+-:  134:
+#####:  135:  return status;
+-:  136:}
+-:  137:
+-:  138:
+function ctutil_ReleaseFileForChanges called 0 returned 0% blocks executed 0%
+#####:  139:void ctutil_ReleaseFileForChanges(ctutil_ChangeableFile_t * * const ppFileHandle)
+-:  140:{
+#####:  141:  ctutil_ChangeableFile_t * const pFile = *ppFileHandle;
+#####:  142:  if(pFile != NULL)
+branch  0 never executed
+branch  1 never executed
+-:  143:  {
+#####:  144:    free(pFile->szOriginalPath);
+#####:  145:    free(pFile->szWriteFilePath);
+#####:  146:    free(pFile);
+#####:  147:    *ppFileHandle = NULL;
+-:  148:  }
+#####:  149:}
+-:  150:
+-:  151:
+function ctutil_GetOriginalFilePath called 0 returned 0% blocks executed 0%
+#####:  152:char const * ctutil_GetOriginalFilePath(ctutil_ChangeableFile_t const * const pFileHandle)
+-:  153:{
+#####:  154:  return pFileHandle->szOriginalPath;
+-:  155:}
+-:  156:
+-:  157:
+function ctutil_GetChangeableFilePath called 0 returned 0% blocks executed 0%
+#####:  158:char const * ctutil_GetChangeableFilePath(ctutil_ChangeableFile_t const * const pFileHandle)
+-:  159:{
+#####:  160:  return pFileHandle->szWriteFilePath;
+-:  161:}
+-:  162:
+-:  163:
+function ctutil_CommitChangeableFile called 0 returned 0% blocks executed 0%
+#####:  164:statusCode_t ctutil_CommitChangeableFile(ctutil_ChangeableFile_t const * const pFileHandle)
+-:  165:{
+#####:  166:  statusCode_t status = CTUTIL_SUCCESS;
+#####:  167:  char const * const szOriginalPath = ctutil_GetOriginalFilePath(pFileHandle);
+call    0 never executed
+#####:  168:  char const * const szModifiedPath = ctutil_GetChangeableFilePath(pFileHandle);
+call    0 never executed
+-:  169:
+-:  170:  struct stat stOriginalFileStat;
+#####:  171:  int const statOriginalResult = lstat(szOriginalPath, &stOriginalFileStat);
+call    0 never executed
+#####:  172:  if(statOriginalResult != 0)
+branch  0 never executed
+branch  1 never executed
+-:  173:  {
+#####:  174:    status = CTUTIL_FILE_OPEN_ERROR;
+-:  175:  }
+#####:  176:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  177:  {
+#####:  178:    int const modChangeResult = chmod(szModifiedPath, stOriginalFileStat.st_mode);
+call    0 never executed
+#####:  179:    if(modChangeResult == 0)
+branch  0 never executed
+branch  1 never executed
+-:  180:    {
+#####:  181:      int const ownChangeResult = chown(szModifiedPath, stOriginalFileStat.st_uid, stOriginalFileStat.st_gid);
+call    0 never executed
+#####:  182:      if(ownChangeResult != 0)
+branch  0 never executed
+branch  1 never executed
+-:  183:      {
+#####:  184:        status = CTUTIL_SYSTEM_CALL_ERROR;
+-:  185:      }
+-:  186:    }
+-:  187:    else
+-:  188:    {
+#####:  189:      status = CTUTIL_SYSTEM_CALL_ERROR;
+-:  190:    }
+-:  191:  }
+#####:  192:  if(ctutil_IsStatusOk(status))
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  193:  {
+#####:  194:    int const renameResult = rename(szModifiedPath, szOriginalPath);
+call    0 never executed
+#####:  195:    if(renameResult != 0)
+branch  0 never executed
+branch  1 never executed
+-:  196:    {
+#####:  197:      status = CTUTIL_SYSTEM_CALL_ERROR;
+-:  198:    }
+-:  199:  }
+-:  200:
+#####:  201:  return status;
+-:  202:}
+-:  203:
+-:  204:
+-:  205://---- End of source file ------------------------------------------------------
+-:  206:

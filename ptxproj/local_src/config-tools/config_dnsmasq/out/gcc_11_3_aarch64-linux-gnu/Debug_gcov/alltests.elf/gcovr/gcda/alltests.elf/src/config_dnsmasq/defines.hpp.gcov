@@ -1,0 +1,189 @@
+-:    0:Source:src/config_dnsmasq/defines.hpp
+-:    1://------------------------------------------------------------------------------
+-:    2:/// Copyright (c) 2020 WAGO GmbH & Co. KG
+-:    3:///
+-:    4:/// PROPRIETARY RIGHTS of WAGO GmbH & Co. KG are involved in
+-:    5:/// the subject matter of this material. All manufacturing, reproduction,
+-:    6:/// use, and sales rights pertaining to this subject matter are governed
+-:    7:/// by the license agreement. The recipient of this software implicitly
+-:    8:/// accepts the terms of the license.
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     defines.h
+-:   12:///
+-:   13:///  \brief    Various defines.
+-:   14:///
+-:   15:///  \author   MSc : WAGO GmbH & Co. KG
+-:   16:///  \author   MOe : WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:#ifndef SRC_CONFIG_DNSMASQ_DEFINES_HPP_
+-:   19:#define SRC_CONFIG_DNSMASQ_DEFINES_HPP_
+-:   20:
+-:   21:#include <string>
+-:   22:
+-:   23:#define SIZEOF_IPADDR   16
+-:   24:#define SIZEOF_MACADDR  18
+-:   25:
+-:   26:// States of the domain name check routine.
+-:   27:using conv_state_t = enum
+-:   28:{
+-:   29:  ERR = -1,
+-:   30:  STOP,
+-:   31:  START,
+-:   32:  INLABEL,
+-:   33:  HYPHEN                         // Input character was a hyphen
+-:   34:};
+-:   35:
+-:   36:// Main function command codes of config_dnsmasq.
+-:   37:using command_t = enum
+-:   38:{
+-:   39:  NONE = 0,
+-:   40:  GENERATE,
+-:   41:  GET_CONFIG,
+-:   42:  GET_JSON_CONFIG,
+-:   43:  SET_CONFIG,
+-:   44:  RESTORE_CONFIG,
+-:   45:  STORE_CONFIG,
+-:   46:  HELP
+-:   47:};
+-:   48:
+-:   49:// Type of service of config_dnsmasq.
+-:   50:using service_t = enum
+-:   51:{
+-:   52:  UNDEF = 0,
+-:   53:  DHCPD,
+-:   54:  DNS
+-:   55:};
+-:   56:
+-:   57:// Program configuration data.
+-:   58:using prgconf_t = struct prgconf
+-:   59:{
+-:   60:    command_t command{NONE};            // Function to perform.
+-:   61:    ::std::string dbg_root;             // Root directory for testing and debugging.
+-:   62:    ::std::string services_xml_path;    // Path to network-services.xml.
+-:   63:    ::std::string etchosts;             // Path to /etc/hosts.
+-:   64:    ::std::string dnsmasq_conf;         // Path to /etc/dnsmasq.conf.
+-:   65:    ::std::string dnsmasq_conf_tmp;     // Path to temporary /etc/dnsmasq.conf.
+-:   66:    ::std::string restart_command;      // Path to /etc/init.d/dnsmasq.
+-:   67:    ::std::string lease_file;           // Path to /var/lib/misc/dnsmasq.leases.
+-:   68:    ::std::string selected_port;        // Port selected for getting/setting DHCPD parameters.
+-:   69:    service_t service_type{UNDEF};      // Configuration type DNS or DHCPD.
+-:   70:    bool dnsmasq_restart{true};         // Do not call dnsmasq init script after config setting.
+-:   71:    ::std::string bridge_config;
+-:   72:    ::std::string ip_config;
+-:   73:    ::std::string interface_config;
+-:   74:    ::std::string interface_statuses;
+-:   75:    ::std::string backup_file_path;     //Path to backup file.
+-:   76:
+function _ZN7prgconfC2Ev called 3 returned 100% blocks executed 40%
+3:   77:    prgconf() :
+3:   78:            dbg_root{""},
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+call    4 never executed
+call    5 never executed
+3:   79:            services_xml_path{""},
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+3:   80:            etchosts{""},
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+3:   81:            dnsmasq_conf{""},
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+3:   82:            dnsmasq_conf_tmp{""},
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+3:   83:            restart_command{""},
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+3:   84:            lease_file{""},
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+3:   85:            selected_port{""},
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+3:   86:            bridge_config{""},
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 3
+call    4 never executed
+3:   87:            ip_config{""},
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+3:   88:            interface_config{""},
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+3:   89:            interface_statuses{""},
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 3
+call    5 never executed
+9:   90:            backup_file_path{""}
+call    0 returned 3
+call    1 returned 3
+call    2 returned 3
+call    3 returned 3
+branch  4 taken 3 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 3
+call    7 never executed
+-:   91:    {
+3:   92:    }
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+-:   93:};
+-:   94:
+-:   95:#endif /* SRC_CONFIG_DNSMASQ_DEFINES_HPP_ */
+-:   96:

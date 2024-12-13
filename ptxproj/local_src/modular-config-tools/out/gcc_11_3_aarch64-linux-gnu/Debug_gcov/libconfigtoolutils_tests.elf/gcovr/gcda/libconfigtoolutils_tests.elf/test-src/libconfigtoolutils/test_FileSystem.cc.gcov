@@ -1,0 +1,1288 @@
+-:    0:Source:test-src/libconfigtoolutils/test_FileSystem.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_FileSystem.cc
+-:   12:///
+-:   13:///  \brief    Tests for file system functions.
+-:   14:///
+-:   15:///  \author   MOe: WAGO GmbH & Co. KG
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "ctutil/filesystem.h"
+-:   23:#include <gtest/gtest.h>
+-:   24:#include "testutil/file_operations.hpp"
+-:   25:
+-:   26://------------------------------------------------------------------------------
+-:   27:// macros
+-:   28://------------------------------------------------------------------------------
+-:   29:
+-:   30://------------------------------------------------------------------------------
+-:   31:// defines; structure, enumeration and type definitions
+-:   32://------------------------------------------------------------------------------
+-:   33:
+-:   34://------------------------------------------------------------------------------
+-:   35:// variables' and constants' definitions
+-:   36://------------------------------------------------------------------------------
+-:   37:
+-:   38://------------------------------------------------------------------------------
+-:   39:// test implementation
+-:   40://------------------------------------------------------------------------------
+4:   41:TEST(FileSystem, ctutil_CheckForMountPoint)
+-:   42:{
+-:   43:  ctutil_OptionsCommon_t stCommonOptions;
+1:   44:  char const * const szPath = "/tmp";
+-:   45:  statusCode_t status;
+-:   46:
+1:   47:  stCommonOptions.quiet = true;
+-:   48:
+1:   49:  status = ctutil_CheckForMountPoint(&stCommonOptions, szPath);
+1*:   50:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+-:   51:}
+------------------
+_ZN41FileSystem_ctutil_CheckForMountPoint_TestC2Ev:
+function _ZN41FileSystem_ctutil_CheckForMountPoint_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   41:TEST(FileSystem, ctutil_CheckForMountPoint)
+call    0 returned 1
+------------------
+_ZN41FileSystem_ctutil_CheckForMountPoint_TestD0Ev:
+function _ZN41FileSystem_ctutil_CheckForMountPoint_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   41:TEST(FileSystem, ctutil_CheckForMountPoint)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN41FileSystem_ctutil_CheckForMountPoint_TestD2Ev:
+function _ZN41FileSystem_ctutil_CheckForMountPoint_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   41:TEST(FileSystem, ctutil_CheckForMountPoint)
+call    0 returned 1
+------------------
+_ZN41FileSystem_ctutil_CheckForMountPoint_Test8TestBodyEv:
+function _ZN41FileSystem_ctutil_CheckForMountPoint_Test8TestBodyEv called 1 returned 100% blocks executed 37%
+1:   41:TEST(FileSystem, ctutil_CheckForMountPoint)
+-:   42:{
+-:   43:  ctutil_OptionsCommon_t stCommonOptions;
+1:   44:  char const * const szPath = "/tmp";
+-:   45:  statusCode_t status;
+-:   46:
+1:   47:  stCommonOptions.quiet = true;
+-:   48:
+1:   49:  status = ctutil_CheckForMountPoint(&stCommonOptions, szPath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   50:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:   51:}
+------------------
+-:   52:
+-:   53:
+4:   54:TEST(FileSystem, CheckForMountPointEmptyPath)
+-:   55:{
+-:   56:  ctutil_OptionsCommon_t stCommonOptions;
+1:   57:  char const * const szPath = "";
+-:   58:
+1:   59:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:   60:  stCommonOptions.quiet = true;
+-:   61:
+1:   62:  statusCode_t status = ctutil_CheckForMountPoint(&stCommonOptions, szPath);
+1*:   63:  ASSERT_NE(CTUTIL_SUCCESS, status);
+-:   64:}
+------------------
+_ZN43FileSystem_CheckForMountPointEmptyPath_TestC2Ev:
+function _ZN43FileSystem_CheckForMountPointEmptyPath_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   54:TEST(FileSystem, CheckForMountPointEmptyPath)
+call    0 returned 1
+------------------
+_ZN43FileSystem_CheckForMountPointEmptyPath_TestD0Ev:
+function _ZN43FileSystem_CheckForMountPointEmptyPath_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   54:TEST(FileSystem, CheckForMountPointEmptyPath)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN43FileSystem_CheckForMountPointEmptyPath_TestD2Ev:
+function _ZN43FileSystem_CheckForMountPointEmptyPath_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   54:TEST(FileSystem, CheckForMountPointEmptyPath)
+call    0 returned 1
+------------------
+_ZN43FileSystem_CheckForMountPointEmptyPath_Test8TestBodyEv:
+function _ZN43FileSystem_CheckForMountPointEmptyPath_Test8TestBodyEv called 1 returned 100% blocks executed 37%
+1:   54:TEST(FileSystem, CheckForMountPointEmptyPath)
+-:   55:{
+-:   56:  ctutil_OptionsCommon_t stCommonOptions;
+1:   57:  char const * const szPath = "";
+-:   58:
+1:   59:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:   60:  stCommonOptions.quiet = true;
+-:   61:
+1:   62:  statusCode_t status = ctutil_CheckForMountPoint(&stCommonOptions, szPath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   63:  ASSERT_NE(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:   64:}
+------------------
+-:   65:
+-:   66:
+4:   67:TEST(FileSystem, CheckForMountPointAbsolutePath)
+-:   68:{
+-:   69:  ctutil_OptionsCommon_t stCommonOptions;
+1:   70:  char const * const szPath = "tmp";
+-:   71:
+1:   72:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:   73:  stCommonOptions.quiet = true;
+-:   74:
+1:   75:  statusCode_t status = ctutil_CheckForMountPoint(&stCommonOptions, szPath);
+1*:   76:  ASSERT_NE(CTUTIL_SUCCESS, status);
+-:   77:}
+------------------
+_ZN46FileSystem_CheckForMountPointAbsolutePath_TestC2Ev:
+function _ZN46FileSystem_CheckForMountPointAbsolutePath_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   67:TEST(FileSystem, CheckForMountPointAbsolutePath)
+call    0 returned 1
+------------------
+_ZN46FileSystem_CheckForMountPointAbsolutePath_TestD0Ev:
+function _ZN46FileSystem_CheckForMountPointAbsolutePath_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   67:TEST(FileSystem, CheckForMountPointAbsolutePath)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN46FileSystem_CheckForMountPointAbsolutePath_TestD2Ev:
+function _ZN46FileSystem_CheckForMountPointAbsolutePath_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   67:TEST(FileSystem, CheckForMountPointAbsolutePath)
+call    0 returned 1
+------------------
+_ZN46FileSystem_CheckForMountPointAbsolutePath_Test8TestBodyEv:
+function _ZN46FileSystem_CheckForMountPointAbsolutePath_Test8TestBodyEv called 1 returned 100% blocks executed 37%
+1:   67:TEST(FileSystem, CheckForMountPointAbsolutePath)
+-:   68:{
+-:   69:  ctutil_OptionsCommon_t stCommonOptions;
+1:   70:  char const * const szPath = "tmp";
+-:   71:
+1:   72:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:   73:  stCommonOptions.quiet = true;
+-:   74:
+1:   75:  statusCode_t status = ctutil_CheckForMountPoint(&stCommonOptions, szPath);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   76:  ASSERT_NE(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:   77:}
+------------------
+-:   78:
+-:   79:
+4:   80:TEST(FileSystem, GetParentFolderStringRoot)
+-:   81:{
+1:   82:  char const * const szPath = "/tmp";
+-:   83:
+-:   84:  char szTargetBuffer[256];
+1:   85:  char * szTarget = szTargetBuffer;
+-:   86:
+1:   87:  statusCode_t status = ctutil_GetParentFolderString(szPath, strlen(szPath), &szTarget, 256, true);
+1*:   88:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+1*:   89:  ASSERT_STREQ("/", szTarget);
+-:   90:}
+------------------
+_ZN41FileSystem_GetParentFolderStringRoot_TestC2Ev:
+function _ZN41FileSystem_GetParentFolderStringRoot_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   80:TEST(FileSystem, GetParentFolderStringRoot)
+call    0 returned 1
+------------------
+_ZN41FileSystem_GetParentFolderStringRoot_TestD0Ev:
+function _ZN41FileSystem_GetParentFolderStringRoot_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   80:TEST(FileSystem, GetParentFolderStringRoot)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN41FileSystem_GetParentFolderStringRoot_TestD2Ev:
+function _ZN41FileSystem_GetParentFolderStringRoot_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   80:TEST(FileSystem, GetParentFolderStringRoot)
+call    0 returned 1
+------------------
+_ZN41FileSystem_GetParentFolderStringRoot_Test8TestBodyEv:
+function _ZN41FileSystem_GetParentFolderStringRoot_Test8TestBodyEv called 1 returned 100% blocks executed 33%
+1:   80:TEST(FileSystem, GetParentFolderStringRoot)
+-:   81:{
+1:   82:  char const * const szPath = "/tmp";
+-:   83:
+-:   84:  char szTargetBuffer[256];
+1:   85:  char * szTarget = szTargetBuffer;
+-:   86:
+1:   87:  statusCode_t status = ctutil_GetParentFolderString(szPath, strlen(szPath), &szTarget, 256, true);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:   88:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1*:   89:  ASSERT_STREQ("/", szTarget);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:   90:}
+------------------
+-:   91:
+-:   92:
+4:   93:TEST(FileSystem, ctutil_GetParentFolderString)
+-:   94:{
+1:   95:  char const * const szPath = "/tmp/mount";
+-:   96:
+-:   97:  char szTargetBuffer[256];
+1:   98:  char * szTarget = szTargetBuffer;
+-:   99:
+1:  100:  statusCode_t status = ctutil_GetParentFolderString(szPath, strlen(szPath), &szTarget, 256, true);
+1*:  101:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+1*:  102:  ASSERT_STREQ("/tmp", szTarget);
+-:  103:}
+------------------
+_ZN44FileSystem_ctutil_GetParentFolderString_TestC2Ev:
+function _ZN44FileSystem_ctutil_GetParentFolderString_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   93:TEST(FileSystem, ctutil_GetParentFolderString)
+call    0 returned 1
+------------------
+_ZN44FileSystem_ctutil_GetParentFolderString_TestD0Ev:
+function _ZN44FileSystem_ctutil_GetParentFolderString_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   93:TEST(FileSystem, ctutil_GetParentFolderString)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN44FileSystem_ctutil_GetParentFolderString_TestD2Ev:
+function _ZN44FileSystem_ctutil_GetParentFolderString_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   93:TEST(FileSystem, ctutil_GetParentFolderString)
+call    0 returned 1
+------------------
+_ZN44FileSystem_ctutil_GetParentFolderString_Test8TestBodyEv:
+function _ZN44FileSystem_ctutil_GetParentFolderString_Test8TestBodyEv called 1 returned 100% blocks executed 33%
+1:   93:TEST(FileSystem, ctutil_GetParentFolderString)
+-:   94:{
+1:   95:  char const * const szPath = "/tmp/mount";
+-:   96:
+-:   97:  char szTargetBuffer[256];
+1:   98:  char * szTarget = szTargetBuffer;
+-:   99:
+1:  100:  statusCode_t status = ctutil_GetParentFolderString(szPath, strlen(szPath), &szTarget, 256, true);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  101:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1*:  102:  ASSERT_STREQ("/tmp", szTarget);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  103:}
+------------------
+-:  104:
+-:  105:
+4:  106:TEST(FileSystem, IsFileAvailableExistingDirectory)
+-:  107:{
+1:  108:  char const * const szPath = "/tmp";
+-:  109:  ctutil_OptionsCommon_t stCommonOptions;
+-:  110:
+1:  111:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:  112:  stCommonOptions.quiet = true;
+-:  113:
+1:  114:  bool fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+-:  115:
+1*:  116:  ASSERT_TRUE(fStatus);
+-:  117:}
+------------------
+_ZN48FileSystem_IsFileAvailableExistingDirectory_TestC2Ev:
+function _ZN48FileSystem_IsFileAvailableExistingDirectory_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  106:TEST(FileSystem, IsFileAvailableExistingDirectory)
+call    0 returned 1
+------------------
+_ZN48FileSystem_IsFileAvailableExistingDirectory_TestD0Ev:
+function _ZN48FileSystem_IsFileAvailableExistingDirectory_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  106:TEST(FileSystem, IsFileAvailableExistingDirectory)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN48FileSystem_IsFileAvailableExistingDirectory_TestD2Ev:
+function _ZN48FileSystem_IsFileAvailableExistingDirectory_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  106:TEST(FileSystem, IsFileAvailableExistingDirectory)
+call    0 returned 1
+------------------
+_ZN48FileSystem_IsFileAvailableExistingDirectory_Test8TestBodyEv:
+function _ZN48FileSystem_IsFileAvailableExistingDirectory_Test8TestBodyEv called 1 returned 100% blocks executed 33%
+1:  106:TEST(FileSystem, IsFileAvailableExistingDirectory)
+-:  107:{
+1:  108:  char const * const szPath = "/tmp";
+-:  109:  ctutil_OptionsCommon_t stCommonOptions;
+-:  110:
+1:  111:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:  112:  stCommonOptions.quiet = true;
+-:  113:
+1:  114:  bool fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  115:
+1*:  116:  ASSERT_TRUE(fStatus);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  117:}
+------------------
+-:  118:
+-:  119:
+4:  120:TEST(FileSystem, IsFileAvailableMissingDirectory)
+-:  121:{
+1:  122:  char const * const szPath = "/tmp/missing";
+-:  123:  ctutil_OptionsCommon_t stCommonOptions;
+-:  124:
+1:  125:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:  126:  stCommonOptions.quiet = true;
+-:  127:
+1:  128:  int const resultSys = system("rm -rf /tmp/missing; sync");
+1*:  129:  ASSERT_EQ(0, resultSys);
+1:  130:  bool fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+-:  131:
+1*:  132:  ASSERT_FALSE(fStatus);
+-:  133:}
+------------------
+_ZN47FileSystem_IsFileAvailableMissingDirectory_TestC2Ev:
+function _ZN47FileSystem_IsFileAvailableMissingDirectory_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  120:TEST(FileSystem, IsFileAvailableMissingDirectory)
+call    0 returned 1
+------------------
+_ZN47FileSystem_IsFileAvailableMissingDirectory_TestD0Ev:
+function _ZN47FileSystem_IsFileAvailableMissingDirectory_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  120:TEST(FileSystem, IsFileAvailableMissingDirectory)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN47FileSystem_IsFileAvailableMissingDirectory_TestD2Ev:
+function _ZN47FileSystem_IsFileAvailableMissingDirectory_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  120:TEST(FileSystem, IsFileAvailableMissingDirectory)
+call    0 returned 1
+------------------
+_ZN47FileSystem_IsFileAvailableMissingDirectory_Test8TestBodyEv:
+function _ZN47FileSystem_IsFileAvailableMissingDirectory_Test8TestBodyEv called 1 returned 100% blocks executed 31%
+1:  120:TEST(FileSystem, IsFileAvailableMissingDirectory)
+-:  121:{
+1:  122:  char const * const szPath = "/tmp/missing";
+-:  123:  ctutil_OptionsCommon_t stCommonOptions;
+-:  124:
+1:  125:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:  126:  stCommonOptions.quiet = true;
+-:  127:
+1:  128:  int const resultSys = system("rm -rf /tmp/missing; sync");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  129:  ASSERT_EQ(0, resultSys);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1:  130:  bool fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  131:
+1*:  132:  ASSERT_FALSE(fStatus);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  133:}
+------------------
+-:  134:
+-:  135:
+4:  136:TEST(FileSystem, ctutil_CreateFolder)
+-:  137:{
+-:  138:  bool fStatus;
+-:  139:  statusCode_t status;
+1:  140:  std::string tempDir = testutil_CreateTempDir("reserved_area_");
+1:  141:  std::string path = tempDir + "/footest";
+1:  142:  char const * const szPath = path.c_str();
+-:  143:  ctutil_OptionsCommon_t stCommonOptions;
+-:  144:
+1:  145:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:  146:  stCommonOptions.quiet = true;
+-:  147:
+2:  148:  std::string command = std::string("rm -rf ") + tempDir + "/footest; sync";
+1:  149:  int const resultSys1 = system(command.c_str());
+1*:  150:  ASSERT_EQ(0, resultSys1);
+1:  151:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+1*:  152:  ASSERT_FALSE(fStatus);
+-:  153:
+1:  154:  status = ctutil_CreateFolder(&stCommonOptions, szPath, false);
+1*:  155:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+-:  156:
+1:  157:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+1*:  158:  ASSERT_TRUE(fStatus);
+-:  159:
+1:  160:  int const resultSys2 = system(command.c_str());
+1*:  161:  ASSERT_EQ(0, resultSys2);
+1:  162:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+1*:  163:  ASSERT_FALSE(fStatus);
+-:  164:
+1*:  165:  ASSERT_TRUE(testutil_RemoveDir(tempDir.c_str()));
+1:  166:}
+------------------
+_ZN35FileSystem_ctutil_CreateFolder_TestC2Ev:
+function _ZN35FileSystem_ctutil_CreateFolder_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  136:TEST(FileSystem, ctutil_CreateFolder)
+call    0 returned 1
+------------------
+_ZN35FileSystem_ctutil_CreateFolder_TestD0Ev:
+function _ZN35FileSystem_ctutil_CreateFolder_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  136:TEST(FileSystem, ctutil_CreateFolder)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN35FileSystem_ctutil_CreateFolder_TestD2Ev:
+function _ZN35FileSystem_ctutil_CreateFolder_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  136:TEST(FileSystem, ctutil_CreateFolder)
+call    0 returned 1
+------------------
+_ZN35FileSystem_ctutil_CreateFolder_Test8TestBodyEv:
+function _ZN35FileSystem_ctutil_CreateFolder_Test8TestBodyEv called 1 returned 100% blocks executed 33%
+1:  136:TEST(FileSystem, ctutil_CreateFolder)
+-:  137:{
+-:  138:  bool fStatus;
+-:  139:  statusCode_t status;
+1:  140:  std::string tempDir = testutil_CreateTempDir("reserved_area_");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  141:  std::string path = tempDir + "/footest";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  142:  char const * const szPath = path.c_str();
+call    0 returned 1
+-:  143:  ctutil_OptionsCommon_t stCommonOptions;
+-:  144:
+1:  145:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:  146:  stCommonOptions.quiet = true;
+-:  147:
+2:  148:  std::string command = std::string("rm -rf ") + tempDir + "/footest; sync";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+call   11 returned 1
+1:  149:  int const resultSys1 = system(command.c_str());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:  150:  ASSERT_EQ(0, resultSys1);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1:  151:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  152:  ASSERT_FALSE(fStatus);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  153:
+1:  154:  status = ctutil_CreateFolder(&stCommonOptions, szPath, false);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  155:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  156:
+1:  157:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  158:  ASSERT_TRUE(fStatus);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  159:
+1:  160:  int const resultSys2 = system(command.c_str());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:  161:  ASSERT_EQ(0, resultSys2);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1:  162:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  163:  ASSERT_FALSE(fStatus);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  164:
+1*:  165:  ASSERT_TRUE(testutil_RemoveDir(tempDir.c_str()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 0 (fallthrough)
+branch  7 taken 1
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+1:  166:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 never executed
+call   10 never executed
+call   11 never executed
+------------------
+-:  167:
+-:  168:
+4:  169:TEST(FileSystem, ctutil_CreateFolderHierarchy)
+-:  170:{
+-:  171:  bool fStatus;
+-:  172:  statusCode_t status;
+1:  173:  std::string tempDir = testutil_CreateTempDir("reserved_area_");
+1:  174:  std::string path = tempDir + "/foo/bar/baz";
+1:  175:  char const * const szPath = path.c_str();
+-:  176:  ctutil_OptionsCommon_t stCommonOptions;
+-:  177:
+1:  178:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:  179:  stCommonOptions.quiet = true;
+-:  180:
+2:  181:  std::string command = std::string("rm -rf ") + tempDir + "/foo; sync";
+1:  182:  int const resultSys1 = system(command.c_str());
+1*:  183:  ASSERT_EQ(0, resultSys1);
+1:  184:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+1*:  185:  ASSERT_FALSE(fStatus);
+-:  186:
+1:  187:  status = ctutil_CreateFolder(&stCommonOptions, szPath, true);
+1*:  188:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+-:  189:
+1:  190:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+1*:  191:  ASSERT_TRUE(fStatus);
+-:  192:
+1:  193:  int const resultSys2 = system(command.c_str());
+1*:  194:  ASSERT_EQ(0, resultSys2);
+1:  195:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+1*:  196:  ASSERT_FALSE(fStatus);
+-:  197:
+1*:  198:  ASSERT_TRUE(testutil_RemoveDir(tempDir.c_str()));
+1:  199:}
+------------------
+_ZN44FileSystem_ctutil_CreateFolderHierarchy_TestC2Ev:
+function _ZN44FileSystem_ctutil_CreateFolderHierarchy_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  169:TEST(FileSystem, ctutil_CreateFolderHierarchy)
+call    0 returned 1
+------------------
+_ZN44FileSystem_ctutil_CreateFolderHierarchy_TestD0Ev:
+function _ZN44FileSystem_ctutil_CreateFolderHierarchy_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  169:TEST(FileSystem, ctutil_CreateFolderHierarchy)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN44FileSystem_ctutil_CreateFolderHierarchy_TestD2Ev:
+function _ZN44FileSystem_ctutil_CreateFolderHierarchy_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  169:TEST(FileSystem, ctutil_CreateFolderHierarchy)
+call    0 returned 1
+------------------
+_ZN44FileSystem_ctutil_CreateFolderHierarchy_Test8TestBodyEv:
+function _ZN44FileSystem_ctutil_CreateFolderHierarchy_Test8TestBodyEv called 1 returned 100% blocks executed 33%
+1:  169:TEST(FileSystem, ctutil_CreateFolderHierarchy)
+-:  170:{
+-:  171:  bool fStatus;
+-:  172:  statusCode_t status;
+1:  173:  std::string tempDir = testutil_CreateTempDir("reserved_area_");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  174:  std::string path = tempDir + "/foo/bar/baz";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  175:  char const * const szPath = path.c_str();
+call    0 returned 1
+-:  176:  ctutil_OptionsCommon_t stCommonOptions;
+-:  177:
+1:  178:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:  179:  stCommonOptions.quiet = true;
+-:  180:
+2:  181:  std::string command = std::string("rm -rf ") + tempDir + "/foo; sync";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+call   11 returned 1
+1:  182:  int const resultSys1 = system(command.c_str());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:  183:  ASSERT_EQ(0, resultSys1);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1:  184:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  185:  ASSERT_FALSE(fStatus);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  186:
+1:  187:  status = ctutil_CreateFolder(&stCommonOptions, szPath, true);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  188:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+-:  189:
+1:  190:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  191:  ASSERT_TRUE(fStatus);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  192:
+1:  193:  int const resultSys2 = system(command.c_str());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:  194:  ASSERT_EQ(0, resultSys2);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0
+call   21 never executed
+call   22 never executed
+call   23 never executed
+1:  195:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1*:  196:  ASSERT_FALSE(fStatus);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  197:
+1*:  198:  ASSERT_TRUE(testutil_RemoveDir(tempDir.c_str()));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 0 (fallthrough)
+branch  7 taken 1
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+1:  199:}
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 never executed
+call   10 never executed
+call   11 never executed
+------------------
+-:  200:
+-:  201:
+4:  202:TEST(FileSystem, CreateFolderExists)
+-:  203:{
+-:  204:  bool fStatus;
+-:  205:  statusCode_t status;
+1:  206:  char const * const szPath = "/tmp";
+-:  207:  ctutil_OptionsCommon_t stCommonOptions;
+-:  208:
+1:  209:  memset(&stCommonOptions, 0, sizeof(stCommonOptions));
+1:  210:  stCommonOptions.quiet = true;
+-:  211:
+1:  212:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+1*:  213:  ASSERT_TRUE(fStatus);
+-:  214:
+1:  215:  status = ctutil_CreateFolder(&stCommonOptions, szPath, false);
+1*:  216:  ASSERT_EQ(CTUTIL_SUCCESS, status);
+-:  217:
+1:  218:  fStatus = ctutil_IsFileAvailable(&stCommonOptions, szPath, "d");
+1*:  219:  ASSERT_TRUE(fStatus);
+-:  220:}
+-:  221:
+-:  222:
+-:  223://---- End of source file ------------------------------------------------------
+-:  224:

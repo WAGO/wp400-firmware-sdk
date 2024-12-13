@@ -1,0 +1,635 @@
+-:    0:Source:test-src/libconfigtoolutils/test_ErrorCodeHelper.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_ErrorCodeHelper.cc
+-:   12:///
+-:   13:///  \brief    Test for error code helper functions.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "wc/assertion.h"
+-:   22:#include "ctutil/error_codes.h"
+-:   23:#include <gtest/gtest.h>
+-:   24:
+-:   25://------------------------------------------------------------------------------
+-:   26:// macros
+-:   27://------------------------------------------------------------------------------
+-:   28:
+-:   29://------------------------------------------------------------------------------
+-:   30:// defines; structure, enumeration and type definitions
+-:   31://------------------------------------------------------------------------------
+-:   32:
+-:   33://------------------------------------------------------------------------------
+-:   34:// variables' and constants' definitions
+-:   35://------------------------------------------------------------------------------
+-:   36:
+-:   37://------------------------------------------------------------------------------
+-:   38:// test implementation
+-:   39://------------------------------------------------------------------------------
+-:   40:WC_STATIC_ASSERT(CTUTIL_SUCCESS > CTUTIL_FAILED);
+-:   41:WC_STATIC_ASSERT(CTUTIL_SUCCESS <= (INT_MAX - 100));
+-:   42:WC_STATIC_ASSERT(CTUTIL_FAILED >= (INT_MIN + 100));
+-:   43:
+-:   44:
+4:   45:TEST(ErrorCodeHelper, StatusOk)
+-:   46:{
+-:   47:  // Check OK codes
+101:   48:  for(statusCode_t statusCode = CTUTIL_SUCCESS; statusCode < (CTUTIL_SUCCESS + 100); ++statusCode)
+-:   49:  {
+100*:   50:    EXPECT_TRUE(ctutil_IsStatusOk(statusCode));
+-:   51:  }
+1*:   52:  EXPECT_TRUE(ctutil_IsStatusOk(INT_MAX));
+-:   53:
+-:   54:  // Check FAILURE codes
+101:   55:  for(statusCode_t statusCode = CTUTIL_FAILED; statusCode > (CTUTIL_FAILED - 100); --statusCode)
+-:   56:  {
+100*:   57:    EXPECT_FALSE(ctutil_IsStatusOk(statusCode));
+-:   58:  }
+1*:   59:  EXPECT_FALSE(ctutil_IsStatusOk(INT_MIN));
+-:   60:
+-:   61:  // Check undefined codes (if any)
+1*:   62:  for(statusCode_t statusCode = (CTUTIL_FAILED + 1); statusCode < CTUTIL_SUCCESS; ++statusCode)
+-:   63:  {
+#####:   64:    EXPECT_FALSE(ctutil_IsStatusOk(statusCode));
+-:   65:  }
+1:   66:}
+------------------
+_ZN29ErrorCodeHelper_StatusOk_TestC2Ev:
+function _ZN29ErrorCodeHelper_StatusOk_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   45:TEST(ErrorCodeHelper, StatusOk)
+call    0 returned 1
+------------------
+_ZN29ErrorCodeHelper_StatusOk_TestD0Ev:
+function _ZN29ErrorCodeHelper_StatusOk_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   45:TEST(ErrorCodeHelper, StatusOk)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN29ErrorCodeHelper_StatusOk_TestD2Ev:
+function _ZN29ErrorCodeHelper_StatusOk_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   45:TEST(ErrorCodeHelper, StatusOk)
+call    0 returned 1
+------------------
+_ZN29ErrorCodeHelper_StatusOk_Test8TestBodyEv:
+function _ZN29ErrorCodeHelper_StatusOk_Test8TestBodyEv called 1 returned 100% blocks executed 21%
+1:   45:TEST(ErrorCodeHelper, StatusOk)
+-:   46:{
+-:   47:  // Check OK codes
+101:   48:  for(statusCode_t statusCode = CTUTIL_SUCCESS; statusCode < (CTUTIL_SUCCESS + 100); ++statusCode)
+branch  0 taken 100
+branch  1 taken 1 (fallthrough)
+-:   49:  {
+100*:   50:    EXPECT_TRUE(ctutil_IsStatusOk(statusCode));
+call    0 returned 100
+branch  1 taken 100 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 100
+call    4 returned 100
+branch  5 taken 0 (fallthrough)
+branch  6 taken 100
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 returned 100
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   51:  }
+1*:   52:  EXPECT_TRUE(ctutil_IsStatusOk(INT_MAX));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 returned 1
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   53:
+-:   54:  // Check FAILURE codes
+101:   55:  for(statusCode_t statusCode = CTUTIL_FAILED; statusCode > (CTUTIL_FAILED - 100); --statusCode)
+branch  0 taken 100
+branch  1 taken 1 (fallthrough)
+-:   56:  {
+100*:   57:    EXPECT_FALSE(ctutil_IsStatusOk(statusCode));
+call    0 returned 100
+branch  1 taken 100 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 100
+call    4 returned 100
+branch  5 taken 0 (fallthrough)
+branch  6 taken 100
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 returned 100
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   58:  }
+1*:   59:  EXPECT_FALSE(ctutil_IsStatusOk(INT_MIN));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 returned 1
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   60:
+-:   61:  // Check undefined codes (if any)
+1*:   62:  for(statusCode_t statusCode = (CTUTIL_FAILED + 1); statusCode < CTUTIL_SUCCESS; ++statusCode)
+branch  0 taken 0
+branch  1 taken 1 (fallthrough)
+-:   63:  {
+#####:   64:    EXPECT_FALSE(ctutil_IsStatusOk(statusCode));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   65:  }
+1:   66:}
+------------------
+-:   67:
+-:   68:
+4:   69:TEST(ErrorCodeHelper, StatusFailure)
+-:   70:{
+-:   71:
+-:   72:  // Check FAILURE codes
+101:   73:  for(statusCode_t statusCode = CTUTIL_FAILED; statusCode > (CTUTIL_FAILED - 100); --statusCode)
+-:   74:  {
+100*:   75:    EXPECT_TRUE(ctutil_IsStatusFailure(statusCode));
+-:   76:  }
+1*:   77:  EXPECT_TRUE(ctutil_IsStatusFailure(INT_MIN));
+-:   78:
+-:   79:  // Check OK codes
+101:   80:  for(statusCode_t statusCode = CTUTIL_SUCCESS; statusCode < (CTUTIL_SUCCESS + 100); ++statusCode)
+-:   81:  {
+100*:   82:    EXPECT_FALSE(ctutil_IsStatusFailure(statusCode));
+-:   83:  }
+1*:   84:  EXPECT_FALSE(ctutil_IsStatusFailure(INT_MAX));
+-:   85:
+-:   86:  // Check undefined codes (if any)
+1*:   87:  for(statusCode_t statusCode = (CTUTIL_FAILED + 1); statusCode < CTUTIL_SUCCESS; ++statusCode)
+-:   88:  {
+#####:   89:    EXPECT_FALSE(ctutil_IsStatusFailure(statusCode));
+-:   90:  }
+1:   91:}
+------------------
+_ZN34ErrorCodeHelper_StatusFailure_TestC2Ev:
+function _ZN34ErrorCodeHelper_StatusFailure_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   69:TEST(ErrorCodeHelper, StatusFailure)
+call    0 returned 1
+------------------
+_ZN34ErrorCodeHelper_StatusFailure_TestD0Ev:
+function _ZN34ErrorCodeHelper_StatusFailure_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   69:TEST(ErrorCodeHelper, StatusFailure)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN34ErrorCodeHelper_StatusFailure_TestD2Ev:
+function _ZN34ErrorCodeHelper_StatusFailure_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   69:TEST(ErrorCodeHelper, StatusFailure)
+call    0 returned 1
+------------------
+_ZN34ErrorCodeHelper_StatusFailure_Test8TestBodyEv:
+function _ZN34ErrorCodeHelper_StatusFailure_Test8TestBodyEv called 1 returned 100% blocks executed 21%
+1:   69:TEST(ErrorCodeHelper, StatusFailure)
+-:   70:{
+-:   71:
+-:   72:  // Check FAILURE codes
+101:   73:  for(statusCode_t statusCode = CTUTIL_FAILED; statusCode > (CTUTIL_FAILED - 100); --statusCode)
+branch  0 taken 100
+branch  1 taken 1 (fallthrough)
+-:   74:  {
+100*:   75:    EXPECT_TRUE(ctutil_IsStatusFailure(statusCode));
+call    0 returned 100
+branch  1 taken 100 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 100
+call    4 returned 100
+branch  5 taken 0 (fallthrough)
+branch  6 taken 100
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 returned 100
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   76:  }
+1*:   77:  EXPECT_TRUE(ctutil_IsStatusFailure(INT_MIN));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 returned 1
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   78:
+-:   79:  // Check OK codes
+101:   80:  for(statusCode_t statusCode = CTUTIL_SUCCESS; statusCode < (CTUTIL_SUCCESS + 100); ++statusCode)
+branch  0 taken 100
+branch  1 taken 1 (fallthrough)
+-:   81:  {
+100*:   82:    EXPECT_FALSE(ctutil_IsStatusFailure(statusCode));
+call    0 returned 100
+branch  1 taken 100 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 100
+call    4 returned 100
+branch  5 taken 0 (fallthrough)
+branch  6 taken 100
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 returned 100
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   83:  }
+1*:   84:  EXPECT_FALSE(ctutil_IsStatusFailure(INT_MAX));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+branch  5 taken 0 (fallthrough)
+branch  6 taken 1
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 returned 1
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   85:
+-:   86:  // Check undefined codes (if any)
+1*:   87:  for(statusCode_t statusCode = (CTUTIL_FAILED + 1); statusCode < CTUTIL_SUCCESS; ++statusCode)
+branch  0 taken 0
+branch  1 taken 1 (fallthrough)
+-:   88:  {
+#####:   89:    EXPECT_FALSE(ctutil_IsStatusFailure(statusCode));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+call   26 never executed
+call   27 never executed
+-:   90:  }
+1:   91:}
+------------------
+-:   92:
+-:   93:
+4:   94:TEST(ErrorCodeHelper, StatusCodeMapping)
+-:   95:{
+-:   96:  // Check negative status codes
+125:   97:  for(statusCode_t statusCode = CTUTIL_FAILED; statusCode > ((CTUTIL_EXIT_MAX) * (-1)); --statusCode)
+-:   98:  {
+124*:   99:    EXPECT_NE(CTUTIL_EXIT_SUCCESS, ctutil_GetExitCodeFromStatus(statusCode));
+-:  100:  }
+-:  101:
+-:  102:  // Check positive status codes
+126:  103:  for(statusCode_t statusCode = CTUTIL_SUCCESS; statusCode < CTUTIL_EXIT_MAX; ++statusCode)
+-:  104:  {
+125*:  105:    EXPECT_EQ(CTUTIL_EXIT_SUCCESS, ctutil_GetExitCodeFromStatus(statusCode));
+-:  106:  }
+-:  107:
+-:  108:  // Check well known status codes
+1*:  109:  EXPECT_EQ(CTUTIL_EXIT_SUCCESS, ctutil_GetExitCodeFromStatus(CTUTIL_SUCCESS));
+1*:  110:  EXPECT_EQ(CTUTIL_EXIT_GENERAL_ERROR, ctutil_GetExitCodeFromStatus(CTUTIL_FAILED));
+1:  111:}
+------------------
+_ZN38ErrorCodeHelper_StatusCodeMapping_TestC2Ev:
+function _ZN38ErrorCodeHelper_StatusCodeMapping_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(ErrorCodeHelper, StatusCodeMapping)
+call    0 returned 1
+------------------
+_ZN38ErrorCodeHelper_StatusCodeMapping_TestD0Ev:
+function _ZN38ErrorCodeHelper_StatusCodeMapping_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(ErrorCodeHelper, StatusCodeMapping)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN38ErrorCodeHelper_StatusCodeMapping_TestD2Ev:
+function _ZN38ErrorCodeHelper_StatusCodeMapping_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(ErrorCodeHelper, StatusCodeMapping)
+call    0 returned 1
+------------------
+_ZN38ErrorCodeHelper_StatusCodeMapping_Test8TestBodyEv:
+function _ZN38ErrorCodeHelper_StatusCodeMapping_Test8TestBodyEv called 1 returned 100% blocks executed 26%
+1:   94:TEST(ErrorCodeHelper, StatusCodeMapping)
+-:   95:{
+-:   96:  // Check negative status codes
+125:   97:  for(statusCode_t statusCode = CTUTIL_FAILED; statusCode > ((CTUTIL_EXIT_MAX) * (-1)); --statusCode)
+branch  0 taken 124
+branch  1 taken 1 (fallthrough)
+-:   98:  {
+124*:   99:    EXPECT_NE(CTUTIL_EXIT_SUCCESS, ctutil_GetExitCodeFromStatus(statusCode));
+call    0 returned 124
+branch  1 taken 124 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 124
+branch  4 taken 124 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 124
+branch  7 taken 0 (fallthrough)
+branch  8 taken 124
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 124
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  100:  }
+-:  101:
+-:  102:  // Check positive status codes
+126:  103:  for(statusCode_t statusCode = CTUTIL_SUCCESS; statusCode < CTUTIL_EXIT_MAX; ++statusCode)
+branch  0 taken 125
+branch  1 taken 1 (fallthrough)
+-:  104:  {
+125*:  105:    EXPECT_EQ(CTUTIL_EXIT_SUCCESS, ctutil_GetExitCodeFromStatus(statusCode));
+call    0 returned 125
+branch  1 taken 125 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 125
+branch  4 taken 125 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 125
+branch  7 taken 0 (fallthrough)
+branch  8 taken 125
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 125
+call   22 never executed
+call   23 never executed
+call   24 never executed
+-:  106:  }
+-:  107:
+-:  108:  // Check well known status codes
+1*:  109:  EXPECT_EQ(CTUTIL_EXIT_SUCCESS, ctutil_GetExitCodeFromStatus(CTUTIL_SUCCESS));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1*:  110:  EXPECT_EQ(CTUTIL_EXIT_GENERAL_ERROR, ctutil_GetExitCodeFromStatus(CTUTIL_FAILED));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+1:  111:}
+------------------
+-:  112:
+-:  113:
+-:  114://---- End of source file ------------------------------------------------------
+-:  115:

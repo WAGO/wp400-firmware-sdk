@@ -1,0 +1,948 @@
+-:    0:Source:test-src/test_Structuring.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project common-header (PTXdist package libcommonheader).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_Structuring.cc
+-:   12:///
+-:   13:///  \brief    Test for structuring helper macros.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include <gtest/gtest.h>
+-:   22:#include "c-modules/test_StructuringMod.h"
+-:   23:#include "cpp-modules/test_StructuringMod.hpp"
+-:   24:
+-:   25://------------------------------------------------------------------------------
+-:   26:// defines; structure, enumeration and type definitions
+-:   27://------------------------------------------------------------------------------
+-:   28:
+-:   29://------------------------------------------------------------------------------
+-:   30:// function prototypes
+-:   31://------------------------------------------------------------------------------
+-:   32:
+-:   33://------------------------------------------------------------------------------
+-:   34:// macros
+-:   35://------------------------------------------------------------------------------
+-:   36:
+-:   37://------------------------------------------------------------------------------
+-:   38:// variables' and constants' definitions
+-:   39://------------------------------------------------------------------------------
+-:   40:
+-:   41://------------------------------------------------------------------------------
+-:   42:// test implementation
+-:   43://------------------------------------------------------------------------------
+4:   44:TEST(Structuring, BreakableScopeC)
+-:   45:{
+1*:   46:  ASSERT_EQ(1U, BreakScopePlainC());
+-:   47:}
+------------------
+_ZN32Structuring_BreakableScopeC_TestC2Ev:
+function _ZN32Structuring_BreakableScopeC_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   44:TEST(Structuring, BreakableScopeC)
+call    0 returned 1
+------------------
+_ZN32Structuring_BreakableScopeC_TestD0Ev:
+function _ZN32Structuring_BreakableScopeC_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   44:TEST(Structuring, BreakableScopeC)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN32Structuring_BreakableScopeC_TestD2Ev:
+function _ZN32Structuring_BreakableScopeC_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   44:TEST(Structuring, BreakableScopeC)
+call    0 returned 1
+------------------
+_ZN32Structuring_BreakableScopeC_Test8TestBodyEv:
+function _ZN32Structuring_BreakableScopeC_Test8TestBodyEv called 1 returned 100% blocks executed 35%
+1:   44:TEST(Structuring, BreakableScopeC)
+-:   45:{
+1*:   46:  ASSERT_EQ(1U, BreakScopePlainC());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:   47:}
+------------------
+-:   48:
+-:   49:
+4:   50:TEST(Structuring, InfiniteLoopC)
+-:   51:{
+1:   52:  size_t const value = 42U;
+1*:   53:  ASSERT_EQ(value, BreakLoopOnValueMatchPlainC(value));
+-:   54:}
+------------------
+_ZN30Structuring_InfiniteLoopC_TestC2Ev:
+function _ZN30Structuring_InfiniteLoopC_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   50:TEST(Structuring, InfiniteLoopC)
+call    0 returned 1
+------------------
+_ZN30Structuring_InfiniteLoopC_TestD0Ev:
+function _ZN30Structuring_InfiniteLoopC_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   50:TEST(Structuring, InfiniteLoopC)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN30Structuring_InfiniteLoopC_TestD2Ev:
+function _ZN30Structuring_InfiniteLoopC_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   50:TEST(Structuring, InfiniteLoopC)
+call    0 returned 1
+------------------
+_ZN30Structuring_InfiniteLoopC_Test8TestBodyEv:
+function _ZN30Structuring_InfiniteLoopC_Test8TestBodyEv called 1 returned 100% blocks executed 37%
+1:   50:TEST(Structuring, InfiniteLoopC)
+-:   51:{
+1:   52:  size_t const value = 42U;
+1*:   53:  ASSERT_EQ(value, BreakLoopOnValueMatchPlainC(value));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:   54:}
+------------------
+-:   55:
+-:   56:
+4:   57:TEST(Structuring, MemberSizeC)
+-:   58:{
+1*:   59:  ASSERT_EQ(GetSizeOfMemberPlainC(), GetSizeOfMemberMacroC());
+-:   60:}
+------------------
+_ZN28Structuring_MemberSizeC_TestC2Ev:
+function _ZN28Structuring_MemberSizeC_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   57:TEST(Structuring, MemberSizeC)
+call    0 returned 1
+------------------
+_ZN28Structuring_MemberSizeC_TestD0Ev:
+function _ZN28Structuring_MemberSizeC_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   57:TEST(Structuring, MemberSizeC)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN28Structuring_MemberSizeC_TestD2Ev:
+function _ZN28Structuring_MemberSizeC_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   57:TEST(Structuring, MemberSizeC)
+call    0 returned 1
+------------------
+_ZN28Structuring_MemberSizeC_Test8TestBodyEv:
+function _ZN28Structuring_MemberSizeC_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   57:TEST(Structuring, MemberSizeC)
+-:   58:{
+1*:   59:  ASSERT_EQ(GetSizeOfMemberPlainC(), GetSizeOfMemberMacroC());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:   60:}
+------------------
+-:   61:
+-:   62:
+4:   63:TEST(Structuring, ElementSizeC)
+-:   64:{
+1*:   65:  ASSERT_EQ(GetSizeOfElementPlainC(), GetSizeOfElementMacroC());
+-:   66:}
+------------------
+_ZN29Structuring_ElementSizeC_TestC2Ev:
+function _ZN29Structuring_ElementSizeC_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   63:TEST(Structuring, ElementSizeC)
+call    0 returned 1
+------------------
+_ZN29Structuring_ElementSizeC_TestD0Ev:
+function _ZN29Structuring_ElementSizeC_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   63:TEST(Structuring, ElementSizeC)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN29Structuring_ElementSizeC_TestD2Ev:
+function _ZN29Structuring_ElementSizeC_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   63:TEST(Structuring, ElementSizeC)
+call    0 returned 1
+------------------
+_ZN29Structuring_ElementSizeC_Test8TestBodyEv:
+function _ZN29Structuring_ElementSizeC_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   63:TEST(Structuring, ElementSizeC)
+-:   64:{
+1*:   65:  ASSERT_EQ(GetSizeOfElementPlainC(), GetSizeOfElementMacroC());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:   66:}
+------------------
+-:   67:
+-:   68:
+4:   69:TEST(Structuring, ArrayLengthC)
+-:   70:{
+1*:   71:  ASSERT_EQ(GetArrayLengthPlainC(), GetArrayLengthMacroC());
+-:   72:}
+------------------
+_ZN29Structuring_ArrayLengthC_TestC2Ev:
+function _ZN29Structuring_ArrayLengthC_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   69:TEST(Structuring, ArrayLengthC)
+call    0 returned 1
+------------------
+_ZN29Structuring_ArrayLengthC_TestD0Ev:
+function _ZN29Structuring_ArrayLengthC_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   69:TEST(Structuring, ArrayLengthC)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN29Structuring_ArrayLengthC_TestD2Ev:
+function _ZN29Structuring_ArrayLengthC_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   69:TEST(Structuring, ArrayLengthC)
+call    0 returned 1
+------------------
+_ZN29Structuring_ArrayLengthC_Test8TestBodyEv:
+function _ZN29Structuring_ArrayLengthC_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   69:TEST(Structuring, ArrayLengthC)
+-:   70:{
+1*:   71:  ASSERT_EQ(GetArrayLengthPlainC(), GetArrayLengthMacroC());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:   72:}
+------------------
+-:   73:
+-:   74:
+4:   75:TEST(Structuring, ArrayToPointerC)
+-:   76:{
+-:   77:  int test_array[8];
+1*:   78:  ASSERT_EQ(GetArrayPointerPlainC(test_array), GetArrayPointerMacroC(test_array));
+-:   79:}
+------------------
+_ZN32Structuring_ArrayToPointerC_TestC2Ev:
+function _ZN32Structuring_ArrayToPointerC_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   75:TEST(Structuring, ArrayToPointerC)
+call    0 returned 1
+------------------
+_ZN32Structuring_ArrayToPointerC_TestD0Ev:
+function _ZN32Structuring_ArrayToPointerC_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   75:TEST(Structuring, ArrayToPointerC)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN32Structuring_ArrayToPointerC_TestD2Ev:
+function _ZN32Structuring_ArrayToPointerC_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   75:TEST(Structuring, ArrayToPointerC)
+call    0 returned 1
+------------------
+_ZN32Structuring_ArrayToPointerC_Test8TestBodyEv:
+function _ZN32Structuring_ArrayToPointerC_Test8TestBodyEv called 1 returned 100% blocks executed 36%
+1:   75:TEST(Structuring, ArrayToPointerC)
+-:   76:{
+-:   77:  int test_array[8];
+1*:   78:  ASSERT_EQ(GetArrayPointerPlainC(test_array), GetArrayPointerMacroC(test_array));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:   79:}
+------------------
+-:   80:
+-:   81:
+4:   82:TEST(Structuring, ContainerFromMemberC)
+-:   83:{
+1*:   84:  ASSERT_EQ(GetContainerAddressPlainC(), GetContainerAddressMacroC());
+-:   85:}
+------------------
+_ZN37Structuring_ContainerFromMemberC_TestC2Ev:
+function _ZN37Structuring_ContainerFromMemberC_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   82:TEST(Structuring, ContainerFromMemberC)
+call    0 returned 1
+------------------
+_ZN37Structuring_ContainerFromMemberC_TestD0Ev:
+function _ZN37Structuring_ContainerFromMemberC_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   82:TEST(Structuring, ContainerFromMemberC)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN37Structuring_ContainerFromMemberC_TestD2Ev:
+function _ZN37Structuring_ContainerFromMemberC_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   82:TEST(Structuring, ContainerFromMemberC)
+call    0 returned 1
+------------------
+_ZN37Structuring_ContainerFromMemberC_Test8TestBodyEv:
+function _ZN37Structuring_ContainerFromMemberC_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   82:TEST(Structuring, ContainerFromMemberC)
+-:   83:{
+1*:   84:  ASSERT_EQ(GetContainerAddressPlainC(), GetContainerAddressMacroC());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:   85:}
+------------------
+-:   86:
+-:   87:
+4:   88:TEST(Structuring, ConstContainerFromMemberC)
+-:   89:{
+1*:   90:  ASSERT_EQ(GetContainerAddressReadonlyPlainC(), GetContainerAddressReadonlyMacroC());
+-:   91:}
+------------------
+_ZN42Structuring_ConstContainerFromMemberC_TestC2Ev:
+function _ZN42Structuring_ConstContainerFromMemberC_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   88:TEST(Structuring, ConstContainerFromMemberC)
+call    0 returned 1
+------------------
+_ZN42Structuring_ConstContainerFromMemberC_TestD0Ev:
+function _ZN42Structuring_ConstContainerFromMemberC_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   88:TEST(Structuring, ConstContainerFromMemberC)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN42Structuring_ConstContainerFromMemberC_TestD2Ev:
+function _ZN42Structuring_ConstContainerFromMemberC_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   88:TEST(Structuring, ConstContainerFromMemberC)
+call    0 returned 1
+------------------
+_ZN42Structuring_ConstContainerFromMemberC_Test8TestBodyEv:
+function _ZN42Structuring_ConstContainerFromMemberC_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   88:TEST(Structuring, ConstContainerFromMemberC)
+-:   89:{
+1*:   90:  ASSERT_EQ(GetContainerAddressReadonlyPlainC(), GetContainerAddressReadonlyMacroC());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:   91:}
+------------------
+-:   92:
+-:   93:
+4:   94:TEST(Structuring, BreakableScopeCPP)
+-:   95:{
+1*:   96:  ASSERT_EQ(1U, BreakScopePlainCPP());
+-:   97:}
+------------------
+_ZN34Structuring_BreakableScopeCPP_TestC2Ev:
+function _ZN34Structuring_BreakableScopeCPP_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(Structuring, BreakableScopeCPP)
+call    0 returned 1
+------------------
+_ZN34Structuring_BreakableScopeCPP_TestD0Ev:
+function _ZN34Structuring_BreakableScopeCPP_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(Structuring, BreakableScopeCPP)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN34Structuring_BreakableScopeCPP_TestD2Ev:
+function _ZN34Structuring_BreakableScopeCPP_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   94:TEST(Structuring, BreakableScopeCPP)
+call    0 returned 1
+------------------
+_ZN34Structuring_BreakableScopeCPP_Test8TestBodyEv:
+function _ZN34Structuring_BreakableScopeCPP_Test8TestBodyEv called 1 returned 100% blocks executed 35%
+1:   94:TEST(Structuring, BreakableScopeCPP)
+-:   95:{
+1*:   96:  ASSERT_EQ(1U, BreakScopePlainCPP());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:   97:}
+------------------
+-:   98:
+-:   99:
+4:  100:TEST(Structuring, InfiniteLoopCPP)
+-:  101:{
+1:  102:  size_t const value = 53U;
+1*:  103:  ASSERT_EQ(value, BreakLoopOnValueMatchPlainCPP(value));
+-:  104:}
+------------------
+_ZN32Structuring_InfiniteLoopCPP_TestC2Ev:
+function _ZN32Structuring_InfiniteLoopCPP_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  100:TEST(Structuring, InfiniteLoopCPP)
+call    0 returned 1
+------------------
+_ZN32Structuring_InfiniteLoopCPP_TestD0Ev:
+function _ZN32Structuring_InfiniteLoopCPP_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  100:TEST(Structuring, InfiniteLoopCPP)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN32Structuring_InfiniteLoopCPP_TestD2Ev:
+function _ZN32Structuring_InfiniteLoopCPP_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  100:TEST(Structuring, InfiniteLoopCPP)
+call    0 returned 1
+------------------
+_ZN32Structuring_InfiniteLoopCPP_Test8TestBodyEv:
+function _ZN32Structuring_InfiniteLoopCPP_Test8TestBodyEv called 1 returned 100% blocks executed 37%
+1:  100:TEST(Structuring, InfiniteLoopCPP)
+-:  101:{
+1:  102:  size_t const value = 53U;
+1*:  103:  ASSERT_EQ(value, BreakLoopOnValueMatchPlainCPP(value));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 0 (fallthrough)
+branch  8 taken 1
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0
+call   24 never executed
+call   25 never executed
+call   26 never executed
+-:  104:}
+------------------
+-:  105:
+-:  106:
+4:  107:TEST(Structuring, MemberSizeCPP)
+-:  108:{
+1*:  109:  ASSERT_EQ(GetSizeOfMemberPlainCPP(), GetSizeOfMemberMacroCPP());
+-:  110:}
+------------------
+_ZN30Structuring_MemberSizeCPP_TestC2Ev:
+function _ZN30Structuring_MemberSizeCPP_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  107:TEST(Structuring, MemberSizeCPP)
+call    0 returned 1
+------------------
+_ZN30Structuring_MemberSizeCPP_TestD0Ev:
+function _ZN30Structuring_MemberSizeCPP_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  107:TEST(Structuring, MemberSizeCPP)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN30Structuring_MemberSizeCPP_TestD2Ev:
+function _ZN30Structuring_MemberSizeCPP_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  107:TEST(Structuring, MemberSizeCPP)
+call    0 returned 1
+------------------
+_ZN30Structuring_MemberSizeCPP_Test8TestBodyEv:
+function _ZN30Structuring_MemberSizeCPP_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:  107:TEST(Structuring, MemberSizeCPP)
+-:  108:{
+1*:  109:  ASSERT_EQ(GetSizeOfMemberPlainCPP(), GetSizeOfMemberMacroCPP());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:  110:}
+------------------
+-:  111:
+-:  112:
+4:  113:TEST(Structuring, ElementSizeCPP)
+-:  114:{
+1*:  115:  ASSERT_EQ(GetSizeOfElementPlainCPP(), GetSizeOfElementMacroCPP());
+-:  116:}
+------------------
+_ZN31Structuring_ElementSizeCPP_TestC2Ev:
+function _ZN31Structuring_ElementSizeCPP_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  113:TEST(Structuring, ElementSizeCPP)
+call    0 returned 1
+------------------
+_ZN31Structuring_ElementSizeCPP_TestD0Ev:
+function _ZN31Structuring_ElementSizeCPP_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  113:TEST(Structuring, ElementSizeCPP)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN31Structuring_ElementSizeCPP_TestD2Ev:
+function _ZN31Structuring_ElementSizeCPP_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  113:TEST(Structuring, ElementSizeCPP)
+call    0 returned 1
+------------------
+_ZN31Structuring_ElementSizeCPP_Test8TestBodyEv:
+function _ZN31Structuring_ElementSizeCPP_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:  113:TEST(Structuring, ElementSizeCPP)
+-:  114:{
+1*:  115:  ASSERT_EQ(GetSizeOfElementPlainCPP(), GetSizeOfElementMacroCPP());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:  116:}
+------------------
+-:  117:
+-:  118:
+4:  119:TEST(Structuring, ArrayLengthCPP)
+-:  120:{
+1*:  121:  ASSERT_EQ(GetArrayLengthPlainCPP(), GetArrayLengthMacroCPP());
+-:  122:}
+------------------
+_ZN31Structuring_ArrayLengthCPP_TestC2Ev:
+function _ZN31Structuring_ArrayLengthCPP_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  119:TEST(Structuring, ArrayLengthCPP)
+call    0 returned 1
+------------------
+_ZN31Structuring_ArrayLengthCPP_TestD0Ev:
+function _ZN31Structuring_ArrayLengthCPP_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  119:TEST(Structuring, ArrayLengthCPP)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN31Structuring_ArrayLengthCPP_TestD2Ev:
+function _ZN31Structuring_ArrayLengthCPP_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  119:TEST(Structuring, ArrayLengthCPP)
+call    0 returned 1
+------------------
+_ZN31Structuring_ArrayLengthCPP_Test8TestBodyEv:
+function _ZN31Structuring_ArrayLengthCPP_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:  119:TEST(Structuring, ArrayLengthCPP)
+-:  120:{
+1*:  121:  ASSERT_EQ(GetArrayLengthPlainCPP(), GetArrayLengthMacroCPP());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:  122:}
+------------------
+-:  123:
+-:  124:
+4:  125:TEST(Structuring, ArrayToPointerCPP)
+-:  126:{
+-:  127:  int test_array[8];
+1*:  128:  ASSERT_EQ(GetArrayPointerPlainCPP(test_array), GetArrayPointerMacroCPP(test_array));
+-:  129:}
+------------------
+_ZN34Structuring_ArrayToPointerCPP_TestC2Ev:
+function _ZN34Structuring_ArrayToPointerCPP_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  125:TEST(Structuring, ArrayToPointerCPP)
+call    0 returned 1
+------------------
+_ZN34Structuring_ArrayToPointerCPP_TestD0Ev:
+function _ZN34Structuring_ArrayToPointerCPP_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  125:TEST(Structuring, ArrayToPointerCPP)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN34Structuring_ArrayToPointerCPP_TestD2Ev:
+function _ZN34Structuring_ArrayToPointerCPP_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  125:TEST(Structuring, ArrayToPointerCPP)
+call    0 returned 1
+------------------
+_ZN34Structuring_ArrayToPointerCPP_Test8TestBodyEv:
+function _ZN34Structuring_ArrayToPointerCPP_Test8TestBodyEv called 1 returned 100% blocks executed 36%
+1:  125:TEST(Structuring, ArrayToPointerCPP)
+-:  126:{
+-:  127:  int test_array[8];
+1*:  128:  ASSERT_EQ(GetArrayPointerPlainCPP(test_array), GetArrayPointerMacroCPP(test_array));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:  129:}
+------------------
+-:  130:
+-:  131:
+4:  132:TEST(Structuring, ContainerFromMemberCPP)
+-:  133:{
+1*:  134:  ASSERT_EQ(GetContainerAddressPlainCPP(), GetContainerAddressMacroCPP());
+-:  135:}
+------------------
+_ZN39Structuring_ContainerFromMemberCPP_TestC2Ev:
+function _ZN39Structuring_ContainerFromMemberCPP_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  132:TEST(Structuring, ContainerFromMemberCPP)
+call    0 returned 1
+------------------
+_ZN39Structuring_ContainerFromMemberCPP_TestD0Ev:
+function _ZN39Structuring_ContainerFromMemberCPP_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  132:TEST(Structuring, ContainerFromMemberCPP)
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN39Structuring_ContainerFromMemberCPP_TestD2Ev:
+function _ZN39Structuring_ContainerFromMemberCPP_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  132:TEST(Structuring, ContainerFromMemberCPP)
+call    0 returned 1
+------------------
+_ZN39Structuring_ContainerFromMemberCPP_Test8TestBodyEv:
+function _ZN39Structuring_ContainerFromMemberCPP_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:  132:TEST(Structuring, ContainerFromMemberCPP)
+-:  133:{
+1*:  134:  ASSERT_EQ(GetContainerAddressPlainCPP(), GetContainerAddressMacroCPP());
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+branch 17 never executed
+branch 18 never executed
+call   19 never executed
+branch 20 never executed
+branch 21 never executed
+call   22 never executed
+call   23 never executed
+call   24 returned 1
+branch 25 taken 1 (fallthrough)
+branch 26 taken 0
+call   27 never executed
+call   28 never executed
+call   29 never executed
+-:  135:}
+------------------
+-:  136:
+-:  137:
+4:  138:TEST(Structuring, ConstContainerFromMemberCPP)
+-:  139:{
+1*:  140:  ASSERT_EQ(GetContainerAddressReadonlyPlainCPP(), GetContainerAddressReadonlyMacroCPP());
+-:  141:}
+-:  142:
+-:  143:
+-:  144://---- End of source file ------------------------------------------------------
+-:  145:

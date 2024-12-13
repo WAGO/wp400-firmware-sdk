@@ -1,0 +1,485 @@
+-:    0:Source:test-src/common/testutil_common_parameter_checks.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2019-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     testutil_common_parameter_checks.cc
+-:   12:///
+-:   13:///  \brief    Implementation for common parameter check functions.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "testutil/common_parameter_checks.h"
+-:   22:#include "ctparts/common_main_defaults.h"
+-:   23:#include <gtest/gtest.h>
+-:   24:
+-:   25:namespace testutil {
+-:   26://------------------------------------------------------------------------------
+-:   27:// defines; structure, enumeration and type definitions
+-:   28://------------------------------------------------------------------------------
+-:   29:
+-:   30://------------------------------------------------------------------------------
+-:   31:// function prototypes
+-:   32://------------------------------------------------------------------------------
+-:   33:
+-:   34://------------------------------------------------------------------------------
+-:   35:// macros
+-:   36://------------------------------------------------------------------------------
+-:   37:
+-:   38://------------------------------------------------------------------------------
+-:   39:// variables' and constants' definitions
+-:   40://------------------------------------------------------------------------------
+-:   41:
+-:   42://------------------------------------------------------------------------------
+-:   43:// function implementation
+-:   44://------------------------------------------------------------------------------
+function _ZN8testutil29TestCommonEarlyOptionsDefaultEiPKPcPKcS4_P14ctutil_Options called 0 returned 0% blocks executed 0%
+#####:   45:void TestCommonEarlyOptionsDefault(int const argCount,
+-:   46:                                   char * const arszArgs[],
+-:   47:                                   char const * const szArg01Copy,
+-:   48:                                   char const * const szArg02Copy,
+-:   49:                                   ctutil_Options_t * const pstOptions)
+-:   50:{
+#####:   51:  statusCode_t status = CTUTIL_SUCCESS;
+#####:   52:  testing::internal::CaptureStdout();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   53:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   54:  EXPECT_STREQ("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+#####:   55:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+#####:   56:  ASSERT_LT(2, argCount);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+branch 19 never executed
+branch 20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+#####:   57:  EXPECT_STREQ(szArg01Copy, arszArgs[1]);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+#####:   58:  EXPECT_STREQ(szArg02Copy, arszArgs[2]);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   59:}
+-:   60:
+function _ZN8testutil22TestCommonOptionsEmptyEiPKPcP14ctutil_Options called 0 returned 0% blocks executed 0%
+#####:   61:void TestCommonOptionsEmpty(int const argCount,
+-:   62:                            char * const arszArgs[],
+-:   63:                            ctutil_Options_t * const pstOptions)
+-:   64:{
+#####:   65:  statusCode_t status = CTUTIL_SUCCESS;
+#####:   66:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   67:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+#####:   68:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   69:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+#####:   70:  EXPECT_TRUE(pstOptions->stCommonOptions.infoPrint);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+#####:   71:}
+-:   72:
+function _ZN8testutil22TestCommonOptionsQuietEiPKPcP14ctutil_Options called 2 returned 100% blocks executed 22%
+2:   73:void TestCommonOptionsQuiet(int const argCount,
+-:   74:                            char * const arszArgs[],
+-:   75:                            ctutil_Options_t * const pstOptions)
+-:   76:{
+2:   77:  statusCode_t status = CTUTIL_SUCCESS;
+2:   78:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2*:   79:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2*:   80:  EXPECT_TRUE(pstOptions->stCommonOptions.quiet);
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 0 (fallthrough)
+branch  3 taken 2
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 2
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+2:   81:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2*:   82:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2:   83:}
+-:   84:
+-:   85:
+function _ZN8testutil21TestCommonOptionsHelpEiPKPcP14ctutil_Options called 2 returned 100% blocks executed 24%
+2:   86:void TestCommonOptionsHelp(int const argCount,
+-:   87:                           char * const arszArgs[],
+-:   88:                           ctutil_Options_t * const pstOptions)
+-:   89:{
+2:   90:  statusCode_t status = CTUTIL_SUCCESS;
+2:   91:  status = ctparts_EvaluateEarlyOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2*:   92:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2:   93:  testing::internal::CaptureStdout();
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+2:   94:  status = ctparts_EvaluateOptions(NULL, argCount, arszArgs, pstOptions);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+4*:   95:  EXPECT_STRNE("", testing::internal::GetCapturedStdout().c_str()); // Expected no ASSERT before GetCapturedStdout!
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+call    4 returned 2
+branch  5 taken 2 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 2
+branch  8 taken 0 (fallthrough)
+branch  9 taken 2
+call   10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 2
+call   23 never executed
+call   24 never executed
+call   25 never executed
+2*:   96:  EXPECT_EQ(CTUTIL_SUCCESS, status);
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 2
+call   19 never executed
+call   20 never executed
+call   21 never executed
+2*:   97:  EXPECT_TRUE(pstOptions->stCommonOptions.earlyExit);
+call    0 returned 2
+call    1 returned 2
+branch  2 taken 0 (fallthrough)
+branch  3 taken 2
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 returned 2
+call   21 never executed
+call   22 never executed
+call   23 never executed
+call   24 never executed
+2:   98:}
+-:   99:
+-:  100:
+-:  101:} // Namespace testutil
+-:  102:
+-:  103:
+-:  104://---- End of source file ------------------------------------------------------

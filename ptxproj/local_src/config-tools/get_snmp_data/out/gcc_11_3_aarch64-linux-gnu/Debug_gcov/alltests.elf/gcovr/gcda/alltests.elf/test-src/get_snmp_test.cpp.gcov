@@ -1,0 +1,3690 @@
+-:    0:Source:test-src/get_snmp_test.cpp
+-:    0:Graph:./out/gcc_11_3_aarch64-linux-gnu/Debug_gcov/alltests.elf/gcovr/gcda/alltests.elf/test-src/get_snmp_test.cpp.gcno
+-:    0:Data:./out/gcc_11_3_aarch64-linux-gnu/Debug_gcov/alltests.elf/gcovr/gcda/alltests.elf/test-src/get_snmp_test.cpp.gcda
+-:    0:Runs:1
+-:    1:// Copyright (c) 2022 WAGO GmbH & Co. KG
+-:    2:// SPDX-License-Identifier: MPL-2.0
+-:    3:
+-:    4:#include <gtest/gtest.h>
+-:    5:#include <gmock/gmock.h>
+-:    6:
+-:    7:#include "get_snmp.hpp"
+-:    8:
+-:    9:namespace wago::get_snmp_data {
+-:   10:
+-:   11:using wago::snmp_config_lib::SnmpConfig;
+-:   12:using wago::snmp_config_lib::Access;
+-:   13:using wago::snmp_config_lib::Privacy;
+-:   14:using wago::snmp_config_lib::Community;
+-:   15:using wago::snmp_config_lib::AuthenticationType;
+-:   16:using wago::snmp_config_lib::VersionV1V2c;
+-:   17:using wago::snmp_config_lib::SecurityLevel;
+-:   18:
+-:   19:namespace {
+-:   20:
+function _ZN4wago13get_snmp_data12_GLOBAL__N_115ExpectParameterEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmRNS_15snmp_config_lib10SnmpConfigENS0_6ResultIS7_EE called 99 returned 100% blocks executed 27%
+99:   21:void ExpectParameter(::std::string &&parameter, size_t index, SnmpConfig &config,
+-:   22:                     Result<::std::string> expected_result) {
+99:   23:  auto result = GetParameter(parameter, index, config);
+call    0 returned 99
+call    1 returned 99
+branch  2 taken 99 (fallthrough)
+branch  3 taken 0 (throw)
+99*:   24:  EXPECT_EQ(expected_result.value_, result.value_);
+call    0 returned 99
+branch  1 taken 99 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 99
+branch  4 taken 0 (fallthrough)
+branch  5 taken 99
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 99
+call   19 never executed
+call   20 never executed
+call   21 never executed
+99*:   25:  EXPECT_EQ(expected_result.status_, result.status_);
+call    0 returned 99
+branch  1 taken 99 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 99
+branch  4 taken 0 (fallthrough)
+branch  5 taken 99
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 99
+call   19 never executed
+call   20 never executed
+call   21 never executed
+99:   26:}
+call    0 returned 99
+call    1 never executed
+-:   27:
+function _ZN4wago13get_snmp_data12_GLOBAL__N_115ExpectParameterEONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS_15snmp_config_lib10SnmpConfigENS0_6ResultIS7_EE called 21 returned 100% blocks executed 27%
+21:   28:void ExpectParameter(::std::string &&parameter, SnmpConfig &config, Result<::std::string> expected_result) {
+21:   29:  auto result = GetParameter(parameter, std::nullopt, config);
+call    0 returned 21
+call    1 returned 21
+branch  2 taken 21 (fallthrough)
+branch  3 taken 0 (throw)
+21*:   30:  EXPECT_EQ(expected_result.value_, result.value_);
+call    0 returned 21
+branch  1 taken 21 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 21
+branch  4 taken 0 (fallthrough)
+branch  5 taken 21
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 21
+call   19 never executed
+call   20 never executed
+call   21 never executed
+21*:   31:  EXPECT_EQ(expected_result.status_, result.status_);
+call    0 returned 21
+branch  1 taken 21 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 21
+branch  4 taken 0 (fallthrough)
+branch  5 taken 21
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 21
+call   19 never executed
+call   20 never executed
+call   21 never executed
+21:   32:}
+call    0 returned 21
+call    1 never executed
+-:   33:
+-:   34:}
+-:   35:
+4:   36:TEST(get_snmp_test, GetBasicParameter) {
+-:   37:
+1:   38:  SnmpConfig config { };
+-:   39:
+1:   40:  config.sys_name_ = "TEST1";
+1:   41:  ExpectParameter("device-name", 0, config, Result<::std::string> { config.sys_name_ });
+-:   42:
+1:   43:  config.sys_descr_ = "TEST2";
+1:   44:  ExpectParameter("description", 0, config, Result<::std::string> { config.sys_descr_ });
+-:   45:
+1:   46:  config.sys_location_ = "TEST3";
+1:   47:  ExpectParameter("physical-location", 0, config, Result<::std::string> { config.sys_location_ });
+-:   48:
+1:   49:  config.sys_contact_ = "TEST4";
+1:   50:  ExpectParameter("contact", 0, config, Result<::std::string> { config.sys_contact_ });
+-:   51:
+1:   52:  config.sys_objectID_ = "TEST5";
+1:   53:  ExpectParameter("objectID", 0, config, Result<::std::string> { config.sys_objectID_ });
+-:   54:
+1:   55:}
+------------------
+_ZN4wago13get_snmp_data36get_snmp_test_GetBasicParameter_TestC2Ev:
+function _ZN4wago13get_snmp_data36get_snmp_test_GetBasicParameter_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   36:TEST(get_snmp_test, GetBasicParameter) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data36get_snmp_test_GetBasicParameter_TestD0Ev:
+function _ZN4wago13get_snmp_data36get_snmp_test_GetBasicParameter_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   36:TEST(get_snmp_test, GetBasicParameter) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data36get_snmp_test_GetBasicParameter_TestD2Ev:
+function _ZN4wago13get_snmp_data36get_snmp_test_GetBasicParameter_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   36:TEST(get_snmp_test, GetBasicParameter) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data36get_snmp_test_GetBasicParameter_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data36get_snmp_test_GetBasicParameter_Test8TestBodyEv called 1 returned 100% blocks executed 47%
+1:   36:TEST(get_snmp_test, GetBasicParameter) {
+-:   37:
+1:   38:  SnmpConfig config { };
+call    0 returned 1
+-:   39:
+1:   40:  config.sys_name_ = "TEST1";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   41:  ExpectParameter("device-name", 0, config, Result<::std::string> { config.sys_name_ });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:   42:
+1:   43:  config.sys_descr_ = "TEST2";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   44:  ExpectParameter("description", 0, config, Result<::std::string> { config.sys_descr_ });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:   45:
+1:   46:  config.sys_location_ = "TEST3";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   47:  ExpectParameter("physical-location", 0, config, Result<::std::string> { config.sys_location_ });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:   48:
+1:   49:  config.sys_contact_ = "TEST4";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   50:  ExpectParameter("contact", 0, config, Result<::std::string> { config.sys_contact_ });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:   51:
+1:   52:  config.sys_objectID_ = "TEST5";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   53:  ExpectParameter("objectID", 0, config, Result<::std::string> { config.sys_objectID_ });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:   54:
+1:   55:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   56:
+4:   57:TEST(get_snmp_test, GetBasicParameterAndIgnoreIndex) {
+-:   58:
+1:   59:  SnmpConfig config { };
+-:   60:
+1:   61:  config.sys_name_ = "TEST1";
+1:   62:  ExpectParameter("device-name", 99, config, Result<::std::string> { config.sys_name_ });
+1:   63:}
+------------------
+_ZN4wago13get_snmp_data50get_snmp_test_GetBasicParameterAndIgnoreIndex_TestC2Ev:
+function _ZN4wago13get_snmp_data50get_snmp_test_GetBasicParameterAndIgnoreIndex_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   57:TEST(get_snmp_test, GetBasicParameterAndIgnoreIndex) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data50get_snmp_test_GetBasicParameterAndIgnoreIndex_TestD0Ev:
+function _ZN4wago13get_snmp_data50get_snmp_test_GetBasicParameterAndIgnoreIndex_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   57:TEST(get_snmp_test, GetBasicParameterAndIgnoreIndex) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data50get_snmp_test_GetBasicParameterAndIgnoreIndex_TestD2Ev:
+function _ZN4wago13get_snmp_data50get_snmp_test_GetBasicParameterAndIgnoreIndex_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   57:TEST(get_snmp_test, GetBasicParameterAndIgnoreIndex) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data50get_snmp_test_GetBasicParameterAndIgnoreIndex_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data50get_snmp_test_GetBasicParameterAndIgnoreIndex_Test8TestBodyEv called 1 returned 100% blocks executed 50%
+1:   57:TEST(get_snmp_test, GetBasicParameterAndIgnoreIndex) {
+-:   58:
+1:   59:  SnmpConfig config { };
+call    0 returned 1
+-:   60:
+1:   61:  config.sys_name_ = "TEST1";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   62:  ExpectParameter("device-name", 99, config, Result<::std::string> { config.sys_name_ });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:   63:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   64:
+4:   65:TEST(get_snmp_test, UnsupportedParameter) {
+1:   66:  SnmpConfig config { };
+1:   67:  ExpectParameter("parameter_xyz", 0, config, Result<::std::string> { INVALID_PARAMETER });
+1:   68:}
+------------------
+_ZN4wago13get_snmp_data39get_snmp_test_UnsupportedParameter_TestC2Ev:
+function _ZN4wago13get_snmp_data39get_snmp_test_UnsupportedParameter_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   65:TEST(get_snmp_test, UnsupportedParameter) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data39get_snmp_test_UnsupportedParameter_TestD0Ev:
+function _ZN4wago13get_snmp_data39get_snmp_test_UnsupportedParameter_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   65:TEST(get_snmp_test, UnsupportedParameter) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data39get_snmp_test_UnsupportedParameter_TestD2Ev:
+function _ZN4wago13get_snmp_data39get_snmp_test_UnsupportedParameter_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   65:TEST(get_snmp_test, UnsupportedParameter) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data39get_snmp_test_UnsupportedParameter_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data39get_snmp_test_UnsupportedParameter_Test8TestBodyEv called 1 returned 100% blocks executed 50%
+1:   65:TEST(get_snmp_test, UnsupportedParameter) {
+1:   66:  SnmpConfig config { };
+call    0 returned 1
+1:   67:  ExpectParameter("parameter_xyz", 0, config, Result<::std::string> { INVALID_PARAMETER });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:   68:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   69:
+4:   70:TEST(get_snmp_test, GetV1V2cStateParameter) {
+1:   71:  SnmpConfig config { };
+-:   72:
+1:   73:  ExpectParameter("v1-v2c-state", 0, config, Result<::std::string> { "disabled" });
+-:   74:
+1:   75:  config.communities_.emplace_back(Community { "name", Access::ReadWrite });
+-:   76:
+1:   77:  ExpectParameter("v1-v2c-state", 0, config, Result<::std::string> { "enabled" });
+-:   78:
+1:   79:}
+------------------
+_ZN4wago13get_snmp_data41get_snmp_test_GetV1V2cStateParameter_TestC2Ev:
+function _ZN4wago13get_snmp_data41get_snmp_test_GetV1V2cStateParameter_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   70:TEST(get_snmp_test, GetV1V2cStateParameter) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data41get_snmp_test_GetV1V2cStateParameter_TestD0Ev:
+function _ZN4wago13get_snmp_data41get_snmp_test_GetV1V2cStateParameter_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   70:TEST(get_snmp_test, GetV1V2cStateParameter) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data41get_snmp_test_GetV1V2cStateParameter_TestD2Ev:
+function _ZN4wago13get_snmp_data41get_snmp_test_GetV1V2cStateParameter_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   70:TEST(get_snmp_test, GetV1V2cStateParameter) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data41get_snmp_test_GetV1V2cStateParameter_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data41get_snmp_test_GetV1V2cStateParameter_Test8TestBodyEv called 1 returned 100% blocks executed 45%
+1:   70:TEST(get_snmp_test, GetV1V2cStateParameter) {
+1:   71:  SnmpConfig config { };
+call    0 returned 1
+-:   72:
+1:   73:  ExpectParameter("v1-v2c-state", 0, config, Result<::std::string> { "disabled" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   74:
+1:   75:  config.communities_.emplace_back(Community { "name", Access::ReadWrite });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+call   11 returned 1
+call   12 returned 1
+call   13 never executed
+call   14 never executed
+call   15 never executed
+-:   76:
+1:   77:  ExpectParameter("v1-v2c-state", 0, config, Result<::std::string> { "enabled" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:   78:
+1:   79:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   80:
+4:   81:TEST(get_snmp_test, GetCommunitiesParameter) {
+-:   82:
+1:   83:  SnmpConfig config { };
+-:   84:
+1:   85:  ExpectParameter("v1-v2c-community-name", 0, config, Result<::std::string> { NOT_FOUND });
+1:   86:  ExpectParameter("v1-v2c-community-access", 0, config, Result<::std::string> { NOT_FOUND });
+1:   87:  ExpectParameter("v1-v2c-community-name", 2, config, Result<::std::string> { NOT_FOUND });
+1:   88:  ExpectParameter("v1-v2c-community-access", 2, config, Result<::std::string> { NOT_FOUND });
+-:   89:
+1:   90:  config.communities_.emplace_back("comm1", Access::ReadWrite);
+1:   91:  config.communities_.emplace_back("comm2", Access::ReadWrite);
+1:   92:  config.communities_.emplace_back("comm3", Access::ReadOnly);
+-:   93:
+1:   94:  ExpectParameter("v1-v2c-community-name", 0, config, Result<::std::string> { "comm1" });
+1:   95:  ExpectParameter("v1-v2c-community-access", 0, config, Result<::std::string> { AccessAsString(Access::ReadWrite) });
+1:   96:  ExpectParameter("v1-v2c-community-name", 2, config, Result<::std::string> { "comm3" });
+1:   97:  ExpectParameter("v1-v2c-community-access", 2, config, Result<::std::string> { AccessAsString(Access::ReadOnly) });
+1:   98:}
+------------------
+_ZN4wago13get_snmp_data42get_snmp_test_GetCommunitiesParameter_TestC2Ev:
+function _ZN4wago13get_snmp_data42get_snmp_test_GetCommunitiesParameter_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST(get_snmp_test, GetCommunitiesParameter) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data42get_snmp_test_GetCommunitiesParameter_TestD0Ev:
+function _ZN4wago13get_snmp_data42get_snmp_test_GetCommunitiesParameter_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST(get_snmp_test, GetCommunitiesParameter) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data42get_snmp_test_GetCommunitiesParameter_TestD2Ev:
+function _ZN4wago13get_snmp_data42get_snmp_test_GetCommunitiesParameter_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST(get_snmp_test, GetCommunitiesParameter) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data42get_snmp_test_GetCommunitiesParameter_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data42get_snmp_test_GetCommunitiesParameter_Test8TestBodyEv called 1 returned 100% blocks executed 44%
+1:   81:TEST(get_snmp_test, GetCommunitiesParameter) {
+-:   82:
+1:   83:  SnmpConfig config { };
+call    0 returned 1
+-:   84:
+1:   85:  ExpectParameter("v1-v2c-community-name", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:   86:  ExpectParameter("v1-v2c-community-access", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:   87:  ExpectParameter("v1-v2c-community-name", 2, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:   88:  ExpectParameter("v1-v2c-community-access", 2, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+-:   89:
+1:   90:  config.communities_.emplace_back("comm1", Access::ReadWrite);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   91:  config.communities_.emplace_back("comm2", Access::ReadWrite);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   92:  config.communities_.emplace_back("comm3", Access::ReadOnly);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   93:
+1:   94:  ExpectParameter("v1-v2c-community-name", 0, config, Result<::std::string> { "comm1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   95:  ExpectParameter("v1-v2c-community-access", 0, config, Result<::std::string> { AccessAsString(Access::ReadWrite) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:   96:  ExpectParameter("v1-v2c-community-name", 2, config, Result<::std::string> { "comm3" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:   97:  ExpectParameter("v1-v2c-community-access", 2, config, Result<::std::string> { AccessAsString(Access::ReadOnly) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:   98:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:   99:
+4:  100:TEST(get_snmp_test, GetFirstRWCommunitiyParameterLegacyAPI) {
+-:  101:  // This test is required to ensure compatibility for backup/restor in an old FW (FW<=23).
+-:  102:  //In the legacy FW there was only one readwrite communities and only these should be taken over with a downgrade.
+-:  103:  //For this purpose, v1-v2c-community-name without index is called in the backup.
+-:  104:  //Without index, this parameter returns the first rw community in the list or none.
+1:  105:  SnmpConfig config { };
+-:  106:
+1:  107:  ExpectParameter("v1-v2c-community-name", config, Result<::std::string> { NOT_FOUND });
+1:  108:  ExpectParameter("v1-v2c-community-access", config, Result<::std::string> { NOT_FOUND });
+-:  109:
+1:  110:  config.communities_.emplace_back("comm1", Access::ReadOnly);
+1:  111:  config.communities_.emplace_back("comm2", Access::ReadWrite);
+1:  112:  config.communities_.emplace_back("comm3", Access::ReadOnly);
+-:  113:
+1:  114:  ExpectParameter("v1-v2c-community-name", config, Result<::std::string> { "comm2" });
+1:  115:  ExpectParameter("v1-v2c-community-access", config, Result<::std::string> { NOT_FOUND });
+1:  116:}
+------------------
+_ZN4wago13get_snmp_data57get_snmp_test_GetFirstRWCommunitiyParameterLegacyAPI_TestC2Ev:
+function _ZN4wago13get_snmp_data57get_snmp_test_GetFirstRWCommunitiyParameterLegacyAPI_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  100:TEST(get_snmp_test, GetFirstRWCommunitiyParameterLegacyAPI) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data57get_snmp_test_GetFirstRWCommunitiyParameterLegacyAPI_TestD0Ev:
+function _ZN4wago13get_snmp_data57get_snmp_test_GetFirstRWCommunitiyParameterLegacyAPI_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  100:TEST(get_snmp_test, GetFirstRWCommunitiyParameterLegacyAPI) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data57get_snmp_test_GetFirstRWCommunitiyParameterLegacyAPI_TestD2Ev:
+function _ZN4wago13get_snmp_data57get_snmp_test_GetFirstRWCommunitiyParameterLegacyAPI_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  100:TEST(get_snmp_test, GetFirstRWCommunitiyParameterLegacyAPI) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data57get_snmp_test_GetFirstRWCommunitiyParameterLegacyAPI_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data57get_snmp_test_GetFirstRWCommunitiyParameterLegacyAPI_Test8TestBodyEv called 1 returned 100% blocks executed 45%
+1:  100:TEST(get_snmp_test, GetFirstRWCommunitiyParameterLegacyAPI) {
+-:  101:  // This test is required to ensure compatibility for backup/restor in an old FW (FW<=23).
+-:  102:  //In the legacy FW there was only one readwrite communities and only these should be taken over with a downgrade.
+-:  103:  //For this purpose, v1-v2c-community-name without index is called in the backup.
+-:  104:  //Without index, this parameter returns the first rw community in the list or none.
+1:  105:  SnmpConfig config { };
+call    0 returned 1
+-:  106:
+1:  107:  ExpectParameter("v1-v2c-community-name", config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  108:  ExpectParameter("v1-v2c-community-access", config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+-:  109:
+1:  110:  config.communities_.emplace_back("comm1", Access::ReadOnly);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  111:  config.communities_.emplace_back("comm2", Access::ReadWrite);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  112:  config.communities_.emplace_back("comm3", Access::ReadOnly);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  113:
+1:  114:  ExpectParameter("v1-v2c-community-name", config, Result<::std::string> { "comm2" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  115:  ExpectParameter("v1-v2c-community-access", config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  116:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:  117:
+4:  118:TEST(get_snmp_test, GetTrapReceiverV1V2cParameter) {
+-:  119:
+1:  120:  SnmpConfig config { };
+-:  121:
+1:  122:  ExpectParameter("v1-v2c-trap-receiver-address", 0, config, Result<::std::string> { NOT_FOUND });
+1:  123:  ExpectParameter("v1-v2c-trap-receiver-community-name", 0, config, Result<::std::string> { NOT_FOUND });
+1:  124:  ExpectParameter("v1-v2c-trap-receiver-version", 0, config, Result<::std::string> { NOT_FOUND });
+1:  125:  ExpectParameter("v1-v2c-trap-receiver-address", 1, config, Result<::std::string> { NOT_FOUND });
+1:  126:  ExpectParameter("v1-v2c-trap-receiver-community-name", 1, config, Result<::std::string> { NOT_FOUND });
+1:  127:  ExpectParameter("v1-v2c-trap-receiver-version", 1, config, Result<::std::string> { NOT_FOUND });
+-:  128:
+1:  129:  config.trap_receivers_V1V2c_.emplace_back("host1", "comm1", VersionV1V2c::V1);
+1:  130:  config.trap_receivers_V1V2c_.emplace_back("host2", "comm2", VersionV1V2c::V2c);
+1:  131:  config.trap_receivers_V1V2c_.emplace_back("host3", "comm3", VersionV1V2c::V2c);
+-:  132:
+1:  133:  ExpectParameter("v1-v2c-trap-receiver-address", 0, config, Result<::std::string> { "host1" });
+1:  134:  ExpectParameter("v1-v2c-trap-receiver-community-name", 0, config, Result<::std::string> { "comm1" });
+3:  135:  ExpectParameter("v1-v2c-trap-receiver-version", 0, config,
+2:  136:                  Result<::std::string> { VersionV1V2cAsString(VersionV1V2c::V1) });
+1:  137:  ExpectParameter("v1-v2c-trap-receiver-address", 1, config, Result<::std::string> { "host2" });
+1:  138:  ExpectParameter("v1-v2c-trap-receiver-community-name", 1, config, Result<::std::string> { "comm2" });
+3:  139:  ExpectParameter("v1-v2c-trap-receiver-version", 1, config,
+2:  140:                  Result<::std::string> { VersionV1V2cAsString(VersionV1V2c::V2c) });
+-:  141:
+-:  142:  //without index means index=0
+1:  143:  ExpectParameter("v1-v2c-trap-receiver-address", config, Result<::std::string> { "host1" });
+1:  144:  ExpectParameter("v1-v2c-trap-receiver-community-name", config, Result<::std::string> { "comm1" });
+3:  145:  ExpectParameter("v1-v2c-trap-receiver-version", config,
+2:  146:                  Result<::std::string> { VersionV1V2cAsString(VersionV1V2c::V1) });
+1:  147:}
+------------------
+_ZN4wago13get_snmp_data48get_snmp_test_GetTrapReceiverV1V2cParameter_TestC2Ev:
+function _ZN4wago13get_snmp_data48get_snmp_test_GetTrapReceiverV1V2cParameter_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  118:TEST(get_snmp_test, GetTrapReceiverV1V2cParameter) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data48get_snmp_test_GetTrapReceiverV1V2cParameter_TestD0Ev:
+function _ZN4wago13get_snmp_data48get_snmp_test_GetTrapReceiverV1V2cParameter_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  118:TEST(get_snmp_test, GetTrapReceiverV1V2cParameter) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data48get_snmp_test_GetTrapReceiverV1V2cParameter_TestD2Ev:
+function _ZN4wago13get_snmp_data48get_snmp_test_GetTrapReceiverV1V2cParameter_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  118:TEST(get_snmp_test, GetTrapReceiverV1V2cParameter) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data48get_snmp_test_GetTrapReceiverV1V2cParameter_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data48get_snmp_test_GetTrapReceiverV1V2cParameter_Test8TestBodyEv called 1 returned 100% blocks executed 43%
+1:  118:TEST(get_snmp_test, GetTrapReceiverV1V2cParameter) {
+-:  119:
+1:  120:  SnmpConfig config { };
+call    0 returned 1
+-:  121:
+1:  122:  ExpectParameter("v1-v2c-trap-receiver-address", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  123:  ExpectParameter("v1-v2c-trap-receiver-community-name", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  124:  ExpectParameter("v1-v2c-trap-receiver-version", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  125:  ExpectParameter("v1-v2c-trap-receiver-address", 1, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  126:  ExpectParameter("v1-v2c-trap-receiver-community-name", 1, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  127:  ExpectParameter("v1-v2c-trap-receiver-version", 1, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+-:  128:
+1:  129:  config.trap_receivers_V1V2c_.emplace_back("host1", "comm1", VersionV1V2c::V1);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  130:  config.trap_receivers_V1V2c_.emplace_back("host2", "comm2", VersionV1V2c::V2c);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  131:  config.trap_receivers_V1V2c_.emplace_back("host3", "comm3", VersionV1V2c::V2c);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  132:
+1:  133:  ExpectParameter("v1-v2c-trap-receiver-address", 0, config, Result<::std::string> { "host1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  134:  ExpectParameter("v1-v2c-trap-receiver-community-name", 0, config, Result<::std::string> { "comm1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  135:  ExpectParameter("v1-v2c-trap-receiver-version", 0, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  136:                  Result<::std::string> { VersionV1V2cAsString(VersionV1V2c::V1) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  137:  ExpectParameter("v1-v2c-trap-receiver-address", 1, config, Result<::std::string> { "host2" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  138:  ExpectParameter("v1-v2c-trap-receiver-community-name", 1, config, Result<::std::string> { "comm2" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  139:  ExpectParameter("v1-v2c-trap-receiver-version", 1, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  140:                  Result<::std::string> { VersionV1V2cAsString(VersionV1V2c::V2c) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+-:  141:
+-:  142:  //without index means index=0
+1:  143:  ExpectParameter("v1-v2c-trap-receiver-address", config, Result<::std::string> { "host1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  144:  ExpectParameter("v1-v2c-trap-receiver-community-name", config, Result<::std::string> { "comm1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  145:  ExpectParameter("v1-v2c-trap-receiver-version", config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  146:                  Result<::std::string> { VersionV1V2cAsString(VersionV1V2c::V1) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  147:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:  148:
+4:  149:TEST(get_snmp_test, GetUserParameters) {
+1:  150:  SnmpConfig config { };
+-:  151:
+1:  152:  ExpectParameter("v3-user-auth-name", 0, config, Result<::std::string> { NOT_FOUND });
+1:  153:  ExpectParameter("v3-user-auth-type", 0, config, Result<::std::string> { NOT_FOUND });
+1:  154:  ExpectParameter("v3-user-auth-key", 0, config, Result<::std::string> { NOT_FOUND });
+1:  155:  ExpectParameter("v3-user-privacy", 0, config, Result<::std::string> { NOT_FOUND });
+1:  156:  ExpectParameter("v3-user-privacy-key", 0, config, Result<::std::string> { NOT_FOUND });
+1:  157:  ExpectParameter("v3-user-access", 0, config, Result<::std::string> { NOT_FOUND });
+1:  158:  ExpectParameter("v3-user-security-level", 0, config, Result<::std::string> { NOT_FOUND });
+-:  159:
+#####:  160:  config.user_.emplace_back("name1", Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  161:                            Privacy::AES, "privKey1");
+#####:  162:  config.user_.emplace_back("name2", Access::ReadOnly, SecurityLevel::AuthNoPriv, AuthenticationType::SHA, "authKey2",
+1:  163:                            Privacy::None, "");
+#####:  164:  config.user_.emplace_back("name3", Access::ReadWrite, SecurityLevel::NoAuthNoPriv, AuthenticationType::None, "",
+1:  165:                            Privacy::None, "");
+-:  166:
+1:  167:  ExpectParameter("v3-user-auth-name", 0, config, Result<::std::string> { "name1" });
+3:  168:  ExpectParameter("v3-user-auth-type", 0, config,
+2:  169:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::MD5) });
+1:  170:  ExpectParameter("v3-user-auth-key", 0, config, Result<::std::string> { "authKey1" });
+1:  171:  ExpectParameter("v3-user-privacy", 0, config, Result<::std::string> { PrivacyAsStr(Privacy::AES) });
+1:  172:  ExpectParameter("v3-user-privacy-key", 0, config, Result<::std::string> { "privKey1" });
+1:  173:  ExpectParameter("v3-user-access", 0, config, Result<::std::string> { AccessAsString(Access::ReadWrite) });
+3:  174:  ExpectParameter("v3-user-security-level", 0, config,
+2:  175:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthPriv) });
+-:  176:
+1:  177:  ExpectParameter("v3-user-auth-name", 1, config, Result<::std::string> { "name2" });
+3:  178:  ExpectParameter("v3-user-auth-type", 1, config,
+2:  179:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::SHA) });
+1:  180:  ExpectParameter("v3-user-auth-key", 1, config, Result<::std::string> { "authKey2" });
+1:  181:  ExpectParameter("v3-user-privacy", 1, config, Result<::std::string> { PrivacyAsStr(Privacy::None) });
+1:  182:  ExpectParameter("v3-user-privacy-key", 1, config, Result<::std::string> { "" });
+1:  183:  ExpectParameter("v3-user-access", 1, config, Result<::std::string> { AccessAsString(Access::ReadOnly) });
+3:  184:  ExpectParameter("v3-user-security-level", 1, config,
+2:  185:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthNoPriv) });
+-:  186:
+1:  187:  ExpectParameter("v3-user-auth-name", 2, config, Result<::std::string> { "name3" });
+3:  188:  ExpectParameter("v3-user-auth-type", 2, config,
+2:  189:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::None) });
+1:  190:  ExpectParameter("v3-user-auth-key", 2, config, Result<::std::string> { "" });
+1:  191:  ExpectParameter("v3-user-privacy", 2, config, Result<::std::string> { PrivacyAsStr(Privacy::None) });
+1:  192:  ExpectParameter("v3-user-privacy-key", 2, config, Result<::std::string> { "" });
+1:  193:  ExpectParameter("v3-user-access", 2, config, Result<::std::string> { AccessAsString(Access::ReadWrite) });
+3:  194:  ExpectParameter("v3-user-security-level", 2, config,
+2:  195:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::NoAuthNoPriv) });
+-:  196:
+-:  197:  //without index means index=0
+1:  198:  ExpectParameter("v3-user-auth-name", config, Result<::std::string> { "name1" });
+3:  199:  ExpectParameter("v3-user-auth-type", config,
+2:  200:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::MD5) });
+1:  201:  ExpectParameter("v3-user-auth-key", config, Result<::std::string> { "authKey1" });
+1:  202:  ExpectParameter("v3-user-privacy", config, Result<::std::string> { PrivacyAsStr(Privacy::AES) });
+1:  203:  ExpectParameter("v3-user-privacy-key", config, Result<::std::string> { "privKey1" });
+1:  204:  ExpectParameter("v3-user-access", config, Result<::std::string> { AccessAsString(Access::ReadWrite) });
+3:  205:  ExpectParameter("v3-user-security-level", config,
+2:  206:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthPriv) });
+1:  207:}
+------------------
+_ZN4wago13get_snmp_data36get_snmp_test_GetUserParameters_TestC2Ev:
+function _ZN4wago13get_snmp_data36get_snmp_test_GetUserParameters_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  149:TEST(get_snmp_test, GetUserParameters) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data36get_snmp_test_GetUserParameters_TestD0Ev:
+function _ZN4wago13get_snmp_data36get_snmp_test_GetUserParameters_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  149:TEST(get_snmp_test, GetUserParameters) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data36get_snmp_test_GetUserParameters_TestD2Ev:
+function _ZN4wago13get_snmp_data36get_snmp_test_GetUserParameters_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  149:TEST(get_snmp_test, GetUserParameters) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data36get_snmp_test_GetUserParameters_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data36get_snmp_test_GetUserParameters_Test8TestBodyEv called 1 returned 100% blocks executed 42%
+1:  149:TEST(get_snmp_test, GetUserParameters) {
+1:  150:  SnmpConfig config { };
+call    0 returned 1
+-:  151:
+1:  152:  ExpectParameter("v3-user-auth-name", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  153:  ExpectParameter("v3-user-auth-type", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  154:  ExpectParameter("v3-user-auth-key", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  155:  ExpectParameter("v3-user-privacy", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  156:  ExpectParameter("v3-user-privacy-key", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  157:  ExpectParameter("v3-user-access", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  158:  ExpectParameter("v3-user-security-level", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+-:  159:
+#####:  160:  config.user_.emplace_back("name1", Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  161:                            Privacy::AES, "privKey1");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+#####:  162:  config.user_.emplace_back("name2", Access::ReadOnly, SecurityLevel::AuthNoPriv, AuthenticationType::SHA, "authKey2",
+1:  163:                            Privacy::None, "");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+#####:  164:  config.user_.emplace_back("name3", Access::ReadWrite, SecurityLevel::NoAuthNoPriv, AuthenticationType::None, "",
+1:  165:                            Privacy::None, "");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  166:
+1:  167:  ExpectParameter("v3-user-auth-name", 0, config, Result<::std::string> { "name1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  168:  ExpectParameter("v3-user-auth-type", 0, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  169:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::MD5) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  170:  ExpectParameter("v3-user-auth-key", 0, config, Result<::std::string> { "authKey1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  171:  ExpectParameter("v3-user-privacy", 0, config, Result<::std::string> { PrivacyAsStr(Privacy::AES) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  172:  ExpectParameter("v3-user-privacy-key", 0, config, Result<::std::string> { "privKey1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  173:  ExpectParameter("v3-user-access", 0, config, Result<::std::string> { AccessAsString(Access::ReadWrite) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+3:  174:  ExpectParameter("v3-user-security-level", 0, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  175:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthPriv) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+-:  176:
+1:  177:  ExpectParameter("v3-user-auth-name", 1, config, Result<::std::string> { "name2" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  178:  ExpectParameter("v3-user-auth-type", 1, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  179:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::SHA) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  180:  ExpectParameter("v3-user-auth-key", 1, config, Result<::std::string> { "authKey2" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  181:  ExpectParameter("v3-user-privacy", 1, config, Result<::std::string> { PrivacyAsStr(Privacy::None) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  182:  ExpectParameter("v3-user-privacy-key", 1, config, Result<::std::string> { "" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  183:  ExpectParameter("v3-user-access", 1, config, Result<::std::string> { AccessAsString(Access::ReadOnly) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+3:  184:  ExpectParameter("v3-user-security-level", 1, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  185:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthNoPriv) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+-:  186:
+1:  187:  ExpectParameter("v3-user-auth-name", 2, config, Result<::std::string> { "name3" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  188:  ExpectParameter("v3-user-auth-type", 2, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  189:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::None) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  190:  ExpectParameter("v3-user-auth-key", 2, config, Result<::std::string> { "" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  191:  ExpectParameter("v3-user-privacy", 2, config, Result<::std::string> { PrivacyAsStr(Privacy::None) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  192:  ExpectParameter("v3-user-privacy-key", 2, config, Result<::std::string> { "" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  193:  ExpectParameter("v3-user-access", 2, config, Result<::std::string> { AccessAsString(Access::ReadWrite) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+3:  194:  ExpectParameter("v3-user-security-level", 2, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  195:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::NoAuthNoPriv) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+-:  196:
+-:  197:  //without index means index=0
+1:  198:  ExpectParameter("v3-user-auth-name", config, Result<::std::string> { "name1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  199:  ExpectParameter("v3-user-auth-type", config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  200:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::MD5) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  201:  ExpectParameter("v3-user-auth-key", config, Result<::std::string> { "authKey1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  202:  ExpectParameter("v3-user-privacy", config, Result<::std::string> { PrivacyAsStr(Privacy::AES) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  203:  ExpectParameter("v3-user-privacy-key", config, Result<::std::string> { "privKey1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  204:  ExpectParameter("v3-user-access", config, Result<::std::string> { AccessAsString(Access::ReadWrite) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+3:  205:  ExpectParameter("v3-user-security-level", config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  206:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthPriv) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  207:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:  208:
+4:  209:TEST(get_snmp_test, GetTrapReceiverV3Parameters) {
+1:  210:  SnmpConfig config { };
+-:  211:
+1:  212:  ExpectParameter("v3-trap-receiver-auth-name", 0, config, Result<::std::string> { NOT_FOUND });
+1:  213:  ExpectParameter("v3-trap-receiver-auth-type", 0, config, Result<::std::string> { NOT_FOUND });
+1:  214:  ExpectParameter("v3-trap-receiver-auth-key", 0, config, Result<::std::string> { NOT_FOUND });
+1:  215:  ExpectParameter("v3-trap-receiver-privacy", 0, config, Result<::std::string> { NOT_FOUND });
+1:  216:  ExpectParameter("v3-trap-receiver-privacy-key", 0, config, Result<::std::string> { NOT_FOUND });
+1:  217:  ExpectParameter("v3-trap-receiver-security-level", 0, config, Result<::std::string> { NOT_FOUND });
+1:  218:  ExpectParameter("v3-trap-receiver-host", 0, config, Result<::std::string> { NOT_FOUND });
+-:  219:
+#####:  220:  config.trap_receivers_V3_.emplace_back("name1", SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  221:                                         Privacy::AES, "privKey1", "host1");
+#####:  222:  config.trap_receivers_V3_.emplace_back("name2", SecurityLevel::AuthNoPriv, AuthenticationType::SHA, "authKey2",
+1:  223:                                         Privacy::None, "", "host2");
+#####:  224:  config.trap_receivers_V3_.emplace_back("name3", SecurityLevel::NoAuthNoPriv, AuthenticationType::None, "",
+1:  225:                                         Privacy::None, "", "host3");
+-:  226:
+1:  227:  ExpectParameter("v3-trap-receiver-auth-name", 0, config, Result<::std::string> { "name1" });
+3:  228:  ExpectParameter("v3-trap-receiver-auth-type", 0, config,
+2:  229:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::MD5) });
+1:  230:  ExpectParameter("v3-trap-receiver-auth-key", 0, config, Result<::std::string> { "authKey1" });
+1:  231:  ExpectParameter("v3-trap-receiver-privacy", 0, config, Result<::std::string> { PrivacyAsStr(Privacy::AES) });
+1:  232:  ExpectParameter("v3-trap-receiver-privacy-key", 0, config, Result<::std::string> { "privKey1" });
+3:  233:  ExpectParameter("v3-trap-receiver-security-level", 0, config,
+2:  234:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthPriv) });
+1:  235:  ExpectParameter("v3-trap-receiver-host", 0, config, Result<::std::string> { "host1" });
+-:  236:
+1:  237:  ExpectParameter("v3-trap-receiver-auth-name", 1, config, Result<::std::string> { "name2" });
+3:  238:  ExpectParameter("v3-trap-receiver-auth-type", 1, config,
+2:  239:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::SHA) });
+1:  240:  ExpectParameter("v3-trap-receiver-auth-key", 1, config, Result<::std::string> { "authKey2" });
+1:  241:  ExpectParameter("v3-trap-receiver-privacy", 1, config, Result<::std::string> { PrivacyAsStr(Privacy::None) });
+1:  242:  ExpectParameter("v3-trap-receiver-privacy-key", 1, config, Result<::std::string> { "" });
+3:  243:  ExpectParameter("v3-trap-receiver-security-level", 1, config,
+2:  244:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthNoPriv) });
+1:  245:  ExpectParameter("v3-trap-receiver-host", 1, config, Result<::std::string> { "host2" });
+-:  246:
+1:  247:  ExpectParameter("v3-trap-receiver-auth-name", 2, config, Result<::std::string> { "name3" });
+3:  248:  ExpectParameter("v3-trap-receiver-auth-type", 2, config,
+2:  249:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::None) });
+1:  250:  ExpectParameter("v3-trap-receiver-auth-key", 2, config, Result<::std::string> { "" });
+1:  251:  ExpectParameter("v3-trap-receiver-privacy", 2, config, Result<::std::string> { PrivacyAsStr(Privacy::None) });
+1:  252:  ExpectParameter("v3-trap-receiver-privacy-key", 2, config, Result<::std::string> { "" });
+3:  253:  ExpectParameter("v3-trap-receiver-security-level", 2, config,
+2:  254:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::NoAuthNoPriv) });
+1:  255:  ExpectParameter("v3-trap-receiver-host", 2, config, Result<::std::string> { "host3" });
+-:  256:
+-:  257:  //without index means index=0
+1:  258:  ExpectParameter("v3-trap-receiver-auth-name", config, Result<::std::string> { "name1" });
+3:  259:  ExpectParameter("v3-trap-receiver-auth-type", config,
+2:  260:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::MD5) });
+1:  261:  ExpectParameter("v3-trap-receiver-auth-key", config, Result<::std::string> { "authKey1" });
+1:  262:  ExpectParameter("v3-trap-receiver-privacy", config, Result<::std::string> { PrivacyAsStr(Privacy::AES) });
+1:  263:  ExpectParameter("v3-trap-receiver-privacy-key", config, Result<::std::string> { "privKey1" });
+3:  264:  ExpectParameter("v3-trap-receiver-security-level", config,
+2:  265:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthPriv) });
+1:  266:  ExpectParameter("v3-trap-receiver-host", config, Result<::std::string> { "host1" });
+1:  267:}
+------------------
+_ZN4wago13get_snmp_data46get_snmp_test_GetTrapReceiverV3Parameters_TestC2Ev:
+function _ZN4wago13get_snmp_data46get_snmp_test_GetTrapReceiverV3Parameters_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  209:TEST(get_snmp_test, GetTrapReceiverV3Parameters) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data46get_snmp_test_GetTrapReceiverV3Parameters_TestD0Ev:
+function _ZN4wago13get_snmp_data46get_snmp_test_GetTrapReceiverV3Parameters_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  209:TEST(get_snmp_test, GetTrapReceiverV3Parameters) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data46get_snmp_test_GetTrapReceiverV3Parameters_TestD2Ev:
+function _ZN4wago13get_snmp_data46get_snmp_test_GetTrapReceiverV3Parameters_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  209:TEST(get_snmp_test, GetTrapReceiverV3Parameters) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data46get_snmp_test_GetTrapReceiverV3Parameters_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data46get_snmp_test_GetTrapReceiverV3Parameters_Test8TestBodyEv called 1 returned 100% blocks executed 42%
+1:  209:TEST(get_snmp_test, GetTrapReceiverV3Parameters) {
+1:  210:  SnmpConfig config { };
+call    0 returned 1
+-:  211:
+1:  212:  ExpectParameter("v3-trap-receiver-auth-name", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  213:  ExpectParameter("v3-trap-receiver-auth-type", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  214:  ExpectParameter("v3-trap-receiver-auth-key", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  215:  ExpectParameter("v3-trap-receiver-privacy", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  216:  ExpectParameter("v3-trap-receiver-privacy-key", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  217:  ExpectParameter("v3-trap-receiver-security-level", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+1:  218:  ExpectParameter("v3-trap-receiver-host", 0, config, Result<::std::string> { NOT_FOUND });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+call   10 returned 1
+call   11 never executed
+call   12 never executed
+call   13 never executed
+-:  219:
+#####:  220:  config.trap_receivers_V3_.emplace_back("name1", SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  221:                                         Privacy::AES, "privKey1", "host1");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+#####:  222:  config.trap_receivers_V3_.emplace_back("name2", SecurityLevel::AuthNoPriv, AuthenticationType::SHA, "authKey2",
+1:  223:                                         Privacy::None, "", "host2");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+#####:  224:  config.trap_receivers_V3_.emplace_back("name3", SecurityLevel::NoAuthNoPriv, AuthenticationType::None, "",
+1:  225:                                         Privacy::None, "", "host3");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  226:
+1:  227:  ExpectParameter("v3-trap-receiver-auth-name", 0, config, Result<::std::string> { "name1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  228:  ExpectParameter("v3-trap-receiver-auth-type", 0, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  229:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::MD5) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  230:  ExpectParameter("v3-trap-receiver-auth-key", 0, config, Result<::std::string> { "authKey1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  231:  ExpectParameter("v3-trap-receiver-privacy", 0, config, Result<::std::string> { PrivacyAsStr(Privacy::AES) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  232:  ExpectParameter("v3-trap-receiver-privacy-key", 0, config, Result<::std::string> { "privKey1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  233:  ExpectParameter("v3-trap-receiver-security-level", 0, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  234:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthPriv) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  235:  ExpectParameter("v3-trap-receiver-host", 0, config, Result<::std::string> { "host1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  236:
+1:  237:  ExpectParameter("v3-trap-receiver-auth-name", 1, config, Result<::std::string> { "name2" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  238:  ExpectParameter("v3-trap-receiver-auth-type", 1, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  239:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::SHA) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  240:  ExpectParameter("v3-trap-receiver-auth-key", 1, config, Result<::std::string> { "authKey2" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  241:  ExpectParameter("v3-trap-receiver-privacy", 1, config, Result<::std::string> { PrivacyAsStr(Privacy::None) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  242:  ExpectParameter("v3-trap-receiver-privacy-key", 1, config, Result<::std::string> { "" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  243:  ExpectParameter("v3-trap-receiver-security-level", 1, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  244:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthNoPriv) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  245:  ExpectParameter("v3-trap-receiver-host", 1, config, Result<::std::string> { "host2" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  246:
+1:  247:  ExpectParameter("v3-trap-receiver-auth-name", 2, config, Result<::std::string> { "name3" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  248:  ExpectParameter("v3-trap-receiver-auth-type", 2, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  249:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::None) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  250:  ExpectParameter("v3-trap-receiver-auth-key", 2, config, Result<::std::string> { "" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  251:  ExpectParameter("v3-trap-receiver-privacy", 2, config, Result<::std::string> { PrivacyAsStr(Privacy::None) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  252:  ExpectParameter("v3-trap-receiver-privacy-key", 2, config, Result<::std::string> { "" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  253:  ExpectParameter("v3-trap-receiver-security-level", 2, config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  254:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::NoAuthNoPriv) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  255:  ExpectParameter("v3-trap-receiver-host", 2, config, Result<::std::string> { "host3" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  256:
+-:  257:  //without index means index=0
+1:  258:  ExpectParameter("v3-trap-receiver-auth-name", config, Result<::std::string> { "name1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  259:  ExpectParameter("v3-trap-receiver-auth-type", config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  260:                  Result<::std::string> { AuthenticationTypeAsStr(AuthenticationType::MD5) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  261:  ExpectParameter("v3-trap-receiver-auth-key", config, Result<::std::string> { "authKey1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  262:  ExpectParameter("v3-trap-receiver-privacy", config, Result<::std::string> { PrivacyAsStr(Privacy::AES) });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  263:  ExpectParameter("v3-trap-receiver-privacy-key", config, Result<::std::string> { "privKey1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+3:  264:  ExpectParameter("v3-trap-receiver-security-level", config,
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 never executed
+call    9 never executed
+2:  265:                  Result<::std::string> { SecurityLevelAsStr(SecurityLevel::AuthPriv) });
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+call    7 never executed
+call    8 never executed
+1:  266:  ExpectParameter("v3-trap-receiver-host", config, Result<::std::string> { "host1" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+1:  267:}
+call    0 returned 1
+call    1 never executed
+------------------
+-:  268:
+4:  269:TEST(get_snmp_test, GetTrapReceiverV1V2cParametersAsJson) {
+1:  270:  SnmpConfig config { };
+-:  271:
+1:  272:  ExpectParameter("v1-v2c-trap-receiver-list-json", 0, config, Result<::std::string> { "[ ]" });
+-:  273:
+1:  274:  config.trap_receivers_V1V2c_.emplace_back("host1", "comm1", VersionV1V2c::V1);
+-:  275:
+1:  276:  ::std::string expected = R"([ { "address": "host1", "communityName": "comm1", "version": "v1" } ])";
+1:  277:  ExpectParameter("v1-v2c-trap-receiver-list-json", 0, config, Result<::std::string> { expected });
+1:  278:}
+------------------
+_ZN4wago13get_snmp_data55get_snmp_test_GetTrapReceiverV1V2cParametersAsJson_TestC2Ev:
+function _ZN4wago13get_snmp_data55get_snmp_test_GetTrapReceiverV1V2cParametersAsJson_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  269:TEST(get_snmp_test, GetTrapReceiverV1V2cParametersAsJson) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data55get_snmp_test_GetTrapReceiverV1V2cParametersAsJson_TestD0Ev:
+function _ZN4wago13get_snmp_data55get_snmp_test_GetTrapReceiverV1V2cParametersAsJson_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  269:TEST(get_snmp_test, GetTrapReceiverV1V2cParametersAsJson) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data55get_snmp_test_GetTrapReceiverV1V2cParametersAsJson_TestD2Ev:
+function _ZN4wago13get_snmp_data55get_snmp_test_GetTrapReceiverV1V2cParametersAsJson_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  269:TEST(get_snmp_test, GetTrapReceiverV1V2cParametersAsJson) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data55get_snmp_test_GetTrapReceiverV1V2cParametersAsJson_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data55get_snmp_test_GetTrapReceiverV1V2cParametersAsJson_Test8TestBodyEv called 1 returned 100% blocks executed 45%
+1:  269:TEST(get_snmp_test, GetTrapReceiverV1V2cParametersAsJson) {
+1:  270:  SnmpConfig config { };
+call    0 returned 1
+-:  271:
+1:  272:  ExpectParameter("v1-v2c-trap-receiver-list-json", 0, config, Result<::std::string> { "[ ]" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  273:
+1:  274:  config.trap_receivers_V1V2c_.emplace_back("host1", "comm1", VersionV1V2c::V1);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  275:
+1:  276:  ::std::string expected = R"([ { "address": "host1", "communityName": "comm1", "version": "v1" } ])";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1:  277:  ExpectParameter("v1-v2c-trap-receiver-list-json", 0, config, Result<::std::string> { expected });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  278:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  279:
+4:  280:TEST(get_snmp_test, GetCommunityParametersAsJson) {
+1:  281:  SnmpConfig config { };
+-:  282:
+1:  283:  ExpectParameter("v1-v2c-community-list-json", 0, config, Result<::std::string> { "[ ]" });
+-:  284:
+1:  285:  config.communities_.emplace_back("comm1", Access::ReadOnly);
+-:  286:
+1:  287:  ::std::string expected = R"([ { "communityName": "comm1", "access": "read-only" } ])";
+1:  288:  ExpectParameter("v1-v2c-community-list-json", 0, config, Result<::std::string> { expected });
+-:  289:
+1:  290:  config.communities_.emplace_back("comm2", Access::ReadWrite);
+-:  291:
+-:  292:  expected =
+1:  293:      R"([ { "communityName": "comm1", "access": "read-only" }, { "communityName": "comm2", "access": "read-write" } ])";
+1:  294:  ExpectParameter("v1-v2c-community-list-json", 0, config, Result<::std::string> { expected });
+-:  295:
+1:  296:}
+------------------
+_ZN4wago13get_snmp_data47get_snmp_test_GetCommunityParametersAsJson_TestC2Ev:
+function _ZN4wago13get_snmp_data47get_snmp_test_GetCommunityParametersAsJson_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  280:TEST(get_snmp_test, GetCommunityParametersAsJson) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data47get_snmp_test_GetCommunityParametersAsJson_TestD0Ev:
+function _ZN4wago13get_snmp_data47get_snmp_test_GetCommunityParametersAsJson_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  280:TEST(get_snmp_test, GetCommunityParametersAsJson) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data47get_snmp_test_GetCommunityParametersAsJson_TestD2Ev:
+function _ZN4wago13get_snmp_data47get_snmp_test_GetCommunityParametersAsJson_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  280:TEST(get_snmp_test, GetCommunityParametersAsJson) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data47get_snmp_test_GetCommunityParametersAsJson_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data47get_snmp_test_GetCommunityParametersAsJson_Test8TestBodyEv called 1 returned 100% blocks executed 45%
+1:  280:TEST(get_snmp_test, GetCommunityParametersAsJson) {
+1:  281:  SnmpConfig config { };
+call    0 returned 1
+-:  282:
+1:  283:  ExpectParameter("v1-v2c-community-list-json", 0, config, Result<::std::string> { "[ ]" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  284:
+1:  285:  config.communities_.emplace_back("comm1", Access::ReadOnly);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  286:
+1:  287:  ::std::string expected = R"([ { "communityName": "comm1", "access": "read-only" } ])";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1:  288:  ExpectParameter("v1-v2c-community-list-json", 0, config, Result<::std::string> { expected });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:  289:
+1:  290:  config.communities_.emplace_back("comm2", Access::ReadWrite);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  291:
+-:  292:  expected =
+1:  293:      R"([ { "communityName": "comm1", "access": "read-only" }, { "communityName": "comm2", "access": "read-write" } ])";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  294:  ExpectParameter("v1-v2c-community-list-json", 0, config, Result<::std::string> { expected });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:  295:
+1:  296:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  297:
+4:  298:TEST(get_snmp_test, GetUserListV3ParametersAsJson) {
+-:  299:  //legacy api test for v3-user-list-json. v3-user-list-json shows user and trap combination.
+1:  300:  SnmpConfig config { };
+-:  301:
+-:  302:  //no user and trap
+1:  303:  ExpectParameter("v3-user-list-json", 0, config, Result<::std::string> { "[ ]" });
+-:  304:
+-:  305:  //user without trap information
+#####:  306:  config.user_.emplace_back("name1", Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  307:                            Privacy::AES, "privKey1");
+-:  308:  ::std::string expected =
+1:  309:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "AES", "privacyKey": "privKey1", "notificationReceiver": "" } ])";
+1:  310:  ExpectParameter("v3-user-list-json", 0, config, Result<::std::string> { expected });
+-:  311:
+-:  312:  //user with trap (notificationReceiver e.g. host) information
+#####:  313:  config.trap_receivers_V3_.emplace_back("name1", SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  314:                                         Privacy::AES, "privKey1", "host1");
+-:  315:  expected =
+1:  316:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "AES", "privacyKey": "privKey1", "notificationReceiver": "" }, { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "AES", "privacyKey": "privKey1", "notificationReceiver": "host1" } ])";
+1:  317:  ExpectParameter("v3-user-list-json", 0, config, Result<::std::string> { expected });
+1:  318:}
+------------------
+_ZN4wago13get_snmp_data48get_snmp_test_GetUserListV3ParametersAsJson_TestC2Ev:
+function _ZN4wago13get_snmp_data48get_snmp_test_GetUserListV3ParametersAsJson_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  298:TEST(get_snmp_test, GetUserListV3ParametersAsJson) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data48get_snmp_test_GetUserListV3ParametersAsJson_TestD0Ev:
+function _ZN4wago13get_snmp_data48get_snmp_test_GetUserListV3ParametersAsJson_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  298:TEST(get_snmp_test, GetUserListV3ParametersAsJson) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data48get_snmp_test_GetUserListV3ParametersAsJson_TestD2Ev:
+function _ZN4wago13get_snmp_data48get_snmp_test_GetUserListV3ParametersAsJson_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  298:TEST(get_snmp_test, GetUserListV3ParametersAsJson) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data48get_snmp_test_GetUserListV3ParametersAsJson_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data48get_snmp_test_GetUserListV3ParametersAsJson_Test8TestBodyEv called 1 returned 100% blocks executed 43%
+1:  298:TEST(get_snmp_test, GetUserListV3ParametersAsJson) {
+-:  299:  //legacy api test for v3-user-list-json. v3-user-list-json shows user and trap combination.
+1:  300:  SnmpConfig config { };
+call    0 returned 1
+-:  301:
+-:  302:  //no user and trap
+1:  303:  ExpectParameter("v3-user-list-json", 0, config, Result<::std::string> { "[ ]" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  304:
+-:  305:  //user without trap information
+#####:  306:  config.user_.emplace_back("name1", Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  307:                            Privacy::AES, "privKey1");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  308:  ::std::string expected =
+1:  309:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "AES", "privacyKey": "privKey1", "notificationReceiver": "" } ])";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1:  310:  ExpectParameter("v3-user-list-json", 0, config, Result<::std::string> { expected });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:  311:
+-:  312:  //user with trap (notificationReceiver e.g. host) information
+#####:  313:  config.trap_receivers_V3_.emplace_back("name1", SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  314:                                         Privacy::AES, "privKey1", "host1");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  315:  expected =
+1:  316:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "AES", "privacyKey": "privKey1", "notificationReceiver": "" }, { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "AES", "privacyKey": "privKey1", "notificationReceiver": "host1" } ])";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  317:  ExpectParameter("v3-user-list-json", 0, config, Result<::std::string> { expected });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  318:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  319:
+4:  320:TEST(get_snmp_test, GetUserV3ParametersAsJson) {
+1:  321:  SnmpConfig config { };
+-:  322:
+1:  323:  ExpectParameter("v3-users-json", 0, config, Result<::std::string> { "[ ]" });
+-:  324:
+#####:  325:  config.user_.emplace_back("name1", Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  326:                            Privacy::AES, "privKey1");
+-:  327:
+-:  328:  ::std::string expected =
+1:  329:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "AES", "privacyKey": "privKey1", "securityLevel": "auth-priv", "access": "read-write" } ])";
+1:  330:  ExpectParameter("v3-users-json", 0, config, Result<::std::string> { expected });
+-:  331:
+#####:  332:  config.user_.emplace_back("name2", Access::ReadOnly, SecurityLevel::NoAuthNoPriv, AuthenticationType::None, "",
+1:  333:                            Privacy::None, "");
+-:  334:
+-:  335:  expected =
+1:  336:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "AES", "privacyKey": "privKey1", "securityLevel": "auth-priv", "access": "read-write" }, { "authName": "name2", "authType": "none", "authKey": "", "privacy": "none", "privacyKey": "", "securityLevel": "no-auth-no-priv", "access": "read-only" } ])";
+1:  337:  ExpectParameter("v3-users-json", 0, config, Result<::std::string> { expected });
+1:  338:}
+------------------
+_ZN4wago13get_snmp_data44get_snmp_test_GetUserV3ParametersAsJson_TestC2Ev:
+function _ZN4wago13get_snmp_data44get_snmp_test_GetUserV3ParametersAsJson_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  320:TEST(get_snmp_test, GetUserV3ParametersAsJson) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data44get_snmp_test_GetUserV3ParametersAsJson_TestD0Ev:
+function _ZN4wago13get_snmp_data44get_snmp_test_GetUserV3ParametersAsJson_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  320:TEST(get_snmp_test, GetUserV3ParametersAsJson) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data44get_snmp_test_GetUserV3ParametersAsJson_TestD2Ev:
+function _ZN4wago13get_snmp_data44get_snmp_test_GetUserV3ParametersAsJson_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  320:TEST(get_snmp_test, GetUserV3ParametersAsJson) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data44get_snmp_test_GetUserV3ParametersAsJson_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data44get_snmp_test_GetUserV3ParametersAsJson_Test8TestBodyEv called 1 returned 100% blocks executed 43%
+1:  320:TEST(get_snmp_test, GetUserV3ParametersAsJson) {
+1:  321:  SnmpConfig config { };
+call    0 returned 1
+-:  322:
+1:  323:  ExpectParameter("v3-users-json", 0, config, Result<::std::string> { "[ ]" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  324:
+#####:  325:  config.user_.emplace_back("name1", Access::ReadWrite, SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  326:                            Privacy::AES, "privKey1");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  327:
+-:  328:  ::std::string expected =
+1:  329:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "AES", "privacyKey": "privKey1", "securityLevel": "auth-priv", "access": "read-write" } ])";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1:  330:  ExpectParameter("v3-users-json", 0, config, Result<::std::string> { expected });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:  331:
+#####:  332:  config.user_.emplace_back("name2", Access::ReadOnly, SecurityLevel::NoAuthNoPriv, AuthenticationType::None, "",
+1:  333:                            Privacy::None, "");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  334:
+-:  335:  expected =
+1:  336:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "AES", "privacyKey": "privKey1", "securityLevel": "auth-priv", "access": "read-write" }, { "authName": "name2", "authType": "none", "authKey": "", "privacy": "none", "privacyKey": "", "securityLevel": "no-auth-no-priv", "access": "read-only" } ])";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  337:  ExpectParameter("v3-users-json", 0, config, Result<::std::string> { expected });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  338:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  339:
+4:  340:TEST(get_snmp_test, GetTrapReceiverV3ParametersAsJson) {
+1:  341:  SnmpConfig config { };
+-:  342:
+1:  343:  ExpectParameter("v3-trap-receivers-json", 0, config, Result<::std::string> { "[ ]" });
+-:  344:
+#####:  345:  config.trap_receivers_V3_.emplace_back("name1", SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  346:                                         Privacy::DES, "privKey1", "host1");
+-:  347:
+-:  348:  ::std::string expected =
+1:  349:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "DES", "privacyKey": "privKey1", "securityLevel": "auth-priv", "host": "host1" } ])";
+1:  350:  ExpectParameter("v3-trap-receivers-json", 0, config, Result<::std::string> { expected });
+-:  351:
+#####:  352:  config.trap_receivers_V3_.emplace_back("name2", SecurityLevel::NoAuthNoPriv, AuthenticationType::None, "",
+1:  353:                                         Privacy::None, "", "host2");
+-:  354:
+-:  355:  expected =
+1:  356:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "DES", "privacyKey": "privKey1", "securityLevel": "auth-priv", "host": "host1" }, { "authName": "name2", "authType": "none", "authKey": "", "privacy": "none", "privacyKey": "", "securityLevel": "no-auth-no-priv", "host": "host2" } ])";
+1:  357:  ExpectParameter("v3-trap-receivers-json", 0, config, Result<::std::string> { expected });
+1:  358:}
+------------------
+_ZN4wago13get_snmp_data52get_snmp_test_GetTrapReceiverV3ParametersAsJson_TestC2Ev:
+function _ZN4wago13get_snmp_data52get_snmp_test_GetTrapReceiverV3ParametersAsJson_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  340:TEST(get_snmp_test, GetTrapReceiverV3ParametersAsJson) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data52get_snmp_test_GetTrapReceiverV3ParametersAsJson_TestD0Ev:
+function _ZN4wago13get_snmp_data52get_snmp_test_GetTrapReceiverV3ParametersAsJson_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  340:TEST(get_snmp_test, GetTrapReceiverV3ParametersAsJson) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data52get_snmp_test_GetTrapReceiverV3ParametersAsJson_TestD2Ev:
+function _ZN4wago13get_snmp_data52get_snmp_test_GetTrapReceiverV3ParametersAsJson_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  340:TEST(get_snmp_test, GetTrapReceiverV3ParametersAsJson) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data52get_snmp_test_GetTrapReceiverV3ParametersAsJson_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data52get_snmp_test_GetTrapReceiverV3ParametersAsJson_Test8TestBodyEv called 1 returned 100% blocks executed 43%
+1:  340:TEST(get_snmp_test, GetTrapReceiverV3ParametersAsJson) {
+1:  341:  SnmpConfig config { };
+call    0 returned 1
+-:  342:
+1:  343:  ExpectParameter("v3-trap-receivers-json", 0, config, Result<::std::string> { "[ ]" });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  344:
+#####:  345:  config.trap_receivers_V3_.emplace_back("name1", SecurityLevel::AuthPriv, AuthenticationType::MD5, "authKey1",
+1:  346:                                         Privacy::DES, "privKey1", "host1");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  347:
+-:  348:  ::std::string expected =
+1:  349:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "DES", "privacyKey": "privKey1", "securityLevel": "auth-priv", "host": "host1" } ])";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1:  350:  ExpectParameter("v3-trap-receivers-json", 0, config, Result<::std::string> { expected });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:  351:
+#####:  352:  config.trap_receivers_V3_.emplace_back("name2", SecurityLevel::NoAuthNoPriv, AuthenticationType::None, "",
+1:  353:                                         Privacy::None, "", "host2");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:  354:
+-:  355:  expected =
+1:  356:      R"([ { "authName": "name1", "authType": "MD5", "authKey": "authKey1", "privacy": "DES", "privacyKey": "privKey1", "securityLevel": "auth-priv", "host": "host1" }, { "authName": "name2", "authType": "none", "authKey": "", "privacy": "none", "privacyKey": "", "securityLevel": "no-auth-no-priv", "host": "host2" } ])";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  357:  ExpectParameter("v3-trap-receivers-json", 0, config, Result<::std::string> { expected });
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+call    8 returned 1
+branch  9 taken 1 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+1:  358:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  359:
+4:  360:TEST(get_snmp_test, GetHelpText) {
+-:  361:
+1:  362:  SnmpConfig config { };
+-:  363:
+1:  364:  ::std::string option = "--help";
+1:  365:  auto result = GetParameter(option, 0, config);
+1*:  366:  EXPECT_FALSE(result.value_.empty());
+1*:  367:  EXPECT_EQ(SUCCESS, result.status_);
+-:  368:
+1:  369:  option = "-h";
+1:  370:  result = GetParameter(option, 0, config);
+1*:  371:  EXPECT_FALSE(result.value_.empty());
+1*:  372:  EXPECT_EQ(SUCCESS, result.status_);
+-:  373:
+1:  374:}
+------------------
+_ZN4wago13get_snmp_data30get_snmp_test_GetHelpText_TestC2Ev:
+function _ZN4wago13get_snmp_data30get_snmp_test_GetHelpText_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  360:TEST(get_snmp_test, GetHelpText) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data30get_snmp_test_GetHelpText_TestD0Ev:
+function _ZN4wago13get_snmp_data30get_snmp_test_GetHelpText_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  360:TEST(get_snmp_test, GetHelpText) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago13get_snmp_data30get_snmp_test_GetHelpText_TestD2Ev:
+function _ZN4wago13get_snmp_data30get_snmp_test_GetHelpText_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  360:TEST(get_snmp_test, GetHelpText) {
+call    0 returned 1
+------------------
+_ZN4wago13get_snmp_data30get_snmp_test_GetHelpText_Test8TestBodyEv:
+function _ZN4wago13get_snmp_data30get_snmp_test_GetHelpText_Test8TestBodyEv called 1 returned 100% blocks executed 27%
+1:  360:TEST(get_snmp_test, GetHelpText) {
+-:  361:
+1:  362:  SnmpConfig config { };
+call    0 returned 1
+-:  363:
+1:  364:  ::std::string option = "--help";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1:  365:  auto result = GetParameter(option, 0, config);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+1*:  366:  EXPECT_FALSE(result.value_.empty());
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 0 (fallthrough)
+branch  4 taken 1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  367:  EXPECT_EQ(SUCCESS, result.status_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  368:
+1:  369:  option = "-h";
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:  370:  result = GetParameter(option, 0, config);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+1*:  371:  EXPECT_FALSE(result.value_.empty());
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+branch  3 taken 0 (fallthrough)
+branch  4 taken 1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+call   11 never executed
+call   12 never executed
+branch 13 never executed
+branch 14 never executed
+call   15 never executed
+branch 16 never executed
+branch 17 never executed
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 returned 1
+call   22 never executed
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1*:  372:  EXPECT_EQ(SUCCESS, result.status_);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 1
+call   19 never executed
+call   20 never executed
+call   21 never executed
+-:  373:
+1:  374:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:  375:
+-:  376:}
+-:  377:// namespace wago::snmp_config

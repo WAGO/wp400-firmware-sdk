@@ -1,0 +1,13 @@
+## SECTION=x_windowmanagers
+
+config CWM
+	tristate
+	prompt "cwm"
+	select XORG_SERVER
+	select FREETYPE
+	select XORG_LIB_XFT
+	help
+	  CWM is an X11 window manager with a focus on getting out of
+	  your way so you can be productive.
+	  It was originally derived from EVILWM.
+	  CWM is developed as part of the OpenBSD base system.

@@ -1,0 +1,182 @@
+-:    0:Source:src/network_config/Output.hpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:#pragma once
+-:    3:
+-:    4:#include <fstream>
+-:    5:#include <ostream>
+-:    6:#include <iostream>
+-:    7:
+-:    8:namespace network_config {
+-:    9:
+-:   10:class Output {
+-:   11: public:
+#####:   12:  Output() = default;
+------------------
+_ZN14network_config6OutputC2Ev:
+function _ZN14network_config6OutputC2Ev called 0 returned 0% blocks executed 0%
+#####:   12:  Output() = default;
+------------------
+_ZN14network_config6OutputC2Ev:
+function _ZN14network_config6OutputC2Ev called 0 returned 0% blocks executed 0%
+#####:   12:  Output() = default;
+------------------
+#####:   13:  virtual ~Output() = default;
+------------------
+_ZN14network_config6OutputD0Ev:
+function _ZN14network_config6OutputD0Ev called 0 returned 0% blocks executed 0%
+#####:   13:  virtual ~Output() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN14network_config6OutputD2Ev:
+function _ZN14network_config6OutputD2Ev called 0 returned 0% blocks executed 0%
+#####:   13:  virtual ~Output() = default;
+------------------
+_ZN14network_config6OutputD0Ev:
+function _ZN14network_config6OutputD0Ev called 0 returned 0% blocks executed 0%
+#####:   13:  virtual ~Output() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN14network_config6OutputD2Ev:
+function _ZN14network_config6OutputD2Ev called 0 returned 0% blocks executed 0%
+#####:   13:  virtual ~Output() = default;
+------------------
+-:   14:  virtual ::std::ostream& GetStream() = 0;
+-:   15:
+-:   16:  Output(const Output&) = delete;
+-:   17:  Output& operator=(const Output&) = delete;
+-:   18:  Output(Output&& other) = delete;
+-:   19:  Output& operator=(Output&&) = delete;
+-:   20:};
+-:   21:
+-:   22:class StderrOutput : public Output {
+-:   23: public:
+#####:   24:  ::std::ostream& GetStream() override {
+#####:   25:    return ::std::cerr;
+-:   26:  }
+------------------
+_ZN14network_config12StderrOutput9GetStreamEv:
+function _ZN14network_config12StderrOutput9GetStreamEv called 0 returned 0% blocks executed 0%
+#####:   24:  ::std::ostream& GetStream() override {
+#####:   25:    return ::std::cerr;
+-:   26:  }
+------------------
+_ZN14network_config12StderrOutput9GetStreamEv:
+function _ZN14network_config12StderrOutput9GetStreamEv called 0 returned 0% blocks executed 0%
+#####:   24:  ::std::ostream& GetStream() override {
+#####:   25:    return ::std::cerr;
+-:   26:  }
+------------------
+-:   27:};
+-:   28:
+-:   29:class FileOutput : public Output {
+-:   30: public:
+function _ZN14network_config10FileOutputC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   31:  explicit FileOutput(const ::std::string& filename)
+#####:   32:      : ostream_ { filename } {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:   33:    if (!ostream_.is_open()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+#####:   34:      throw ::std::ios::failure { "Failed to open: " + filename };
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+-:   35:    }
+-:   36:
+#####:   37:  }
+call    0 never executed
+call    1 never executed
+#####:   38:  ~FileOutput() override {
+#####:   39:    ostream_.close();
+#####:   40:  }
+------------------
+_ZN14network_config10FileOutputD0Ev:
+function _ZN14network_config10FileOutputD0Ev called 0 returned 0% blocks executed 0%
+#####:   38:  ~FileOutput() override {
+-:   39:    ostream_.close();
+#####:   40:  }
+call    0 never executed
+call    1 never executed
+------------------
+_ZN14network_config10FileOutputD2Ev:
+function _ZN14network_config10FileOutputD2Ev called 0 returned 0% blocks executed 0%
+#####:   38:  ~FileOutput() override {
+#####:   39:    ostream_.close();
+call    0 never executed
+#####:   40:  }
+call    0 never executed
+call    1 never executed
+------------------
+-:   41:
+-:   42:  FileOutput(const FileOutput&) = delete;
+-:   43:  FileOutput& operator=(const FileOutput&) = delete;
+-:   44:  FileOutput(FileOutput&& other) = delete;
+-:   45:  FileOutput& operator=(FileOutput&&) = delete;
+-:   46:
+function _ZN14network_config10FileOutput9GetStreamEv called 0 returned 0% blocks executed 0%
+#####:   47:  ::std::ostream& GetStream() override {
+#####:   48:    return ostream_;
+-:   49:  }
+-:   50:
+-:   51: private:
+-:   52:  ::std::ofstream ostream_;
+-:   53:
+-:   54:};
+-:   55:
+-:   56:class NullOutput : public Output {
+-:   57: public:
+-:   58:
+function _ZN14network_config10NullOutputC2Ev called 0 returned 0% blocks executed 0%
+#####:   59:  NullOutput() = default;
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+#####:   60:  ~NullOutput() override = default;
+------------------
+_ZN14network_config10NullOutputD0Ev:
+function _ZN14network_config10NullOutputD0Ev called 0 returned 0% blocks executed 0%
+#####:   60:  ~NullOutput() override = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN14network_config10NullOutputD2Ev:
+function _ZN14network_config10NullOutputD2Ev called 0 returned 0% blocks executed 0%
+#####:   60:  ~NullOutput() override = default;
+call    0 never executed
+call    1 never executed
+------------------
+-:   61:
+-:   62:  NullOutput(const NullOutput &other) = delete;
+-:   63:  NullOutput(NullOutput &&other) = delete;
+-:   64:  NullOutput& operator=(const NullOutput&) = delete;
+-:   65:  NullOutput& operator=(NullOutput&&) = delete;
+-:   66:
+function _ZN14network_config10NullOutput9GetStreamEv called 0 returned 0% blocks executed 0%
+#####:   67:  ::std::ostream& GetStream() override {
+#####:   68:    return ostream_;
+-:   69:  }
+-:   70:
+-:   71: private:
+-:   72:  ::std::ofstream ostream_;
+-:   73:};
+-:   74:
+-:   75:} /* namespace network_config */
+-:   76:

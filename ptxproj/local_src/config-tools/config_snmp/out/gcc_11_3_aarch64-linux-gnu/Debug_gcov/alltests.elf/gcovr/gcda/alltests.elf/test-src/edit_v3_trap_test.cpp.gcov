@@ -1,0 +1,1035 @@
+-:    0:Source:test-src/edit_v3_trap_test.cpp
+-:    1:// Copyright (c) 2022 WAGO GmbH & Co. KG
+-:    2:// SPDX-License-Identifier: MPL-2.0
+-:    3:
+-:    4:#include <gmock/gmock.h>
+-:    5:#include <gtest/gtest.h>
+-:    6:
+-:    7:#include "SnmpConfig.hpp"
+-:    8:#include "snmp_config_handler.hpp"
+-:    9:
+-:   10:namespace wago::snmp_config {
+-:   11:
+-:   12:using namespace wago::snmp_config_lib;  // NOLINT google-build-using-namespace
+-:   13:using namespace ::testing;              // NOLINT google-build-using-namespace
+-:   14:
+-:   15:// "Following 7 parameters must be given together:",
+-:   16:// "v3-edit: \"add\" | \"delete\"",
+-:   17:// "v3-auth-name-value: string without spaces, min 1, max 32 characters",
+-:   18:// "v3-auth-type-value: \"none\" | \"MD5\" | \"SHA\""
+-:   19:// "v3-auth-key-value: string without spaces, min 8 characters"
+-:   20:// "v3-privacy-value: \"none\" | \"DES\" | \"AES\" "
+-:   21:// "v3-privacy-key-value: string without spaces, min 8 characters; optional - if it is not given, netsnmp will use "
+-:   22:// "auth type value"
+-:   23:
+4:   24:TEST(edit_v3_user_or_trap, implicit_add_trap) {
+1:   25:  SnmpConfig config{};
+-:   26:
+-:   27:  const parameter_map parameters = {
+-:   28:      {"v3-edit", "add"},
+-:   29:      {"v3-auth-name", "auth-name"},
+-:   30:      {"v3-auth-type", "sha"},
+-:   31:      {"v3-auth-key", "auth-key"},
+-:   32:      {"v3-privacy", "aes"},
+-:   33:      {"v3-privacy-key", "privacy-key"},
+-:   34:      {"v3-notification-receiver", "notification-receiver"},
+9:   35:  };
+-:   36:
+-:   37:  TrapReceiverV3 expected_trap = {"auth-name",  SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   38:                                  Privacy::AES, "privacy-key",           "notification-receiver"};
+-:   39:
+1:   40:  edit_v3_user_or_trap(parameters, config);
+-:   41:
+2*:   42:  EXPECT_THAT(config.trap_receivers_V3_, ElementsAre(expected_trap));
+1:   43:}
+------------------
+_ZN4wago11snmp_config43edit_v3_user_or_trap_implicit_add_trap_TestC2Ev:
+function _ZN4wago11snmp_config43edit_v3_user_or_trap_implicit_add_trap_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   24:TEST(edit_v3_user_or_trap, implicit_add_trap) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config43edit_v3_user_or_trap_implicit_add_trap_TestD0Ev:
+function _ZN4wago11snmp_config43edit_v3_user_or_trap_implicit_add_trap_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   24:TEST(edit_v3_user_or_trap, implicit_add_trap) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config43edit_v3_user_or_trap_implicit_add_trap_TestD2Ev:
+function _ZN4wago11snmp_config43edit_v3_user_or_trap_implicit_add_trap_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   24:TEST(edit_v3_user_or_trap, implicit_add_trap) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config43edit_v3_user_or_trap_implicit_add_trap_Test8TestBodyEv:
+function _ZN4wago11snmp_config43edit_v3_user_or_trap_implicit_add_trap_Test8TestBodyEv called 1 returned 100% blocks executed 42%
+1:   24:TEST(edit_v3_user_or_trap, implicit_add_trap) {
+1:   25:  SnmpConfig config{};
+call    0 returned 1
+-:   26:
+-:   27:  const parameter_map parameters = {
+-:   28:      {"v3-edit", "add"},
+-:   29:      {"v3-auth-name", "auth-name"},
+-:   30:      {"v3-auth-type", "sha"},
+-:   31:      {"v3-auth-key", "auth-key"},
+-:   32:      {"v3-privacy", "aes"},
+-:   33:      {"v3-privacy-key", "privacy-key"},
+-:   34:      {"v3-notification-receiver", "notification-receiver"},
+9:   35:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 1
+call   22 returned 1
+branch 23 taken 1 (fallthrough)
+branch 24 taken 0 (throw)
+call   25 returned 7
+call   26 never executed
+-:   36:
+-:   37:  TrapReceiverV3 expected_trap = {"auth-name",  SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   38:                                  Privacy::AES, "privacy-key",           "notification-receiver"};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+-:   39:
+1:   40:  edit_v3_user_or_trap(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   41:
+2*:   42:  EXPECT_THAT(config.trap_receivers_V3_, ElementsAre(expected_trap));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+1:   43:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   44:
+4:   45:TEST(edit_v3_user_or_trap, implicit_delete_trap) {
+1:   46:  SnmpConfig config{};
+-:   47:
+#####:   48:  config.trap_receivers_V3_.emplace_back("auth-name", SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+1:   49:                                         Privacy::AES, "privacy-key", "host-address");
+-:   50:
+-:   51:  const parameter_map parameters = {
+-:   52:      {"v3-edit", "delete"},
+-:   53:      {"v3-notification-receiver", "host-address"},
+-:   54:      {"v3-auth-name", "auth-name"},
+5:   55:  };
+-:   56:
+1:   57:  edit_v3_user_or_trap(parameters, config);
+-:   58:
+1*:   59:  EXPECT_THAT(config.trap_receivers_V3_, IsEmpty());
+1:   60:}
+------------------
+_ZN4wago11snmp_config46edit_v3_user_or_trap_implicit_delete_trap_TestC2Ev:
+function _ZN4wago11snmp_config46edit_v3_user_or_trap_implicit_delete_trap_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   45:TEST(edit_v3_user_or_trap, implicit_delete_trap) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config46edit_v3_user_or_trap_implicit_delete_trap_TestD0Ev:
+function _ZN4wago11snmp_config46edit_v3_user_or_trap_implicit_delete_trap_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   45:TEST(edit_v3_user_or_trap, implicit_delete_trap) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config46edit_v3_user_or_trap_implicit_delete_trap_TestD2Ev:
+function _ZN4wago11snmp_config46edit_v3_user_or_trap_implicit_delete_trap_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   45:TEST(edit_v3_user_or_trap, implicit_delete_trap) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config46edit_v3_user_or_trap_implicit_delete_trap_Test8TestBodyEv:
+function _ZN4wago11snmp_config46edit_v3_user_or_trap_implicit_delete_trap_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   45:TEST(edit_v3_user_or_trap, implicit_delete_trap) {
+1:   46:  SnmpConfig config{};
+call    0 returned 1
+-:   47:
+#####:   48:  config.trap_receivers_V3_.emplace_back("auth-name", SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+1:   49:                                         Privacy::AES, "privacy-key", "host-address");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   50:
+-:   51:  const parameter_map parameters = {
+-:   52:      {"v3-edit", "delete"},
+-:   53:      {"v3-notification-receiver", "host-address"},
+-:   54:      {"v3-auth-name", "auth-name"},
+5:   55:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 3
+call   14 never executed
+-:   56:
+1:   57:  edit_v3_user_or_trap(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   58:
+1*:   59:  EXPECT_THAT(config.trap_receivers_V3_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:   60:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:   61:
+4:   62:TEST(edit_v3_user_or_trap, add_trap_receiver) {
+1:   63:  SnmpConfig config{};
+-:   64:
+-:   65:  const parameter_map parameters = {
+-:   66:      {"v3-trap-receiver-edit", "add"},
+-:   67:      {"v3-auth-name", "auth-name"},
+-:   68:      {"v3-auth-type", "sha"},
+-:   69:      {"v3-auth-key", "auth-key"},
+-:   70:      {"v3-privacy", "aes"},
+-:   71:      {"v3-privacy-key", "privacy-key"},
+-:   72:      {"v3-notification-receiver", "notification-receiver"},
+9:   73:  };
+-:   74:
+-:   75:  TrapReceiverV3 expected_trap = {"auth-name",  SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   76:                                  Privacy::AES, "privacy-key",           "notification-receiver"};
+-:   77:
+1:   78:  edit_v3_user_or_trap(parameters, config);
+-:   79:
+2*:   80:  EXPECT_THAT(config.trap_receivers_V3_, ElementsAre(expected_trap));
+1:   81:}
+------------------
+_ZN4wago11snmp_config43edit_v3_user_or_trap_add_trap_receiver_TestC2Ev:
+function _ZN4wago11snmp_config43edit_v3_user_or_trap_add_trap_receiver_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST(edit_v3_user_or_trap, add_trap_receiver) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config43edit_v3_user_or_trap_add_trap_receiver_TestD0Ev:
+function _ZN4wago11snmp_config43edit_v3_user_or_trap_add_trap_receiver_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST(edit_v3_user_or_trap, add_trap_receiver) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config43edit_v3_user_or_trap_add_trap_receiver_TestD2Ev:
+function _ZN4wago11snmp_config43edit_v3_user_or_trap_add_trap_receiver_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   62:TEST(edit_v3_user_or_trap, add_trap_receiver) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config43edit_v3_user_or_trap_add_trap_receiver_Test8TestBodyEv:
+function _ZN4wago11snmp_config43edit_v3_user_or_trap_add_trap_receiver_Test8TestBodyEv called 1 returned 100% blocks executed 42%
+1:   62:TEST(edit_v3_user_or_trap, add_trap_receiver) {
+1:   63:  SnmpConfig config{};
+call    0 returned 1
+-:   64:
+-:   65:  const parameter_map parameters = {
+-:   66:      {"v3-trap-receiver-edit", "add"},
+-:   67:      {"v3-auth-name", "auth-name"},
+-:   68:      {"v3-auth-type", "sha"},
+-:   69:      {"v3-auth-key", "auth-key"},
+-:   70:      {"v3-privacy", "aes"},
+-:   71:      {"v3-privacy-key", "privacy-key"},
+-:   72:      {"v3-notification-receiver", "notification-receiver"},
+9:   73:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 1
+call   22 returned 1
+branch 23 taken 1 (fallthrough)
+branch 24 taken 0 (throw)
+call   25 returned 7
+call   26 never executed
+-:   74:
+-:   75:  TrapReceiverV3 expected_trap = {"auth-name",  SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+2:   76:                                  Privacy::AES, "privacy-key",           "notification-receiver"};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+branch 17 taken 1 (fallthrough)
+branch 18 taken 0 (throw)
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+call   24 returned 1
+call   25 returned 1
+-:   77:
+1:   78:  edit_v3_user_or_trap(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   79:
+2*:   80:  EXPECT_THAT(config.trap_receivers_V3_, ElementsAre(expected_trap));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+1:   81:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   82:
+4:   83:TEST(edit_v3_user_or_trap, delete_trap_receiver) {
+1:   84:  SnmpConfig config{};
+-:   85:
+#####:   86:  config.trap_receivers_V3_.emplace_back("auth-name", SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+1:   87:                                         Privacy::AES, "privacy-key", "host-address");
+-:   88:
+-:   89:  const parameter_map parameters = {
+-:   90:      {"v3-trap-receiver-edit", "delete"},
+-:   91:      {"v3-auth-name", "auth-name"},
+-:   92:      {"v3-notification-receiver", "host-address"},
+5:   93:  };
+-:   94:
+1:   95:  edit_v3_user_or_trap(parameters, config);
+-:   96:
+1*:   97:  EXPECT_THAT(config.trap_receivers_V3_, IsEmpty());
+1:   98:}
+------------------
+_ZN4wago11snmp_config46edit_v3_user_or_trap_delete_trap_receiver_TestC2Ev:
+function _ZN4wago11snmp_config46edit_v3_user_or_trap_delete_trap_receiver_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   83:TEST(edit_v3_user_or_trap, delete_trap_receiver) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config46edit_v3_user_or_trap_delete_trap_receiver_TestD0Ev:
+function _ZN4wago11snmp_config46edit_v3_user_or_trap_delete_trap_receiver_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   83:TEST(edit_v3_user_or_trap, delete_trap_receiver) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config46edit_v3_user_or_trap_delete_trap_receiver_TestD2Ev:
+function _ZN4wago11snmp_config46edit_v3_user_or_trap_delete_trap_receiver_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   83:TEST(edit_v3_user_or_trap, delete_trap_receiver) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config46edit_v3_user_or_trap_delete_trap_receiver_Test8TestBodyEv:
+function _ZN4wago11snmp_config46edit_v3_user_or_trap_delete_trap_receiver_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   83:TEST(edit_v3_user_or_trap, delete_trap_receiver) {
+1:   84:  SnmpConfig config{};
+call    0 returned 1
+-:   85:
+#####:   86:  config.trap_receivers_V3_.emplace_back("auth-name", SecurityLevel::AuthPriv, AuthenticationType::SHA, "auth-key",
+1:   87:                                         Privacy::AES, "privacy-key", "host-address");
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   88:
+-:   89:  const parameter_map parameters = {
+-:   90:      {"v3-trap-receiver-edit", "delete"},
+-:   91:      {"v3-auth-name", "auth-name"},
+-:   92:      {"v3-notification-receiver", "host-address"},
+5:   93:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 3
+call   14 never executed
+-:   94:
+1:   95:  edit_v3_user_or_trap(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   96:
+1*:   97:  EXPECT_THAT(config.trap_receivers_V3_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:   98:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:   99:
+4:  100:TEST(edit_v3_user_or_trap, add_throws_when_name_is_missing) {
+1:  101:  SnmpConfig config{};
+-:  102:  const parameter_map parameters = {
+-:  103:      {"v3-trap-receiver-edit", "add"},  {"v3-auth-type", "sha"},
+-:  104:      {"v3-auth-key", "auth-key"},       {"v3-privacy", "aes"},
+-:  105:      {"v3-privacy-key", "privacy-key"}, {"v3-notification-receiver", "notification-receiver"},
+8:  106:  };
+-:  107:
+2*:  108:  EXPECT_THROW(
+-:  109:      {
+-:  110:        try {
+-:  111:          edit_v3_user_or_trap(parameters, config);
+-:  112:        } catch (snmp_config_exception const& e) {
+-:  113:          EXPECT_STREQ("missing parameter: v3-auth-name", e.what());
+-:  114:          EXPECT_EQ(snmp_config_error::missing_parameter, e.error());
+-:  115:          throw;
+-:  116:        }
+-:  117:      },
+1:  118:      snmp_config_exception);
+-:  119:
+1*:  120:  EXPECT_THAT(config.trap_receivers_V3_, IsEmpty());
+1:  121:}
+------------------
+_ZN4wago11snmp_config57edit_v3_user_or_trap_add_throws_when_name_is_missing_TestC2Ev:
+function _ZN4wago11snmp_config57edit_v3_user_or_trap_add_throws_when_name_is_missing_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  100:TEST(edit_v3_user_or_trap, add_throws_when_name_is_missing) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config57edit_v3_user_or_trap_add_throws_when_name_is_missing_TestD0Ev:
+function _ZN4wago11snmp_config57edit_v3_user_or_trap_add_throws_when_name_is_missing_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  100:TEST(edit_v3_user_or_trap, add_throws_when_name_is_missing) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config57edit_v3_user_or_trap_add_throws_when_name_is_missing_TestD2Ev:
+function _ZN4wago11snmp_config57edit_v3_user_or_trap_add_throws_when_name_is_missing_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  100:TEST(edit_v3_user_or_trap, add_throws_when_name_is_missing) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config57edit_v3_user_or_trap_add_throws_when_name_is_missing_Test8TestBodyEv:
+function _ZN4wago11snmp_config57edit_v3_user_or_trap_add_throws_when_name_is_missing_Test8TestBodyEv called 1 returned 100% blocks executed 31%
+1:  100:TEST(edit_v3_user_or_trap, add_throws_when_name_is_missing) {
+1:  101:  SnmpConfig config{};
+call    0 returned 1
+-:  102:  const parameter_map parameters = {
+-:  103:      {"v3-trap-receiver-edit", "add"},  {"v3-auth-type", "sha"},
+-:  104:      {"v3-auth-key", "auth-key"},       {"v3-privacy", "aes"},
+-:  105:      {"v3-privacy-key", "privacy-key"}, {"v3-notification-receiver", "notification-receiver"},
+8:  106:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+call   19 returned 1
+branch 20 taken 1 (fallthrough)
+branch 21 taken 0 (throw)
+call   22 returned 6
+call   23 never executed
+-:  107:
+2*:  108:  EXPECT_THROW(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1 (throw)
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+branch 29 taken 0 (fallthrough)
+branch 30 taken 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+branch 34 taken 1 (fallthrough)
+branch 35 taken 0 (throw)
+call   36 returned 1
+branch 37 taken 0 (fallthrough)
+branch 38 taken 1
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+call   43 never executed
+branch 44 never executed
+branch 45 never executed
+call   46 never executed
+branch 47 never executed
+branch 48 never executed
+call   49 never executed
+call   50 never executed
+call   51 returned 1
+call   52 returned 1
+call   53 returned 1
+branch 54 taken 1 (fallthrough)
+branch 55 taken 0 (throw)
+call   56 returned 1
+branch 57 taken 0 (fallthrough)
+branch 58 taken 1
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+branch 67 never executed
+branch 68 never executed
+call   69 never executed
+call   70 never executed
+call   71 returned 1
+call   72 returned 1
+call   73 never executed
+call   74 never executed
+call   75 never executed
+call   76 never executed
+call   77 never executed
+call   78 never executed
+call   79 returned 1
+branch 80 taken 1
+branch 81 taken 0
+branch 82 taken 0
+call   83 returned 1
+call   84 returned 1
+branch 85 taken 1 (fallthrough)
+branch 86 taken 0 (throw)
+call   87 never executed
+call   88 never executed
+branch 89 never executed
+branch 90 never executed
+call   91 never executed
+branch 92 never executed
+branch 93 never executed
+call   94 never executed
+branch 95 never executed
+branch 96 never executed
+call   97 never executed
+call   98 never executed
+branch 99 never executed
+branch 100 never executed
+call   101 never executed
+call   102 never executed
+branch 103 never executed
+branch 104 never executed
+call   105 never executed
+branch 106 never executed
+branch 107 never executed
+call   108 never executed
+call   109 never executed
+call   110 never executed
+branch 111 never executed
+branch 112 never executed
+call   113 never executed
+branch 114 never executed
+branch 115 never executed
+call   116 never executed
+call   117 never executed
+call   118 never executed
+call   119 never executed
+call   120 never executed
+-:  109:      {
+-:  110:        try {
+-:  111:          edit_v3_user_or_trap(parameters, config);
+-:  112:        } catch (snmp_config_exception const& e) {
+-:  113:          EXPECT_STREQ("missing parameter: v3-auth-name", e.what());
+-:  114:          EXPECT_EQ(snmp_config_error::missing_parameter, e.error());
+-:  115:          throw;
+-:  116:        }
+-:  117:      },
+1:  118:      snmp_config_exception);
+call    0 returned 1
+call    1 never executed
+-:  119:
+1*:  120:  EXPECT_THAT(config.trap_receivers_V3_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:  121:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  122:
+4:  123:TEST(edit_v3_user_or_trap, add_trap_throws_when_privacy_is_invalid) {
+1:  124:  SnmpConfig config{};
+-:  125:  const parameter_map parameters = {
+-:  126:      {"v3-trap-receiver-edit", "add"},  {"v3-auth-name", "auth-name"},
+-:  127:      {"v3-auth-type", "md5"},           {"v3-auth-key", "auth-key"},
+-:  128:      {"v3-privacy", "invalid-privacy"}, {"v3-privacy-key", "privacy-key"},
+-:  129:      {"v3-user-access", "read-only"},   {"v3-notification-receiver", "notification-receiver"},
+10:  130:  };
+-:  131:
+2*:  132:  EXPECT_THROW(
+-:  133:      {
+-:  134:        try {
+-:  135:          edit_v3_user_or_trap(parameters, config);
+-:  136:        } catch (snmp_config_exception const& e) {
+-:  137:          EXPECT_STREQ("invalid conversion: invalid-privacy", e.what());
+-:  138:          EXPECT_EQ(snmp_config_error::invalid_parameter, e.error());
+-:  139:          throw;
+-:  140:        }
+-:  141:      },
+1:  142:      snmp_config_exception);
+-:  143:
+1*:  144:  EXPECT_THAT(config.trap_receivers_V3_, IsEmpty());
+1:  145:}
+------------------
+_ZN4wago11snmp_config65edit_v3_user_or_trap_add_trap_throws_when_privacy_is_invalid_TestC2Ev:
+function _ZN4wago11snmp_config65edit_v3_user_or_trap_add_trap_throws_when_privacy_is_invalid_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  123:TEST(edit_v3_user_or_trap, add_trap_throws_when_privacy_is_invalid) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config65edit_v3_user_or_trap_add_trap_throws_when_privacy_is_invalid_TestD0Ev:
+function _ZN4wago11snmp_config65edit_v3_user_or_trap_add_trap_throws_when_privacy_is_invalid_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  123:TEST(edit_v3_user_or_trap, add_trap_throws_when_privacy_is_invalid) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config65edit_v3_user_or_trap_add_trap_throws_when_privacy_is_invalid_TestD2Ev:
+function _ZN4wago11snmp_config65edit_v3_user_or_trap_add_trap_throws_when_privacy_is_invalid_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  123:TEST(edit_v3_user_or_trap, add_trap_throws_when_privacy_is_invalid) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config65edit_v3_user_or_trap_add_trap_throws_when_privacy_is_invalid_Test8TestBodyEv:
+function _ZN4wago11snmp_config65edit_v3_user_or_trap_add_trap_throws_when_privacy_is_invalid_Test8TestBodyEv called 1 returned 100% blocks executed 32%
+1:  123:TEST(edit_v3_user_or_trap, add_trap_throws_when_privacy_is_invalid) {
+1:  124:  SnmpConfig config{};
+call    0 returned 1
+-:  125:  const parameter_map parameters = {
+-:  126:      {"v3-trap-receiver-edit", "add"},  {"v3-auth-name", "auth-name"},
+-:  127:      {"v3-auth-type", "md5"},           {"v3-auth-key", "auth-key"},
+-:  128:      {"v3-privacy", "invalid-privacy"}, {"v3-privacy-key", "privacy-key"},
+-:  129:      {"v3-user-access", "read-only"},   {"v3-notification-receiver", "notification-receiver"},
+10:  130:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 1
+branch 19 taken 1 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0 (throw)
+call   24 returned 1
+call   25 returned 1
+branch 26 taken 1 (fallthrough)
+branch 27 taken 0 (throw)
+call   28 returned 8
+call   29 never executed
+-:  131:
+2*:  132:  EXPECT_THROW(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1 (throw)
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+branch 29 taken 0 (fallthrough)
+branch 30 taken 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+branch 34 taken 1 (fallthrough)
+branch 35 taken 0 (throw)
+call   36 returned 1
+branch 37 taken 0 (fallthrough)
+branch 38 taken 1
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+call   43 never executed
+branch 44 never executed
+branch 45 never executed
+call   46 never executed
+branch 47 never executed
+branch 48 never executed
+call   49 never executed
+call   50 never executed
+call   51 returned 1
+call   52 returned 1
+call   53 returned 1
+branch 54 taken 1 (fallthrough)
+branch 55 taken 0 (throw)
+call   56 returned 1
+branch 57 taken 0 (fallthrough)
+branch 58 taken 1
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+branch 67 never executed
+branch 68 never executed
+call   69 never executed
+call   70 never executed
+call   71 returned 1
+call   72 returned 1
+call   73 never executed
+call   74 never executed
+call   75 never executed
+call   76 never executed
+call   77 never executed
+call   78 never executed
+call   79 returned 1
+branch 80 taken 1
+branch 81 taken 0
+branch 82 taken 0
+call   83 returned 1
+call   84 returned 1
+branch 85 taken 1 (fallthrough)
+branch 86 taken 0 (throw)
+call   87 never executed
+call   88 never executed
+branch 89 never executed
+branch 90 never executed
+call   91 never executed
+branch 92 never executed
+branch 93 never executed
+call   94 never executed
+branch 95 never executed
+branch 96 never executed
+call   97 never executed
+call   98 never executed
+branch 99 never executed
+branch 100 never executed
+call   101 never executed
+call   102 never executed
+branch 103 never executed
+branch 104 never executed
+call   105 never executed
+branch 106 never executed
+branch 107 never executed
+call   108 never executed
+call   109 never executed
+call   110 never executed
+branch 111 never executed
+branch 112 never executed
+call   113 never executed
+branch 114 never executed
+branch 115 never executed
+call   116 never executed
+call   117 never executed
+call   118 never executed
+call   119 never executed
+call   120 never executed
+-:  133:      {
+-:  134:        try {
+-:  135:          edit_v3_user_or_trap(parameters, config);
+-:  136:        } catch (snmp_config_exception const& e) {
+-:  137:          EXPECT_STREQ("invalid conversion: invalid-privacy", e.what());
+-:  138:          EXPECT_EQ(snmp_config_error::invalid_parameter, e.error());
+-:  139:          throw;
+-:  140:        }
+-:  141:      },
+1:  142:      snmp_config_exception);
+call    0 returned 1
+call    1 never executed
+-:  143:
+1*:  144:  EXPECT_THAT(config.trap_receivers_V3_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:  145:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  146:
+-:  147:}  // namespace wago::snmp_config

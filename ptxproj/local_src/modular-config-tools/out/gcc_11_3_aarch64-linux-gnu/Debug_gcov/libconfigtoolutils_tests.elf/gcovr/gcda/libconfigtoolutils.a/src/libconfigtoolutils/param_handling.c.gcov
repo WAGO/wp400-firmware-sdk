@@ -1,0 +1,235 @@
+-:    0:Source:src/libconfigtoolutils/param_handling.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     param_handling.c
+-:   12:///
+-:   13:///  \brief    Helper functions for config tool parameter handling.
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "wc/assertion.h"
+-:   22:#include "wc/structuring.h"
+-:   23:#include "wc/std_includes.h"
+-:   24:#include "ctutil/param_handling.h"
+-:   25:#include "ctutil/log.h"
+-:   26:#include <stdlib.h>
+-:   27:#include <string.h>
+-:   28:#include <glib.h>
+-:   29:
+-:   30://------------------------------------------------------------------------------
+-:   31:// defines; structure, enumeration and type definitions
+-:   32://------------------------------------------------------------------------------
+-:   33:typedef struct ctutil_optionFace
+-:   34:{
+-:   35:  char const * const szName;
+-:   36:  int const code;
+-:   37:} ctutil_optionFace_t;
+-:   38:
+-:   39:
+-:   40://------------------------------------------------------------------------------
+-:   41:// function prototypes
+-:   42://------------------------------------------------------------------------------
+-:   43:
+-:   44://------------------------------------------------------------------------------
+-:   45:// macros
+-:   46://------------------------------------------------------------------------------
+-:   47:
+-:   48://------------------------------------------------------------------------------
+-:   49:// variables' and constants' definitions
+-:   50://------------------------------------------------------------------------------
+-:   51:static ctutil_optionFace_t earlyOptions[] =
+-:   52:{
+-:   53:  { "quiet",                                   'q' },
+-:   54:  { "extract-from-uri-encoding",               'x' },
+-:   55:  { NULL,                                       0  } // End marker, don't remove
+-:   56:};
+-:   57:
+-:   58:
+-:   59://------------------------------------------------------------------------------
+-:   60:// function implementation
+-:   61://------------------------------------------------------------------------------
+function ctutil_InitOptions called 5 returned 100% blocks executed 100%
+5:   62:void ctutil_InitOptions(ctutil_Options_t * const pstOptions)
+-:   63:{
+5:   64:  memset(pstOptions, 0, sizeof(*pstOptions));
+5:   65:}
+-:   66:
+-:   67:
+function ctutil_DecodeUriArgument called 70 returned 100% blocks executed 82%
+70:   68:statusCode_t ctutil_DecodeUriArgument(char * const szArgument)
+-:   69:{
+70:   70:  statusCode_t status = CTUTIL_SUCCESS;
+-:   71:
+-:   72:  // Decode URI argument and rewrite/replace argument (decoded argument is always shorter)
+70:   73:  gpointer pUriDecodedParam = g_uri_unescape_string(szArgument, NULL);
+call    0 returned 70
+70*:   74:  status = (pUriDecodedParam != NULL) ? CTUTIL_SUCCESS : CTUTIL_FAILED;
+branch  0 taken 70 (fallthrough)
+branch  1 taken 0
+70:   75:  if(ctutil_IsStatusOk(status))
+call    0 returned 70
+branch  1 taken 70 (fallthrough)
+branch  2 taken 0
+-:   76:  {
+70:   77:    char const * const szUriDecodedParam = pUriDecodedParam;
+-:   78:
+-:   79:    // Check assumption that decoded string is always shorter than encoded string
+70*:   80:    WC_ASSERT(strlen(szUriDecodedParam) <= strlen(szArgument));
+branch  0 taken 0 (fallthrough)
+branch  1 taken 70
+call    2 never executed
+-:   81:
+-:   82:    // Replace original argument string
+70:   83:    size_t  maxParamLength = strlen(szArgument);
+70:   84:    strncpy(szArgument, szUriDecodedParam, maxParamLength);
+70:   85:    szArgument[maxParamLength] = '\0';
+70:   86:    g_free(pUriDecodedParam);
+call    0 returned 70
+-:   87:  }
+-:   88:
+70:   89:  return status;
+-:   90:}
+-:   91:
+-:   92:
+-:   93:// TODO: Check for publishing in libconfigtoolutils
+function ContainsOption called 41 returned 100% blocks executed 93%
+41:   94:static bool ContainsOption(char const * const szTestString,
+-:   95:                           ctutil_optionFace_t const * const pOptionFace)
+-:   96:{
+41:   97:  bool result = false;
+-:   98:
+41:   99:  if(szTestString != NULL)
+branch  0 taken 41 (fallthrough)
+branch  1 taken 0
+-:  100:  {
+41:  101:    if(szTestString[0] == '-')
+branch  0 taken 19 (fallthrough)
+branch  1 taken 22
+-:  102:    {
+19:  103:      if(szTestString[1] == '-')
+branch  0 taken 8 (fallthrough)
+branch  1 taken 11
+-:  104:      {
+8*:  105:        WC_ASSERT(pOptionFace->szName != NULL);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 8
+call    2 never executed
+8:  106:        if(strcmp(szTestString + 2, pOptionFace->szName) == 0)
+branch  0 taken 4 (fallthrough)
+branch  1 taken 4
+-:  107:        {
+4:  108:          result = true;
+-:  109:        }
+-:  110:      }
+-:  111:      else
+-:  112:      {
+56:  113:        for(unsigned i = 1; szTestString[i] != '\0'; ++i)
+branch  0 taken 45
+branch  1 taken 11 (fallthrough)
+-:  114:        {
+45:  115:          if(szTestString[i] == pOptionFace->code)
+branch  0 taken 6 (fallthrough)
+branch  1 taken 39
+-:  116:          {
+6:  117:            result = true;
+-:  118:          }
+-:  119:        }
+-:  120:      }
+-:  121:    }
+-:  122:  }
+-:  123:
+41:  124:  return result;
+-:  125:}
+-:  126:
+-:  127:
+function ctutil_EvaluateEarlyOptions called 9 returned 100% blocks executed 68%
+9:  128:statusCode_t ctutil_EvaluateEarlyOptions(int const argc,
+-:  129:                                         char * const argv[],
+-:  130:                                         ctutil_Options_t * const pstOptions)
+-:  131:{
+9:  132:  statusCode_t status = CTUTIL_SUCCESS;
+-:  133:
+-:  134:  // Check all arguments for quiet option
+25:  135:  for(int i = 0; i < argc; ++i)
+branch  0 taken 21
+branch  1 taken 4 (fallthrough)
+-:  136:  {
+21*:  137:    WC_ASSERT(earlyOptions[0].code == 'q');
+branch  0 taken 0 (fallthrough)
+branch  1 taken 21
+call    2 never executed
+21:  138:    if(ContainsOption(argv[i], &(earlyOptions[0])))
+call    0 returned 21
+branch  1 taken 5 (fallthrough)
+branch  2 taken 16
+-:  139:    {
+5:  140:      pstOptions->stCommonOptions.quiet = true;
+5:  141:      break;
+-:  142:    }
+-:  143:  }
+-:  144:
+-:  145:  // Check all arguments for URI extraction option
+24:  146:  for(int i = 0; i < argc; ++i)
+branch  0 taken 21
+branch  1 taken 3 (fallthrough)
+-:  147:  {
+21*:  148:    WC_ASSERT(earlyOptions[1].code == 'x');
+branch  0 taken 0 (fallthrough)
+branch  1 taken 21
+call    2 never executed
+21:  149:    if(    pstOptions->stCommonOptions.extractFromUri
+branch  0 taken 20 (fallthrough)
+branch  1 taken 1
+20:  150:        || (ContainsOption(argv[i], &(earlyOptions[1]))))
+call    0 returned 20
+branch  1 taken 5 (fallthrough)
+branch  2 taken 15
+-:  151:    {
+6:  152:      pstOptions->stCommonOptions.extractFromUri = true;
+26:  153:      for(int j = 0; j < argc; ++j)
+branch  0 taken 20
+branch  1 taken 6 (fallthrough)
+-:  154:      {
+20:  155:        status = ctutil_DecodeUriArgument(argv[j]);
+call    0 returned 20
+20:  156:        if(ctutil_IsStatusFailure(status))
+call    0 returned 20
+branch  1 taken 0 (fallthrough)
+branch  2 taken 20
+-:  157:        {
+#####:  158:          CTUTIL_LOG_STATUS_ERROR(pstOptions->stCommonOptions.quiet, status, "Failed to extract argument from URI encoding");
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+-:  159:        }
+-:  160:      }
+6:  161:      break;
+-:  162:    }
+-:  163:  }
+-:  164:
+9:  165:  return status;
+-:  166:}
+-:  167:
+-:  168:
+-:  169://---- End of source file ------------------------------------------------------
+-:  170:

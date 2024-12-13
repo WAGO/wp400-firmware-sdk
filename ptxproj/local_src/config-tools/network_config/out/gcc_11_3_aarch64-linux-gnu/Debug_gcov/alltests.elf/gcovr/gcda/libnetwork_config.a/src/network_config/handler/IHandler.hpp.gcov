@@ -1,0 +1,53 @@
+-:    0:Source:src/network_config/handler/IHandler.hpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#pragma once
+-:    4:
+-:    5:#include <string>
+-:    6:
+-:    7:namespace network_config {
+-:    8:
+-:    9:class IHandler {
+-:   10: public:
+7*:   11:  IHandler() = default;
+------------------
+_ZN14network_config8IHandlerC2Ev:
+function _ZN14network_config8IHandlerC2Ev called 0 returned 0% blocks executed 0%
+#####:   11:  IHandler() = default;
+------------------
+_ZN14network_config8IHandlerC2Ev:
+function _ZN14network_config8IHandlerC2Ev called 7 returned 100% blocks executed 100%
+7:   11:  IHandler() = default;
+------------------
+#####:   12:  virtual ~IHandler() = default;
+------------------
+_ZN14network_config8IHandlerD0Ev:
+function _ZN14network_config8IHandlerD0Ev called 0 returned 0% blocks executed 0%
+#####:   12:  virtual ~IHandler() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN14network_config8IHandlerD2Ev:
+function _ZN14network_config8IHandlerD2Ev called 0 returned 0% blocks executed 0%
+#####:   12:  virtual ~IHandler() = default;
+------------------
+_ZN14network_config8IHandlerD0Ev:
+function _ZN14network_config8IHandlerD0Ev called 0 returned 0% blocks executed 0%
+#####:   12:  virtual ~IHandler() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN14network_config8IHandlerD2Ev:
+function _ZN14network_config8IHandlerD2Ev called 0 returned 0% blocks executed 0%
+#####:   12:  virtual ~IHandler() = default;
+------------------
+-:   13:
+-:   14:  IHandler(const IHandler&) = delete;
+-:   15:  IHandler& operator=(const IHandler&) = delete;
+-:   16:  IHandler(const IHandler&&) = delete;
+-:   17:  IHandler& operator=(const IHandler&&) = delete;
+-:   18:
+-:   19:  virtual void Execute() = 0;
+-:   20:};
+-:   21:
+-:   22:}

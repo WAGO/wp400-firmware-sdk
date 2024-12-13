@@ -1,0 +1,92 @@
+-:    0:Source:test-src/cpp-modules/test_AssertionMod.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project common-header (PTXdist package libcommonheader).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_AssertionMod.cc
+-:   12:///
+-:   13:///  \brief    Test module for assertion helper macros (C++).
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "../test_Assertion.h"
+-:   22:#include "test_AssertionMod.hpp"
+-:   23:
+-:   24://------------------------------------------------------------------------------
+-:   25:// defines; structure, enumeration and type definitions
+-:   26://------------------------------------------------------------------------------
+-:   27:
+-:   28://------------------------------------------------------------------------------
+-:   29:// function prototypes
+-:   30://------------------------------------------------------------------------------
+-:   31:
+-:   32://------------------------------------------------------------------------------
+-:   33:// macros
+-:   34://------------------------------------------------------------------------------
+-:   35:
+-:   36://------------------------------------------------------------------------------
+-:   37:// variables' and constants' definitions
+-:   38://------------------------------------------------------------------------------
+-:   39:
+-:   40://------------------------------------------------------------------------------
+-:   41:// function implementation
+-:   42://------------------------------------------------------------------------------
+function TriggerSuccessCPP called 6 returned 100% blocks executed 100%
+6:   43:void TriggerSuccessCPP(void)
+-:   44:{
+-:   45:  WC_ASSERT(ONE==ONE);
+6:   46:}
+-:   47:
+-:   48:
+function TriggerFailCPP called 6 returned 83% blocks executed 100%
+6:   49:void TriggerFailCPP(void)
+-:   50:{
+6:   51:  WC_ASSERT(ONE==ZERO);
+call    0 returned 5
+5:   52:}
+-:   53:
+-:   54:
+function TriggerSuccessReturnCPP called 4 returned 100% blocks executed 100%
+4:   55:int TriggerSuccessReturnCPP(int const value)
+-:   56:{
+-:   57:  WC_ASSERT_RETURN(ONE==ONE, value);
+4:   58:  return -1;
+-:   59:}
+-:   60:
+-:   61:
+function TriggerFailReturnCPP called 4 returned 75% blocks executed 100%
+4:   62:int TriggerFailReturnCPP(int const value)
+-:   63:{
+4:   64:  WC_ASSERT_RETURN(ONE==ZERO, value);
+call    0 returned 3
+-:   65:  return -1;
+-:   66:}
+-:   67:
+-:   68:
+function TriggerSuccessReturnVoidCPP called 2 returned 100% blocks executed 100%
+2:   69:void TriggerSuccessReturnVoidCPP()
+-:   70:{
+-:   71:  WC_ASSERT_RETURN_VOID(ONE==ONE);
+-:   72:}
+-:   73:
+-:   74:
+function TriggerFailReturnVoidCPP called 2 returned 50% blocks executed 100%
+2:   75:void TriggerFailReturnVoidCPP()
+-:   76:{
+2:   77:  WC_ASSERT_RETURN_VOID(ONE==ZERO);
+call    0 returned 1
+-:   78:}
+-:   79:
+-:   80:
+-:   81://---- End of source file ------------------------------------------------------
+-:   82:

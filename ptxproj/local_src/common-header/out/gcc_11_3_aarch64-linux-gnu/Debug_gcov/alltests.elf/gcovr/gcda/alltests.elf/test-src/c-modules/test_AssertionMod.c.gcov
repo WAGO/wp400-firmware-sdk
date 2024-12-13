@@ -1,0 +1,92 @@
+-:    0:Source:test-src/c-modules/test_AssertionMod.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project common-header (PTXdist package libcommonheader).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_AssertionMod.c
+-:   12:///
+-:   13:///  \brief    Test module for assertion helper macros (C).
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "../test_Assertion.h"
+-:   22:#include "test_AssertionMod.h"
+-:   23:
+-:   24://------------------------------------------------------------------------------
+-:   25:// defines; structure, enumeration and type definitions
+-:   26://------------------------------------------------------------------------------
+-:   27:
+-:   28://------------------------------------------------------------------------------
+-:   29:// function prototypes
+-:   30://------------------------------------------------------------------------------
+-:   31:
+-:   32://------------------------------------------------------------------------------
+-:   33:// macros
+-:   34://------------------------------------------------------------------------------
+-:   35:
+-:   36://------------------------------------------------------------------------------
+-:   37:// variables' and constants' definitions
+-:   38://------------------------------------------------------------------------------
+-:   39:
+-:   40://------------------------------------------------------------------------------
+-:   41:// function implementation
+-:   42://------------------------------------------------------------------------------
+function TriggerSuccessC called 7 returned 100% blocks executed 100%
+7:   43:void TriggerSuccessC(void)
+-:   44:{
+-:   45:  WC_ASSERT(ONE==ONE); //lint -e 506 Constant value Boolean
+7:   46:}
+-:   47:
+-:   48:
+function TriggerFailC called 7 returned 86% blocks executed 100%
+7:   49:void TriggerFailC(void)
+-:   50:{
+7:   51:  WC_ASSERT(ONE==ZERO); //lint -e 506 Constant value Boolean
+call    0 returned 6
+6:   52:}
+-:   53:
+-:   54:
+function TriggerSuccessReturnC called 5 returned 100% blocks executed 100%
+5:   55:int TriggerSuccessReturnC(int const value)
+-:   56:{
+-:   57:  WC_ASSERT_RETURN(ONE==ONE, value); //lint -e 506 Constant value Boolean
+5:   58:  return -1;
+-:   59:}
+-:   60:
+-:   61:
+function TriggerFailReturnC called 5 returned 80% blocks executed 100%
+5:   62:int TriggerFailReturnC(int const value)
+-:   63:{
+5:   64:  WC_ASSERT_RETURN(ONE==ZERO, value); //lint -e 506 Constant value Boolean
+call    0 returned 4
+-:   65:  return -1;
+-:   66:}
+-:   67:
+-:   68:
+function TriggerSuccessReturnVoidC called 3 returned 100% blocks executed 100%
+3:   69:void TriggerSuccessReturnVoidC(void)
+-:   70:{
+-:   71:  WC_ASSERT_RETURN_VOID(ONE==ONE); //lint -e 506 Constant value Boolean
+-:   72:}
+-:   73:
+-:   74:
+function TriggerFailReturnVoidC called 3 returned 67% blocks executed 100%
+3:   75:void TriggerFailReturnVoidC(void)
+-:   76:{
+3:   77:  WC_ASSERT_RETURN_VOID(ONE==ZERO); //lint -e 506 Constant value Boolean
+call    0 returned 2
+-:   78:}
+-:   79:
+-:   80:
+-:   81://---- End of source file ------------------------------------------------------
+-:   82:

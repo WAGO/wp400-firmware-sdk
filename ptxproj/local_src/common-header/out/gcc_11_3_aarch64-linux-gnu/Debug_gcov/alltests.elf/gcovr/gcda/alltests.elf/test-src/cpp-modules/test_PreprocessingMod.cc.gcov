@@ -1,0 +1,87 @@
+-:    0:Source:test-src/cpp-modules/test_PreprocessingMod.cc
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project common-header (PTXdist package libcommonheader).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     test_PreprocessingMod.cc
+-:   12:///
+-:   13:///  \brief    Test module for preprocessing helper macros (C++).
+-:   14:///
+-:   15:///  \author   PEn: WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18://------------------------------------------------------------------------------
+-:   19:// include files
+-:   20://------------------------------------------------------------------------------
+-:   21:#include "../test_Preprocessing.h"
+-:   22:#include "test_PreprocessingMod.hpp"
+-:   23:
+-:   24://------------------------------------------------------------------------------
+-:   25:// defines; structure, enumeration and type definitions
+-:   26://------------------------------------------------------------------------------
+-:   27:
+-:   28://------------------------------------------------------------------------------
+-:   29:// function prototypes
+-:   30://------------------------------------------------------------------------------
+-:   31:
+-:   32://------------------------------------------------------------------------------
+-:   33:// macros
+-:   34://------------------------------------------------------------------------------
+-:   35:
+-:   36://------------------------------------------------------------------------------
+-:   37:// variables' and constants' definitions
+-:   38://------------------------------------------------------------------------------
+-:   39:
+-:   40://------------------------------------------------------------------------------
+-:   41:// function implementation
+-:   42://------------------------------------------------------------------------------
+function GetCPP_3_5 called 1 returned 100% blocks executed 100%
+1:   43:int GetCPP_3_5(void)
+-:   44:{
+1:   45:  return (3+5);
+-:   46:}
+-:   47:
+-:   48:
+function GetCPPStr_3_5 called 1 returned 100% blocks executed 100%
+1:   49:char const * GetCPPStr_3_5(void)
+-:   50:{
+1:   51:  return WC_STR(3+5);
+-:   52:}
+-:   53:
+-:   54:
+function GetCPPStr_3_FIVE called 1 returned 100% blocks executed 100%
+1:   55:char const * GetCPPStr_3_FIVE(void)
+-:   56:{
+1:   57:  return WC_STR(3+FIVE);
+-:   58:}
+-:   59:
+-:   60:
+function GetCPPSubstStr_3_FIVE called 1 returned 100% blocks executed 100%
+1:   61:char const * GetCPPSubstStr_3_FIVE(void)
+-:   62:{
+1:   63:  return WC_SUBST_STR(3+FIVE);
+-:   64:}
+-:   65:
+-:   66:
+function GetCPPGlue_FI_VE called 1 returned 100% blocks executed 100%
+1:   67:int GetCPPGlue_FI_VE(void)
+-:   68:{
+1:   69:  return WC_GLUE(FI, VE);
+-:   70:}
+-:   71:
+-:   72:
+function GetCPPSubstGlue_FIVE_FIRST_SECOND called 1 returned 100% blocks executed 100%
+1:   73:int GetCPPSubstGlue_FIVE_FIRST_SECOND(void)
+-:   74:{
+1:   75:  return WC_SUBST_AND_GLUE(FIVE_FIRST, FIVE_SECOND);
+-:   76:}
+-:   77:
+-:   78:
+-:   79://---- End of source file ------------------------------------------------------
+-:   80:

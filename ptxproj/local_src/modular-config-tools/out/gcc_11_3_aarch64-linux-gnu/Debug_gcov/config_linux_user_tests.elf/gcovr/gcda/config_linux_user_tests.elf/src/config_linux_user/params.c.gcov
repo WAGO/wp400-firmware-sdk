@@ -1,0 +1,328 @@
+-:    0:Source:src/config_linux_user/params.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     params.c
+-:   12:///
+-:   13:///  \brief    Config tool specific parameter definition and handling for
+-:   14:///            config_linux_user.
+-:   15:///
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "wc/structuring.h"
+-:   23:#include "wc/assertion.h"
+-:   24:#include "ctutil/log.h"
+-:   25:#include "ctparts/common_main_defaults.h"
+-:   26:#include "params.h"
+-:   27:#include <stdlib.h>
+-:   28:#include <stdio.h>
+-:   29:#include <string.h>
+-:   30:
+-:   31://------------------------------------------------------------------------------
+-:   32:// defines; structure, enumeration and type definitions
+-:   33://------------------------------------------------------------------------------
+-:   34:
+-:   35://------------------------------------------------------------------------------
+-:   36:// function prototypes
+-:   37://------------------------------------------------------------------------------
+-:   38:
+-:   39://------------------------------------------------------------------------------
+-:   40:// macros
+-:   41://------------------------------------------------------------------------------
+-:   42:
+-:   43://------------------------------------------------------------------------------
+-:   44:// variables' and constants' definitions
+-:   45://------------------------------------------------------------------------------
+-:   46:
+-:   47://------------------------------------------------------------------------------
+-:   48:// function implementation
+-:   49://------------------------------------------------------------------------------
+-:   50:
+function PrintHelp called 2 returned 100% blocks executed 100%
+2:   51:static void PrintHelp(void)
+-:   52:{
+2:   53:    printf("\n* Change the passwords of the linux-user *\n"
+call    0 returned 2
+-:   54:           "\n"
+-:   55:           "Usage: config_linux_user < user=user-value new-password=new-password-value confirm-password=confirm-password-value >\n"
+-:   56:           "       config_linux_user < user=user-value hash=new-hash-value >\n"
+-:   57:           "\n"
+-:   58:           "user-value:                                    name of the webserver-user, whose password should be changed\n"
+-:   59:           "new-password-value / confirm-password-value:   both strings must be the same and URI encoded\n"
+-:   60:           "hash:                                          password hash and additional infos in /etc/shadow format\n"
+-:   61:           "\n"
+-:   62:           "Optional parameter options (set by default, added for compatibility):\n"
+-:   63:           "  --quiet (-q)                                 Don't print information or error texts to stdout/stderr\n"
+-:   64:           "  --extract-from-uri-encoding (-x)             Extracts arguments from an URI encoding\n"
+-:   65:          );
+2:   66:}
+-:   67:
+-:   68:
+-:   69:/// Function to print program information text of config_linux_user.
+function ctparts_PrintInfoText called 0 returned 0% blocks executed 0%
+#####:   70:void ctparts_PrintInfoText(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:   71:                           char const * const WC_UNUSED_PARAM(szCallString))
+-:   72:{
+#####:   73:  PrintHelp();
+call    0 never executed
+-:   74:
+#####:   75:  return;
+-:   76:}
+-:   77:
+-:   78:
+-:   79:/// Function to allocate specific options struct and set the option defaults of config_linux_user.
+function ctparts_SetOptionDefaults called 23 returned 100% blocks executed 62%
+23:   80:statusCode_t ctparts_SetOptionDefaults(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:   81:                                       ctutil_Options_t * const pstOptions)
+-:   82:{
+23:   83:  statusCode_t status = CTUTIL_SUCCESS;
+-:   84:
+23*:   85:  WC_ASSERT(pstOptions->pstSpecificOptions == NULL);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 23
+call    2 never executed
+23:   86:  pstOptions->stCommonOptions.infoPrint = true;
+23:   87:  pstOptions->stCommonOptions.quiet = true;
+23:   88:  pstOptions->stCommonOptions.extractFromUri = true;
+23:   89:  pstOptions->pstSpecificOptions = malloc(sizeof(ctutil_OptionsSpecific_t));
+23:   90:  if(pstOptions->pstSpecificOptions == NULL)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 23
+-:   91:  {
+#####:   92:    status = CTUTIL_FAILED;
+-:   93:  }
+-:   94:  else
+-:   95:  {
+23:   96:    pstOptions->pstSpecificOptions->szUsername = NULL;
+23:   97:    pstOptions->pstSpecificOptions->szPassword1 = NULL;
+23:   98:    pstOptions->pstSpecificOptions->szPassword2 = NULL;
+23:   99:    pstOptions->pstSpecificOptions->szHash = NULL;
+-:  100:  }
+-:  101:
+23:  102:  if(ctutil_IsStatusOk(status))
+call    0 returned 23
+branch  1 taken 23 (fallthrough)
+branch  2 taken 0
+-:  103:  {
+23*:  104:    WC_ASSERT(pstOptions->pstSpecificOptions != NULL);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 23
+call    2 never executed
+-:  105:  }
+-:  106:  else
+-:  107:  {
+#####:  108:    WC_ASSERT(pstOptions->pstSpecificOptions == NULL);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  109:  }
+-:  110:
+23:  111:  return status;
+-:  112:}
+-:  113:
+-:  114:
+-:  115:/// Function to release and free the specific option struct of config_linux_user.
+function ctparts_ReleaseSpecificOptions called 23 returned 100% blocks executed 100%
+23:  116:void ctparts_ReleaseSpecificOptions(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:  117:                                    ctutil_Options_t * const pstOptions)
+-:  118:{
+23:  119:  if(pstOptions->pstSpecificOptions != NULL)
+branch  0 taken 23 (fallthrough)
+branch  1 taken 0
+-:  120:  {
+23:  121:    free(pstOptions->pstSpecificOptions);
+23:  122:    pstOptions->pstSpecificOptions = NULL;
+-:  123:  }
+23:  124:}
+-:  125:
+-:  126:
+-:  127:/// Function to evaluate early options of config_linux_user.
+function ctparts_EvaluateEarlyOptions called 15 returned 100% blocks executed 100%
+15:  128:statusCode_t ctparts_EvaluateEarlyOptions(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:  129:                                          int const argc,
+-:  130:                                          char * const argv[],
+-:  131:                                          ctutil_Options_t * const pstOptions)
+-:  132:{
+15:  133:  return ctutil_EvaluateEarlyOptions(argc, argv, pstOptions);
+call    0 returned 15
+-:  134:}
+-:  135:
+-:  136:
+function ValidateOptions called 12 returned 100% blocks executed 46%
+12:  137:static statusCode_t ValidateOptions(ctutil_Options_t * const pstOptions)
+-:  138:{
+12:  139:  statusCode_t status = CTUTIL_SUCCESS;
+-:  140:
+12:  141:  if(pstOptions->pstSpecificOptions->szUsername == NULL)
+branch  0 taken 3 (fallthrough)
+branch  1 taken 9
+-:  142:  {
+3:  143:    status = CTUTIL_MISSING_PARAMETER;
+3*:  144:    CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet,
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+call    2 never executed
+-:  145:                     "Found no user parameter option");
+-:  146:  }
+-:  147:  else
+-:  148:  {
+9:  149:    if(    (pstOptions->pstSpecificOptions->szPassword1 == NULL)
+branch  0 taken 5 (fallthrough)
+branch  1 taken 4
+5:  150:        && (pstOptions->pstSpecificOptions->szHash == NULL))
+branch  0 taken 1 (fallthrough)
+branch  1 taken 4
+-:  151:    {
+1:  152:      status = CTUTIL_MISSING_PARAMETER;
+1*:  153:      CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet,
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+call    2 never executed
+-:  154:                       "Found whether password parameter option nor hash parameter option");
+-:  155:    }
+-:  156:  }
+12:  157:  if(pstOptions->pstSpecificOptions->szPassword2 != NULL)
+branch  0 taken 3 (fallthrough)
+branch  1 taken 9
+-:  158:  {
+3:  159:    if(pstOptions->pstSpecificOptions->szPassword1 == NULL)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+-:  160:    {
+#####:  161:      status = CTUTIL_MISSING_PARAMETER;
+#####:  162:      CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet,
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  163:                       "Found no password parameter option");
+-:  164:    }
+-:  165:  }
+12:  166:  if(pstOptions->pstSpecificOptions->szPassword1 != NULL)
+branch  0 taken 5 (fallthrough)
+branch  1 taken 7
+-:  167:  {
+5:  168:    if(pstOptions->pstSpecificOptions->szPassword2 == NULL)
+branch  0 taken 2 (fallthrough)
+branch  1 taken 3
+-:  169:    {
+2:  170:      status = CTUTIL_MISSING_PARAMETER;
+2*:  171:      CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet,
+branch  0 taken 0 (fallthrough)
+branch  1 taken 2
+call    2 never executed
+-:  172:                       "Found no password confirm parameter option");
+-:  173:    }
+-:  174:    else
+-:  175:    {
+3:  176:      if(strcmp(pstOptions->pstSpecificOptions->szPassword1, pstOptions->pstSpecificOptions->szPassword2) != 0)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 2
+-:  177:      {
+1:  178:        status = CTUTIL_INVALID_PARAMETER;
+1*:  179:        CTUTIL_LOG_ERROR(pstOptions->stCommonOptions.quiet,
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+call    2 never executed
+-:  180:                         "Password confirm parameter value does not match password parameter value");
+-:  181:      }
+-:  182:    }
+5:  183:    if(pstOptions->pstSpecificOptions->szHash != NULL)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 4
+-:  184:    {
+1:  185:      pstOptions->pstSpecificOptions->szHash = NULL;
+1*:  186:      CTUTIL_LOG_WARN(pstOptions->stCommonOptions.quiet,
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+call    2 never executed
+-:  187:                      "Found additional hash parameter option, ignore option");
+-:  188:    }
+-:  189:  }
+-:  190:
+12:  191:  return status;
+-:  192:}
+-:  193:
+-:  194:
+-:  195:/// Function to evaluate argument options of config_linux_user.
+function ctparts_EvaluateOptions called 14 returned 100% blocks executed 100%
+14:  196:statusCode_t ctparts_EvaluateOptions(ctparts_commonMainContext_t * const WC_UNUSED_PARAM(pstContext),
+-:  197:                                     int const argc,
+-:  198:                                     char * const argv[],
+-:  199:                                     ctutil_Options_t * const pstOptions)
+-:  200:{
+14:  201:  statusCode_t status = CTUTIL_SUCCESS;
+-:  202:
+-:  203:  // Parse arguments ( no dashes -> no getopt :( )
+-:  204:  do
+-:  205:  {
+40:  206:    for(int nr = 1; nr < argc; ++nr)
+branch  0 taken 28
+branch  1 taken 12 (fallthrough)
+-:  207:    {
+28:  208:      if(    (strcmp(argv[nr], "-h") == 0)
+branch  0 taken 27 (fallthrough)
+branch  1 taken 1
+27:  209:          || (strcmp(argv[nr], "--help") == 0))
+branch  0 taken 1 (fallthrough)
+branch  1 taken 26
+-:  210:      {
+2:  211:        PrintHelp(); // Do not care about quiet option because it is the standard behavior for this tool
+call    0 returned 2
+2:  212:        pstOptions->stCommonOptions.infoPrint = false;
+2:  213:        pstOptions->stCommonOptions.earlyExit = true;
+2:  214:        break;
+-:  215:      }
+26:  216:      if(!strncmp(argv[nr],"user=",strlen("user=")))
+branch  0 taken 9 (fallthrough)
+branch  1 taken 17
+-:  217:      {
+9:  218:        pstOptions->pstSpecificOptions->szUsername = argv[nr] + strlen("user=");
+-:  219:      }
+17:  220:      else if(!strncmp(argv[nr],"new-password=",strlen("new-password=")))
+branch  0 taken 5 (fallthrough)
+branch  1 taken 12
+-:  221:      {
+5:  222:        pstOptions->pstSpecificOptions->szPassword1 = argv[nr] + strlen("new-password=");
+-:  223:      }
+12:  224:      else if(!strncmp(argv[nr],"confirm-password=",strlen("confirm-password=")))
+branch  0 taken 3 (fallthrough)
+branch  1 taken 9
+-:  225:      {
+3:  226:        pstOptions->pstSpecificOptions->szPassword2 = argv[nr] + strlen("confirm-password=");
+-:  227:      }
+9:  228:      else if(!strncmp(argv[nr],"hash=",strlen("hash=")))
+branch  0 taken 6 (fallthrough)
+branch  1 taken 3
+-:  229:      {
+6:  230:        pstOptions->pstSpecificOptions->szHash = argv[nr] + strlen("hash=");
+-:  231:      }
+-:  232:    }
+-:  233:  }
+-:  234:  while(0);
+-:  235:
+-:  236:  // Validate argument options if no exit planned
+14:  237:  if(!pstOptions->stCommonOptions.earlyExit)
+branch  0 taken 12 (fallthrough)
+branch  1 taken 2
+-:  238:  {
+12:  239:    status = ValidateOptions(pstOptions);
+call    0 returned 12
+-:  240:  }
+-:  241:
+14:  242:  return status;
+-:  243:}
+-:  244:
+-:  245:
+-:  246://---- End of source file ------------------------------------------------------
+-:  247:

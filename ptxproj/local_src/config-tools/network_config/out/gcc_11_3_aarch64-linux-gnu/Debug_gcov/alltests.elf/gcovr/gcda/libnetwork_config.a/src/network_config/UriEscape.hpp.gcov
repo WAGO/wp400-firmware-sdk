@@ -1,0 +1,28 @@
+-:    0:Source:src/network_config/UriEscape.hpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:#pragma once
+-:    3:
+-:    4:#include <string>
+-:    5:
+-:    6:class UriEscape {
+-:    7: public:
+-:    8:  explicit UriEscape(::std::string escape_chars = "");
+function _ZN9UriEscapeD2Ev called 6 returned 100% blocks executed 100%
+6:    9:  ~UriEscape() = default;
+call    0 returned 6
+-:   10:
+-:   11:  UriEscape(const UriEscape&) = delete;
+-:   12:  UriEscape& operator=(const UriEscape&) = delete;
+-:   13:  UriEscape(UriEscape&& other) = delete;
+-:   14:  UriEscape& operator=(UriEscape&&) = delete;
+-:   15:
+-:   16:  ::std::string Unescape(const ::std::string &escaped_uri) const;
+-:   17:  ::std::string Unescape(const char *escaped_uri) const;
+-:   18:
+-:   19:  ::std::string Escape(const ::std::string &escaped_uri) const;
+-:   20:  ::std::string Escape(const char *escaped_uri) const;
+-:   21:
+-:   22: private:
+-:   23:  ::std::string escape_chars_;
+-:   24:
+-:   25:};

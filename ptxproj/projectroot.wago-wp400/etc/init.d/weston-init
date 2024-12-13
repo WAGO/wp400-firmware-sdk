@@ -1,0 +1,27 @@
+#!/bin/sh
+
+start() {
+	WESTON_ARGS="--log=/var/log/weston.log"
+
+	. /etc/profile
+	export XDG_RUNTIME_DIR=/tmp/runtime-root
+	mkdir -p "$XDG_RUNTIME_DIR"
+	chmod 0700 "$XDG_RUNTIME_DIR"
+
+	echo "Starting Weston"
+#	exec weston-launch --tty=/dev/tty7 --user=root --backend=drm-backend.so --config=/etc/xdg/weston/weston.ini &
+	exec weston-launch --tty=/dev/tty7 --user=root -- --backend=drm-backend.so --config=/etc/xdg/weston/weston.ini &
+}
+
+stop() {
+	echo "Stopping Weston"
+	killall -q weston
+}
+
+case $1 in
+	start|stop) $1 ;;
+	restart) stop ; sleep 1 ; start ;;
+
+	*) echo "Usage: $0 {start|stop|restart}"; exit 1 ;;
+esac
+

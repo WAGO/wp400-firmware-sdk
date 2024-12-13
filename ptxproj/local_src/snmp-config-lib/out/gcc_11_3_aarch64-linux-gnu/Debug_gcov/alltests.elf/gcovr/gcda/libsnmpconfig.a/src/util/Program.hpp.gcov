@@ -1,0 +1,53 @@
+-:    0:Source:src/util/Program.hpp
+-:    1:#pragma once
+-:    2:
+-:    3:#include <string>
+-:    4:#include <unistd.h>
+-:    5:
+-:    6:namespace wago::util {
+-:    7:
+-:    8:class Program {
+-:    9: public:
+function _ZN4wago4util7ProgramC2Ev called 0 returned 0% blocks executed 0%
+#####:   10:  Program() = default;
+call    0 never executed
+call    1 never executed
+#####:   11:  ~Program() = default;
+------------------
+_ZN4wago4util7ProgramD2Ev:
+function _ZN4wago4util7ProgramD2Ev called 0 returned 0% blocks executed 0%
+#####:   11:  ~Program() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN4wago4util7ProgramD2Ev:
+function _ZN4wago4util7ProgramD2Ev called 0 returned 0% blocks executed 0%
+#####:   11:  ~Program() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN4wago4util7ProgramD2Ev:
+function _ZN4wago4util7ProgramD2Ev called 0 returned 0% blocks executed 0%
+#####:   11:  ~Program() = default;
+call    0 never executed
+call    1 never executed
+------------------
+-:   12:  Program(const Program&) = delete;
+-:   13:  Program(Program &&other) noexcept;
+-:   14:  Program& operator=(const Program&) = delete;
+-:   15:  Program& operator=(Program &&other) noexcept;
+-:   16:
+-:   17:  ::std::string GetStdout() const;
+-:   18:  ::std::string GetStderr() const;
+-:   19:  int GetResult() const;
+-:   20:
+-:   21:  static Program Execute(std::string &&cmdline);
+-:   22:  static Program Execute(std::string &cmdline);
+-:   23:
+-:   24: private:
+-:   25:  int result_ = -1;
+-:   26:  ::std::string stdout_;
+-:   27:  ::std::string stderr_;
+-:   28:};
+-:   29:
+-:   30:}  // namespace wago::util

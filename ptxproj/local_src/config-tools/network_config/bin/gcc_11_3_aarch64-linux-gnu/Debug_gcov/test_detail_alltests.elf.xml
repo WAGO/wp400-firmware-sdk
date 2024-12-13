@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuites tests="41" failures="0" disabled="0" errors="0" time="0.881" timestamp="2024-12-02T18:47:40.775" name="AllTests">
+  <testsuite name="network_config.DSAModeHandlerTest" tests="4" failures="0" disabled="0" skipped="0" errors="0" time="0.424" timestamp="2024-12-02T18:47:40.789">
+    <testcase name="GetAConfig" file="test-src/DSAModeHandlerTest.cpp" line="37" status="run" result="completed" time="0.243" timestamp="2024-12-02T18:47:40.790" classname="network_config.DSAModeHandlerTest"/>
+    <testcase name="SetDSAModeNoChange" file="test-src/DSAModeHandlerTest.cpp" line="51" status="run" result="completed" time="0.159" timestamp="2024-12-02T18:47:41.035" classname="network_config.DSAModeHandlerTest"/>
+    <testcase name="SetDSAModeWithChange" file="test-src/DSAModeHandlerTest.cpp" line="70" status="run" result="completed" time="0.009" timestamp="2024-12-02T18:47:41.196" classname="network_config.DSAModeHandlerTest"/>
+    <testcase name="SetDSAModeOtherInterfaceRemains" file="test-src/DSAModeHandlerTest.cpp" line="89" status="run" result="completed" time="0.007" timestamp="2024-12-02T18:47:41.205" classname="network_config.DSAModeHandlerTest"/>
+  </testsuite>
+  <testsuite name="network_config.IPConfigHandlerTest" tests="3" failures="0" disabled="0" skipped="0" errors="0" time="0.199" timestamp="2024-12-02T18:47:41.214">
+    <testcase name="SetWithBridgeDuplicateFails" file="test-src/IpConfigHandlerTest.cpp" line="42" status="run" result="completed" time="0.073" timestamp="2024-12-02T18:47:41.214" classname="network_config.IPConfigHandlerTest"/>
+    <testcase name="SetWithTwoBridges" file="test-src/IpConfigHandlerTest.cpp" line="50" status="run" result="completed" time="0.038" timestamp="2024-12-02T18:47:41.288" classname="network_config.IPConfigHandlerTest"/>
+    <testcase name="GetDHCPClientID" file="test-src/IpConfigHandlerTest.cpp" line="60" status="run" result="completed" time="0.087" timestamp="2024-12-02T18:47:41.327" classname="network_config.IPConfigHandlerTest"/>
+  </testsuite>
+  <testsuite name="network_config.MessagePrinterTest" tests="4" failures="0" disabled="0" skipped="0" errors="0" time="0.034" timestamp="2024-12-02T18:47:41.414">
+    <testcase name="PrintDefaultToStdError" file="test-src/MessagePrinterTest.cpp" line="48" status="run" result="completed" time="0.029" timestamp="2024-12-02T18:47:41.414" classname="network_config.MessagePrinterTest"/>
+    <testcase name="PrintToOtherOutput" file="test-src/MessagePrinterTest.cpp" line="57" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:47:41.444" classname="network_config.MessagePrinterTest"/>
+    <testcase name="PrintStatusObject" file="test-src/MessagePrinterTest.cpp" line="63" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:47:41.446" classname="network_config.MessagePrinterTest"/>
+    <testcase name="StatusOkIsNotPrinted" file="test-src/MessagePrinterTest.cpp" line="69" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:47:41.448" classname="network_config.MessagePrinterTest"/>
+  </testsuite>
+  <testsuite name="network_config.OptionParserCombinationsTest" tests="20" failures="0" disabled="0" skipped="0" errors="0" time="0.117" timestamp="2024-12-02T18:47:41.449">
+    <testcase name="GetRequest" file="test-src/OptionParserCombinationsTest.cpp" line="34" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:47:41.449" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="GetRequestDefaultFormatJson" file="test-src/OptionParserCombinationsTest.cpp" line="43" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:47:41.455" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="GetRequestUnexpectedFormat" file="test-src/OptionParserCombinationsTest.cpp" line="52" status="run" result="completed" time="0.012" timestamp="2024-12-02T18:47:41.460" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="RequestGetCurrentOption" file="test-src/OptionParserCombinationsTest.cpp" line="59" status="run" result="completed" time="0.003" timestamp="2024-12-02T18:47:41.472" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="SetRequest" file="test-src/OptionParserCombinationsTest.cpp" line="66" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:47:41.476" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="GetBridgeConfigFaultyRequest" file="test-src/OptionParserCombinationsTest.cpp" line="74" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:47:41.482" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="RequestMultiplePrimaryOptions" file="test-src/OptionParserCombinationsTest.cpp" line="81" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:47:41.487" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="RequestUnknownOption" file="test-src/OptionParserCombinationsTest.cpp" line="88" status="run" result="completed" time="0.008" timestamp="2024-12-02T18:47:41.493" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="RequestDuplicateOption" file="test-src/OptionParserCombinationsTest.cpp" line="95" status="run" result="completed" time="0.006" timestamp="2024-12-02T18:47:41.502" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="RequestMissingOption" file="test-src/OptionParserCombinationsTest.cpp" line="102" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:47:41.508" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="RequestMissingSetValue" file="test-src/OptionParserCombinationsTest.cpp" line="109" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:47:41.513" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="IllegalSetOfBothNetmaskAndPrefix" file="test-src/OptionParserCombinationsTest.cpp" line="116" status="run" result="completed" time="0.003" timestamp="2024-12-02T18:47:41.518" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="Backup" file="test-src/OptionParserCombinationsTest.cpp" line="125" status="run" result="completed" time="0.003" timestamp="2024-12-02T18:47:41.522" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="Retore" file="test-src/OptionParserCombinationsTest.cpp" line="133" status="run" result="completed" time="0.003" timestamp="2024-12-02T18:47:41.525" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="BackupFailsWithoutFilepath" file="test-src/OptionParserCombinationsTest.cpp" line="141" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:47:41.529" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="SetFixIp" file="test-src/OptionParserCombinationsTest.cpp" line="148" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:47:41.534" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="GetMacAddress" file="test-src/OptionParserCombinationsTest.cpp" line="156" status="run" result="completed" time="0.005" timestamp="2024-12-02T18:47:41.539" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="GetMacAddressMissingGetOption" file="test-src/OptionParserCombinationsTest.cpp" line="164" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:47:41.545" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="GetMacAddressMissingGetOptionValue" file="test-src/OptionParserCombinationsTest.cpp" line="171" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:47:41.550" classname="network_config.OptionParserCombinationsTest"/>
+    <testcase name="QuietAndErrMsgDstDontGoAlong" file="test-src/OptionParserCombinationsTest.cpp" line="178" status="run" result="completed" time="0.012" timestamp="2024-12-02T18:47:41.554" classname="network_config.OptionParserCombinationsTest"/>
+  </testsuite>
+  <testsuite name="network_config.OutputTest" tests="4" failures="0" disabled="0" skipped="0" errors="0" time="0.066" timestamp="2024-12-02T18:47:41.567">
+    <testcase name="StderrorPrint" file="test-src/OutoutTest.cpp" line="51" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:47:41.567" classname="network_config.OutputTest"/>
+    <testcase name="FilePrint" file="test-src/OutoutTest.cpp" line="60" status="run" result="completed" time="0" timestamp="2024-12-02T18:47:41.569" classname="network_config.OutputTest"/>
+    <testcase name="FilePrintOverridesFormerContent" file="test-src/OutoutTest.cpp" line="67" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:47:41.570" classname="network_config.OutputTest"/>
+    <testcase name="NullPrint" file="test-src/OutoutTest.cpp" line="76" status="run" result="completed" time="0.061" timestamp="2024-12-02T18:47:41.572" classname="network_config.OutputTest"/>
+  </testsuite>
+  <testsuite name="network_config.OutputFactoryTest" tests="5" failures="0" disabled="0" skipped="0" errors="0" time="0.019" timestamp="2024-12-02T18:47:41.634">
+    <testcase name="NullOutput" file="test-src/OutputFactoryTest.cpp" line="28" status="run" result="completed" time="0.01" timestamp="2024-12-02T18:47:41.634" classname="network_config.OutputFactoryTest"/>
+    <testcase name="FilenameOutput" file="test-src/OutputFactoryTest.cpp" line="37" status="run" result="completed" time="0.002" timestamp="2024-12-02T18:47:41.645" classname="network_config.OutputFactoryTest"/>
+    <testcase name="OutputToLastError" file="test-src/OutputFactoryTest.cpp" line="46" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:47:41.648" classname="network_config.OutputFactoryTest"/>
+    <testcase name="StderrOutput" file="test-src/OutputFactoryTest.cpp" line="55" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:47:41.650" classname="network_config.OutputFactoryTest"/>
+    <testcase name="QuietIsPrefered" file="test-src/OutputFactoryTest.cpp" line="62" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:47:41.651" classname="network_config.OutputFactoryTest"/>
+  </testsuite>
+  <testsuite name="network_config.UtilsTest" tests="1" failures="0" disabled="0" skipped="0" errors="0" time="0.001" timestamp="2024-12-02T18:47:41.653">
+    <testcase name="JoinOptionNames" file="test-src/UtilsTest.cpp" line="11" status="run" result="completed" time="0.001" timestamp="2024-12-02T18:47:41.653" classname="network_config.UtilsTest"/>
+  </testsuite>
+</testsuites>

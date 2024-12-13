@@ -1,0 +1,461 @@
+-:    0:Source:src/config_linux_user/shadow_functions.c
+-:    1://------------------------------------------------------------------------------
+-:    2:// This Source Code Form is subject to the terms of the Mozilla Public
+-:    3:// License, v. 2.0. If a copy of the MPL was not distributed with this
+-:    4:// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-:    5://
+-:    6:// This file is part of project modular-config-tools (PTXdist package modular-config-tools).
+-:    7://
+-:    8:// Copyright (c) 2017-2022 WAGO GmbH & Co. KG
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///  \file     shadow_functions.h
+-:   12:///
+-:   13:///  \brief    Shadow modify and cryption functionality for config_linux_user.
+-:   14:///
+-:   15:///  \author   HFS: WAGO GmbH & Co. KG
+-:   16:///  \author   PEn: WAGO GmbH & Co. KG
+-:   17://------------------------------------------------------------------------------
+-:   18:
+-:   19://------------------------------------------------------------------------------
+-:   20:// include files
+-:   21://------------------------------------------------------------------------------
+-:   22:#include "wc/structuring.h"
+-:   23:#include "wc/assertion.h"
+-:   24:#include "shadow_functions.h"
+-:   25:#include "resources.h"
+-:   26:#include <sys/types.h>
+-:   27:#include <sys/stat.h>
+-:   28:#include <stdio.h>
+-:   29:#include <stdlib.h>
+-:   30:#include <string.h>
+-:   31:#include <unistd.h>
+-:   32:#include <fcntl.h>
+-:   33:#include <time.h>
+-:   34:#include <shadow.h>
+-:   35:#include <crypt.h>
+-:   36:#include <paths.h>
+-:   37:
+-:   38://------------------------------------------------------------------------------
+-:   39:// defines; structure, enumeration and type definitions
+-:   40://------------------------------------------------------------------------------
+-:   41:#define SALT_PLACE_HOLDER                                     "................"
+-:   42:#define SALT_LENGTH                             (sizeof(SALT_PLACE_HOLDER) - 1U)
+-:   43:#define HASH_ID_STRING                                                       "6"
+-:   44:#define SALT_CHARS                            "./0123456789ABCDEFGHIJKLMNOPQRST" \
+-:   45:                                              "UVWXYZabcdefghijklmnopqrstuvwxyz"
+-:   46:
+-:   47://------------------------------------------------------------------------------
+-:   48:// function prototypes
+-:   49://------------------------------------------------------------------------------
+-:   50:
+-:   51://------------------------------------------------------------------------------
+-:   52:// macros
+-:   53://------------------------------------------------------------------------------
+-:   54:
+-:   55://------------------------------------------------------------------------------
+-:   56:// variables' and constants' definitions
+-:   57://------------------------------------------------------------------------------
+-:   58:
+-:   59://------------------------------------------------------------------------------
+-:   60:// function implementation
+-:   61://------------------------------------------------------------------------------
+function IsValidUser called 5 returned 100% blocks executed 100%
+5:   62:static bool IsValidUser(const char* userName)
+-:   63:{
+-:   64:  // TODO: Switch to a configurable white list solution
+5:   65:  return    (strcmp(userName, "admin") == 0)
+3:   66:         || (strcmp(userName, "visualisation") == 0)
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+8:   67:         || (strcmp(userName, "user") == 0);
+branch  0 taken 3 (fallthrough)
+branch  1 taken 2
+branch  2 taken 0 (fallthrough)
+branch  3 taken 3
+-:   68:}
+-:   69:
+function GetRandomBytes called 3 returned 100% blocks executed 92%
+3:   70:void GetRandomBytes(ctutil_Resources_t const * const pstResources,
+-:   71:                    unsigned char * const arBuffer,
+-:   72:                    size_t const bufferSize)
+-:   73:{
+-:   74:  int fd;
+3:   75:  int rbytes=0;
+3:   76:  fd = open(pstResources->pstSpecificResources->szRandomSource1, O_NONBLOCK | O_RDONLY);
+call    0 returned 3
+3:   77:  rbytes = read(fd, arBuffer, bufferSize);
+call    0 returned 3
+3:   78:  close(fd);
+call    0 returned 3
+-:   79:  // If first random source does not get enough bytes use second source
+3*:   80:  WC_ASSERT(bufferSize <= INT_MAX);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+call    2 never executed
+3:   81:  int const requested = (int)bufferSize;
+-:   82:
+3:   83:  if(rbytes < requested)
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+-:   84:  {
+3:   85:    size_t const received = (rbytes > 0) ? (size_t)rbytes : 0U;
+3:   86:    fd = open(pstResources->pstSpecificResources->szRandomSource2, O_RDONLY);
+call    0 returned 3
+3:   87:    ssize_t read_bytes = read(fd, arBuffer+received, bufferSize-received);
+call    0 returned 3
+3:   88:    if ((read_bytes <= 0) && (0 == strcmp(pstResources->pstSpecificResources->szRandomSource2, "/dev/zero")))
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0
+-:   89:    {
+3:   90:      memset (arBuffer+received, 0, bufferSize-received);
+-:   91:    }
+3:   92:    close(fd);
+call    0 returned 3
+-:   93:  }
+3:   94:}
+-:   95:
+-:   96:
+function CryptPwd called 2 returned 100% blocks executed 100%
+2:   97:char * CryptPwd(ctutil_Resources_t const * const pstResources,
+-:   98:                char const * const szPassword)
+-:   99:{
+-:  100:  // Create random bytes for making random salt
+-:  101:  unsigned char arNaCl[SALT_LENGTH];
+2:  102:  GetRandomBytes(pstResources, arNaCl, sizeof(arNaCl));
+call    0 returned 2
+-:  103:
+-:  104:  // Make salt
+2:  105:  const char szNaClChars[] = SALT_CHARS;
+2:  106:  char szCryptSalt[] = "$" HASH_ID_STRING "$" SALT_PLACE_HOLDER;
+-:  107:  WC_STATIC_ASSERT(sizeof(szCryptSalt) >= (3 + SALT_LENGTH + 1));
+34:  108:  for(size_t i = 0; i < SALT_LENGTH; i++)
+branch  0 taken 32
+branch  1 taken 2 (fallthrough)
+-:  109:  {
+32:  110:    szCryptSalt[3+i] = szNaClChars[arNaCl[i] % (sizeof(szNaClChars)-1)];
+-:  111:  }
+-:  112:
+-:  113:  // Hash password
+2:  114:  char * const szHash = crypt(szPassword, szCryptSalt);
+call    0 returned 2
+-:  115:
+2:  116:  return szHash;
+-:  117:}
+-:  118:
+-:  119:
+function FillUserData called 3 returned 100% blocks executed 91%
+3:  120:statusCode_t FillUserData(struct spwd * const stUserData,
+-:  121:                          ctutil_Resources_t const * const pstResources,
+-:  122:                          char const * const WC_UNUSED_PARAM(szUsername),
+-:  123:                          char const * const szPassword1,
+-:  124:                          char const * const szPassword2)
+-:  125:{
+3:  126:  if(!IsValidUser(stUserData->sp_namp))
+call    0 returned 3
+branch  1 taken 2 (fallthrough)
+branch  2 taken 1
+-:  127:  {
+2:  128:    return CTUTIL_INVALID_PARAMETER;
+-:  129:  }
+1:  130:  if((szPassword1 == NULL || szPassword2 == NULL) || strcmp(szPassword1,szPassword2))
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+branch  4 taken 0 (fallthrough)
+branch  5 taken 1
+-:  131:  {
+#####:  132:    return CTUTIL_INVALID_PARAMETER;
+-:  133:  }
+-:  134:
+1:  135:  stUserData->sp_pwdp = CryptPwd(pstResources, szPassword1);
+call    0 returned 1
+1:  136:  stUserData->sp_lstchg = time(NULL) / (86400);
+call    0 returned 1
+-:  137:
+1:  138:  return CTUTIL_SUCCESS;
+-:  139:}
+-:  140:
+-:  141:
+function FillUserDataFromHash called 2 returned 100% blocks executed 100%
+2:  142:statusCode_t FillUserDataFromHash(struct spwd * const pstUserData,
+-:  143:                                  ctutil_Resources_t const * const WC_UNUSED_PARAM(pstResources),
+-:  144:                                  char const * const szUsername,
+-:  145:                                  char const * const szHash)
+-:  146:{
+2:  147:  statusCode_t status = CTUTIL_FAILED;
+-:  148:
+2:  149:  char *userEntry = NULL;
+2:  150:  struct spwd *_newUserData = NULL;
+-:  151:
+2:  152:  if(!IsValidUser(szUsername))
+call    0 returned 2
+branch  1 taken 1 (fallthrough)
+branch  2 taken 1
+-:  153:  {
+1:  154:    return CTUTIL_INVALID_PARAMETER;
+-:  155:  }
+-:  156:
+1:  157:  status = CTUTIL_SYSTEM_CALL_ERROR;
+1:  158:  userEntry = malloc(strlen(szUsername) + strlen(szHash) + 2);
+-:  159:
+1:  160:  if(NULL != userEntry)
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+-:  161:  {
+1:  162:    strcpy(userEntry, szUsername);
+1:  163:    strcat(userEntry, ":");
+1:  164:    strcat(userEntry, szHash);
+-:  165:
+1:  166:    if(NULL != (_newUserData = sgetspent(userEntry)))
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+-:  167:    {
+1:  168:      memcpy(pstUserData, _newUserData, sizeof(struct spwd));
+1:  169:      status = CTUTIL_SUCCESS;
+-:  170:    }
+-:  171:
+1:  172:    free(userEntry);
+-:  173:  }
+-:  174:
+1:  175:  return status;
+-:  176:}
+-:  177:
+-:  178:
+function IsShadowFileOnline called 4 returned 100% blocks executed 100%
+4:  179:static bool IsShadowFileOnline(ctutil_Resources_t const * const pstResources)
+-:  180:{
+4:  181:  char const * const szShadowFilePath = ctutil_GetOriginalFilePath(pstResources->pstSpecificResources->pShadowFile);
+call    0 returned 4
+4:  182:  return (strcmp(_PATH_SHADOW, szShadowFilePath) == 0);
+-:  183:}
+-:  184:
+-:  185:
+function LockPasswordFileIfOnline called 4 returned 100% blocks executed 55%
+4:  186:static statusCode_t LockPasswordFileIfOnline(ctutil_Resources_t const * const pstResources,
+-:  187:                                             bool * const pHasLock)
+-:  188:{
+4:  189:  bool const online = IsShadowFileOnline(pstResources);
+call    0 returned 4
+4:  190:  if(online)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
+-:  191:  {
+#####:  192:    int const lockResult = lckpwdf();
+call    0 never executed
+#####:  193:    *pHasLock = (lockResult == 0);
+#####:  194:    WC_ASSERT(*pHasLock);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+-:  195:  }
+-:  196:
+4*:  197:  return ((!online) || (*pHasLock)) ? CTUTIL_SUCCESS : CTUTIL_FAILED;
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
+branch  2 never executed
+branch  3 never executed
+-:  198:}
+-:  199:
+-:  200:
+function UnlockPasswordFile called 0 returned 0% blocks executed 0%
+#####:  201:static void UnlockPasswordFile(void)
+-:  202:{
+#####:  203:  int const unlockResult = ulckpwdf();
+call    0 never executed
+#####:  204:  WC_ASSERT(unlockResult == 0);
+branch  0 never executed
+branch  1 never executed
+call    2 never executed
+#####:  205:}
+-:  206:
+-:  207:
+function SearchShadowEntry called 2 returned 100% blocks executed 80%
+2:  208:statusCode_t SearchShadowEntry(char const * const szUsername)
+-:  209:{
+2:  210:  statusCode_t status = CTUTIL_SUCCESS;
+-:  211:
+-:  212:  // TODO: Need abstract check for entry existence instead using current active shadow file
+2:  213:  if((getspnam(szUsername)) == NULL)
+call    0 returned 2
+branch  1 taken 0 (fallthrough)
+branch  2 taken 2
+-:  214:  {
+#####:  215:    status = CTUTIL_NOT_FOUND;
+-:  216:  }
+-:  217:
+2:  218:  return status;
+-:  219:}
+-:  220:
+-:  221:
+function WriteShadow called 4 returned 100% blocks executed 83%
+4:  222:statusCode_t WriteShadow(ctutil_Resources_t const * const pstResources,
+-:  223:                         struct spwd const * const pstNewUserData)
+-:  224:{
+4:  225:  statusCode_t status = CTUTIL_SUCCESS;
+4:  226:  char const * const szShadowPath = ctutil_GetOriginalFilePath(pstResources->pstSpecificResources->pShadowFile);
+call    0 returned 4
+4:  227:  char const * const szNewShadowPath = ctutil_GetChangeableFilePath(pstResources->pstSpecificResources->pShadowFile);
+call    0 returned 4
+-:  228:
+-:  229:  // Lock an online shadow file to be safe for parallel access
+4:  230:  bool hasLock = false;
+4:  231:  status = LockPasswordFileIfOnline(pstResources, &hasLock);
+call    0 returned 4
+4:  232:  if(ctutil_IsStatusFailure(status))
+call    0 returned 4
+branch  1 taken 0 (fallthrough)
+branch  2 taken 4
+-:  233:  {
+#####:  234:    status = CTUTIL_FILE_OPEN_ERROR;
+-:  235:  }
+-:  236:
+4:  237:  FILE * fpShadowOld = NULL;
+4:  238:  FILE * fpShadowNew = NULL;
+4:  239:  if(ctutil_IsStatusOk(status))
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+-:  240:  {
+4:  241:    fpShadowOld = fopen(szShadowPath, "r");
+call    0 returned 4
+4:  242:    if(fpShadowOld == NULL)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
+-:  243:    {
+#####:  244:      status = CTUTIL_FILE_OPEN_ERROR;
+-:  245:    }
+-:  246:    else
+-:  247:    {
+4:  248:      fpShadowNew = fopen(szNewShadowPath, "w");
+call    0 returned 4
+4:  249:      if(fpShadowNew == NULL)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
+-:  250:      {
+#####:  251:        status = CTUTIL_FILE_OPEN_ERROR;
+#####:  252:        fclose(fpShadowOld);
+call    0 never executed
+-:  253:      }
+-:  254:    }
+-:  255:  }
+-:  256:
+-:  257:  // copy file permissions and owner/group from current shadow file
+-:  258:  struct stat shadow_stat;
+4:  259:  if(ctutil_IsStatusOk(status))
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+-:  260:  {
+4:  261:    if(fstat(fileno(fpShadowOld), &shadow_stat) == 0)
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0
+-:  262:    {
+8:  263:      if(fchmod(fileno(fpShadowNew), shadow_stat.st_mode) != 0 ||
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0
+branch  4 taken 0 (fallthrough)
+branch  5 taken 4
+4:  264:         fchown(fileno(fpShadowNew), shadow_stat.st_uid, shadow_stat.st_gid) != 0)
+call    0 returned 4
+call    1 returned 4
+-:  265:      {
+#####:  266:        status = CTUTIL_SYSTEM_CALL_ERROR;
+-:  267:      }
+-:  268:    }
+-:  269:    else
+-:  270:    {
+#####:  271:      status = CTUTIL_SYSTEM_CALL_ERROR;
+-:  272:    }
+-:  273:  }
+-:  274:
+4:  275:  struct spwd * pstPasswordFile = NULL;
+4:  276:  bool shadowFileChanged = false;
+4:  277:  if(ctutil_IsStatusOk(status))
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+-:  278:  {
+-:  279:    // Buildup new shadow file
+16:  280:    while((pstPasswordFile = fgetspent(fpShadowOld)) != NULL)
+call    0 returned 16
+branch  1 taken 12
+branch  2 taken 4 (fallthrough)
+-:  281:    {
+12:  282:      if(!strcmp(pstNewUserData->sp_namp, pstPasswordFile->sp_namp))
+branch  0 taken 4 (fallthrough)
+branch  1 taken 8
+-:  283:      {
+4:  284:        pstPasswordFile->sp_pwdp = pstNewUserData->sp_pwdp;
+4:  285:        pstPasswordFile->sp_lstchg = pstNewUserData->sp_lstchg;
+4:  286:        shadowFileChanged = true;
+-:  287:      }
+12:  288:      int const putResult = putspent(pstPasswordFile, fpShadowNew);
+call    0 returned 12
+12:  289:      if(putResult != 0)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 12
+-:  290:      {
+#####:  291:        status = CTUTIL_EXIT_FILE_WRITE_ERROR;
+#####:  292:        break;
+-:  293:      }
+-:  294:    }
+4:  295:    fclose(fpShadowOld);
+call    0 returned 4
+4:  296:    fclose(fpShadowNew);
+call    0 returned 4
+-:  297:
+-:  298:    // Restore file mode and replace old shadow file by new one if necessary
+4:  299:    if(shadowFileChanged)
+branch  0 taken 4 (fallthrough)
+branch  1 taken 0
+-:  300:    {
+4:  301:      status = ctutil_CommitChangeableFile(pstResources->pstSpecificResources->pShadowFile);
+call    0 returned 4
+-:  302:    }
+-:  303:    else
+-:  304:    {
+#####:  305:      status = CTUTIL_NOT_FOUND;
+-:  306:    }
+-:  307:  }
+-:  308:
+4:  309:  if(ctutil_IsStatusFailure(status))
+call    0 returned 4
+branch  1 taken 0 (fallthrough)
+branch  2 taken 4
+-:  310:  {
+#####:  311:    unlink(szNewShadowPath);
+call    0 never executed
+-:  312:  }
+-:  313:
+4:  314:  if(ctutil_IsStatusOk(status))
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+-:  315:  {
+4:  316:    sync();
+call    0 returned 4
+-:  317:  }
+-:  318:
+4:  319:  if(hasLock)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
+-:  320:  {
+#####:  321:    UnlockPasswordFile();
+call    0 never executed
+-:  322:  }
+-:  323:
+4:  324:  return status;
+-:  325:}
+-:  326:
+-:  327:
+-:  328://---- End of source file ------------------------------------------------------
+-:  329:

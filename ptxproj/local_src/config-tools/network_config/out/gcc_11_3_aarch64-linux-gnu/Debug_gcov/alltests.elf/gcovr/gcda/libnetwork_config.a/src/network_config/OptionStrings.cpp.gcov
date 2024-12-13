@@ -1,0 +1,23 @@
+-:    0:Source:src/network_config/OptionStrings.cpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#include "OptionStrings.hpp"
+-:    4:
+-:    5:namespace network_config {
+-:    6:
+-:    7:static const Options options;
+-:    8:static const Fields fields;
+-:    9:
+-:   10:[[gnu::const]]
+function _ZN14network_config10GetOptionsEv called 33 returned 100% blocks executed 100%
+33:   11:const Options& GetOptions() {
+33:   12:  return options;
+-:   13:}
+-:   14:
+-:   15:[[gnu::const]]
+function _ZN14network_config9GetFieldsEv called 24 returned 100% blocks executed 100%
+24:   16:const Fields& GetFields() {
+24:   17:  return fields;
+-:   18:}
+-:   19:
+-:   20:}  // namespace network_config

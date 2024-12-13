@@ -1,0 +1,423 @@
+-:    0:Source:src/config_dnsmasq/utilities.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:/// Copyright (c) 2020-2024 WAGO GmbH & Co. KG
+-:    3:///
+-:    4:/// PROPRIETARY RIGHTS of WAGO GmbH & Co. KG are involved in
+-:    5:/// the subject matter of this material. All manufacturing, reproduction,
+-:    6:/// use, and sales rights pertaining to this subject matter are governed
+-:    7:/// by the license agreement. The recipient of this software implicitly
+-:    8:/// accepts the terms of the license.
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///
+-:   12:///  \brief    Collection of utility functions.
+-:   13:///
+-:   14:///  \author   MSc : WAGO GmbH & Co. KG
+-:   15:///  \author   MOe : WAGO GmbH & Co. KG
+-:   16://------------------------------------------------------------------------------
+-:   17:
+-:   18:#include <boost/algorithm/string.hpp>
+-:   19:#include <boost/asio.hpp>
+-:   20:#include <cstddef>
+-:   21:#include <cstdint>
+-:   22:
+-:   23:#include "defines.hpp"
+-:   24:#include "utilities.hpp"
+-:   25:#include "error_handling.hpp"
+-:   26:
+-:   27:using ::boost::asio::ip::make_address_v4;
+-:   28:using ::boost::system::error_code;
+-:   29:
+-:   30:namespace configdnsmasq {
+-:   31:
+-:   32:namespace {
+-:   33:
+-:   34:// Character code to character class. Available classes:
+-:   35://   0 = Illegal characters
+-:   36://   1 = digits
+-:   37://   2 = alphabetic
+-:   38://   3 = Hyphen
+-:   39://   4 = Label terminating '.'
+-:   40://   5 = String terminating '\0'
+-:   41:::std::array<uint8_t, 256> conv_dnchar = {{
+-:   42:    5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-:   43:    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-:   44:    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 0,
+-:   45:    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+-:   46:    0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+-:   47:    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0,
+-:   48:    0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+-:   49:    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0,
+-:   50:    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-:   51:    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-:   52:    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-:   53:    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-:   54:    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-:   55:    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-:   56:    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-:   57:    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+-:   58:}};
+-:   59:
+-:   60:// State transition table.
+-:   61:::std::array<conv_state_t, 24> conv_transitions = {{
+-:   62:    /*             ill. digit    letter   -       .      \0 */
+-:   63:    /* STOP */     ERR, ERR,     ERR,     ERR,    ERR,   ERR,
+-:   64:    /* START */    ERR, ERR,     INLABEL, ERR,    ERR,   ERR,
+-:   65:    /* INLABEL */  ERR, INLABEL, INLABEL, HYPHEN, START, STOP,
+-:   66:    /* HYPHEN */   ERR, INLABEL, INLABEL, HYPHEN, ERR,   ERR,
+-:   67:}};
+-:   68:
+-:   69:// Convert one ascii character '0' to '9' and 'a' - 'f' to decimal 0 - 15.
+-:   70:// Upper case letters work as well.
+function _ZN13configdnsmasq12_GLOBAL__N_16hexvalEi called 72 returned 100% blocks executed 100%
+72:   71:int hexval(int c) {
+-:   72:  static ::std::array<int8_t, 64> ktab = {{
+-:   73:      0,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1,
+-:   74:     -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+-:   75:     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+-:   76:     -1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+-:   77:  }};
+72:   78:  int rv = -1;
+-:   79:
+72:   80:  c -= 0x30;
+72:   81:  if (c >= 0 && c < 0x40) {
+branch  0 taken 72 (fallthrough)
+branch  1 taken 0
+branch  2 taken 71 (fallthrough)
+branch  3 taken 1
+71:   82:    rv = ktab.at(static_cast<size_t>(c));
+call    0 returned 71
+-:   83:  }
+72:   84:  return rv;
+-:   85:}
+-:   86:
+-:   87:}  // Anonymous namespace
+-:   88:
+-:   89:// Convert IP-Address from dotted ASCII string to uint32_t.
+function conv_ip_ascii2bin called 8 returned 100% blocks executed 89%
+8:   90:eStatusCode conv_ip_ascii2bin(uint32_t &bin_address, const ::std::string &address) {
+8:   91:  error_code error;
+8:   92:  bin_address = make_address_v4(address, error).to_uint();
+call    0 returned 8
+branch  1 taken 8 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 8
+8:   93:  if (error) {
+call    0 returned 8
+branch  1 taken 0 (fallthrough)
+branch  2 taken 8
+#####:   94:    bin_address = 0;
+#####:   95:    return INVALID_PARAMETER;
+-:   96:  }
+8:   97:  return SUCCESS;
+-:   98:}
+-:   99:
+function is_valid_ip_string called 0 returned 0% blocks executed 0%
+#####:  100:bool is_valid_ip_string(const ::std::string &address) {
+-:  101:  uint32_t bin_address;
+#####:  102:  auto status = conv_ip_ascii2bin(bin_address, address);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:  103:
+#####:  104:  return SUCCESS == status;
+-:  105:}
+-:  106:
+function conv_ip_bin2ascii called 0 returned 0% blocks executed 0%
+#####:  107:void conv_ip_bin2ascii(::std::string& address, uint32_t bin_address) {
+#####:  108:  address = make_address_v4(bin_address).to_string();
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+#####:  109:}
+-:  110:
+function conv_hosts_ascii2bin called 0 returned 0% blocks executed 0%
+#####:  111:eStatusCode conv_hosts_ascii2bin(const ::std::string &hostsstr, uint32_t netmask, ::std::vector<dhcpd_host_t> &hosts) {
+#####:  112:  eStatusCode status = SUCCESS;
+-:  113:
+#####:  114:  if(hostsstr.empty()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  115:    return status;
+-:  116:  }
+-:  117:
+#####:  118:  std::vector < std::string > hostsString;
+call    0 never executed
+#####:  119:  ::boost::split(hostsString, hostsstr, ::boost::is_any_of(","));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+-:  120:
+#####:  121:  for (auto &host : hostsString) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+#####:  122:    dhcpd_host_t hp;
+call    0 never executed
+-:  123:
+#####:  124:    ::std::vector < ::std::string > parts;
+call    0 never executed
+#####:  125:    ::boost::split(parts, host, ::boost::is_any_of("_"));
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+-:  126:
+#####:  127:    if (parts.size() != 2) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  128:      hosts.clear();
+call    0 never executed
+#####:  129:      status = eStatusCode::INVALID_PARAMETER;
+#####:  130:      break;
+-:  131:    }
+#####:  132:    if (!conv_is_valid_mac(parts[0]) && !conv_is_valid_domain_name(parts[0])) {
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+branch 11 never executed
+branch 12 never executed
+branch 13 never executed
+#####:  133:      hosts.clear();
+call    0 never executed
+#####:  134:      status = eStatusCode::INVALID_PARAMETER;
+#####:  135:      break;
+-:  136:    }
+#####:  137:    hp.mac = parts[0];
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+-:  138:    uint32_t ip;
+#####:  139:    status = conv_ip_ascii2bin(ip, parts[1]);
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  140:    if (SUCCESS != status) {
+branch  0 never executed
+branch  1 never executed
+#####:  141:      break;
+-:  142:    }
+#####:  143:    hp.ip_net_part = ip & netmask;
+#####:  144:    hp.ip_host_part = ip & ~netmask;
+-:  145:
+#####:  146:    hosts.push_back(hp);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  147:  }
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+-:  148:
+#####:  149:  return status;
+#####:  150:}
+call    0 never executed
+call    1 never executed
+-:  151:
+function conv_hosts_bin2ascii called 0 returned 0% blocks executed 0%
+#####:  152:void conv_hosts_bin2ascii(::std::string& hosts, const ::std::vector<dhcpd_host_t> &host_list) {
+#####:  153:  std::list < std::string > strings;
+call    0 never executed
+#####:  154:  for (auto& host : host_list) {
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+#####:  155:    std::string ip{};
+call    0 never executed
+#####:  156:    conv_ip_bin2ascii(ip, host.ip_net_part | host.ip_host_part);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:  157:    strings.push_back(host.mac + "_" + ip);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+#####:  158:  }
+call    0 never executed
+call    1 never executed
+#####:  159:  hosts = boost::algorithm::join(strings, ",");
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+call    4 never executed
+#####:  160:}
+call    0 never executed
+call    1 never executed
+-:  161:
+-:  162:// Statemachine to check domain/host name according to RFC 1034.
+function conv_is_valid_domain_name called 0 returned 0% blocks executed 0%
+#####:  163:bool conv_is_valid_domain_name(const ::std::string &name) {
+-:  164:  //return std::regex_match(name, std::regex("^(?![0-9]+)(?!-)[a-zA-Z0-9-]{0,63}(?<!-)$"));
+#####:  165:  bool isname = true;
+#####:  166:  int labelidx = 0;
+#####:  167:  int charidx = 0;
+#####:  168:  size_t i = 0;
+#####:  169:  conv_state_t state = START;
+-:  170:
+#####:  171:  while (state > STOP && isname && charidx <= 255) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:  172:    unsigned int c = (i >= name.size()) ? 0 : name.at(i) & 255;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+#####:  173:    uint8_t ccl = conv_dnchar.at(c);
+call    0 never executed
+#####:  174:    conv_state_t nstate = conv_transitions.at(static_cast<unsigned int>(state) * 6 + ccl);
+call    0 never executed
+#####:  175:    switch (state) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+#####:  176:      case START:
+#####:  177:        isname = (ccl == 2);
+#####:  178:        labelidx = 0;
+#####:  179:        break;
+#####:  180:      case INLABEL:
+#####:  181:        isname = (ccl > 0);
+#####:  182:        break;
+#####:  183:      case HYPHEN:
+#####:  184:        isname = (ccl == 1 || ccl == 2 || ccl == 3);
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:  185:        break;
+#####:  186:      default:
+#####:  187:        break;
+-:  188:    }
+#####:  189:    state = nstate;
+#####:  190:    i++;
+#####:  191:    labelidx++;
+#####:  192:    charidx++;
+-:  193:  }
+#####:  194:  return isname && state == STOP && labelidx <= 64;
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+-:  195:}
+-:  196:
+-:  197:// Returns true if mac address is valid. Checks also for broadcast and multicast.
+function conv_is_valid_mac called 8 returned 100% blocks executed 100%
+8:  198:bool conv_is_valid_mac(const ::std::string &mac_in) {
+-:  199:  static ::std::array<char, 18> states = {{ 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 0 }};
+8:  200:  bool result = false;
+-:  201:
+8:  202:  if(mac_in.size() != 17) {
+call    0 returned 8
+branch  1 taken 2 (fallthrough)
+branch  2 taken 6
+2:  203:    return false;
+-:  204:  }
+-:  205:
+98:  206:  for (size_t i = 0; i <= mac_in.size(); i++) {
+call    0 returned 98
+branch  1 taken 98
+branch  2 taken 0 (fallthrough)
+98:  207:    if (states.at(i) == 0) {
+call    0 returned 98
+branch  1 taken 4 (fallthrough)
+branch  2 taken 94
+4:  208:      if (mac_in.size() == i) {
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0
+4:  209:        result = true;
+-:  210:      }
+4:  211:      break;
+-:  212:    }
+-:  213:
+94:  214:    if (states.at(i) == 1) {
+call    0 returned 94
+branch  1 taken 66 (fallthrough)
+branch  2 taken 28
+66:  215:      if (hexval(mac_in.at(i)) < 0) {
+call    0 returned 66
+call    1 returned 66
+branch  2 taken 1 (fallthrough)
+branch  3 taken 65
+1:  216:        break;
+-:  217:      }
+28:  218:    } else if (states.at(i) == 2) {
+call    0 returned 28
+branch  1 taken 28 (fallthrough)
+branch  2 taken 0
+28:  219:      if (mac_in.at(i) != ':') {
+call    0 returned 28
+branch  1 taken 1 (fallthrough)
+branch  2 taken 27
+1:  220:        break;
+-:  221:      }
+-:  222:    }
+-:  223:  }
+-:  224:
+-:  225:  // Check for broadcast or multicast MAC address.
+6:  226:  if ((hexval(mac_in[1]) & 1) != 0) {
+call    0 returned 6
+call    1 returned 6
+branch  2 taken 2 (fallthrough)
+branch  3 taken 4
+2:  227:    result = false;
+-:  228:  }
+6:  229:  return result;
+-:  230:}
+-:  231:}  //namespace configdnsmasq::utilities

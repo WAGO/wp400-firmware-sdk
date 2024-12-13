@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuites tests="15" failures="0" disabled="0" errors="0" time="0.497" timestamp="2024-12-02T18:43:12.287" name="AllTests">
+  <testsuite name="get_snmp_data.get_snmp_test" tests="15" failures="0" disabled="0" skipped="0" errors="0" time="0.46" timestamp="2024-12-02T18:43:12.321">
+    <testcase name="GetBasicParameter" file="test-src/get_snmp_test.cpp" line="36" status="run" result="completed" time="0.094" timestamp="2024-12-02T18:43:12.322" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetBasicParameterAndIgnoreIndex" file="test-src/get_snmp_test.cpp" line="57" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:12.418" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="UnsupportedParameter" file="test-src/get_snmp_test.cpp" line="65" status="run" result="completed" time="0.004" timestamp="2024-12-02T18:43:12.423" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetV1V2cStateParameter" file="test-src/get_snmp_test.cpp" line="70" status="run" result="completed" time="0.015" timestamp="2024-12-02T18:43:12.428" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetCommunitiesParameter" file="test-src/get_snmp_test.cpp" line="81" status="run" result="completed" time="0.028" timestamp="2024-12-02T18:43:12.444" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetFirstRWCommunitiyParameterLegacyAPI" file="test-src/get_snmp_test.cpp" line="100" status="run" result="completed" time="0.012" timestamp="2024-12-02T18:43:12.472" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetTrapReceiverV1V2cParameter" file="test-src/get_snmp_test.cpp" line="118" status="run" result="completed" time="0.041" timestamp="2024-12-02T18:43:12.485" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetUserParameters" file="test-src/get_snmp_test.cpp" line="149" status="run" result="completed" time="0.114" timestamp="2024-12-02T18:43:12.527" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetTrapReceiverV3Parameters" file="test-src/get_snmp_test.cpp" line="209" status="run" result="completed" time="0.082" timestamp="2024-12-02T18:43:12.642" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetTrapReceiverV1V2cParametersAsJson" file="test-src/get_snmp_test.cpp" line="269" status="run" result="completed" time="0.008" timestamp="2024-12-02T18:43:12.724" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetCommunityParametersAsJson" file="test-src/get_snmp_test.cpp" line="280" status="run" result="completed" time="0.008" timestamp="2024-12-02T18:43:12.733" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetUserListV3ParametersAsJson" file="test-src/get_snmp_test.cpp" line="298" status="run" result="completed" time="0.009" timestamp="2024-12-02T18:43:12.742" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetUserV3ParametersAsJson" file="test-src/get_snmp_test.cpp" line="320" status="run" result="completed" time="0.009" timestamp="2024-12-02T18:43:12.752" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetTrapReceiverV3ParametersAsJson" file="test-src/get_snmp_test.cpp" line="340" status="run" result="completed" time="0.008" timestamp="2024-12-02T18:43:12.761" classname="get_snmp_data.get_snmp_test"/>
+    <testcase name="GetHelpText" file="test-src/get_snmp_test.cpp" line="360" status="run" result="completed" time="0.01" timestamp="2024-12-02T18:43:12.771" classname="get_snmp_data.get_snmp_test"/>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,922 @@
+-:    0:Source:test-src/edit_v1v2c_community_test.cpp
+-:    1:// Copyright (c) 2022 WAGO GmbH & Co. KG
+-:    2:// SPDX-License-Identifier: MPL-2.0
+-:    3:
+-:    4:#include <gmock/gmock.h>
+-:    5:#include <gtest/gtest.h>
+-:    6:
+-:    7:#include "SnmpConfig.hpp"
+-:    8:#include "snmp_config_handler.hpp"
+-:    9:
+-:   10:namespace wago::snmp_config {
+-:   11:
+-:   12:using namespace wago::snmp_config_lib;  // NOLINT google-build-using-namespace
+-:   13:using namespace ::testing;              // NOLINT google-build-using-namespace
+-:   14:
+-:   15://  Following 3 parameters must be given together:
+-:   16://       v1-v2c-community-edit: add | delete
+-:   17://       v1-v2c-community-name: string without spaces, min 1, max 32 characters
+-:   18://       v1-v2c-community-access: read-only | read-write
+-:   19:
+4:   20:TEST(edit_community, add_community) {
+1:   21:  SnmpConfig config{};
+-:   22:  const parameter_map parameters = {
+-:   23:      {"v1-v2c-community-edit", "add"},
+-:   24:      {"v1-v2c-community-name", "community-name"},
+-:   25:      {"v1-v2c-community-access", "read-only"},
+5:   26:  };
+-:   27:
+2:   28:  auto expected_community = Community{"community-name", Access::ReadOnly};
+-:   29:
+1:   30:  edit_v1v2c_community(parameters, config);
+-:   31:
+2*:   32:  EXPECT_THAT(config.communities_, ElementsAre(expected_community));
+1:   33:}
+------------------
+_ZN4wago11snmp_config33edit_community_add_community_TestC2Ev:
+function _ZN4wago11snmp_config33edit_community_add_community_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   20:TEST(edit_community, add_community) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config33edit_community_add_community_TestD0Ev:
+function _ZN4wago11snmp_config33edit_community_add_community_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   20:TEST(edit_community, add_community) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config33edit_community_add_community_TestD2Ev:
+function _ZN4wago11snmp_config33edit_community_add_community_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   20:TEST(edit_community, add_community) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config33edit_community_add_community_Test8TestBodyEv:
+function _ZN4wago11snmp_config33edit_community_add_community_Test8TestBodyEv called 1 returned 100% blocks executed 39%
+1:   20:TEST(edit_community, add_community) {
+1:   21:  SnmpConfig config{};
+call    0 returned 1
+-:   22:  const parameter_map parameters = {
+-:   23:      {"v1-v2c-community-edit", "add"},
+-:   24:      {"v1-v2c-community-name", "community-name"},
+-:   25:      {"v1-v2c-community-access", "read-only"},
+5:   26:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 3
+call   14 never executed
+-:   27:
+2:   28:  auto expected_community = Community{"community-name", Access::ReadOnly};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+-:   29:
+1:   30:  edit_v1v2c_community(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   31:
+2*:   32:  EXPECT_THAT(config.communities_, ElementsAre(expected_community));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+1:   33:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   34:
+4:   35:TEST(edit_community, delete_community) {
+1:   36:  SnmpConfig config{};
+1:   37:  config.communities_.emplace_back("to-delete", Access::ReadOnly);
+1:   38:  config.communities_.emplace_back("to-keep", Access::ReadWrite);
+-:   39:
+-:   40:  const parameter_map parameters = {
+-:   41:      {"v1-v2c-community-edit", "delete"},
+-:   42:      {"v1-v2c-community-name", "to-delete"},
+4:   43:  };
+-:   44:
+1:   45:  edit_v1v2c_community(parameters, config);
+-:   46:
+2*:   47:  EXPECT_THAT(config.communities_, ElementsAre(Community{"to-keep", Access::ReadWrite}));
+1:   48:}
+------------------
+_ZN4wago11snmp_config36edit_community_delete_community_TestC2Ev:
+function _ZN4wago11snmp_config36edit_community_delete_community_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   35:TEST(edit_community, delete_community) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config36edit_community_delete_community_TestD0Ev:
+function _ZN4wago11snmp_config36edit_community_delete_community_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   35:TEST(edit_community, delete_community) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config36edit_community_delete_community_TestD2Ev:
+function _ZN4wago11snmp_config36edit_community_delete_community_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   35:TEST(edit_community, delete_community) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config36edit_community_delete_community_Test8TestBodyEv:
+function _ZN4wago11snmp_config36edit_community_delete_community_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   35:TEST(edit_community, delete_community) {
+1:   36:  SnmpConfig config{};
+call    0 returned 1
+1:   37:  config.communities_.emplace_back("to-delete", Access::ReadOnly);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   38:  config.communities_.emplace_back("to-keep", Access::ReadWrite);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   39:
+-:   40:  const parameter_map parameters = {
+-:   41:      {"v1-v2c-community-edit", "delete"},
+-:   42:      {"v1-v2c-community-name", "to-delete"},
+4:   43:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 2
+call   11 never executed
+-:   44:
+1:   45:  edit_v1v2c_community(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   46:
+2*:   47:  EXPECT_THAT(config.communities_, ElementsAre(Community{"to-keep", Access::ReadWrite}));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+branch 21 taken 0 (fallthrough)
+branch 22 taken 1
+call   23 never executed
+branch 24 never executed
+branch 25 never executed
+call   26 never executed
+call   27 never executed
+branch 28 never executed
+branch 29 never executed
+call   30 never executed
+branch 31 never executed
+branch 32 never executed
+call   33 never executed
+call   34 never executed
+call   35 returned 1
+call   36 never executed
+call   37 never executed
+call   38 never executed
+1:   48:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:   49:
+4:   50:TEST(edit_community, delete_last_community) {
+1:   51:  SnmpConfig config{};
+1:   52:  config.communities_.emplace_back("to-delete", Access::ReadOnly);
+-:   53:
+-:   54:  const parameter_map parameters = {
+-:   55:      {"v1-v2c-community-edit", "delete"},
+-:   56:      {"v1-v2c-community-name", "to-delete"},
+4:   57:  };
+-:   58:
+1:   59:  edit_v1v2c_community(parameters, config);
+-:   60:
+1*:   61:  EXPECT_THAT(config.communities_, IsEmpty());
+1:   62:}
+------------------
+_ZN4wago11snmp_config41edit_community_delete_last_community_TestC2Ev:
+function _ZN4wago11snmp_config41edit_community_delete_last_community_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   50:TEST(edit_community, delete_last_community) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config41edit_community_delete_last_community_TestD0Ev:
+function _ZN4wago11snmp_config41edit_community_delete_last_community_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   50:TEST(edit_community, delete_last_community) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config41edit_community_delete_last_community_TestD2Ev:
+function _ZN4wago11snmp_config41edit_community_delete_last_community_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   50:TEST(edit_community, delete_last_community) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config41edit_community_delete_last_community_Test8TestBodyEv:
+function _ZN4wago11snmp_config41edit_community_delete_last_community_Test8TestBodyEv called 1 returned 100% blocks executed 38%
+1:   50:TEST(edit_community, delete_last_community) {
+1:   51:  SnmpConfig config{};
+call    0 returned 1
+1:   52:  config.communities_.emplace_back("to-delete", Access::ReadOnly);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   53:
+-:   54:  const parameter_map parameters = {
+-:   55:      {"v1-v2c-community-edit", "delete"},
+-:   56:      {"v1-v2c-community-name", "to-delete"},
+4:   57:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 2
+call   11 never executed
+-:   58:
+1:   59:  edit_v1v2c_community(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   60:
+1*:   61:  EXPECT_THAT(config.communities_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:   62:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:   63:
+-:   64:
+4:   65:TEST(edit_community, edit_basic_parameter_should_not_interfere_with_add_community) {
+1:   66:  SnmpConfig config{};
+-:   67:  const parameter_map parameters = {
+-:   68:      {"v1-v2c-community-edit", "add"},
+-:   69:      {"v1-v2c-community-name", "community-name"},
+-:   70:      {"v1-v2c-community-access", "read-only"},
+5:   71:  };
+-:   72:
+2:   73:  auto expected_community = Community{"community-name", Access::ReadOnly};
+-:   74:
+1:   75:  edit_basic_parameter(parameters, config);
+1:   76:  edit_v1v2c_community(parameters, config);
+-:   77:
+2*:   78:  EXPECT_THAT(config.communities_, ElementsAre(expected_community));
+1:   79:}
+------------------
+_ZN4wago11snmp_config80edit_community_edit_basic_parameter_should_not_interfere_with_add_community_TestC2Ev:
+function _ZN4wago11snmp_config80edit_community_edit_basic_parameter_should_not_interfere_with_add_community_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   65:TEST(edit_community, edit_basic_parameter_should_not_interfere_with_add_community) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config80edit_community_edit_basic_parameter_should_not_interfere_with_add_community_TestD0Ev:
+function _ZN4wago11snmp_config80edit_community_edit_basic_parameter_should_not_interfere_with_add_community_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   65:TEST(edit_community, edit_basic_parameter_should_not_interfere_with_add_community) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config80edit_community_edit_basic_parameter_should_not_interfere_with_add_community_TestD2Ev:
+function _ZN4wago11snmp_config80edit_community_edit_basic_parameter_should_not_interfere_with_add_community_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   65:TEST(edit_community, edit_basic_parameter_should_not_interfere_with_add_community) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config80edit_community_edit_basic_parameter_should_not_interfere_with_add_community_Test8TestBodyEv:
+function _ZN4wago11snmp_config80edit_community_edit_basic_parameter_should_not_interfere_with_add_community_Test8TestBodyEv called 1 returned 100% blocks executed 40%
+1:   65:TEST(edit_community, edit_basic_parameter_should_not_interfere_with_add_community) {
+1:   66:  SnmpConfig config{};
+call    0 returned 1
+-:   67:  const parameter_map parameters = {
+-:   68:      {"v1-v2c-community-edit", "add"},
+-:   69:      {"v1-v2c-community-name", "community-name"},
+-:   70:      {"v1-v2c-community-access", "read-only"},
+5:   71:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 3
+call   14 never executed
+-:   72:
+2:   73:  auto expected_community = Community{"community-name", Access::ReadOnly};
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+-:   74:
+1:   75:  edit_basic_parameter(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+1:   76:  edit_v1v2c_community(parameters, config);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+-:   77:
+2*:   78:  EXPECT_THAT(config.communities_, ElementsAre(expected_community));
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+branch 21 never executed
+branch 22 never executed
+call   23 never executed
+call   24 never executed
+call   25 returned 1
+call   26 never executed
+call   27 never executed
+call   28 never executed
+1:   79:}
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 never executed
+call    4 never executed
+call    5 never executed
+------------------
+-:   80:
+4:   81:TEST(edit_community, add_community_throws_when_name_is_missing) {
+1:   82:  SnmpConfig config{};
+-:   83:  const parameter_map parameters = {
+-:   84:      {"v1-v2c-community-edit", "add"},
+-:   85:      {"v1-v2c-community-access", "read-only"},
+4:   86:  };
+-:   87:
+2*:   88:  EXPECT_THROW(
+-:   89:      {
+-:   90:        try {
+-:   91:          edit_v1v2c_community(parameters, config);
+-:   92:        } catch (snmp_config_exception const& e) {
+-:   93:          EXPECT_STREQ("missing parameter: v1-v2c-community-name", e.what());
+-:   94:          EXPECT_EQ(snmp_config_error::missing_parameter, e.error());
+-:   95:          throw;
+-:   96:        }
+-:   97:      },
+1:   98:      snmp_config_exception);
+-:   99:
+1*:  100:  EXPECT_THAT(config.communities_, IsEmpty());
+1:  101:}
+------------------
+_ZN4wago11snmp_config61edit_community_add_community_throws_when_name_is_missing_TestC2Ev:
+function _ZN4wago11snmp_config61edit_community_add_community_throws_when_name_is_missing_TestC2Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST(edit_community, add_community_throws_when_name_is_missing) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config61edit_community_add_community_throws_when_name_is_missing_TestD0Ev:
+function _ZN4wago11snmp_config61edit_community_add_community_throws_when_name_is_missing_TestD0Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST(edit_community, add_community_throws_when_name_is_missing) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config61edit_community_add_community_throws_when_name_is_missing_TestD2Ev:
+function _ZN4wago11snmp_config61edit_community_add_community_throws_when_name_is_missing_TestD2Ev called 1 returned 100% blocks executed 100%
+1:   81:TEST(edit_community, add_community_throws_when_name_is_missing) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config61edit_community_add_community_throws_when_name_is_missing_Test8TestBodyEv:
+function _ZN4wago11snmp_config61edit_community_add_community_throws_when_name_is_missing_Test8TestBodyEv called 1 returned 100% blocks executed 29%
+1:   81:TEST(edit_community, add_community_throws_when_name_is_missing) {
+1:   82:  SnmpConfig config{};
+call    0 returned 1
+-:   83:  const parameter_map parameters = {
+-:   84:      {"v1-v2c-community-edit", "add"},
+-:   85:      {"v1-v2c-community-access", "read-only"},
+4:   86:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 2
+call   11 never executed
+-:   87:
+2*:   88:  EXPECT_THROW(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1 (throw)
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+branch 29 taken 0 (fallthrough)
+branch 30 taken 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+branch 34 taken 1 (fallthrough)
+branch 35 taken 0 (throw)
+call   36 returned 1
+branch 37 taken 0 (fallthrough)
+branch 38 taken 1
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+call   43 never executed
+branch 44 never executed
+branch 45 never executed
+call   46 never executed
+branch 47 never executed
+branch 48 never executed
+call   49 never executed
+call   50 never executed
+call   51 returned 1
+call   52 returned 1
+call   53 returned 1
+branch 54 taken 1 (fallthrough)
+branch 55 taken 0 (throw)
+call   56 returned 1
+branch 57 taken 0 (fallthrough)
+branch 58 taken 1
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+branch 67 never executed
+branch 68 never executed
+call   69 never executed
+call   70 never executed
+call   71 returned 1
+call   72 returned 1
+call   73 never executed
+call   74 never executed
+call   75 never executed
+call   76 never executed
+call   77 never executed
+call   78 never executed
+call   79 returned 1
+branch 80 taken 1
+branch 81 taken 0
+branch 82 taken 0
+call   83 returned 1
+call   84 returned 1
+branch 85 taken 1 (fallthrough)
+branch 86 taken 0 (throw)
+call   87 never executed
+call   88 never executed
+branch 89 never executed
+branch 90 never executed
+call   91 never executed
+branch 92 never executed
+branch 93 never executed
+call   94 never executed
+branch 95 never executed
+branch 96 never executed
+call   97 never executed
+call   98 never executed
+branch 99 never executed
+branch 100 never executed
+call   101 never executed
+call   102 never executed
+branch 103 never executed
+branch 104 never executed
+call   105 never executed
+branch 106 never executed
+branch 107 never executed
+call   108 never executed
+call   109 never executed
+call   110 never executed
+branch 111 never executed
+branch 112 never executed
+call   113 never executed
+branch 114 never executed
+branch 115 never executed
+call   116 never executed
+call   117 never executed
+call   118 never executed
+call   119 never executed
+call   120 never executed
+-:   89:      {
+-:   90:        try {
+-:   91:          edit_v1v2c_community(parameters, config);
+-:   92:        } catch (snmp_config_exception const& e) {
+-:   93:          EXPECT_STREQ("missing parameter: v1-v2c-community-name", e.what());
+-:   94:          EXPECT_EQ(snmp_config_error::missing_parameter, e.error());
+-:   95:          throw;
+-:   96:        }
+-:   97:      },
+1:   98:      snmp_config_exception);
+call    0 returned 1
+call    1 never executed
+-:   99:
+1*:  100:  EXPECT_THAT(config.communities_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:  101:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  102:
+4:  103:TEST(edit_community, add_community_throws_when_access_is_invalid) {
+1:  104:  SnmpConfig config{};
+-:  105:  const parameter_map parameters = {
+-:  106:      {"v1-v2c-community-edit", "add"},
+-:  107:      {"v1-v2c-community-name", "community-name"},
+-:  108:      {"v1-v2c-community-access", "invalid-access"},
+5:  109:  };
+-:  110:
+2*:  111:  EXPECT_THROW(
+-:  112:      {
+-:  113:        try {
+-:  114:          edit_v1v2c_community(parameters, config);
+-:  115:        } catch (snmp_config_exception const& e) {
+-:  116:          EXPECT_STREQ("invalid conversion: invalid-access", e.what());
+-:  117:          EXPECT_EQ(snmp_config_error::invalid_parameter, e.error());
+-:  118:          throw;
+-:  119:        }
+-:  120:      },
+1:  121:      snmp_config_exception);
+-:  122:
+1*:  123:  EXPECT_THAT(config.communities_, IsEmpty());
+1:  124:}
+------------------
+_ZN4wago11snmp_config63edit_community_add_community_throws_when_access_is_invalid_TestC2Ev:
+function _ZN4wago11snmp_config63edit_community_add_community_throws_when_access_is_invalid_TestC2Ev called 1 returned 100% blocks executed 100%
+1:  103:TEST(edit_community, add_community_throws_when_access_is_invalid) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config63edit_community_add_community_throws_when_access_is_invalid_TestD0Ev:
+function _ZN4wago11snmp_config63edit_community_add_community_throws_when_access_is_invalid_TestD0Ev called 1 returned 100% blocks executed 100%
+1:  103:TEST(edit_community, add_community_throws_when_access_is_invalid) {
+call    0 returned 1
+call    1 returned 1
+------------------
+_ZN4wago11snmp_config63edit_community_add_community_throws_when_access_is_invalid_TestD2Ev:
+function _ZN4wago11snmp_config63edit_community_add_community_throws_when_access_is_invalid_TestD2Ev called 1 returned 100% blocks executed 100%
+1:  103:TEST(edit_community, add_community_throws_when_access_is_invalid) {
+call    0 returned 1
+------------------
+_ZN4wago11snmp_config63edit_community_add_community_throws_when_access_is_invalid_Test8TestBodyEv:
+function _ZN4wago11snmp_config63edit_community_add_community_throws_when_access_is_invalid_Test8TestBodyEv called 1 returned 100% blocks executed 30%
+1:  103:TEST(edit_community, add_community_throws_when_access_is_invalid) {
+1:  104:  SnmpConfig config{};
+call    0 returned 1
+-:  105:  const parameter_map parameters = {
+-:  106:      {"v1-v2c-community-edit", "add"},
+-:  107:      {"v1-v2c-community-name", "community-name"},
+-:  108:      {"v1-v2c-community-access", "invalid-access"},
+5:  109:  };
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+call   10 returned 1
+branch 11 taken 1 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 returned 3
+call   14 never executed
+-:  110:
+2*:  111:  EXPECT_THROW(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0
+call    9 returned 1
+branch 10 taken 0 (fallthrough)
+branch 11 taken 1 (throw)
+branch 12 taken 0 (fallthrough)
+branch 13 taken 1
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+branch 25 never executed
+branch 26 never executed
+call   27 never executed
+call   28 never executed
+branch 29 taken 0 (fallthrough)
+branch 30 taken 1
+call   31 returned 1
+call   32 returned 1
+call   33 returned 1
+branch 34 taken 1 (fallthrough)
+branch 35 taken 0 (throw)
+call   36 returned 1
+branch 37 taken 0 (fallthrough)
+branch 38 taken 1
+call   39 never executed
+branch 40 never executed
+branch 41 never executed
+call   42 never executed
+call   43 never executed
+branch 44 never executed
+branch 45 never executed
+call   46 never executed
+branch 47 never executed
+branch 48 never executed
+call   49 never executed
+call   50 never executed
+call   51 returned 1
+call   52 returned 1
+call   53 returned 1
+branch 54 taken 1 (fallthrough)
+branch 55 taken 0 (throw)
+call   56 returned 1
+branch 57 taken 0 (fallthrough)
+branch 58 taken 1
+call   59 never executed
+branch 60 never executed
+branch 61 never executed
+call   62 never executed
+call   63 never executed
+branch 64 never executed
+branch 65 never executed
+call   66 never executed
+branch 67 never executed
+branch 68 never executed
+call   69 never executed
+call   70 never executed
+call   71 returned 1
+call   72 returned 1
+call   73 never executed
+call   74 never executed
+call   75 never executed
+call   76 never executed
+call   77 never executed
+call   78 never executed
+call   79 returned 1
+branch 80 taken 1
+branch 81 taken 0
+branch 82 taken 0
+call   83 returned 1
+call   84 returned 1
+branch 85 taken 1 (fallthrough)
+branch 86 taken 0 (throw)
+call   87 never executed
+call   88 never executed
+branch 89 never executed
+branch 90 never executed
+call   91 never executed
+branch 92 never executed
+branch 93 never executed
+call   94 never executed
+branch 95 never executed
+branch 96 never executed
+call   97 never executed
+call   98 never executed
+branch 99 never executed
+branch 100 never executed
+call   101 never executed
+call   102 never executed
+branch 103 never executed
+branch 104 never executed
+call   105 never executed
+branch 106 never executed
+branch 107 never executed
+call   108 never executed
+call   109 never executed
+call   110 never executed
+branch 111 never executed
+branch 112 never executed
+call   113 never executed
+branch 114 never executed
+branch 115 never executed
+call   116 never executed
+call   117 never executed
+call   118 never executed
+call   119 never executed
+call   120 never executed
+-:  112:      {
+-:  113:        try {
+-:  114:          edit_v1v2c_community(parameters, config);
+-:  115:        } catch (snmp_config_exception const& e) {
+-:  116:          EXPECT_STREQ("invalid conversion: invalid-access", e.what());
+-:  117:          EXPECT_EQ(snmp_config_error::invalid_parameter, e.error());
+-:  118:          throw;
+-:  119:        }
+-:  120:      },
+1:  121:      snmp_config_exception);
+call    0 returned 1
+call    1 never executed
+-:  122:
+1*:  123:  EXPECT_THAT(config.communities_, IsEmpty());
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 0 (fallthrough)
+branch  9 taken 1
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+call   14 never executed
+branch 15 never executed
+branch 16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+call   22 returned 1
+call   23 never executed
+call   24 never executed
+call   25 never executed
+1:  124:}
+call    0 returned 1
+call    1 returned 1
+call    2 never executed
+call    3 never executed
+------------------
+-:  125:
+-:  126:}  // namespace wago::snmp_config

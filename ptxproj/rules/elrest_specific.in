@@ -1,0 +1,20 @@
+## SECTION=elrest_specific
+
+menu "Tools                            "
+source "generated/elrest_specific_tools.in"
+endmenu
+
+
+menu "Applications                     "
+source "generated/elrest_specific_applications.in"
+endmenu
+
+menu "Command-Line Tools               "
+source "generated/elrest_specific_commandline_tools.in"
+endmenu
+
+
+
+menu "Install Elrest custom WP400 files"
+source "generated/elrest_custom_wp400_install.in"
+endmenu

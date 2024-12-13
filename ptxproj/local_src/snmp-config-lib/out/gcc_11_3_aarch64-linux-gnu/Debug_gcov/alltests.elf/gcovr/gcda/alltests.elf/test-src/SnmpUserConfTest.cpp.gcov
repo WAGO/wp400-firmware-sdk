@@ -1,0 +1,911 @@
+-:    0:Source:test-src/SnmpUserConfTest.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:
+-:   10:#include <gtest/gtest.h>
+-:   11:#include <gmock/gmock.h>
+-:   12:
+-:   13:#include "SnmpUserConf.hpp"
+-:   14:
+-:   15:namespace wago::snmp_config_lib {
+-:   16:
+-:   17:struct TestData {
+-:   18:  ::std::string actual_user_conf_;
+-:   19:  ::std::string new_user_conf_;
+-:   20:  ::std::string actual_name_;
+-:   21:  ::std::string new_name_;
+-:   22:  ::std::string actual_desc_;
+-:   23:  ::std::string new_desc_;
+-:   24:
+function _ZN4wago15snmp_config_lib8TestData15GetActualConfigEv called 10 returned 100% blocks executed 86%
+10:   25:  SnmpConfig GetActualConfig() {
+10:   26:    SnmpConfig c;
+call    0 returned 10
+10:   27:    c.sys_name_ = actual_name_;
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+10:   28:    c.sys_descr_ = actual_desc_;
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+10:   29:    return c;
+=====:   30:  }
+call    0 never executed
+function _ZN4wago15snmp_config_lib8TestData12GetNewConfigEv called 10 returned 100% blocks executed 86%
+10:   31:  SnmpConfig GetNewConfig() {
+10:   32:    SnmpConfig c;
+call    0 returned 10
+10:   33:    c.sys_name_ = new_name_;
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+10:   34:    c.sys_descr_ = new_desc_;
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+10:   35:    return c;
+=====:   36:  }
+call    0 never executed
+-:   37:};
+-:   38:
+-:   39:struct SnmpUserConfTest : public ::testing::Test, public ::testing::WithParamInterface<TestData> {
+-:   40:  TestData param_;
+function _ZN4wago15snmp_config_lib16SnmpUserConfTest5SetUpEv called 10 returned 100% blocks executed 100%
+10:   41:  void SetUp() override {
+10:   42:    param_ = GetParam();
+call    0 returned 10
+call    1 returned 10
+10:   43:  }
+-:   44:};
+-:   45:
+21:   46:TEST_P(SnmpUserConfTest, UpdateSnmpUserConf ) {
+10:   47:  UpdateSnmpUserConfData(param_.actual_user_conf_, param_.GetNewConfig(), param_.GetActualConfig());
+10*:   48:  EXPECT_EQ(param_.new_user_conf_, param_.actual_user_conf_);
+10:   49:}
+------------------
+_ZN4wago15snmp_config_lib40SnmpUserConfTest_UpdateSnmpUserConf_Test8TestBodyEv:
+function _ZN4wago15snmp_config_lib40SnmpUserConfTest_UpdateSnmpUserConf_Test8TestBodyEv called 10 returned 100% blocks executed 34%
+10:   46:TEST_P(SnmpUserConfTest, UpdateSnmpUserConf ) {
+10:   47:  UpdateSnmpUserConfData(param_.actual_user_conf_, param_.GetNewConfig(), param_.GetActualConfig());
+call    0 returned 10
+call    1 returned 10
+branch  2 taken 10 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 10
+branch  5 taken 10 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 10
+call    8 returned 10
+call    9 never executed
+call   10 never executed
+call   11 never executed
+10*:   48:  EXPECT_EQ(param_.new_user_conf_, param_.actual_user_conf_);
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 10
+branch  4 taken 0 (fallthrough)
+branch  5 taken 10
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+branch 11 never executed
+branch 12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+call   18 returned 10
+call   19 never executed
+call   20 never executed
+call   21 never executed
+10:   49:}
+------------------
+_ZN4wago15snmp_config_lib40SnmpUserConfTest_UpdateSnmpUserConf_Test13AddToRegistryEv:
+function _ZN4wago15snmp_config_lib40SnmpUserConfTest_UpdateSnmpUserConf_Test13AddToRegistryEv called 1 returned 100% blocks executed 55%
+1:   46:TEST_P(SnmpUserConfTest, UpdateSnmpUserConf ) {
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+branch 21 taken 1 (fallthrough)
+branch 22 taken 0 (throw)
+call   23 returned 1
+branch 24 taken 1 (fallthrough)
+branch 25 taken 0 (throw)
+call   26 returned 1
+call   27 returned 1
+call   28 returned 1
+call   29 returned 1
+call   30 returned 1
+call   31 returned 1
+call   32 never executed
+call   33 never executed
+call   34 never executed
+call   35 never executed
+call   36 never executed
+call   37 never executed
+------------------
+_ZN4wago15snmp_config_lib40SnmpUserConfTest_UpdateSnmpUserConf_TestC2Ev:
+function _ZN4wago15snmp_config_lib40SnmpUserConfTest_UpdateSnmpUserConf_TestC2Ev called 10 returned 100% blocks executed 100%
+10:   46:TEST_P(SnmpUserConfTest, UpdateSnmpUserConf ) {
+call    0 returned 10
+------------------
+-:   50:
+12*:   51:INSTANTIATE_TEST_CASE_P(
+------------------
+_ZN4wago15snmp_config_libL58gtest_UpdateSnmpUserConfSnmpUserConfTest_EvalGenerateName_ERKN7testing13TestParamInfoINS0_8TestDataEEE:
+function _ZN4wago15snmp_config_libL58gtest_UpdateSnmpUserConfSnmpUserConfTest_EvalGenerateName_ERKN7testing13TestParamInfoINS0_8TestDataEEE called 10 returned 100% blocks executed 1%
+10*:   51:INSTANTIATE_TEST_CASE_P(
+call    0 returned 10
+branch  1 taken 0 (fallthrough)
+branch  2 taken 10
+call    3 never executed
+call    4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+call    8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+branch 14 never executed
+branch 15 never executed
+call   16 never executed
+call   17 never executed
+branch 18 never executed
+branch 19 never executed
+call   20 never executed
+call   21 never executed
+branch 22 never executed
+branch 23 never executed
+call   24 never executed
+call   25 never executed
+branch 26 never executed
+branch 27 never executed
+call   28 never executed
+call   29 never executed
+branch 30 never executed
+branch 31 never executed
+call   32 never executed
+call   33 never executed
+branch 34 never executed
+branch 35 never executed
+call   36 never executed
+call   37 never executed
+branch 38 never executed
+branch 39 never executed
+call   40 never executed
+call   41 never executed
+branch 42 never executed
+branch 43 never executed
+call   44 never executed
+call   45 never executed
+branch 46 never executed
+branch 47 never executed
+call   48 never executed
+call   49 never executed
+branch 50 never executed
+branch 51 never executed
+call   52 never executed
+call   53 never executed
+branch 54 never executed
+branch 55 never executed
+call   56 never executed
+call   57 never executed
+branch 58 never executed
+branch 59 never executed
+call   60 never executed
+call   61 never executed
+branch 62 never executed
+branch 63 never executed
+call   64 never executed
+call   65 never executed
+branch 66 never executed
+branch 67 never executed
+call   68 never executed
+call   69 never executed
+branch 70 never executed
+branch 71 never executed
+call   72 never executed
+call   73 never executed
+branch 74 never executed
+branch 75 never executed
+call   76 never executed
+call   77 never executed
+branch 78 never executed
+branch 79 never executed
+call   80 never executed
+call   81 never executed
+branch 82 never executed
+branch 83 never executed
+call   84 never executed
+call   85 never executed
+branch 86 never executed
+branch 87 never executed
+call   88 never executed
+call   89 never executed
+branch 90 never executed
+branch 91 never executed
+call   92 never executed
+call   93 never executed
+branch 94 never executed
+branch 95 never executed
+call   96 never executed
+call   97 never executed
+branch 98 never executed
+branch 99 never executed
+call   100 never executed
+call   101 never executed
+branch 102 never executed
+branch 103 never executed
+call   104 never executed
+call   105 never executed
+branch 106 never executed
+branch 107 never executed
+call   108 never executed
+call   109 never executed
+branch 110 never executed
+branch 111 never executed
+call   112 never executed
+call   113 never executed
+branch 114 never executed
+branch 115 never executed
+call   116 never executed
+call   117 never executed
+branch 118 never executed
+branch 119 never executed
+call   120 never executed
+call   121 never executed
+branch 122 never executed
+branch 123 never executed
+call   124 never executed
+call   125 never executed
+branch 126 never executed
+branch 127 never executed
+call   128 never executed
+call   129 never executed
+branch 130 never executed
+branch 131 never executed
+call   132 never executed
+call   133 never executed
+branch 134 never executed
+branch 135 never executed
+call   136 never executed
+call   137 never executed
+branch 138 never executed
+branch 139 never executed
+call   140 never executed
+call   141 never executed
+branch 142 never executed
+branch 143 never executed
+call   144 never executed
+call   145 never executed
+branch 146 never executed
+branch 147 never executed
+call   148 never executed
+call   149 never executed
+branch 150 never executed
+branch 151 never executed
+call   152 never executed
+call   153 never executed
+branch 154 never executed
+branch 155 never executed
+call   156 never executed
+call   157 never executed
+branch 158 never executed
+branch 159 never executed
+call   160 never executed
+call   161 never executed
+branch 162 never executed
+branch 163 never executed
+call   164 never executed
+call   165 never executed
+branch 166 never executed
+branch 167 never executed
+call   168 never executed
+call   169 never executed
+branch 170 never executed
+branch 171 never executed
+call   172 never executed
+call   173 never executed
+branch 174 never executed
+branch 175 never executed
+call   176 never executed
+call   177 never executed
+branch 178 never executed
+branch 179 never executed
+call   180 never executed
+call   181 never executed
+branch 182 never executed
+branch 183 never executed
+call   184 never executed
+call   185 never executed
+branch 186 never executed
+branch 187 never executed
+call   188 never executed
+call   189 never executed
+branch 190 never executed
+branch 191 never executed
+call   192 never executed
+call   193 never executed
+branch 194 never executed
+branch 195 never executed
+call   196 never executed
+call   197 never executed
+branch 198 never executed
+branch 199 never executed
+call   200 never executed
+call   201 never executed
+branch 202 never executed
+branch 203 never executed
+call   204 never executed
+call   205 never executed
+branch 206 never executed
+branch 207 never executed
+call   208 never executed
+call   209 never executed
+branch 210 never executed
+branch 211 never executed
+call   212 never executed
+call   213 never executed
+branch 214 never executed
+branch 215 never executed
+call   216 never executed
+call   217 never executed
+branch 218 never executed
+branch 219 never executed
+call   220 never executed
+call   221 never executed
+branch 222 never executed
+branch 223 never executed
+call   224 never executed
+call   225 never executed
+branch 226 never executed
+branch 227 never executed
+call   228 never executed
+call   229 never executed
+branch 230 never executed
+branch 231 never executed
+call   232 never executed
+call   233 never executed
+branch 234 never executed
+branch 235 never executed
+call   236 never executed
+call   237 never executed
+branch 238 never executed
+branch 239 never executed
+call   240 never executed
+call   241 never executed
+branch 242 never executed
+branch 243 never executed
+call   244 never executed
+branch 245 never executed
+branch 246 never executed
+call   247 never executed
+branch 248 never executed
+branch 249 never executed
+call   250 never executed
+call   251 never executed
+call   252 never executed
+call   253 never executed
+call   254 never executed
+call   255 never executed
+call   256 never executed
+call   257 never executed
+call   258 never executed
+call   259 never executed
+call   260 never executed
+call   261 never executed
+call   262 never executed
+call   263 never executed
+call   264 never executed
+call   265 never executed
+call   266 never executed
+call   267 never executed
+call   268 never executed
+call   269 never executed
+call   270 never executed
+call   271 never executed
+call   272 never executed
+call   273 never executed
+call   274 never executed
+call   275 never executed
+call   276 never executed
+call   277 never executed
+call   278 never executed
+call   279 never executed
+call   280 never executed
+call   281 never executed
+call   282 never executed
+call   283 never executed
+call   284 never executed
+call   285 never executed
+call   286 never executed
+call   287 never executed
+call   288 never executed
+call   289 never executed
+call   290 never executed
+call   291 never executed
+call   292 never executed
+call   293 never executed
+call   294 never executed
+call   295 never executed
+call   296 never executed
+call   297 never executed
+call   298 never executed
+call   299 never executed
+call   300 never executed
+call   301 never executed
+call   302 never executed
+call   303 never executed
+call   304 never executed
+call   305 never executed
+call   306 never executed
+call   307 never executed
+call   308 never executed
+call   309 never executed
+call   310 never executed
+call   311 never executed
+call   312 never executed
+call   313 never executed
+call   314 never executed
+call   315 never executed
+call   316 never executed
+call   317 never executed
+call   318 never executed
+call   319 never executed
+call   320 never executed
+call   321 returned 10
+------------------
+_ZN4wago15snmp_config_libL55gtest_UpdateSnmpUserConfSnmpUserConfTest_EvalGenerator_Ev:
+function _ZN4wago15snmp_config_libL55gtest_UpdateSnmpUserConfSnmpUserConfTest_EvalGenerator_Ev called 1 returned 100% blocks executed 48%
+2:   51:INSTANTIATE_TEST_CASE_P(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 1
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+call   12 returned 1
+call   13 returned 1
+branch 14 taken 1 (fallthrough)
+branch 15 taken 0 (throw)
+call   16 returned 1
+call   17 returned 1
+branch 18 taken 1 (fallthrough)
+branch 19 taken 0 (throw)
+call   20 returned 1
+call   21 returned 1
+branch 22 taken 1 (fallthrough)
+branch 23 taken 0 (throw)
+call   24 returned 1
+call   25 returned 1
+branch 26 taken 1 (fallthrough)
+branch 27 taken 0 (throw)
+call   28 returned 1
+call   29 returned 1
+branch 30 taken 1 (fallthrough)
+branch 31 taken 0 (throw)
+call   32 returned 1
+call   33 returned 1
+branch 34 taken 1 (fallthrough)
+branch 35 taken 0 (throw)
+call   36 returned 1
+call   37 returned 1
+branch 38 taken 1 (fallthrough)
+branch 39 taken 0 (throw)
+call   40 returned 1
+call   41 returned 1
+branch 42 taken 1 (fallthrough)
+branch 43 taken 0 (throw)
+call   44 returned 1
+call   45 returned 1
+branch 46 taken 1 (fallthrough)
+branch 47 taken 0 (throw)
+call   48 returned 1
+call   49 returned 1
+branch 50 taken 1 (fallthrough)
+branch 51 taken 0 (throw)
+call   52 returned 1
+call   53 returned 1
+branch 54 taken 1 (fallthrough)
+branch 55 taken 0 (throw)
+call   56 returned 1
+call   57 returned 1
+branch 58 taken 1 (fallthrough)
+branch 59 taken 0 (throw)
+call   60 returned 1
+call   61 returned 1
+branch 62 taken 1 (fallthrough)
+branch 63 taken 0 (throw)
+call   64 returned 1
+call   65 returned 1
+branch 66 taken 1 (fallthrough)
+branch 67 taken 0 (throw)
+call   68 returned 1
+call   69 returned 1
+branch 70 taken 1 (fallthrough)
+branch 71 taken 0 (throw)
+call   72 returned 1
+call   73 returned 1
+branch 74 taken 1 (fallthrough)
+branch 75 taken 0 (throw)
+call   76 returned 1
+call   77 returned 1
+branch 78 taken 1 (fallthrough)
+branch 79 taken 0 (throw)
+call   80 returned 1
+call   81 returned 1
+branch 82 taken 1 (fallthrough)
+branch 83 taken 0 (throw)
+call   84 returned 1
+call   85 returned 1
+branch 86 taken 1 (fallthrough)
+branch 87 taken 0 (throw)
+call   88 returned 1
+call   89 returned 1
+branch 90 taken 1 (fallthrough)
+branch 91 taken 0 (throw)
+call   92 returned 1
+call   93 returned 1
+branch 94 taken 1 (fallthrough)
+branch 95 taken 0 (throw)
+call   96 returned 1
+call   97 returned 1
+branch 98 taken 1 (fallthrough)
+branch 99 taken 0 (throw)
+call   100 returned 1
+call   101 returned 1
+branch 102 taken 1 (fallthrough)
+branch 103 taken 0 (throw)
+call   104 returned 1
+call   105 returned 1
+branch 106 taken 1 (fallthrough)
+branch 107 taken 0 (throw)
+call   108 returned 1
+call   109 returned 1
+branch 110 taken 1 (fallthrough)
+branch 111 taken 0 (throw)
+call   112 returned 1
+call   113 returned 1
+branch 114 taken 1 (fallthrough)
+branch 115 taken 0 (throw)
+call   116 returned 1
+call   117 returned 1
+branch 118 taken 1 (fallthrough)
+branch 119 taken 0 (throw)
+call   120 returned 1
+call   121 returned 1
+branch 122 taken 1 (fallthrough)
+branch 123 taken 0 (throw)
+call   124 returned 1
+call   125 returned 1
+branch 126 taken 1 (fallthrough)
+branch 127 taken 0 (throw)
+call   128 returned 1
+call   129 returned 1
+branch 130 taken 1 (fallthrough)
+branch 131 taken 0 (throw)
+call   132 returned 1
+call   133 returned 1
+branch 134 taken 1 (fallthrough)
+branch 135 taken 0 (throw)
+call   136 returned 1
+call   137 returned 1
+branch 138 taken 1 (fallthrough)
+branch 139 taken 0 (throw)
+call   140 returned 1
+call   141 returned 1
+branch 142 taken 1 (fallthrough)
+branch 143 taken 0 (throw)
+call   144 returned 1
+call   145 returned 1
+branch 146 taken 1 (fallthrough)
+branch 147 taken 0 (throw)
+call   148 returned 1
+call   149 returned 1
+branch 150 taken 1 (fallthrough)
+branch 151 taken 0 (throw)
+call   152 returned 1
+call   153 returned 1
+branch 154 taken 1 (fallthrough)
+branch 155 taken 0 (throw)
+call   156 returned 1
+call   157 returned 1
+branch 158 taken 1 (fallthrough)
+branch 159 taken 0 (throw)
+call   160 returned 1
+call   161 returned 1
+branch 162 taken 1 (fallthrough)
+branch 163 taken 0 (throw)
+call   164 returned 1
+call   165 returned 1
+branch 166 taken 1 (fallthrough)
+branch 167 taken 0 (throw)
+call   168 returned 1
+call   169 returned 1
+branch 170 taken 1 (fallthrough)
+branch 171 taken 0 (throw)
+call   172 returned 1
+call   173 returned 1
+branch 174 taken 1 (fallthrough)
+branch 175 taken 0 (throw)
+call   176 returned 1
+call   177 returned 1
+branch 178 taken 1 (fallthrough)
+branch 179 taken 0 (throw)
+call   180 returned 1
+call   181 returned 1
+branch 182 taken 1 (fallthrough)
+branch 183 taken 0 (throw)
+call   184 returned 1
+call   185 returned 1
+branch 186 taken 1 (fallthrough)
+branch 187 taken 0 (throw)
+call   188 returned 1
+call   189 returned 1
+branch 190 taken 1 (fallthrough)
+branch 191 taken 0 (throw)
+call   192 returned 1
+call   193 returned 1
+branch 194 taken 1 (fallthrough)
+branch 195 taken 0 (throw)
+call   196 returned 1
+call   197 returned 1
+branch 198 taken 1 (fallthrough)
+branch 199 taken 0 (throw)
+call   200 returned 1
+call   201 returned 1
+branch 202 taken 1 (fallthrough)
+branch 203 taken 0 (throw)
+call   204 returned 1
+call   205 returned 1
+branch 206 taken 1 (fallthrough)
+branch 207 taken 0 (throw)
+call   208 returned 1
+call   209 returned 1
+branch 210 taken 1 (fallthrough)
+branch 211 taken 0 (throw)
+call   212 returned 1
+call   213 returned 1
+branch 214 taken 1 (fallthrough)
+branch 215 taken 0 (throw)
+call   216 returned 1
+call   217 returned 1
+branch 218 taken 1 (fallthrough)
+branch 219 taken 0 (throw)
+call   220 returned 1
+call   221 returned 1
+branch 222 taken 1 (fallthrough)
+branch 223 taken 0 (throw)
+call   224 returned 1
+call   225 returned 1
+branch 226 taken 1 (fallthrough)
+branch 227 taken 0 (throw)
+call   228 returned 1
+call   229 returned 1
+branch 230 taken 1 (fallthrough)
+branch 231 taken 0 (throw)
+call   232 returned 1
+call   233 returned 1
+branch 234 taken 1 (fallthrough)
+branch 235 taken 0 (throw)
+call   236 returned 1
+call   237 returned 1
+branch 238 taken 1 (fallthrough)
+branch 239 taken 0 (throw)
+call   240 returned 1
+branch 241 taken 1 (fallthrough)
+branch 242 taken 0 (throw)
+call   243 returned 1
+branch 244 taken 1 (fallthrough)
+branch 245 taken 0 (throw)
+call   246 returned 1
+call   247 returned 1
+call   248 returned 1
+call   249 returned 1
+call   250 returned 1
+call   251 returned 1
+call   252 returned 1
+call   253 returned 1
+call   254 returned 1
+call   255 returned 1
+call   256 returned 1
+call   257 returned 1
+call   258 returned 1
+call   259 returned 1
+call   260 returned 1
+call   261 returned 1
+call   262 returned 1
+call   263 returned 1
+call   264 returned 1
+call   265 returned 1
+call   266 returned 1
+call   267 returned 1
+call   268 returned 1
+call   269 returned 1
+call   270 returned 1
+call   271 returned 1
+call   272 returned 1
+call   273 returned 1
+call   274 returned 1
+call   275 returned 1
+call   276 returned 1
+call   277 returned 1
+call   278 returned 1
+call   279 returned 1
+call   280 returned 1
+call   281 returned 1
+call   282 returned 1
+call   283 returned 1
+call   284 returned 1
+call   285 returned 1
+call   286 returned 1
+call   287 returned 1
+call   288 returned 1
+call   289 returned 1
+call   290 returned 1
+call   291 returned 1
+call   292 returned 1
+call   293 returned 1
+call   294 returned 1
+call   295 returned 1
+call   296 returned 1
+call   297 returned 1
+call   298 returned 1
+call   299 returned 1
+call   300 returned 1
+call   301 returned 1
+call   302 returned 1
+call   303 returned 1
+call   304 returned 1
+call   305 returned 1
+call   306 returned 1
+call   307 returned 1
+call   308 returned 1
+call   309 returned 1
+call   310 returned 1
+call   311 returned 1
+call   312 returned 1
+call   313 returned 1
+call   314 returned 1
+call   315 returned 1
+call   316 returned 1
+call   317 never executed
+call   318 never executed
+call   319 never executed
+call   320 never executed
+call   321 never executed
+call   322 never executed
+call   323 never executed
+call   324 never executed
+call   325 never executed
+call   326 never executed
+call   327 never executed
+call   328 never executed
+call   329 never executed
+call   330 never executed
+call   331 never executed
+call   332 never executed
+call   333 never executed
+call   334 never executed
+call   335 never executed
+call   336 never executed
+call   337 never executed
+call   338 never executed
+call   339 never executed
+call   340 never executed
+call   341 never executed
+call   342 never executed
+call   343 never executed
+call   344 never executed
+call   345 never executed
+call   346 never executed
+call   347 never executed
+call   348 never executed
+call   349 never executed
+call   350 never executed
+call   351 never executed
+call   352 never executed
+call   353 never executed
+call   354 never executed
+call   355 never executed
+call   356 never executed
+call   357 never executed
+call   358 never executed
+call   359 never executed
+call   360 never executed
+call   361 never executed
+call   362 never executed
+call   363 never executed
+call   364 never executed
+call   365 never executed
+call   366 never executed
+call   367 never executed
+call   368 never executed
+call   369 never executed
+call   370 never executed
+call   371 never executed
+call   372 never executed
+call   373 never executed
+call   374 never executed
+call   375 never executed
+call   376 never executed
+call   377 never executed
+call   378 never executed
+call   379 never executed
+call   380 never executed
+call   381 never executed
+call   382 never executed
+call   383 never executed
+call   384 never executed
+call   385 never executed
+call   386 never executed
+call   387 never executed
+------------------
+-:   52:    UpdateSnmpUserConf, SnmpUserConfTest,
+-:   53:    ::testing::Values<TestData>(TestData { "USE_USER_DEFINED_DEVICE_NAME=no\nUSE_USER_DEFINED_DESCRIPTION=no\n",
+-:   54:                                    "USE_USER_DEFINED_DEVICE_NAME=yes\nUSE_USER_DEFINED_DESCRIPTION=yes\n", "name1",
+-:   55:                                    "name2", "desc1", "desc2" },
+-:   56:                                TestData { "USE_USER_DEFINED_DEVICE_NAME=no\nUSE_USER_DEFINED_DESCRIPTION=no\n",
+-:   57:                                    "USE_USER_DEFINED_DEVICE_NAME=yes\nUSE_USER_DEFINED_DESCRIPTION=no\n", "name1",
+-:   58:                                    "name2", "desc1", "desc1" },
+-:   59:                                TestData { "USE_USER_DEFINED_DEVICE_NAME=no\nUSE_USER_DEFINED_DESCRIPTION=no\n",
+-:   60:                                    "USE_USER_DEFINED_DEVICE_NAME=no\nUSE_USER_DEFINED_DESCRIPTION=yes\n", "name1",
+-:   61:                                    "name1", "desc1", "desc2" },
+-:   62:                                TestData { "USE_USER_DEFINED_DEVICE_NAME=no\nUSE_USER_DEFINED_DESCRIPTION=no\n",
+-:   63:                                    "USE_USER_DEFINED_DEVICE_NAME=no\nUSE_USER_DEFINED_DESCRIPTION=no\n", "name1",
+-:   64:                                    "name1", "desc1", "desc1" },
+-:   65:                                TestData { "USE_USER_DEFINED_DEVICE_NAME=yes\nUSE_USER_DEFINED_DESCRIPTION=no\n",
+-:   66:                                    "USE_USER_DEFINED_DEVICE_NAME=yes\nUSE_USER_DEFINED_DESCRIPTION=yes\n", "name1",
+-:   67:                                    "name1", "desc1", "desc2" },
+-:   68:                                TestData { "USE_USER_DEFINED_DEVICE_NAME=no\nUSE_USER_DEFINED_DESCRIPTION=yes\n",
+-:   69:                                    "USE_USER_DEFINED_DEVICE_NAME=yes\nUSE_USER_DEFINED_DESCRIPTION=yes\n", "name1",
+-:   70:                                    "name2", "desc1", "desc1" },
+-:   71:                                TestData { "", "USE_USER_DEFINED_DEVICE_NAME=no\nUSE_USER_DEFINED_DESCRIPTION=no\n",
+-:   72:                                    "name1", "name1", "desc1", "desc1" },
+-:   73:                                TestData { "", "USE_USER_DEFINED_DEVICE_NAME=yes\nUSE_USER_DEFINED_DESCRIPTION=no\n",
+-:   74:                                    "name1", "name2", "desc1", "desc1" },
+-:   75:                                TestData { "", "USE_USER_DEFINED_DEVICE_NAME=no\nUSE_USER_DEFINED_DESCRIPTION=yes\n",
+-:   76:                                    "name1", "name1", "desc1", "desc2" },
+-:   77:                                TestData { "", "USE_USER_DEFINED_DEVICE_NAME=yes\nUSE_USER_DEFINED_DESCRIPTION=yes\n",
+-:   78:                                    "name1", "name2", "desc1", "desc2" }));
+-:   79:
+-:   80:}
+-:   81:// wago::util

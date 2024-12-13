@@ -1,0 +1,102 @@
+-:    0:Source:src/config_dnsmasq/port_data.hpp
+-:    1://------------------------------------------------------------------------------
+-:    2:/// Copyright (c) 2020-2024 WAGO GmbH & Co. KG
+-:    3:///
+-:    4:/// PROPRIETARY RIGHTS of WAGO GmbH & Co. KG are involved in
+-:    5:/// the subject matter of this material. All manufacturing, reproduction,
+-:    6:/// use, and sales rights pertaining to this subject matter are governed
+-:    7:/// by the license agreement. The recipient of this software implicitly
+-:    8:/// accepts the terms of the license.
+-:    9://------------------------------------------------------------------------------
+-:   10://------------------------------------------------------------------------------
+-:   11:///
+-:   12:///  \brief    Class representation of a port configuration
+-:   13:///
+-:   14:///  \author   MSc : WAGO GmbH & Co. KG
+-:   15://------------------------------------------------------------------------------
+-:   16:
+-:   17:#ifndef SRC_CONFIG_DNSMASQ_PORTDATA_HPP_
+-:   18:#define SRC_CONFIG_DNSMASQ_PORTDATA_HPP_
+-:   19:
+-:   20:#include <BaseTypes.hpp>
+-:   21:#include <cstdint>
+-:   22:#include <string>
+-:   23:#include <BridgeConfig.hpp>
+-:   24:#include <IPConfig.hpp>
+-:   25:#include <InterfaceConfig.hpp>
+-:   26:
+-:   27:namespace napi = ::netconf::api;
+-:   28:
+-:   29:namespace configdnsmasq {
+-:   30:
+-:   31:class port_data {
+-:   32: public:
+-:   33:  std::string port_name_;
+-:   34:  std::string state_;
+-:   35:  netconf::LinkState link_state_;
+-:   36:  std::string type_;
+-:   37:  std::string ip_addr_;
+-:   38:  std::string netmask_;
+-:   39:  uint32_t ip_addr_bin_;
+-:   40:  uint32_t netmask_bin_;
+-:   41:  uint32_t network_bin_;
+-:   42:
+-:   43:  port_data();
+function _ZN13configdnsmasq9port_dataC2ERKS0_ called 14 returned 100% blocks executed 50%
+14:   44:  port_data(const port_data& data) = default;
+call    0 returned 14
+call    1 returned 14
+branch  2 taken 14 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 14
+branch  5 taken 14 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 14
+branch  8 taken 14 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 14
+branch 11 taken 14 (fallthrough)
+branch 12 taken 0 (throw)
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+-:   45:  port_data& operator=(const port_data& other) = default;
+-:   46:  port_data(port_data&& other) = delete;
+-:   47:  port_data& operator=(port_data&& other) = delete;
+18*:   48:  virtual ~port_data() = default;
+------------------
+_ZN13configdnsmasq9port_dataD0Ev:
+function _ZN13configdnsmasq9port_dataD0Ev called 0 returned 0% blocks executed 0%
+#####:   48:  virtual ~port_data() = default;
+call    0 never executed
+call    1 never executed
+------------------
+_ZN13configdnsmasq9port_dataD2Ev:
+function _ZN13configdnsmasq9port_dataD2Ev called 18 returned 100% blocks executed 100%
+18:   48:  virtual ~port_data() = default;
+call    0 returned 18
+call    1 returned 18
+call    2 returned 18
+call    3 returned 18
+call    4 returned 18
+------------------
+-:   49:
+-:   50:  void setState(const std::string &bridge, const napi::BridgeConfig &bridgeConfig,
+-:   51:                napi::InterfaceConfigs interfaceConfig);
+-:   52:  void setLinkState(const std::string &bridge, const napi::BridgeConfig &bridgeConfig,
+-:   53:                    const netconf::InterfaceStatuses& interfaceStatuses);
+-:   54:  void setIpAddress(const std::string &address);
+-:   55:  void setNetmask(const std::string &netmask);
+-:   56:  void setType(const netconf::IPConfig &ip_config);
+-:   57:  bool has_valid_ip_config();
+-:   58:
+-:   59: private:
+-:   60:  bool areAllBridgeInterfacesDown(const std::string &bridge_name, const napi::BridgeConfig& bridge_config,
+-:   61:                                  napi::InterfaceConfigs& interface_config);
+-:   62:  bool areAllBridgeInterfacesLowerDown(const std::string &bridge_name, const napi::BridgeConfig& bridge_config,
+-:   63:                                       const netconf::InterfaceStatuses& interface_statuses);
+-:   64:};
+-:   65:
+-:   66:} // namespace configdnsmasq
+-:   67:#endif /* SRC_CONFIG_DNSMASQ_PORTDATA_HPP_ */

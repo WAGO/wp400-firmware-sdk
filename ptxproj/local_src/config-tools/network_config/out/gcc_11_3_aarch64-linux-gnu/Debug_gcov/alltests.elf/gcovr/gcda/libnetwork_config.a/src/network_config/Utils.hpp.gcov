@@ -1,0 +1,528 @@
+-:    0:Source:src/network_config/Utils.hpp
+-:    1:// SPDX-License-Identifier: GPL-2.0-or-later
+-:    2:
+-:    3:#pragma once
+-:    4:
+-:    5:#include "UriEscape.hpp"
+-:    6:
+-:    7:#include <string>
+-:    8:#include <boost/algorithm/string/trim.hpp>
+-:    9:#include <boost/algorithm/string/join.hpp>
+-:   10:#include <boost/optional/optional.hpp>
+-:   11:#include <initializer_list>
+-:   12:#include <array>
+-:   13:#include "OptionParser.hpp"
+-:   14:#include "OptionStrings.hpp"
+-:   15:#include "BaseTypes.hpp"
+-:   16:
+-:   17:namespace network_config {
+-:   18:
+-:   19:bool Contains(const boost::program_options::variables_map &map, const ::std::string &key);
+-:   20:bool Contains(const boost::program_options::variables_map &map, const Option &option);
+-:   21:::std::string GetValueOf(const boost::program_options::variables_map &map, const ::std::string &key);
+-:   22:::std::string GetValueOf(const boost::program_options::variables_map &map, const Option &option);
+-:   23:boost::optional<::std::vector<::std::string>> GetValuesOf(
+-:   24:    const boost::program_options::variables_map &map, const ::std::string &key);
+-:   25:::std::string GetValueOfGet(const boost::program_options::variables_map &map);
+-:   26:::std::string GetValueOfSet(const boost::program_options::variables_map &map);
+-:   27:::std::string GetValueOfAdd(const boost::program_options::variables_map &map);
+-:   28:::std::string GetValueOfDel(const boost::program_options::variables_map &map);
+-:   29:::std::string GetFormat(const boost::program_options::variables_map &map);
+-:   30:::std::string GetDevice(const boost::program_options::variables_map &map);
+-:   31:::std::string Get(const boost::program_options::variables_map &map, const Option &option);
+-:   32:
+-:   33:template<typename ... Options>
+function _ZN14network_config15JoinOptionNamesIJRKNS_6OptionES3_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_DpOT_ called 0 returned 0% blocks executed 0%
+#####:   34:::std::string JoinOptionNames(std::string separator, Options &&... options) {
+#####:   35:  ::std::array<::std::string, sizeof...(options)> options_a { { (options.name)... } };
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+call    5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+call   10 never executed
+call   11 never executed
+call   12 never executed
+#####:   36:  return boost::algorithm::join(options_a, separator);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   37:}
+call    0 never executed
+call    1 never executed
+-:   38:
+-:   39:template<typename ... Args>
+function _ZN14network_config28OptionalAndMutuallyExclusiveIJRKNS_6OptionES3_EEEvRKN5boost15program_options13variables_mapEDpOT_ called 19 returned 95% blocks executed 49%
+19:   40:void OptionalAndMutuallyExclusive(const boost::program_options::variables_map &map, Args &&... args) {
+19:   41:  auto option_count = (map.count(args.name) + ...);
+call    0 returned 19
+call    1 returned 19
+branch  2 taken 19 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 19
+branch  5 taken 19 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 19
+call    8 returned 19
+branch  9 taken 19 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 19
+branch 12 taken 19 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 19
+call   15 returned 19
+call   16 returned 19
+call   17 returned 19
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+-:   42:
+19:   43:  if (option_count > 1) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 18
+2:   44:    throw boost::program_options::error(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 never executed
+2:   45:        ::std::string("Optional arguments are mutually exclusive: " + JoinOptionNames(",", args...)));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+branch  8 taken 1 (fallthrough)
+branch  9 taken 0 (throw)
+call   10 returned 1
+call   11 returned 1
+call   12 returned 1
+call   13 returned 1
+call   14 returned 0
+call   15 never executed
+call   16 never executed
+call   17 never executed
+call   18 never executed
+-:   46:  }
+18:   47:}
+-:   48:
+-:   49:template<typename ... Args>
+35:   50:void MutuallyExclusiveAndOnlyOnce(const boost::program_options::variables_map &map, Args &&... args) {
+35:   51:  auto option_count = (map.count(args.name) + ... );
+-:   52:
+35:   53:  if (option_count != 1) {
+8:   54:    throw boost::program_options::error(
+8:   55:        ::std::string("Either options are set that are mutually exclusive, or an option is set multiple times."));
+-:   56:  }
+31:   57:}
+------------------
+_ZN14network_config28MutuallyExclusiveAndOnlyOnceIJRKNS_6OptionEEEEvRKN5boost15program_options13variables_mapEDpOT_:
+function _ZN14network_config28MutuallyExclusiveAndOnlyOnceIJRKNS_6OptionEEEEvRKN5boost15program_options13variables_mapEDpOT_ called 5 returned 80% blocks executed 54%
+5:   50:void MutuallyExclusiveAndOnlyOnce(const boost::program_options::variables_map &map, Args &&... args) {
+5:   51:  auto option_count = (map.count(args.name) + ... );
+call    0 returned 5
+call    1 returned 5
+branch  2 taken 5 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 5
+branch  5 taken 5 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 5
+call    8 returned 5
+call    9 never executed
+call   10 never executed
+call   11 never executed
+-:   52:
+5:   53:  if (option_count != 1) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 4
+2:   54:    throw boost::program_options::error(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 never executed
+2:   55:        ::std::string("Either options are set that are mutually exclusive, or an option is set multiple times."));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+call    6 returned 0
+call    7 never executed
+call    8 never executed
+-:   56:  }
+4:   57:}
+------------------
+_ZN14network_config28MutuallyExclusiveAndOnlyOnceIJRKNS_6OptionES3_S3_EEEvRKN5boost15program_options13variables_mapEDpOT_:
+function _ZN14network_config28MutuallyExclusiveAndOnlyOnceIJRKNS_6OptionES3_S3_EEEvRKN5boost15program_options13variables_mapEDpOT_ called 6 returned 83% blocks executed 50%
+6:   50:void MutuallyExclusiveAndOnlyOnce(const boost::program_options::variables_map &map, Args &&... args) {
+6:   51:  auto option_count = (map.count(args.name) + ... );
+call    0 returned 6
+call    1 returned 6
+branch  2 taken 6 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 6
+branch  5 taken 6 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 6
+call    8 returned 6
+branch  9 taken 6 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 6
+branch 12 taken 6 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 6
+call   15 returned 6
+branch 16 taken 6 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 6
+branch 19 taken 6 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 6
+call   22 returned 6
+call   23 returned 6
+call   24 returned 6
+call   25 returned 6
+call   26 returned 6
+call   27 never executed
+call   28 never executed
+call   29 never executed
+call   30 never executed
+call   31 never executed
+call   32 never executed
+call   33 never executed
+-:   52:
+6:   53:  if (option_count != 1) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 5
+2:   54:    throw boost::program_options::error(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 never executed
+2:   55:        ::std::string("Either options are set that are mutually exclusive, or an option is set multiple times."));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+call    6 returned 0
+call    7 never executed
+call    8 never executed
+-:   56:  }
+5:   57:}
+------------------
+_ZN14network_config28MutuallyExclusiveAndOnlyOnceIJRKNS_6OptionES3_EEEvRKN5boost15program_options13variables_mapEDpOT_:
+function _ZN14network_config28MutuallyExclusiveAndOnlyOnceIJRKNS_6OptionES3_EEEvRKN5boost15program_options13variables_mapEDpOT_ called 4 returned 75% blocks executed 51%
+4:   50:void MutuallyExclusiveAndOnlyOnce(const boost::program_options::variables_map &map, Args &&... args) {
+4:   51:  auto option_count = (map.count(args.name) + ... );
+call    0 returned 4
+call    1 returned 4
+branch  2 taken 4 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 4
+branch  5 taken 4 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 4
+call    8 returned 4
+branch  9 taken 4 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 4
+branch 12 taken 4 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 4
+call   15 returned 4
+call   16 returned 4
+call   17 returned 4
+call   18 never executed
+call   19 never executed
+call   20 never executed
+call   21 never executed
+call   22 never executed
+-:   52:
+4:   53:  if (option_count != 1) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 3
+2:   54:    throw boost::program_options::error(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 never executed
+2:   55:        ::std::string("Either options are set that are mutually exclusive, or an option is set multiple times."));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+call    6 returned 0
+call    7 never executed
+call    8 never executed
+-:   56:  }
+3:   57:}
+------------------
+_ZN14network_config28MutuallyExclusiveAndOnlyOnceIJRKNS_6OptionES3_S3_S3_S3_S3_S3_S3_S3_S3_S3_S3_S3_S3_S3_S3_EEEvRKN5boost15program_options13variables_mapEDpOT_:
+function _ZN14network_config28MutuallyExclusiveAndOnlyOnceIJRKNS_6OptionES3_S3_S3_S3_S3_S3_S3_S3_S3_S3_S3_S3_S3_S3_S3_EEEvRKN5boost15program_options13variables_mapEDpOT_ called 20 returned 95% blocks executed 47%
+20:   50:void MutuallyExclusiveAndOnlyOnce(const boost::program_options::variables_map &map, Args &&... args) {
+20:   51:  auto option_count = (map.count(args.name) + ... );
+call    0 returned 20
+call    1 returned 20
+branch  2 taken 20 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 20
+branch  5 taken 20 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 20
+call    8 returned 20
+branch  9 taken 20 (fallthrough)
+branch 10 taken 0 (throw)
+call   11 returned 20
+branch 12 taken 20 (fallthrough)
+branch 13 taken 0 (throw)
+call   14 returned 20
+call   15 returned 20
+branch 16 taken 20 (fallthrough)
+branch 17 taken 0 (throw)
+call   18 returned 20
+branch 19 taken 20 (fallthrough)
+branch 20 taken 0 (throw)
+call   21 returned 20
+call   22 returned 20
+branch 23 taken 20 (fallthrough)
+branch 24 taken 0 (throw)
+call   25 returned 20
+branch 26 taken 20 (fallthrough)
+branch 27 taken 0 (throw)
+call   28 returned 20
+call   29 returned 20
+branch 30 taken 20 (fallthrough)
+branch 31 taken 0 (throw)
+call   32 returned 20
+branch 33 taken 20 (fallthrough)
+branch 34 taken 0 (throw)
+call   35 returned 20
+call   36 returned 20
+branch 37 taken 20 (fallthrough)
+branch 38 taken 0 (throw)
+call   39 returned 20
+branch 40 taken 20 (fallthrough)
+branch 41 taken 0 (throw)
+call   42 returned 20
+call   43 returned 20
+branch 44 taken 20 (fallthrough)
+branch 45 taken 0 (throw)
+call   46 returned 20
+branch 47 taken 20 (fallthrough)
+branch 48 taken 0 (throw)
+call   49 returned 20
+call   50 returned 20
+branch 51 taken 20 (fallthrough)
+branch 52 taken 0 (throw)
+call   53 returned 20
+branch 54 taken 20 (fallthrough)
+branch 55 taken 0 (throw)
+call   56 returned 20
+call   57 returned 20
+branch 58 taken 20 (fallthrough)
+branch 59 taken 0 (throw)
+call   60 returned 20
+branch 61 taken 20 (fallthrough)
+branch 62 taken 0 (throw)
+call   63 returned 20
+call   64 returned 20
+branch 65 taken 20 (fallthrough)
+branch 66 taken 0 (throw)
+call   67 returned 20
+branch 68 taken 20 (fallthrough)
+branch 69 taken 0 (throw)
+call   70 returned 20
+call   71 returned 20
+branch 72 taken 20 (fallthrough)
+branch 73 taken 0 (throw)
+call   74 returned 20
+branch 75 taken 20 (fallthrough)
+branch 76 taken 0 (throw)
+call   77 returned 20
+call   78 returned 20
+branch 79 taken 20 (fallthrough)
+branch 80 taken 0 (throw)
+call   81 returned 20
+branch 82 taken 20 (fallthrough)
+branch 83 taken 0 (throw)
+call   84 returned 20
+call   85 returned 20
+branch 86 taken 20 (fallthrough)
+branch 87 taken 0 (throw)
+call   88 returned 20
+branch 89 taken 20 (fallthrough)
+branch 90 taken 0 (throw)
+call   91 returned 20
+call   92 returned 20
+branch 93 taken 20 (fallthrough)
+branch 94 taken 0 (throw)
+call   95 returned 20
+branch 96 taken 20 (fallthrough)
+branch 97 taken 0 (throw)
+call   98 returned 20
+call   99 returned 20
+branch 100 taken 20 (fallthrough)
+branch 101 taken 0 (throw)
+call   102 returned 20
+branch 103 taken 20 (fallthrough)
+branch 104 taken 0 (throw)
+call   105 returned 20
+call   106 returned 20
+branch 107 taken 20 (fallthrough)
+branch 108 taken 0 (throw)
+call   109 returned 20
+branch 110 taken 20 (fallthrough)
+branch 111 taken 0 (throw)
+call   112 returned 20
+call   113 returned 20
+call   114 returned 20
+call   115 returned 20
+call   116 returned 20
+call   117 returned 20
+call   118 returned 20
+call   119 returned 20
+call   120 returned 20
+call   121 returned 20
+call   122 returned 20
+call   123 returned 20
+call   124 returned 20
+call   125 returned 20
+call   126 returned 20
+call   127 returned 20
+call   128 returned 20
+call   129 returned 20
+call   130 returned 20
+call   131 returned 20
+call   132 returned 20
+call   133 returned 20
+call   134 returned 20
+call   135 returned 20
+call   136 returned 20
+call   137 returned 20
+call   138 returned 20
+call   139 returned 20
+call   140 returned 20
+call   141 returned 20
+call   142 returned 20
+call   143 returned 20
+call   144 never executed
+call   145 never executed
+call   146 never executed
+call   147 never executed
+call   148 never executed
+call   149 never executed
+call   150 never executed
+call   151 never executed
+call   152 never executed
+call   153 never executed
+call   154 never executed
+call   155 never executed
+call   156 never executed
+call   157 never executed
+call   158 never executed
+call   159 never executed
+call   160 never executed
+call   161 never executed
+call   162 never executed
+call   163 never executed
+call   164 never executed
+call   165 never executed
+call   166 never executed
+call   167 never executed
+call   168 never executed
+call   169 never executed
+call   170 never executed
+call   171 never executed
+call   172 never executed
+call   173 never executed
+call   174 never executed
+call   175 never executed
+call   176 never executed
+-:   52:
+20:   53:  if (option_count != 1) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 19
+2:   54:    throw boost::program_options::error(
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 never executed
+2:   55:        ::std::string("Either options are set that are mutually exclusive, or an option is set multiple times."));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 1
+call    5 returned 1
+call    6 returned 0
+call    7 never executed
+call    8 never executed
+-:   56:  }
+19:   57:}
+------------------
+-:   58:
+-:   59:template<typename ... Args>
+115:   60:void ExpectOptionPair(const boost::program_options::variables_map &map, Option option, Args &&... suboptions) {
+115:   61:  if (Contains(map, option)) {
+15:   62:    MutuallyExclusiveAndOnlyOnce(map, suboptions...);
+-:   63:  }
+112:   64:}
+------------------
+_ZN14network_config16ExpectOptionPairIJRKNS_6OptionEEEEvRKN5boost15program_options13variables_mapES1_DpOT_:
+function _ZN14network_config16ExpectOptionPairIJRKNS_6OptionEEEEvRKN5boost15program_options13variables_mapES1_DpOT_ called 16 returned 94% blocks executed 100%
+16:   60:void ExpectOptionPair(const boost::program_options::variables_map &map, Option option, Args &&... suboptions) {
+16:   61:  if (Contains(map, option)) {
+call    0 returned 16
+branch  1 taken 5 (fallthrough)
+branch  2 taken 11
+5:   62:    MutuallyExclusiveAndOnlyOnce(map, suboptions...);
+call    0 returned 4
+-:   63:  }
+15:   64:}
+------------------
+_ZN14network_config16ExpectOptionPairIJRKNS_6OptionES3_S3_EEEvRKN5boost15program_options13variables_mapES1_DpOT_:
+function _ZN14network_config16ExpectOptionPairIJRKNS_6OptionES3_S3_EEEvRKN5boost15program_options13variables_mapES1_DpOT_ called 17 returned 94% blocks executed 100%
+17:   60:void ExpectOptionPair(const boost::program_options::variables_map &map, Option option, Args &&... suboptions) {
+17:   61:  if (Contains(map, option)) {
+call    0 returned 17
+branch  1 taken 6 (fallthrough)
+branch  2 taken 11
+6:   62:    MutuallyExclusiveAndOnlyOnce(map, suboptions...);
+call    0 returned 5
+-:   63:  }
+16:   64:}
+------------------
+_ZN14network_config16ExpectOptionPairIJRKNS_6OptionES3_EEEvRKN5boost15program_options13variables_mapES1_DpOT_:
+function _ZN14network_config16ExpectOptionPairIJRKNS_6OptionES3_EEEvRKN5boost15program_options13variables_mapES1_DpOT_ called 82 returned 99% blocks executed 100%
+82:   60:void ExpectOptionPair(const boost::program_options::variables_map &map, Option option, Args &&... suboptions) {
+82:   61:  if (Contains(map, option)) {
+call    0 returned 82
+branch  1 taken 4 (fallthrough)
+branch  2 taken 78
+4:   62:    MutuallyExclusiveAndOnlyOnce(map, suboptions...);
+call    0 returned 3
+-:   63:  }
+81:   64:}
+------------------
+-:   65:
+-:   66:}

@@ -1,0 +1,194 @@
+-:    0:Source:src/util/File.cpp
+-:    1://------------------------------------------------------------------------------
+-:    2:// Copyright (c) WAGO GmbH & Co. KG
+-:    3://
+-:    4:// PROPRIETARY RIGHTS are involved in the subject matter of this material. All
+-:    5:// manufacturing, reproduction, use and sales rights pertaining to this
+-:    6:// subject matter are governed by the license agreement. The recipient of this
+-:    7:// software implicitly accepts the terms of the license.
+-:    8://------------------------------------------------------------------------------
+-:    9:
+-:   10:#include "File.hpp"
+-:   11:
+-:   12:#include <algorithm>
+-:   13:#include <fstream>
+-:   14:#include <filesystem>
+-:   15:#include <iostream>
+-:   16:#include <string>
+-:   17:
+-:   18:namespace wago::util {
+-:   19:
+function _ZN4wago4util9WriteFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_ called 0 returned 0% blocks executed 0%
+#####:   20:void WriteFile(const ::std::string &path, const ::std::string &data) {
+#####:   21:  std::ofstream os(path + ".tmp");
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:   22:  os << data << ::std::flush;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:   23:  os.close();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   24:  std::filesystem::rename(path + ".tmp", path);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+-:   25:
+#####:   26:}
+call    0 never executed
+call    1 never executed
+-:   27:
+function _ZN4wago4util14RemoveSnmpUserERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   28:void RemoveSnmpUser(const std::string &path) {
+#####:   29:    std::ifstream inputFile(path);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   30:    std::ofstream outputFile(path + ".tmp");
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+-:   31:
+#####:   32:    if (!inputFile.is_open() || !outputFile.is_open()) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+branch  9 never executed
+branch 10 never executed
+branch 11 never executed
+#####:   33:        std::cerr << "Error opening files." << std::endl;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+#####:   34:        return;
+-:   35:    }
+-:   36:
+#####:   37:    std::string line;
+call    0 never executed
+-:   38:
+#####:   39:    while (std::getline(inputFile, line)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+#####:   40:        if (line.substr(0, 7) != "usmUser") {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+#####:   41:            outputFile << line << std::endl;
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+-:   42:        }
+-:   43:    }
+-:   44:
+#####:   45:    inputFile.close();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   46:    outputFile.close();
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+-:   47:
+#####:   48:    std::filesystem::rename(path + ".tmp", path);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+branch  7 never executed
+branch  8 never executed
+call    9 never executed
+branch 10 never executed
+branch 11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+call   17 never executed
+#####:   49:}
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 never executed
+call    8 never executed
+call    9 never executed
+-:   50:
+function _ZN4wago4util8ReadFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+#####:   51:::std::string ReadFile(const ::std::string &path) {
+#####:   52:  std::ifstream t(path);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+#####:   53:  return ::std::string((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+call    6 never executed
+call    7 never executed
+#####:   54:}
+call    0 never executed
+call    1 never executed
+-:   55:
+-:   56:}
