@@ -1,0 +1,50 @@
+diff -Naur qt-everywhere-src-6.7.3_org/qtdeclarative/tools/CMakeLists.txt qt-everywhere-src-6.7.3/qtdeclarative/tools/CMakeLists.txt
+--- qt-everywhere-src-6.7.3_org/qtdeclarative/tools/CMakeLists.txt	2024-09-19 17:44:58.000000000 +0200
++++ qt-everywhere-src-6.7.3/qtdeclarative/tools/CMakeLists.txt	2025-08-20 10:11:06.922360204 +0200
+@@ -39,9 +39,12 @@
+ endif()
+ if(QT_BUILD_SHARED_LIBS AND QT_FEATURE_thread AND TARGET Qt::Quick AND NOT ANDROID AND NOT WASM AND NOT IOS AND NOT rtems)
+     add_subdirectory(qmlscene)
+-    add_subdirectory(qmltime)
++    if (NOT CMAKE_CROSSCOMPILING)
++        add_subdirectory(qmltime)
++    endif()
+ endif()
+ if(QT_BUILD_SHARED_LIBS
++        AND NOT CMAKE_CROSSCOMPILING
+         AND QT_FEATURE_process
+         AND QT_FEATURE_regularexpression
+         AND QT_FEATURE_thread
+@@ -70,6 +73,7 @@
+     add_subdirectory(qmleasing)
+ endif()
+ if(TARGET Qt::Quick
++        AND NOT CMAKE_CROSSCOMPILING
+         AND TARGET Qt::Svg
+         AND NOT ANDROID
+         AND NOT IOS
+@@ -77,7 +81,7 @@
+         AND NOT rtems)
+     add_subdirectory(svgtoqml)
+ endif()
+-if(QT_FEATURE_thread AND TARGET Qt::QuickTest AND NOT ANDROID AND NOT WASM AND NOT rtems)
++if(QT_FEATURE_thread AND TARGET Qt::QuickTest AND NOT ANDROID AND NOT WASM AND NOT rtems AND NOT CMAKE_CROSSCOMPILING)
+     add_subdirectory(qmltestrunner)
+ endif()
+ if(QT_FEATURE_private_tests AND QT_FEATURE_thread AND NOT ANDROID AND NOT WASM AND NOT IOS AND NOT rtems)
+diff -Naur qt-everywhere-src-6.7.3_org/qtquick3d/tools/CMakeLists.txt qt-everywhere-src-6.7.3/qtquick3d/tools/CMakeLists.txt
+--- qt-everywhere-src-6.7.3_org/qtquick3d/tools/CMakeLists.txt	2024-09-19 21:34:37.000000000 +0200
++++ qt-everywhere-src-6.7.3/qtquick3d/tools/CMakeLists.txt	2025-08-20 13:30:38.860823123 +0200
+@@ -1,6 +1,7 @@
+ # Copyright (C) 2022 The Qt Company Ltd.
+ # SPDX-License-Identifier: BSD-3-Clause
+ 
++if (NOT CMAKE_CROSSCOMPILING)
+ add_subdirectory(balsam)
+ if(TARGET Qt::Widgets)
+     if(TARGET Qt::Concurrent)
+@@ -18,3 +19,4 @@
+ add_subdirectory(instancer)
+ add_subdirectory(shapegen)
+ add_subdirectory(materialeditor)
++endif()

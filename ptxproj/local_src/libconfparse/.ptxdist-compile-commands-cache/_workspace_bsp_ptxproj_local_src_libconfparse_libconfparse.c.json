@@ -1,0 +1,6 @@
+  {
+    "directory": "/workspace/bsp/ptxproj/local_src/libconfparse",
+    "command": "aarch64-linux-gnu-gcc  -fdebug-prefix-map=/workspace/bsp/ptxproj/= -fdebug-prefix-map=/workspace/bsp/ptxproj/platform-wago-wp400/sysroot-host/usr/lib/wrapper/=platform-wago-wp400/ -frecord-gcc-switches -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64   -O2 -g -Wall -fpic -c libconfparse.c  -isystem /workspace/bsp/ptxproj/platform-wago-wp400/sysroot-target/usr/include",
+    "file": "/workspace/bsp/ptxproj/local_src/libconfparse/libconfparse.c",
+    "output": "/workspace/bsp/ptxproj/local_src/libconfparse/libconfparse.o"
+  }

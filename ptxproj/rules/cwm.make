@@ -40,7 +40,8 @@ CWM_LICENSE	:= OPENBSD
 
 #CWM_PATH	:= PATH=$(CROSS_PATH)
 CWM_CONF_TOOL	:= NO
-CWM_MAKE_ENV	:= $(CROSS_ENV)
+CWM_MAKE_ENV	:= $(CROSS_ENV) \
+				MAKEFLAGS="PREFIX=/usr"
 
 #$(STATEDIR)/cwm.prepare:
 #	@$(call targetinfo)
@@ -76,7 +77,7 @@ $(STATEDIR)/cwm.targetinstall:
 	@$(call install_fixup, cwm,SECTION,base)
 	@$(call install_fixup, cwm,AUTHOR,"<elrest GmbH>")
 	@$(call install_fixup, cwm,DESCRIPTION,missing)
-	@$(call install_copy, cwm, 0, 0, 0755, $(CWM_DIR)/cwm, /usr/bin/cwm)
+	@$(call install_copy, cwm, 0, 0, 0755, -, /usr/bin/cwm)
 	@$(call install_finish, cwm)
 	@$(call touch)
 

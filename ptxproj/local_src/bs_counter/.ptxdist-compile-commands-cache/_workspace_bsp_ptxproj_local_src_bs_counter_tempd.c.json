@@ -1,0 +1,6 @@
+  {
+    "directory": "/workspace/bsp/ptxproj/local_src/bs_counter",
+    "command": "aarch64-linux-gnu-gcc  -fdebug-prefix-map=/workspace/bsp/ptxproj/= -fdebug-prefix-map=/workspace/bsp/ptxproj/platform-wago-wp400/sysroot-host/usr/lib/wrapper/=platform-wago-wp400/ -frecord-gcc-switches -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64   -Wl,--build-id=sha1  -O2 -g -Wall tempd.c -o tempd  -isystem /workspace/bsp/ptxproj/platform-wago-wp400/sysroot-target/usr/include -B/workspace/bsp/ptxproj/platform-wago-wp400/sysroot-target/usr/lib -L/workspace/bsp/ptxproj/platform-wago-wp400/sysroot-target/usr/lib -Wl,-rpath-link -Wl,/workspace/bsp/ptxproj/platform-wago-wp400/sysroot-target/usr/lib",
+    "file": "/workspace/bsp/ptxproj/local_src/bs_counter/tempd.c",
+    "output": "/workspace/bsp/ptxproj/local_src/bs_counter/tempd"
+  }

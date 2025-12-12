@@ -1,0 +1,6 @@
+  {
+    "directory": "/workspace/pfc/local_src/libmsgtool",
+    "command": "aarch64-linux-gnu-gcc  -fdebug-prefix-map=/workspace/pfc/ptxproj.2013.03.0/= -fdebug-prefix-map=/workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-host/usr/lib/wrapper/=platform-wago-wp400/ -frecord-gcc-switches -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64   -O2 -g -Wall -fpic -Wfloat-equal -Wformat-security -c libmsgtool.c  -isystem /workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-target/usr/include",
+    "file": "/workspace/pfc/local_src/libmsgtool/libmsgtool.c",
+    "output": "/workspace/pfc/local_src/libmsgtool/libmsgtool.o"
+  }

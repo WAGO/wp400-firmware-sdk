@@ -1,0 +1,103 @@
+diff -Naur qt-everywhere-src-6.6.2_org/qtvirtualkeyboard/src/virtualkeyboard/platforminputcontext.cpp qt-everywhere-src-6.6.2/qtvirtualkeyboard/src/virtualkeyboard/platforminputcontext.cpp
+--- qt-everywhere-src-6.6.2_org/qtvirtualkeyboard/src/virtualkeyboard/platforminputcontext.cpp	2024-02-10 02:16:55.000000000 +0100
++++ qt-everywhere-src-6.6.2/qtvirtualkeyboard/src/virtualkeyboard/platforminputcontext.cpp	2025-07-28 11:08:38.691272756 +0200
+@@ -14,6 +14,11 @@
+ 
+ #include <QWindow>
+ #include <QGuiApplication>
++#include <stdio.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <unistd.h>
++#include <errno.h>
+ 
+ QT_BEGIN_NAMESPACE
+ namespace QtVirtualKeyboard {
+@@ -22,6 +27,65 @@
+ 
+ static const char disableDesktopEnvVarName[] = "QT_VIRTUALKEYBOARD_DESKTOP_DISABLE";
+ 
++static char * TrimRight(char *pStr)
++{
++    if (pStr)
++    {
++        int n = strlen(pStr);
++        if (n > 0)
++        {
++            //remove lf cr sp
++            while ((pStr[n-1] == 10)||(pStr[n-1] == 13)||(pStr[n-1] == 32))
++            {
++                pStr[n-1] = 0;
++                n = strlen(pStr);
++            }
++        }
++    }
++    return pStr;
++}
++
++static bool IsUsbKeyboardPresent()
++{
++    FILE * fp;
++    bool ret = false;
++    char szLine[1024];
++    char * pStr;
++
++    fp = fopen("/proc/bus/input/devices", "r");
++    if (fp == NULL)
++    {
++        return ret;
++    }
++
++    while (fgets(szLine, sizeof(szLine), fp) != NULL)
++    {
++        //B: EV=120013
++        pStr = &szLine[3];
++        if (*pStr == 'E')
++        {
++            pStr++;
++            if (*pStr == 'V')
++            {
++                pStr++;
++                if (*pStr == '=')
++                {
++                    pStr++;
++                    TrimRight(pStr);
++                    if (strcmp(pStr, "120013")==0)
++                    {
++                        ret = true;
++                        break;
++                    }
++                }
++            }
++        }
++    }
++
++    fclose(fp);
++    return ret;
++}
++
+ /*!
+     \class QtVirtualKeyboard::PlatformInputContext
+     \internal
+@@ -110,6 +174,21 @@
+ 
+ void PlatformInputContext::showInputPanel()
+ {
++    struct stat sts;
++    char * pFile = "/tmp/qtvirtualkeyboard.disabled";
++    if (stat(pFile, &sts) == -1 && errno == ENOENT)
++    {
++        //file does not exists
++    }
++    else
++    {
++        //file exists
++        return;
++    }
++    
++    if (IsUsbKeyboardPresent())
++        return;
++
+     if (!m_visible) {
+         VIRTUALKEYBOARD_DEBUG() << "PlatformInputContext::showInputPanel()";
+         m_visible = true;

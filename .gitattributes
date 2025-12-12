@@ -7,3 +7,10 @@ ptxproj/src/boost_1_68_0.tar.bz2 filter=lfs diff=lfs merge=lfs -text
 ptxproj/src/go1.21.8.linux-amd64.tar.gz filter=lfs diff=lfs merge=lfs -text
 ptxproj/src/qemu-5.0.0.tar.xz filter=lfs diff=lfs merge=lfs -text
 ptxproj/src/linux-6.6.3-w004.tar.xz filter=lfs diff=lfs merge=lfs -text
+/ptxproj/src/nss-3.106.tar.gz filter=lfs diff=lfs merge=lfs -text
+ptxproj/src/u-boot-2023.07-rc3-w01.08.00_01.tar.gz filter=lfs diff=lfs merge=lfs -text
+ptxproj/src/node-v20.11.0.tar.xz filter=lfs diff=lfs merge=lfs -text
+ptxproj/src/qemu-9.1.2.tar.xz filter=lfs diff=lfs merge=lfs -text
+ptxproj/src/linux-6.6.3-w005.tar.xz filter=lfs diff=lfs merge=lfs -text
+ptxproj/src/qt-everywhere-src-6.7.3.tar.xz filter=lfs diff=lfs merge=lfs -text
+ptxproj/src/boost_1_83_0.tar.bz2 filter=lfs diff=lfs merge=lfs -text

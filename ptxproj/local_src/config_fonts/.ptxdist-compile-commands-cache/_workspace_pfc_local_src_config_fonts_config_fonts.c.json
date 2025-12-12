@@ -1,0 +1,6 @@
+  {
+    "directory": "/workspace/pfc/local_src/config_fonts",
+    "command": "aarch64-linux-gnu-gcc  -fdebug-prefix-map=/workspace/pfc/ptxproj.2013.03.0/= -fdebug-prefix-map=/workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-host/usr/lib/wrapper/=platform-wago-wp400/ -frecord-gcc-switches -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64   -isystem /workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-target/usr/include/glib-2.0 -isystem /workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-target/usr/lib/glib-2.0/include -O0 -ggdb3 -c -o config_fonts.o config_fonts.c  -isystem /workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-target/usr/include",
+    "file": "/workspace/pfc/local_src/config_fonts/config_fonts.c",
+    "output": "/workspace/pfc/local_src/config_fonts/config_fonts.o"
+  }

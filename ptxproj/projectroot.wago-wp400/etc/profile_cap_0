@@ -21,8 +21,8 @@ export QTWEBENGINE_DISABLE_SANDBOX=1
 export QT_IM_MODULE=qtvirtualkeyboard
 export QT_VIRTUALKEYBOARD_STYLE=mystyle
 
-export QTWEBENGINEPROCESS_PATH=/usr/lib/qt5/libexec/QtWebEngineProcess
-export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/qt5/plugins
+export QTWEBENGINEPROCESS_PATH=/usr/lib/qt6/libexec/QtWebEngineProcess
+export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/qt6/plugins
 export XDG_RUNTIME_DIR="/tmp/runtime-root"
 export QT_QPA_GENERIC_PLUGINS=evdevtouch
 

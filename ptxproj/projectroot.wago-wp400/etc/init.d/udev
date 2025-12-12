@@ -41,6 +41,10 @@ load_pca955x () {
 	fi
 }
 
+enable_spread_spectrum () {
+	/sbin/devmem 0x30360034 32 0x8004F042
+}
+
 show_bootscreen () {
 	mknod /dev/fb0 c 29 0
 
@@ -179,6 +183,7 @@ start)
 		reboot -f
 	fi
 
+	enable_spread_spectrum
 	#echo "show bootscreen"
 	show_bootscreen
 	echo 255 > /sys/class/backlight/backlight/brightness 

@@ -3,7 +3,19 @@
 config QTVIRTUALKEYBOARD
 	tristate
 	prompt "qtvirtualkeyboard"
-	select QT5
+	select QT6 if QTVIRTUALKEYBOARD_USE_QT6
 	help
-	  FIXME
+	  qt based virtual keyboard
 
+if QTVIRTUALKEYBOARD
+choice
+	prompt "QT_VERSION_USED"
+		config QTVIRTUALKEYBOARD_USE_QT5
+			bool
+			prompt "QT5"
+
+		config QTVIRTUALKEYBOARD_USE_QT6
+			bool
+			prompt "QT6"
+endchoice
+endif

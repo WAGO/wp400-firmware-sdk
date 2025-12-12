@@ -60,6 +60,8 @@ ifdef PTXCONF_ELREST_CUSTOM_WP400_USER_FILES_INSTALL
 	@$(call install_copy, elrest-custom-wp400-install, ${PTXCONF_ROOTFS_PASSWD_USER_UID}, ${PTXCONF_ROOTFS_PASSWD_USER_GID}, 0755, /home/user)
 	@$(call install_alternative, elrest-custom-wp400-install, 0, 0, 0644, /home/user/logo.png)
 	@$(call install_alternative_tree, elrest-custom-wp400-install, 0, 0,  /usr/lib/qt5/qml/QtQuick/VirtualKeyboard/Styles/mystyle)
+	@$(call install_alternative_tree, elrest-custom-wp400-install, 0, 0,  /usr/lib/qt6/qml/QtQuick/VirtualKeyboard/Styles/mystyle)
+	@$(call install_alternative_tree, elrest-custom-wp400-install, 0, 0,  /usr/lib/qt6/qml/QtQuick/VirtualKeyboard/Styles/mystyle_portrait)
 endif
 
 ifdef PTXCONF_ELREST_CUSTOM_WP400_CONFIG_FILES_INSTALL

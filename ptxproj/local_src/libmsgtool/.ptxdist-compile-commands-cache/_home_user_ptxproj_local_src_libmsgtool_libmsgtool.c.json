@@ -1,0 +1,6 @@
+  {
+    "directory": "/home/user/ptxproj/local_src/libmsgtool",
+    "command": "aarch64-linux-gnu-gcc  -fdebug-prefix-map=/home/user/ptxproj/= -fdebug-prefix-map=/home/user/ptxproj/platform-wago-wp400/sysroot-host/usr/lib/wrapper/=platform-wago-wp400/ -frecord-gcc-switches -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64   -O2 -g -Wall -fpic -Wfloat-equal -Wformat-security -c libmsgtool.c  -isystem /home/user/ptxproj/platform-wago-wp400/sysroot-target/usr/include",
+    "file": "/home/user/ptxproj/local_src/libmsgtool/libmsgtool.c",
+    "output": "/home/user/ptxproj/local_src/libmsgtool/libmsgtool.o"
+  }

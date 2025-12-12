@@ -59,12 +59,4 @@ if [ ! -z $PIDVKB ]; then
   fi
 fi
 
-STATEMONITOR=`getconfvalue /etc/specific/plcselect.conf statemonitor`
-PIDTCPMONITOR=`pidof tcp_monitor`
-if [ "$STATEMONITOR" == "enabled" ]; then
-  if [ -z $PIDTCPMONITOR ]; then
-    /usr/bin/tcp_monitor > /dev/null 2>&1 &
-  fi
-fi
-
 ShowUrl

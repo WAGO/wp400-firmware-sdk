@@ -1,0 +1,6 @@
+  {
+    "directory": "/workspace/pfc/local_src/getconfvalue",
+    "command": "aarch64-linux-gnu-gcc  -fdebug-prefix-map=/workspace/pfc/ptxproj.2013.03.0/= -fdebug-prefix-map=/workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-host/usr/lib/wrapper/=platform-wago-wp400/ -frecord-gcc-switches -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64   -Wl,--build-id=sha1  -O2 -g -Wall getconfvalue.c -o getconfvalue  -isystem /workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-target/usr/include -B/workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-target/usr/lib -L/workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-target/usr/lib -Wl,-rpath-link -Wl,/workspace/pfc/ptxproj.2013.03.0/platform-wago-wp400/sysroot-target/usr/lib",
+    "file": "/workspace/pfc/local_src/getconfvalue/getconfvalue.c",
+    "output": "/workspace/pfc/local_src/getconfvalue/getconfvalue"
+  }

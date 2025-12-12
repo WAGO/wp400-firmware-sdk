@@ -1,0 +1,11 @@
+## SECTION=multimedia_xorg_app
+
+config XCB_UTIL_CURSOR
+	tristate
+	select LIBXCB
+	select XCB_UTIL_RENDERUTIL
+	select XCB_UTIL_IMAGE
+	select XORG_UTIL_MACROS
+	prompt "xcb-util-cursor"
+	help
+	  utility libraries for X C Binding -- cursor

@@ -1,0 +1,20 @@
+## SECTION=elrest_specific_applications_browser
+
+config WEBENGINEBROWSER_QT6
+	bool
+	prompt "webenginebrowser qt6"
+	select QT6
+	select MUSTACHE
+	select LIBMSGTOOL
+	help
+	  qt6 webengine based browser
+
+if WEBENGINEBROWSER_QT6
+
+config WEBENGINEBROWSER_QT6_TRUNK
+	bool
+#	prompt "use trunk"
+	help
+	  Build trunk instead of latest release.
+
+endif

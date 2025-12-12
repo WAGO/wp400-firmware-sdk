@@ -68,7 +68,11 @@ We provide one tag for each firmware(FW) release. You can download specific FW v
 
 Afterward you can checkout a specific release.
 
-    git checkout <fw release>    
+    git checkout <fw release>  
+    
+### 1.1) Optional: 
+
+Important: The SDK-image is built inside a Docker-container, and it may require your company’s SSL certificates to access internal resources during the build process. These certificates should be copied into the 'docker/certs' directory before starting the build.
 
 ### 2.) Create docker image wp400-builder
 

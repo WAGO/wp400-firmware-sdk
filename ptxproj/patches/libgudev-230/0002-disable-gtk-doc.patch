@@ -1,0 +1,37 @@
+--- a/configure.ac	2015-06-02 12:44:05.137634431 +0200
++++ b/configure.ac	2025-04-23 07:57:54.710373759 +0200
+@@ -26,12 +26,6 @@
+ AC_PROG_CC_C99
+ PKG_PROG_PKG_CONFIG
+ 
+-# gtkdocize greps for '^GTK_DOC_CHECK', so it needs to be on its own line
+-m4_ifdef([GTK_DOC_CHECK], [
+-GTK_DOC_CHECK([1.18],[--flavour no-tmpl])],
+-         [AM_CONDITIONAL([ENABLE_GTK_DOC], [false])
+-          enable_gtk_doc=no])
+-
+ m4_ifdef([GOBJECT_INTROSPECTION_CHECK], [
+ GOBJECT_INTROSPECTION_CHECK([1.31.1])
+ ], [
+@@ -44,8 +38,6 @@
+ AC_CONFIG_FILES([
+         Makefile
+         gudev-1.0.pc
+-        docs/Makefile
+-        docs/version.xml
+ ])
+ 
+ AC_OUTPUT
+--- a/Makefile.am	2015-05-15 11:42:30.115215144 +0200
++++ b/Makefile.am	2025-04-23 08:01:03.249172273 +0200
+@@ -182,10 +182,6 @@
+ # ------------------------------------------------------------------------------
+ # docs
+ 
+-if ENABLE_GTK_DOC
+-SUBDIRS += docs
+-endif
+-
+ #docs/html:
+ #	$(AM_V_at)$(MKDIR_P) $(dir $@)
+ #	$(AM_V_LN)$(LN_S) -f ../gudev/html $@

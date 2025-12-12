@@ -73,6 +73,8 @@ xrandr -o right
 elif [ "$ROTATION" == "portrait270" ]; then
 xrandr -o left
 fi
+#avoid xorg dpi autosetting
+xrandr --dpi 96x96
 
 # start services 
 /etc/script/start_application.sh &

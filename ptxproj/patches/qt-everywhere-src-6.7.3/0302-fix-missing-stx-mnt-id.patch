@@ -1,0 +1,12 @@
+diff -Naur qt-everywhere-src-6.7.3_org/qtbase/src/corelib/io/qstorageinfo_linux.cpp qt-everywhere-src-6.7.3/qtbase/src/corelib/io/qstorageinfo_linux.cpp
+--- qt-everywhere-src-6.7.3_org/qtbase/src/corelib/io/qstorageinfo_linux.cpp	2024-09-16 11:24:52.000000000 +0200
++++ qt-everywhere-src-6.7.3/qtbase/src/corelib/io/qstorageinfo_linux.cpp	2025-08-20 13:06:20.218462432 +0200
+@@ -103,7 +103,7 @@
+ {
+     if (fd < 0)
+         return 0;
+-#if defined(STATX_BASIC_STATS) && defined(STATX_MNT_ID)
++#if defined(HAVE_STRUCT_STATX) && defined(HAVE_STRUCT_STATX_STX_MNT_ID)
+     // STATX_MNT_ID was added in kernel v5.8
+     struct statx st;
+     int r = statx(fd, "", AT_EMPTY_PATH | AT_NO_AUTOMOUNT, STATX_MNT_ID, &st);
